@@ -1,76 +1,83 @@
 Acity Marketplace & Skill Exchange
 
- Project Overview
-Acity Marketplace & Skill Exchange is a web application designed for students of Academic City University College. The platform allows users to:
+Project Overview
+Acity Marketplace & Skill Exchange is a full-stack web application designed for students of Academic City University College.  
 
+The platform allows users to:
 - Create and manage listings (items or skills)
-- Search and filter available listings
+- Search and filter listings
 - Express interest in listings (cart system)
-- Interact with other users for potential trades
 - Manage personal profiles and skills
-- Admin users can moderate listings and manage platform activity
+- Interact with other users
+- Admins can moderate listings and monitor activity
 
-The system includes both a frontend (HTML, CSS, JavaScript) and a backend (Node.js, Express, PostgreSQL).
 
- Deployment Links
+Deployment Links
 
- Frontend (GitHub Pages)
- https://nanaAmoah321.github.io/acity-frontend.git
+Frontend (GitHub Pages)
+https://github.com/NanaAmoah321/acity-frontend.git
 
 Backend (Render)
- https://acity-backend.onrender.com
+https://acity-backend.onrender.com
+
+API Test Endpoint
+https://acity-backend.onrender.com/api/listings
+
 
 Login Details
 
- Test User
+Test User
 - Email: arnold@acity.edu.gh  
-- Password: password 
+- Password: password  
 
 Admin User
 - Email: nana.kwadwo@acity.edu.gh  
-- Password: password 
+- Password: password  
 
 
 
 Feature Checklist
 
- User Features
-✔ User registration and login (with Acity email validation)  
+User Features
+✔ User registration and login (Acity email validation)  
 ✔ JWT authentication  
 ✔ Create listings (items or skills)  
 ✔ View all listings  
 ✔ Search and filter listings  
-✔ Express interest in listings ("Interested" button)  
+✔ Express interest in listings  
 ✔ View interested items (cart system)  
 ✔ Remove items from cart  
 ✔ Edit and delete personal listings  
-✔ Profile page (view name, email, skills)  
+✔ Profile page (name, email, skills)  
 
 
-Interaction & Communication
-✔ Interest system (users can show interest in listings)  
+
+Interaction Features
+✔ Interest system (user ↔ listings)  
 ✔ Status tracking (available, sold, swapped)  
-✔ Notification-style feedback (alerts for actions)  
+✔ Feedback alerts for user actions  
+
 
 Admin Features
-✔ Role-based access control (admin vs user)  
+✔ Role-based access control  
 ✔ Admin dashboard  
-✔ Delete any listing (moderation)  
+✔ Delete any listing  
 ✔ Flag inappropriate listings  
-✔ View platform activity (total listings)  
+✔ View total platform listings  
+
 
 Backend Features
-✔ RESTful API (Express)  
+✔ RESTful API (Node.js + Express)  
 ✔ PostgreSQL database  
 ✔ JWT authentication middleware  
 ✔ Protected routes  
 ✔ CRUD operations for listings  
-✔ Interest system (user ↔ listings relationship)  
+✔ Interest system  
 
 
-Installation Instructions
+Installation Instructions (Run Locally)
 
-1. Clone the repository
-´´bash
-https://github.com/NanaAmoah321/acity-frontend.git
+1. Clone Frontend Repository
+```bash
+git clone https://github.com/NanaAmoah321/acity-frontend.git
 cd acity-frontend
