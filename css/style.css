@@ -1,0 +1,207 @@
+body {
+    background-image: url(https://npf-unlayer.s3.ap-south-1.amazonaws.com/unlayer%2Fimages%2F1717766775849-acity-univercity-college.webp);
+    background-size: cover;
+    margin: 0px;
+    
+}
+.form-container {
+    width : 300px;
+    margin : 100px auto;
+    padding : 20px;
+    background: beige;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+input, textarea, select {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+
+}
+
+.login-register {
+    width: 90%;
+    padding: 10px;
+    background: red;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+nav {
+    
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+
+.logo img {
+    width: 70px;
+    height: 70px;
+}
+
+
+.nav-links a {
+    text-decoration: none;
+    color: white;
+    margin: 0 10px;
+    font-size: larger;
+}
+
+.nav-links a:hover {
+    text-decoration: underline;
+}
+
+.hero {
+    text-align: center;
+    padding: 50px;
+    font-family: 'arial', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: white;
+    line-height: 1.6;
+}
+
+#hero-button {
+    width: 10%;
+    padding: 10px;
+    background-color: grey;
+    border: none;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+.hero a {
+    text-decoration: none;
+    color: white;
+}
+
+.filters {
+    padding: 20px;
+    text-align: center;
+}
+
+.filters input, .filters select {
+    padding: 10px;
+    margin: 5px;
+    width: 500px;
+    border-radius: 6px;
+}
+
+#itemsHeading {
+    text-align: center;
+    color: white;
+    margin-top: 20px;
+}
+
+.card {
+    background: beige;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    margin: 20px;
+}
+
+.ItemsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#ItemsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.ItemsContainer h2 {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+    color: white;
+}
+.Add-button {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+.card button {
+    margin-top: 8px;
+    margin-right: 5px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    color: white;
+    background-color: red;
+}
+.card button:hover {
+    opacity: 0.9;
+}
+
+.InterestedContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+#interestedContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.InterestedContainer h2 {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.admin-container {
+    text-align: center;
+    padding: 40px;
+}
+
+.admin-container h2 {
+    color: white;
+    margin-bottom: 20px;
+}
+
+
+#stats {
+    width: 300px;
+    margin: 20px auto;
+    padding: 15px;
+    background: beige;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    color: black;
+}
+
+#allListings {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#adminLink {
+    background-color: grey;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+#adminLink:hover {
+    background-color: grey;
+}

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acity Connect</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <img src="images/acity_new_logo-removebg-preview.png" alt="acity logo" width="50px">
+        </div>
+
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="login.html">Login</a>
+            <a href="register.html">Register</a>
+            <a href="create-listing.html"> Add Item</a>
+            <a href="profile.html">Profile</a>
+            <a href="myCart.html">My Cart</a>
+            <a href="admin.html" id="adminLink" style="display:none;">Admin</a>
+            <a href="#" onclick="logout()">Logout</a>
+           
+
+
+        </div>
+    </nav>
+
+    <div class="hero">
+        <h1>Welcome to Acity Connect</h1>
+        <p>Find the available products on campus and connect with other students!</p>
+        <button id="hero-button">
+            <a href="register.html" >Register Now</a>
+        </button>
+    </div>
+
+    <section class="filters">
+        <input type="text" id="searchInput" placeholder="Search products or skills">
+
+        <select name="catergory" id="categoryFilter">
+            <option value="All">All</option>
+            <option value="Items">Items</option>
+            <option value="Skills">Skills</option>
+        </select>
+    </section>
+
+    <h2 id="itemsHeading">ITEMS AVAILABLE</h2>
+
+    <section class="ItemsContainer" id="ItemsContainer">
+        
+
+
+    </section>
+
+    <script src="js/listings.js"></script>
+    <script src="js/auth.js"></script>
+
+
+</body>
+</html>
