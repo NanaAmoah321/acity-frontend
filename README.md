@@ -39,6 +39,7 @@ Admin User
 Feature Checklist
 
 User Features
+
 ✔ User registration and login (Acity email validation)  
 ✔ JWT authentication  
 ✔ Create listings (items or skills)  
@@ -53,12 +54,14 @@ User Features
 
 
 Interaction Features
+
 ✔ Interest system (user ↔ listings)  
 ✔ Status tracking (available, sold, swapped)  
 ✔ Feedback alerts for user actions  
 
 
 Admin Features
+
 ✔ Role-based access control  
 ✔ Admin dashboard  
 ✔ Delete any listing  
@@ -67,6 +70,7 @@ Admin Features
 
 
 Backend Features
+
 ✔ RESTful API (Node.js + Express)  
 ✔ PostgreSQL database  
 ✔ JWT authentication middleware  
