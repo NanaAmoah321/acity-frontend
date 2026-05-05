@@ -15,7 +15,7 @@ The platform allows users to:
 Deployment Links
 
 Frontend (GitHub Pages)
-https://github.com/NanaAmoah321/acity-frontend.git
+https://nanaamoah321.github.io/acity-frontend/
 
 Backend (Render)
 https://acity-backend.onrender.com
