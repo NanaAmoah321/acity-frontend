@@ -1127,3 +1127,267 @@ nav {
     color: #777;
 
 }
+
+.checkout-modal {
+
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0,0,0,0.7);
+
+    backdrop-filter: blur(5px);
+
+    justify-content: center;
+
+    align-items: center;
+
+    z-index: 9999;
+
+}
+
+.checkout-content {
+
+    background: #f4f1de;
+
+    width: 500px;
+
+    max-width: 90%;
+
+    padding: 35px;
+
+    border-radius: 20px;
+
+    box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+
+    animation: popup 0.3s ease;
+
+}
+
+@keyframes popup {
+
+    from {
+
+        opacity: 0;
+        transform: scale(0.9);
+
+    }
+
+    to {
+
+        opacity: 1;
+        transform: scale(1);
+
+    }
+
+}
+
+.checkout-content h2 {
+
+    text-align: center;
+
+    margin-bottom: 30px;
+
+    color: #222;
+
+}
+
+.delivery-options {
+
+    display: flex;
+
+    gap: 15px;
+
+    margin-bottom: 25px;
+
+}
+
+.delivery-card {
+
+    flex: 1;
+
+    padding: 20px;
+
+    border: 2px solid #ddd;
+
+    border-radius: 12px;
+
+    text-align: center;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+
+}
+
+.delivery-card:hover {
+
+    border-color: red;
+
+    transform: translateY(-3px);
+
+}
+
+.delivery-card input {
+
+    display: none;
+
+}
+
+.delivery-card.selected {
+
+    border-color: red;
+
+    background: rgba(255,0,0,0.08);
+
+}
+
+#deliveryFields input,
+#deliveryFields select {
+
+    width: 100%;
+
+    padding: 12px;
+
+    border-radius: 10px;
+
+    border: 1px solid #ccc;
+
+    margin-top: 10px;
+
+    margin-bottom: 15px;
+
+}
+
+.checkout-buttons {
+
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 20px;
+
+}
+
+.checkout-buttons button {
+
+    flex: 1;
+
+    padding: 14px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+
+    transition: 0.3s;
+
+}
+
+.place-order {
+
+    background: red;
+
+    color: white;
+
+}
+
+.place-order:hover {
+
+    background: darkred;
+
+}
+
+.cancel-order {
+
+    background: #ddd;
+
+}
+
+.cancel-order:hover {
+
+    background: #bbb;
+
+}
+
+.checkout-product {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-bottom: 25px;
+
+    padding: 15px;
+
+    background: white;
+
+    border-radius: 12px;
+
+}
+
+.checkout-product img {
+
+    width: 80px;
+
+    height: 80px;
+
+    object-fit: cover;
+
+    border-radius: 10px;
+
+}
+
+.checkout-product h3 {
+
+    margin: 0;
+
+}
+
+.checkout-product p {
+
+    margin-top: 8px;
+
+    color: red;
+
+    font-weight: bold;
+
+}
+
+.checkout-summary {
+
+    margin-top: 20px;
+
+    background: white;
+
+    padding: 15px;
+
+    border-radius: 10px;
+
+}
+
+.checkout-summary h3 {
+
+    color: red;
+
+}
+
+.place-order:disabled {
+
+    opacity: 0.5;
+
+    cursor: not-allowed;
+
+}
+
+#incomingOrdersHeading{
+    text-align: center;
+    color: white;
+}

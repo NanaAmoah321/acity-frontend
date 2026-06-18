@@ -222,3 +222,172 @@ async function editItem(id) {
   }
 
 }
+
+async function loadSellerOrders() {
+
+    const token =
+    localStorage.getItem(
+        "token"
+    );
+
+    const res =
+    await fetch(
+        "http://localhost:5000/api/listings/seller-orders",
+        {
+            headers: {
+                Authorization:
+                `Bearer ${token}`
+            }
+        }
+    );
+
+    const orders =
+    await res.json();
+
+    console.log("ORDERS RESPONSE:", orders);
+
+    const container =
+    document.getElementById(
+        "sellerOrders"
+    );
+
+    if (!container)
+        return;
+
+    container.innerHTML = "";
+
+    if (!Array.isArray(orders)) {
+
+        console.error("Not an array:", orders);
+
+        return;
+
+    }
+
+    orders.forEach(order => {
+
+        container.innerHTML += `
+
+        <div class="card">
+
+            <h3>
+                ${order.title}
+            </h3>
+
+            <p>
+                Buyer:
+                ${order.buyer_name}
+            </p>
+
+            <p>
+                ₵${order.price}
+            </p>
+
+            <p class="order-status">
+
+              Status:
+              <strong>
+                   ${order.status}
+              </strong>
+
+            </p>
+
+            <button
+                onclick="acceptOrder(${order.id})"
+            >
+                Accept
+            </button>
+
+            <button
+                onclick="rejectOrder(${order.id})"
+            >
+                Reject
+            </button>
+
+        </div>
+
+        `;
+
+    });
+
+}
+loadSellerOrders();
+async function acceptOrder(orderId) {
+
+    const token =
+    localStorage.getItem(
+        "token"
+    );
+
+    const res =
+    await fetch(
+        `http://localhost:5000/api/listings/orders/${orderId}`,
+        {
+            method: "PUT",
+
+            headers: {
+                "Content-Type":
+                "application/json",
+
+                Authorization:
+                `Bearer ${token}`
+            },
+
+            body: JSON.stringify({
+                status:
+                "accepted"
+            })
+
+        }
+    );
+
+    const data =
+    await res.json();
+
+    alert(
+        data.message
+    );
+
+    loadSellerOrders();
+
+}
+
+async function rejectOrder(orderId) {
+
+    const token =
+    localStorage.getItem(
+        "token"
+    );
+
+    const res =
+    await fetch(
+        `http://localhost:5000/api/listings/orders/${orderId}`,
+        {
+            method: "PUT",
+
+            headers: {
+                "Content-Type":
+                "application/json",
+
+                Authorization:
+                `Bearer ${token}`
+            },
+
+            body: JSON.stringify({
+                status:
+                "rejected"
+            })
+
+        }
+    );
+
+    const data =
+    await res.json();
+
+    alert(
+        data.message
+    );
+
+    loadSellerOrders();
+
+}

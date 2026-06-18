@@ -87,6 +87,116 @@
         <div id="interestedContainer"></div>
     </section>
     
+    <div id="checkoutModal" class="checkout-modal">
+
+        <div class="checkout-content">
+
+        <h2>Checkout</h2>
+
+        <div class="checkout-product">
+
+            <img
+                id="checkoutImage"
+                src=""
+            >
+
+            <div>
+
+                <h3 id="checkoutTitle">
+                </h3>
+
+                <p id="checkoutPrice">
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="delivery-options">
+
+            <label class="delivery-card">
+
+                <input
+                    type="radio"
+                    name="deliveryMethod"
+                    value="room"
+                >
+
+                🏠
+
+                <h3>Room Delivery</h3>
+
+            </label>
+
+            <label class="delivery-card">
+
+                <input
+                    type="radio"
+                    name="deliveryMethod"
+                    value="meetup"
+                >
+
+                🤝
+
+                <h3>Meet Up</h3>
+
+            </label>
+
+        </div>
+
+        <div id="deliveryFields"></div>
+        
+
+        <div class="checkout-summary">
+
+            <p>
+                Product:
+                <span id="productTotal">
+                    ₵0
+                </span>
+            </p>
+
+            <p>
+                Delivery:
+                <span id="deliveryFee">
+                    Free
+                </span>
+            </p>
+
+            <hr>
+
+            <h3>
+                Total:
+                <span id="grandTotal">
+                    ₵0
+                </span>
+            </h3>
+
+        </div>
+        
+        <div class="checkout-buttons">
+
+            <button
+                id="placeOrderBtn"
+                class="place-order"
+                onclick="placeOrder()"
+                disabled
+            >
+                Place Order
+            </button>
+
+            <button
+                class="cancel-order"
+                onclick="closeCheckout()"
+            >
+                Cancel
+            </button>
+
+        </div>
+
+        </div>
+
+    </div>
 
     
     <script src="js/myCart.js"></script>

@@ -1,3 +1,5 @@
+
+let currentItems = [];
 const container = document.getElementById("interestedContainer");
 
 async function loadInterested() {
@@ -5,11 +7,12 @@ async function loadInterested() {
 
   const res = await fetch("http://localhost:5000/api/listings/interested", {
     headers: {
-      "Authorization": token
+      "Authorization": `Bearer ${token}`
     }
   });
 
   const items = await res.json();
+  currentItems = items;
 
   container.innerHTML = "";
 
@@ -35,21 +38,53 @@ async function loadInterested() {
         ₵${item.price}
     </p>
 
-    <p class="product-status">
-        ${item.status}
-    </p>
-
     <p>
         ${item.description}
     </p>
 
-    
+    <p class="product-status">
 
-    <button
-        onclick="removeFromCart(${item.id})"
-    >
-        Remove From Cart
-    </button>
+      Listing:
+      <strong>
+        ${item.status}
+      </strong>
+
+    </p>
+
+    <p class="order-status">
+
+      Order:
+      <strong>
+        ${item.order_status || "Not Ordered"}
+      </strong>
+
+    </p>
+
+    <div class="cart-buttons">
+
+        <button
+            onclick="messageSeller(${item.user_id})"
+        >
+            Message Seller
+        </button>
+
+        <button
+            onclick="checkoutItem(${item.id})"
+        >
+            Checkout
+        </button>
+
+        <button
+            onclick="removeFromCart(${item.id})"
+        >
+            Remove
+        </button>
+
+    </div>
+
+
+    
+    
     `;
     container.appendChild(div);
   });
@@ -61,7 +96,7 @@ async function removeFromCart(listingId) {
     const res = await fetch(`http://localhost:5000/api/listings/cart/${listingId}`, {
       method: "DELETE",
       headers: {
-        "Authorization": token
+        "Authorization": `Bearer ${token}`     
       }
     });
 
@@ -79,4 +114,293 @@ function getStatusText(status) {
   return "Unknown";
 }
 
+let selectedItem = null;
+
+
+
+function checkoutItem(id) {
+
+    const item =
+    currentItems.find(
+        product =>
+        product.id === id
+    );
+
+    selectedItem = item;
+
+    document
+    .getElementById(
+        "checkoutTitle"
+    )
+    .textContent =
+    item.title;
+
+    document
+    .getElementById(
+        "checkoutPrice"
+    )
+    .textContent =
+    `₵${item.price}`;
+
+    document
+    .getElementById(
+        "checkoutImage"
+    )
+    .src =
+    item.image_url ||
+    `images/${item.category}.jpg`;
+
+    document
+    .getElementById(
+        "productTotal"
+    )
+    .textContent =
+    `₵${item.price}`;
+
+    document
+    .getElementById(
+        "grandTotal"
+    )
+    .textContent =
+    `₵${item.price}`;
+
+    document
+    .getElementById(
+        "checkoutModal"
+    )
+    .style.display =
+    "flex";
+
+}
+
+document.addEventListener(
+    "change",
+    function(e) {
+
+        if (
+            e.target.name !==
+            "deliveryMethod"
+        ) return;
+
+        const container =
+        document.getElementById(
+            "deliveryFields"
+        );
+
+        if (
+            e.target.value ===
+            "room"
+        ) {
+
+            container.innerHTML = `
+
+                <select id="hostel">
+
+                    <option>
+                        Hostel A
+                    </option>
+
+                    <option>
+                        Hostel B
+                    </option>
+
+                </select>
+
+                <input
+                    id="roomNumber"
+                    placeholder="Room Number"
+                >
+
+            `;
+
+        } else {
+
+            container.innerHTML = `
+
+                <input
+                    id="meetingLocation"
+                    placeholder="Meeting Location"
+                >
+
+            `;
+
+        }
+
+    }
+);
+
+document
+.addEventListener(
+    "change",
+    function(e) {
+
+        if (
+            e.target.name ===
+            "deliveryMethod"
+        ) {
+
+            document
+            .querySelectorAll(
+                ".delivery-card"
+            )
+            .forEach(card => {
+
+                card.classList.remove(
+                    "selected"
+                );
+
+                document
+                .getElementById(
+                    "placeOrderBtn"
+                )
+                .disabled = false;
+
+            });
+
+            e.target
+            .closest(
+                ".delivery-card"
+            )
+            .classList.add(
+                "selected"
+            );
+
+        }
+
+    }
+);
+
+function closeCheckout() {
+
+    document
+        .getElementById("checkoutModal")
+        .style.display = "none";
+
+}
+
+function messageSeller(userId) {
+
+    localStorage.setItem(
+        "receiver_id",
+        userId
+    );
+
+    window.location.href =
+    "message.html";
+
+}
+
+async function placeOrder() {
+
+    const token =
+    localStorage.getItem(
+        "token"
+    );
+
+    const deliveryMethod =
+    document.querySelector(
+        'input[name="deliveryMethod"]:checked'
+    )?.value;
+
+    if (!deliveryMethod) {
+
+        alert(
+            "Select a delivery method"
+        );
+
+        return;
+
+    }
+
+    let hostel = null;
+    let room_number = null;
+    let meeting_location = null;
+
+    if (
+        deliveryMethod ===
+        "room"
+    ) {
+
+        hostel =
+        document.getElementById(
+            "hostel"
+        )?.value;
+
+        room_number =
+        document.getElementById(
+            "roomNumber"
+        )?.value;
+
+    }
+
+    if (
+        deliveryMethod ===
+        "meetup"
+    ) {
+
+        meeting_location =
+        document.getElementById(
+            "meetingLocation"
+        )?.value;
+
+    }
+
+    try {
+
+        const res =
+        await fetch(
+            "http://localhost:5000/api/listings/orders",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type":
+                    "application/json",
+
+                    "Authorization":
+                    `Bearer ${token}`
+                },
+
+                body: JSON.stringify({
+
+                    listing_id:
+                    selectedItem.id,
+
+                    seller_id:
+                    selectedItem.user_id,
+
+                    delivery_method:
+                    deliveryMethod,
+
+                    hostel,
+
+                    room_number,
+
+                    meeting_location
+
+                })
+
+            }
+        );
+
+        const data =
+        await res.json();
+
+        alert(
+            data.message
+        );
+
+        closeCheckout();
+
+    } catch(err) {
+
+        console.error(err);
+
+        alert(
+            "Failed to create order"
+        );
+
+    }
+
+}
 loadInterested();
