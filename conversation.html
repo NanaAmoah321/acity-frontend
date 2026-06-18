@@ -2,11 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Conversation</title>
+
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-</head>
 </head>
 <body>
 
@@ -71,8 +73,9 @@
         <span>Logout</span>
     </a>
 
-    <a href="admin.html" class="nav-item">
-       <i class="fa-solid fa-shield-halved"></i>
+    <a href="admin.html"
+       class="nav-item">
+        <i class="fa-solid fa-shield-halved"></i>
         <span>Admin</span>
     </a>
 
@@ -87,44 +90,66 @@
 
 <div class="container">
 
-    <h1>Admin Dashboard</h1>
+    <h2>Conversation</h2>
 
-    <div class="dashboard-grid">
+    <div id="conversationContainer"></div>
 
-        <div class="card">
-            <h2 id="usersCount">0</h2>
-            <p>Users</p>
-        </div>
+    <textarea
+        id="messageInput"
+        placeholder="Type message..."
+    ></textarea>
 
-        <div class="card">
-            <h2 id="listingsCount">0</h2>
-            <p>Listings</p>
-        </div>
+    <button id="sendBtn">
+        Send
+    </button>
 
-        <div class="card">
-            <h2 id="servicesCount">0</h2>
-            <p>Services</p>
-        </div>
+    <button id="reviewBtn">
+        Leave Review
+    </button>
 
-        <div class="card">
-            <h2 id="messagesCount">0</h2>
-            <p>Messages</p>
-        </div>
+    <div id="reviewForm"
+     style="display:none;">
 
-    </div>
+    <select id="rating">
 
-    <h2>Recent Listings</h2>
-    <div id="recentListings"></div>
+        <option value="5">
+            ⭐⭐⭐⭐⭐
+        </option>
 
-    <h2>Recent Services</h2>
-    <div id="recentServices"></div>
+        <option value="4">
+            ⭐⭐⭐⭐
+        </option>
 
-    <h2>Users</h2>
-    <div id="usersContainer"></div>
+        <option value="3">
+            ⭐⭐⭐
+        </option>
+
+        <option value="2">
+            ⭐⭐
+        </option>
+
+        <option value="1">
+            ⭐
+        </option>
+
+    </select>
+
+    <textarea
+        id="reviewComment"
+        placeholder="Write review..."
+    ></textarea>
+
+    <button
+        id="submitReview"
+    >
+        Submit Review
+    </button>
 
 </div>
 
-<script src="js/admin.js"></script>
+</div>
+
+<script src="js/conversation.js"></script>
 <script src="js/navbar.js"></script>
 
 </body>

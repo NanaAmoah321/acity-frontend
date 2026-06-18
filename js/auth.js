@@ -10,7 +10,7 @@ if (loginForm) {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
-  const res = await fetch("https://acity-backend.onrender.com/api/auth/login", {
+  const res = await fetch("http://localhost:5000/api/auth/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -26,7 +26,7 @@ if (loginForm) {
     localStorage.setItem("user", JSON.stringify(data.user));
 
     alert("Login successful");
-    window.location.href = "index.html";
+    window.location.href = "marketplace.html";
   } else {
     alert(data.message || data.error);
   }
@@ -45,7 +45,7 @@ if (registerForm) {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
-  const res = await fetch("https://acity-backend.onrender.com/api/auth/register", {
+  const res = await fetch("http://localhost:5000/api/auth/register", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"

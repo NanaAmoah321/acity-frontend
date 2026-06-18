@@ -3,14 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
+    <title>Acity Connect</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
-</head>
 <body>
-
-<nav>
+    <nav>
 
         <div class="logo">
             <img
@@ -31,8 +29,8 @@
     </a>
 
     <a href="marketplace.html" class="nav-item">
-    <i class="fa-solid fa-store"></i>
-    <span>Marketplace</span>
+        <i class="fa-solid fa-store"></i>
+        <span>Marketplace</span>
     </a>
 
     <a href="login.html" class="nav-item">
@@ -71,8 +69,11 @@
         <span>Logout</span>
     </a>
 
-    <a href="admin.html" class="nav-item">
-       <i class="fa-solid fa-shield-halved"></i>
+    <a 
+       href="admin.html"
+       class="nav-item"
+       >
+        <i class="fa-solid fa-shield-halved"></i>
         <span>Admin</span>
     </a>
 
@@ -85,46 +86,73 @@
 
     </nav>
 
-<div class="container">
-
-    <h1>Admin Dashboard</h1>
-
-    <div class="dashboard-grid">
-
-        <div class="card">
-            <h2 id="usersCount">0</h2>
-            <p>Users</p>
-        </div>
-
-        <div class="card">
-            <h2 id="listingsCount">0</h2>
-            <p>Listings</p>
-        </div>
-
-        <div class="card">
-            <h2 id="servicesCount">0</h2>
-            <p>Services</p>
-        </div>
-
-        <div class="card">
-            <h2 id="messagesCount">0</h2>
-            <p>Messages</p>
-        </div>
-
+    <div class="hero">
+        <h1>Welcome to ACity Connect</h1>
+        <h2>SKILLS CONNECT</h2>
+        <p>Find the available services on campus and connect with other students!</p>
+        <button id="hero-button">
+            <a href="register.html" >Register Now</a>
+        </button>
     </div>
 
-    <h2>Recent Listings</h2>
-    <div id="recentListings"></div>
+    <section class="filters">
+        <input
+        type="text"
+        id="searchService"
+        placeholder="Search for tutors, designers, developers..."
+        />
 
-    <h2>Recent Services</h2>
-    <div id="recentServices"></div>
+       <select id="categoryFilter">
 
-    <h2>Users</h2>
-    <div id="usersContainer"></div>
+             <option value="All">
+                All
+            </option>
+
+            <option value="Programming">
+                Programming
+            </option>
+
+            <option value="Graphic Design">
+                Graphic Design
+            </option>
+
+            <option value="Tutoring">
+                Tutoring
+            </option>
+
+            <option value="Photography">
+                Photography
+            </option>
+
+            <option value="Video Editing">
+                Video Editing
+            </option>
+
+            <option value="Writing">
+                Writing
+            </option>
+
+            <option value="Marketing">
+                Marketing
+            </option>
+
+            <option value="Other">
+                Other
+            </option>
+
+        </select>
+    </section>
+    
+
+    <h2 id="servicesHeading">SERVICES AVAILABLE</h2>
+    <section
+        class="ItemsContainer"
+        id="ServicesContainer"
+    ></section>
 
 </div>
 
-<script src="js/admin.js"></script>
+<script src="js/services.js"></script>
 <script src="js/navbar.js"></script>
 
 </body>

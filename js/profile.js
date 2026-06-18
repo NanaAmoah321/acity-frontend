@@ -36,9 +36,9 @@ async function loadMyItems() {
   }
 
   try {
-    const res = await fetch("https://acity-backend.onrender.com/api/listings/my", {
+    const res = await fetch("http://localhost:5000/api/listings/my", {
       headers: {
-        "Authorization": token
+        "Authorization": `Bearer ${token}`
       }
     });
 
@@ -86,10 +86,10 @@ async function deleteItem(id) {
   const token = localStorage.getItem("token");
 
   if (confirm("Delete this item?")) {
-    await fetch(`https://acity-backend.onrender.com/api/listings/${id}`, {
+    await fetch(`http://localhost:5000/api/listings/${id}`, {
       method: "DELETE",
       headers: {
-        "Authorization": token
+        "Authorization": `Bearer ${token}`
       }
     });
 
@@ -99,35 +99,126 @@ async function deleteItem(id) {
 }
 
 async function editItem(id) {
+
   const token = localStorage.getItem("token");
 
-  const newTitle = prompt("Enter new title:");
-  const newDescription = prompt("Enter new description:");
-  const newCategory = prompt("Enter category (Items/Skills):");
-  const newStatus = prompt("Enter status (available/sold/swapped):");
+  const itemCard =
+  Array.from(
+    document.querySelectorAll(".card")
+  ).find(card =>
+    card.innerHTML.includes(
+      `editItem(${id})`
+    )
+  );
 
-  if (!newTitle || !newDescription || !newCategory || !newStatus) return;
+  const currentItem =
+  (
+    await fetch(
+      `http://localhost:5000/api/listings/${id}`
+    )
+  ).json();
 
-  const res = await fetch(`https://acity-backend.onrender.com/api/listings/${id}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": token
-    },
-    body: JSON.stringify({
-      title: newTitle,
-      description: newDescription,
-      category: newCategory,
-      status: newStatus
-    })
-  });
+  const item =
+  await currentItem;
 
-  const data = await res.json();
+  const newTitle =
+  prompt(
+    "Enter new title:",
+    item.title
+  );
+
+  const newDescription =
+  prompt(
+    "Enter new description:",
+    item.description
+  );
+
+  const newCategory =
+  prompt(
+    "Enter category:",
+    item.category
+  );
+
+  const newPrice =
+  prompt(
+    "Enter price:",
+    item.price
+  );
+
+  const newImageUrl =
+  prompt(
+    "Enter image URL:",
+    item.image_url
+  );
+
+  const newStatus =
+  prompt(
+    "Enter status:",
+    item.status
+  );
+
+  const res =
+  await fetch(
+    `http://localhost:5000/api/listings/${id}`,
+    {
+      method: "PUT",
+
+      headers: {
+        "Content-Type":
+        "application/json",
+
+        "Authorization":
+        `Bearer ${token}`
+      },
+
+      body: JSON.stringify({
+
+        title:
+        newTitle ||
+        item.title,
+
+        description:
+        newDescription ||
+        item.description,
+
+        category:
+        newCategory ||
+        item.category,
+
+        price:
+        newPrice ||
+        item.price,
+
+        image_url:
+        newImageUrl ||
+        item.image_url,
+
+        status:
+        newStatus ||
+        item.status
+
+      })
+    }
+  );
+
+  const data =
+  await res.json();
 
   if (res.ok) {
-    alert("Item updated!");
+
+    alert(
+      "Item updated!"
+    );
+
     loadMyItems();
+
   } else {
-    alert(data.message || data.error);
+
+    alert(
+      data.message ||
+      data.error
+    );
+
   }
+
 }

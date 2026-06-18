@@ -1,14 +1,15 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
+    <title>Offer a Service - Acity Connect</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
-</head>
 <body>
+
 
 <nav>
 
@@ -71,8 +72,11 @@
         <span>Logout</span>
     </a>
 
-    <a href="admin.html" class="nav-item">
-       <i class="fa-solid fa-shield-halved"></i>
+    <a 
+       href="admin.html"
+       class="nav-item"
+      >
+        <i class="fa-solid fa-shield-halved"></i>
         <span>Admin</span>
     </a>
 
@@ -85,47 +89,69 @@
 
     </nav>
 
-<div class="container">
+<div class="form-container">
 
-    <h1>Admin Dashboard</h1>
+    <h2>Offer Your Skills</h2>
 
-    <div class="dashboard-grid">
+    <form id="serviceForm">
 
-        <div class="card">
-            <h2 id="usersCount">0</h2>
-            <p>Users</p>
-        </div>
+        <label for="title">Service Title</label>
+        <input
+            type="text"
+            id="title"
+            placeholder="e.g. Web Developer"
+            required
+        >
 
-        <div class="card">
-            <h2 id="listingsCount">0</h2>
-            <p>Listings</p>
-        </div>
+        <label for="description">Description</label>
+        <textarea
+            id="description"
+            placeholder="Describe the service you offer"
+            required
+        ></textarea>
 
-        <div class="card">
-            <h2 id="servicesCount">0</h2>
-            <p>Services</p>
-        </div>
+        <label for="category">Category</label>
+        <select id="category" required>
+            <option value="">Select Category</option>
+            <option value="Programming">Programming</option>
+            <option value="Graphic Design">Graphic Design</option>
+            <option value="Tutoring">Tutoring</option>
+            <option value="Photography">Photography</option>
+            <option value="Video Editing">Video Editing</option>
+            <option value="Writing">Writing</option>
+            <option value="Marketing">Marketing</option>
+            <option value="Other">Other</option>
+        </select>
 
-        <div class="card">
-            <h2 id="messagesCount">0</h2>
-            <p>Messages</p>
-        </div>
+        <label for="rate">Rate (₵)</label>
+        <input
+            type="number"
+            id="rate"
+            placeholder="Enter your rate"
+            required
+        >
 
-    </div>
+        <label for="portfolio_url">Portfolio Link</label>
+        <input
+            type="url"
+            id="portfolio_url"
+            placeholder="https://github.com/yourprofile"
+        >
 
-    <h2>Recent Listings</h2>
-    <div id="recentListings"></div>
+        <button
+            type="submit"
+            class="Add-button"
+        >
+            Create Service
+        </button>
 
-    <h2>Recent Services</h2>
-    <div id="recentServices"></div>
-
-    <h2>Users</h2>
-    <div id="usersContainer"></div>
+    </form>
 
 </div>
 
-<script src="js/admin.js"></script>
+<script src="js/create-service.js"></script>
 <script src="js/navbar.js"></script>
+
 
 </body>
 </html>

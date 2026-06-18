@@ -3,7 +3,7 @@ const container = document.getElementById("interestedContainer");
 async function loadInterested() {
   const token = localStorage.getItem("token");
 
-  const res = await fetch("https://acity-backend.onrender.com/api/listings/interested", {
+  const res = await fetch("http://localhost:5000/api/listings/interested", {
     headers: {
       "Authorization": token
     }
@@ -23,13 +23,34 @@ async function loadInterested() {
     div.classList.add("card");
 
     div.innerHTML = `
-      <h3>${item.title}</h3>
-      <p>${item.description}</p>
-      <p><strong>Category:</strong> ${item.category}</p>
-      <p><strong>Status:</strong> ${getStatusText(item.status)}</p>
-      <button onclick="removeFromCart('${item.id}')">Remove from Cart</button>
-    `;
+    <img
+        src="${item.image_url || `images/${item.category}.jpg`}"
+        class="listing-image"
+        onerror="this.src='images/Other.jpg'"
+    >
 
+    <h3>${item.title}</h3>
+
+    <p class="product-price">
+        ₵${item.price}
+    </p>
+
+    <p class="product-status">
+        ${item.status}
+    </p>
+
+    <p>
+        ${item.description}
+    </p>
+
+    
+
+    <button
+        onclick="removeFromCart(${item.id})"
+    >
+        Remove From Cart
+    </button>
+    `;
     container.appendChild(div);
   });
 }
@@ -37,7 +58,7 @@ async function removeFromCart(listingId) {
   const token = localStorage.getItem("token");
 
   if (confirm("Remove this item from cart?")) {
-    const res = await fetch(`https://acity-backend.onrender.com/api/listings/cart/${listingId}`, {
+    const res = await fetch(`http://localhost:5000/api/listings/cart/${listingId}`, {
       method: "DELETE",
       headers: {
         "Authorization": token

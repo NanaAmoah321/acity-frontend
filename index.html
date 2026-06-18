@@ -3,58 +3,244 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acity Connect</title>
+    <title>ACity Connect</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
-    <nav>
+
+    <nav class="landing-nav">
+
         <div class="logo">
-            <img src="images/acity_new_logo-removebg-preview.png" alt="acity logo" width="50px">
+            <img src="images/acity_new_logo-removebg-preview.png">
         </div>
 
         <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="login.html">Login</a>
-            <a href="register.html">Register</a>
-            <a href="create-listing.html"> Add Item</a>
-            <a href="profile.html">Profile</a>
-            <a href="myCart.html">My Cart</a>
-            <a href="admin.html" id="adminLink" style="display:none;">Admin</a>
-            <a href="#" onclick="logout()">Logout</a>
-           
+            <a href="login.html" class="nav-item">
+                <i class="fa-solid fa-right-to-bracket"></i>
+                <span>Login</span>
+            </a>
 
-
+            <a href="register.html" class="nav-item">
+                <i class="fa-solid fa-user-plus"></i>
+                <span>Register</span>
+            </a>
         </div>
+
     </nav>
 
-    <div class="hero">
-        <h1>Welcome to Acity Connect</h1>
-        <p>Find the available products on campus and connect with other students!</p>
-        <button id="hero-button">
-            <a href="register.html" >Register Now</a>
-        </button>
+    <section class="landing-hero">
+
+        <div class="hero-content">
+
+            <h1>ACity Connect</h1>
+
+            <h2>
+                The Marketplace & Skills Platform
+                for Academic City Students
+            </h2>
+
+            <p>
+                Buy and sell products,
+                discover student services,
+                and connect with the Academic City community.
+            </p>
+
+            <div class="hero-buttons">
+
+                <a href="register.html" class="primary-btn">
+                    Get Started
+                </a>
+
+                <a href="marketplace.html" class="secondary-btn">
+                    Explore Marketplace
+                </a>
+
+            </div>
+
+            
+
+        </div>
+
+    </section>
+
+    <section class="features">
+
+    <h2>Why ACity Connect?</h2>
+
+    <p class="features-subtitle">
+        Everything you need to buy, sell, learn, and connect
+        with the Academic City community.
+    </p>
+
+    <div class="feature-grid">
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                📚
+            </div>
+
+            <h3>Marketplace</h3>
+
+            <p>
+                Buy and sell books, electronics,
+                clothing, hostel items, and more
+                from fellow students.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                🛠️
+            </div>
+
+            <h3>Skills Connect</h3>
+
+            <p>
+                Find tutors, programmers,
+                designers, photographers,
+                and student services.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                💬
+            </div>
+
+            <h3>Direct Messaging</h3>
+
+            <p>
+                Communicate directly with buyers,
+                sellers, and service providers
+                in real time.
+            </p>
+
+             </div>
+
+        </div>
+
+     </section>
+
+    <section class="stats">
+
+    <div class="stat">
+
+        <h2>100+</h2>
+
+        <p>Listings</p>
+
     </div>
 
-    <section class="filters">
-        <input type="text" id="searchInput" placeholder="Search products or skills">
+    <div class="stat">
 
-        <select name="catergory" id="categoryFilter">
-            <option value="All">All</option>
-            <option value="Items">Items</option>
-            <option value="Skills">Skills</option>
-        </select>
+        <h2>20+</h2>
+
+        <p>Stores</p>
+
+    </div>
+
+    <div class="stat">
+
+        <h2>50+</h2>
+
+        <p>Students</p>
+
+    </div>
+
+    <div class="stat">
+
+        <h2>10+</h2>
+
+        <p>Services</p>
+
+    </div>
+
     </section>
 
-    <h2 id="itemsHeading">ITEMS AVAILABLE</h2>
+    <section class="preview">
 
-    <section class="ItemsContainer" id="ItemsContainer">
-        
+    <h2>Marketplace Preview</h2>
 
+    <p>
+        Browse student stores, discover products,
+        and connect with sellers.
+    </p>
+
+    <img
+        src="images/marketplace-preview.png"
+        class="preview-image"
+    >
 
     </section>
 
-    <script src="js/listings.js"></script>
-    <script src="js/auth.js"></script>
+    <section class="cta">
+
+    <h2>
+        Ready to Join ACity Connect?
+    </h2>
+
+    <p>
+        Start buying, selling,
+        and connecting today.
+    </p>
+
+    <a href="register.html">
+        Register Now
+    </a>
+
+</section>
+
+<footer class="footer">
+
+    <div class="footer-content">
+
+        <img
+            src="images/acity_new_logo-removebg-preview.png"
+            class="footer-logo"
+        >
+
+        <h3>ACity Connect</h3>
+
+        <p>
+            The Marketplace & Skills Platform
+            for Academic City Students.
+        </p>
+
+        <div class="footer-links">
+
+            <a href="marketplace.html">
+                Marketplace
+            </a>
+
+            <a href="services.html">
+                Skills Connect
+            </a>
+
+            <a href="login.html">
+                Login
+            </a>
+
+            <a href="register.html">
+                Register
+            </a>
+
+        </div>
+
+        <p class="copyright">
+            © 2026 ACity Connect.
+            Built for the Academic City Community.
+        </p>
+
+    </div>
+
+</footer>
+
 
 
 </body>
