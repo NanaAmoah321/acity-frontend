@@ -9,11 +9,7 @@ body {
     font-family: Arial, sans-serif;
 }
 
-body.marketplace-page{
 
-    background:#f5f7fb;
-
-}
 .form-container {
     width : 300px;
     margin : 100px auto;
@@ -61,7 +57,7 @@ nav {
 
 .nav-links a {
     text-decoration: none;
-    color: white;
+    color: ;
     margin: 0 10px;
     font-size: larger;
 }
@@ -274,11 +270,12 @@ nav {
     background: beige;
     display: flex;
     flex-direction: column;
+    min-width:300px;
     padding: 10px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 300px;
-    margin: 20px;
+    margin: 8px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -305,9 +302,14 @@ nav {
     margin:0;
 }
 
-.product-card,
+
 .store-card,
 .service-card{
+    
+
+    flex:0 0 300px;
+
+
 
     min-height:420px;
 
@@ -501,25 +503,38 @@ nav {
     gap:25px;
 }
 
-.section-title{
+/*.section-title{
 
-    max-width:1400px;
+    
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+
+    margin:20px;
     
 
-    margin:50px auto 20px;
-    
-
-    padding:0 20px;
+    padding:50px;
 
     text-align:left;
 
     color:white;
 
     font-size: 20px;
-}
+}*/
 
 .section-title{
     font-size:24px !important;
+    padding: 10px!important;
+    margin-bottom: 10px !important;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    margin-right: 1162px;
+    border-radius: 20px;
+    margin-left: 30px;
+    color: white;
+    
+    
+
+
 }
 
 .ItemsContainer h2 {
@@ -657,6 +672,8 @@ nav {
     border-radius: 10px;
     width: 70%;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
 }
 
 
@@ -853,6 +870,34 @@ nav {
     padding: 100px 50px;
 
     text-align: center;
+
+}
+
+#featuredProducts{
+
+    display:flex;
+
+    gap:20px;
+
+    overflow-x:auto;
+
+    padding:20px 0;
+
+    scroll-behavior:smooth;
+
+}
+
+#featuredProducts::-webkit-scrollbar{
+
+    height:8px;
+
+}
+
+#featuredProducts::-webkit-scrollbar-thumb{
+
+    background:#ccc;
+
+    border-radius:20px;
 
 }
 
@@ -1437,6 +1482,19 @@ nav {
     text-align:center;
     padding:60px 20px;
     color:white;
+    /*background-color: #222;*/
+    margin: 30px;
+    border-radius: 20px;
+    /*background-image:  url("https://www.theboutiqueasia.com/cdn/shop/files/Banner_1_1500x834.jpg?v=1746463664");*/
+}
+
+.big-hero{
+   
+    padding: 10px;
+    margin: 30px;
+    border-radius: 20px;
+    /*background-image: url(https://npf-unlayer.s3.ap-south-1.amazonaws.com/unlayer%2Fimages%2F1717766775849-acity-univercity-college.webp);*/
+    background-position: center;
 }
 
 .market-header h1{
@@ -1484,19 +1542,18 @@ nav {
 
 /* Section Titles */
 
-.section-title{
+/*.section-title{
     max-width:1400px;
     margin:50px auto 20px;
     padding:0 30px;
     color:white;
     font-size:42px;
     text-align:left;
-}
+}*/
 
 /* All marketplace grids */
 
-#featuredProducts,
-#recentListings,
+
 #servicesContainer,
 #ItemsContainer{
 
@@ -1513,7 +1570,18 @@ nav {
 
     gap:25px;
 }
+#recentListings{
 
+    display:flex;
+
+    gap:20px;
+
+    overflow-x:auto;
+
+    padding:20px 0;
+    flex: 0 0 30px;
+
+}
 /* Product Cards */
 
 .product-card{
@@ -1528,6 +1596,8 @@ nav {
     0 10px 25px rgba(0,0,0,.15);
 
     transition:0.3s;
+
+    flex:0 0 300px;
 
 }
 

@@ -254,7 +254,7 @@ async function loadFeaturedProducts(){
     container.innerHTML = "";
 
     listings
-    .slice(0,6)
+    .slice(0,15)
     .forEach(item=>{
 
        console.log(
@@ -262,9 +262,11 @@ async function loadFeaturedProducts(){
           item.image_url
         );
 
+        console.log(item);
+
         container.innerHTML += `
 
-        <div class="product-card" onclick="viewListing(${item.id})">
+        <div class="product-card" onclick="viewListing(${item.user_id})">
 
             <img
               src="${
@@ -385,7 +387,7 @@ async function loadRecentListings(){
 
         container.innerHTML += `
 
-        <div class="product-card" onclick="viewListing(${item.id})">
+        <div class="product-card" onclick="viewListing(${item.user_id})">
 
             <img
               src="${
@@ -441,6 +443,13 @@ function messageProvider(userId) {
 function viewListing(id) {
     window.location.href =
     `listing.html?id=${id}`;
+}
+
+function viewStore(userId){
+
+    window.location.href =
+    `listing.html?id=${userId}`;
+
 }
 
 loadItems();
