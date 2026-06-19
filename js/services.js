@@ -4,8 +4,24 @@ document.getElementById("ServicesContainer");
 const searchService =
 document.getElementById("searchService");
 
-const categoryFilter =
-document.getElementById("categoryFilter");
+let selectedCategory = "All";
+document
+.querySelectorAll(".categories button")
+.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        selectedCategory =
+        button.dataset.category;
+
+        displayServices();
+
+    });
+
+});
+
+//const categoryFilter =
+//document.getElementById("categoryFilter");
 
 let services = [];
 
@@ -34,8 +50,8 @@ function displayServices() {
     const searchText =
     searchService.value.toLowerCase();
 
-    const selectedCategory =
-    categoryFilter.value;
+    
+    
 
     ServicesContainer.innerHTML = "";
 
@@ -197,9 +213,6 @@ searchService.addEventListener(
     displayServices
 );
 
-categoryFilter.addEventListener(
-    "change",
-    displayServices
-);
+
 
 loadServices();

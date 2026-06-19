@@ -1,7 +1,7 @@
 console.log("JS is connected");
 const ItemsContainer = document.getElementById('ItemsContainer');
 const searchInput = document.getElementById('searchInput');
-const categoryFilter = document.getElementById('categoryFilter');
+//const categoryFilter = document.getElementById('categoryFilter');
 
 function getStoreImage(category) {
 
@@ -22,8 +22,8 @@ async function loadItems() {
     const searchText =
     searchInput.value.toLowerCase();
 
-    const selectedCategory =
-    categoryFilter.value;
+    //const selectedCategory =
+    //categoryFilter.value;
 
     ItemsContainer.innerHTML = "";
 
@@ -42,15 +42,15 @@ async function loadItems() {
         .toLowerCase()
         .includes(searchText);
 
-      const matchesCategory =
+      //const matchesCategory =
 
-        selectedCategory === "All"
+        //selectedCategory === "All"
 
-        ||
+        //||
 
-        store.store_category === selectedCategory;
+        //store.store_category === selectedCategory;
 
-      return matchesSearch && matchesCategory;
+      return matchesSearch;
 
     });
 
@@ -127,7 +127,7 @@ if (ItemsContainer) {
     loadItems();
 
     searchInput.addEventListener('input', loadItems);
-    categoryFilter.addEventListener('change', loadItems);
+    //categoryFilter.addEventListener('change', loadItems);
 }
 
 const ItemForm = document.getElementById("ItemForm");
@@ -233,3 +233,217 @@ function viewStore(userId) {
     `listing.html?id=${userId}`;
 
 }
+
+async function loadFeaturedProducts(){
+
+    const res =
+    await fetch(
+        "http://localhost:5000/api/listings"
+    );
+
+    
+
+    const listings =
+    await res.json();
+
+    const container =
+    document.getElementById(
+        "featuredProducts"
+    );
+
+    container.innerHTML = "";
+
+    listings
+    .slice(0,6)
+    .forEach(item=>{
+
+       console.log(
+          item.title,
+          item.image_url
+        );
+
+        container.innerHTML += `
+
+        <div class="product-card" onclick="viewListing(${item.id})">
+
+            <img
+              src="${
+                item.image_url && item.image_url.trim()
+                ? item.image_url
+                : `images/${item.category || "Other"}.jpg`
+                }"
+            >
+
+            <div class="product-info">
+
+                <h3>${item.title}</h3>
+
+                <p class="price">
+                    GH₵ ${item.price}
+                </p>
+
+                <p>
+                    ${item.category}
+                </p>
+
+            </div>
+
+        </div>
+
+        `;
+
+    });
+
+}
+
+async function loadServices(){
+
+    const res =
+    await fetch(
+        "http://localhost:5000/api/services"
+    );
+
+    const services =
+    await res.json();
+
+    const container =
+    document.getElementById(
+        "servicesContainer"
+    );
+
+    container.innerHTML = "";
+
+    services
+.slice(0,6)
+.forEach(service=>{
+
+    container.innerHTML += `
+
+    <div class="card">
+
+        <h3>
+            ${service.title}
+        </h3>
+
+        <p class="provider">
+            ${service.provider_name}
+        </p>
+
+        <p class="category">
+            ${service.category}
+        </p>
+
+        <p class="rate">
+            GH₵ ${service.rate}
+        </p>
+
+        <div class="service-actions">
+
+            <button
+                onclick="viewService(${service.id})"
+                class="details-btn"
+            >
+                View Details
+            </button>
+
+            <button
+                onclick="messageProvider(${service.user_id})"
+                class="message-btn"
+            >
+                Message
+            </button>
+
+        </div>
+
+    </div>
+
+    `;
+
+});
+}
+
+async function loadRecentListings(){
+
+    const res =
+    await fetch(
+        "http://localhost:5000/api/listings"
+    );
+
+    const listings =
+    await res.json();
+
+    const container =
+    document.getElementById(
+        "recentListings"
+    );
+
+    container.innerHTML = "";
+
+    listings
+    .slice(0,8)
+    .forEach(item=>{
+
+        container.innerHTML += `
+
+        <div class="product-card" onclick="viewListing(${item.id})">
+
+            <img
+              src="${
+                 item.image_url && item.image_url.trim()
+                 ? item.image_url
+                 : `images/${item.category || "Other"}.jpg`
+              }"
+            >
+
+            <div class="product-info">
+
+                <h3>${item.title}</h3>
+
+                <p>
+                    GH₵ ${item.price}
+                </p>
+
+            </div>
+
+        </div>
+
+        `;
+
+    });
+
+}
+
+function getCategoryImage(category){
+
+    return `images/${category}.jpg`;
+
+}
+
+function viewService(id){
+
+    window.location.href =
+    `service.html?id=${id}`;
+
+}
+
+function messageProvider(userId) {
+
+    localStorage.setItem(
+        "receiver_id",
+        userId
+    );
+
+    window.location.href =
+    "message.html";
+
+}
+
+function viewListing(id) {
+    window.location.href =
+    `listing.html?id=${id}`;
+}
+
+loadItems();
+loadFeaturedProducts();
+loadServices();
+loadRecentListings();

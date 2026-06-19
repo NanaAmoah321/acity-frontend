@@ -8,6 +8,12 @@ body {
     min-height: 100vh;
     font-family: Arial, sans-serif;
 }
+
+body.marketplace-page{
+
+    background:#f5f7fb;
+
+}
 .form-container {
     width : 300px;
     margin : 100px auto;
@@ -47,9 +53,9 @@ nav {
     
 }
 
-.logo img {
-    width: 20%;
-    height: 20%;
+.logo img{
+    height:60px;
+    width:auto;
 }
 
 
@@ -281,27 +287,33 @@ nav {
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
 }
 
-.store-card {
+.store-card{
 
     background: beige;
-
-    width: 350px;
 
     border-radius: 15px;
 
     overflow: hidden;
 
-    margin: 20px;
-
     box-shadow:
-    0 0 10px rgba(
-        0,0,0,0.2
-    );
+    0 10px 25px rgba(0,0,0,.15);
 
-   transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: .3s;
 
+    width:100%;
 
+    margin:0;
+}
 
+.product-card,
+.store-card,
+.service-card{
+
+    min-height:420px;
+
+    display:flex;
+
+    flex-direction:column;
 }
 
 .store-card:hover {
@@ -470,19 +482,44 @@ nav {
 
 
 
-.ItemsContainer {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    background:grey;
-    border-radius: 10px;
-    opacity: 0.9;
+#ItemsContainer,
+#featuredProducts,
+#recentListings,
+#servicesContainer{
+
+    max-width:1400px;
+
+    margin:0 auto;
+
+    padding:30px;
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fill,minmax(300px,1fr));
+
+    gap:25px;
 }
 
-#ItemsContainer {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+.section-title{
+
+    max-width:1400px;
+    
+
+    margin:50px auto 20px;
+    
+
+    padding:0 20px;
+
+    text-align:left;
+
+    color:white;
+
+    font-size: 20px;
+}
+
+.section-title{
+    font-size:24px !important;
 }
 
 .ItemsContainer h2 {
@@ -1390,4 +1427,177 @@ nav {
 #incomingOrdersHeading{
     text-align: center;
     color: white;
+}
+
+/* ===========================
+   MARKETPLACE REDESIGN
+=========================== */
+
+.market-header{
+    text-align:center;
+    padding:60px 20px;
+    color:white;
+}
+
+.market-header h1{
+    font-size:64px;
+    margin-bottom:10px;
+}
+
+.market-header p{
+    font-size:18px;
+    margin-bottom:25px;
+}
+
+.market-header input{
+    width:700px;
+    max-width:90%;
+    padding:18px;
+    border:none;
+    border-radius:50px;
+    font-size:16px;
+}
+
+/* Categories */
+
+.categories{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:15px;
+    margin:40px auto;
+}
+
+.categories button{
+    background:white;
+    border:none;
+    padding:14px 24px;
+    border-radius:15px;
+    cursor:pointer;
+    font-weight:600;
+}
+
+.categories .active{
+    background:red;
+    color:white;
+}
+
+/* Section Titles */
+
+.section-title{
+    max-width:1400px;
+    margin:50px auto 20px;
+    padding:0 30px;
+    color:white;
+    font-size:42px;
+    text-align:left;
+}
+
+/* All marketplace grids */
+
+#featuredProducts,
+#recentListings,
+#servicesContainer,
+#ItemsContainer{
+
+    max-width:1400px;
+
+    margin:0 auto;
+
+    padding:30px;
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fill,minmax(300px,1fr));
+
+    gap:25px;
+}
+
+/* Product Cards */
+
+.product-card{
+
+    background:beige;
+
+    border-radius:15px;
+
+    overflow:hidden;
+
+    box-shadow:
+    0 10px 25px rgba(0,0,0,.15);
+
+    transition:0.3s;
+
+}
+
+.product-card:hover{
+
+    transform:translateY(-8px);
+
+}
+
+.product-card img{
+
+    width:100%;
+
+    height:220px;
+
+    object-fit:cover;
+
+    display:block;
+
+}
+
+.product-info{
+
+    padding:20px;
+
+}
+
+.product-info h3{
+
+    margin:0 0 10px;
+
+    font-size:18px;
+
+}
+
+.product-info p{
+
+    margin:6px 0;
+
+}
+
+.price{
+
+    color:red;
+
+    font-weight:bold;
+
+    font-size:22px;
+
+}
+
+/* Service Cards */
+
+.service-card{
+
+    background:beige;
+
+    border-radius:15px;
+
+    padding:20px;
+
+    box-shadow:
+    0 10px 25px rgba(0,0,0,.15);
+
+    transition:0.3s;
+
+}
+
+.service-card:hover{
+
+    transform:translateY(-8px);
+
 }
