@@ -57,7 +57,7 @@ nav {
 
 .nav-links a {
     text-decoration: none;
-    color: ;
+    
     margin: 0 10px;
     font-size: larger;
 }
@@ -246,7 +246,7 @@ nav {
 .filters {
     padding: 20px;
     text-align: center;
-    background:
+   
     
 }
 
@@ -524,17 +524,11 @@ nav {
 .section-title{
     font-size:24px !important;
     padding: 10px!important;
-    margin-bottom: 10px !important;
-    background: rgba(255,255,255,0.15);
-    backdrop-filter: blur(10px);
-    margin-right: 1162px;
-    border-radius: 20px;
-    margin-left: 30px;
+    /*margin-bottom: 10px !important;*/
+    margin: 30px;
+    /*background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);*/
     color: white;
-    
-    
-
-
 }
 
 .ItemsContainer h2 {
@@ -542,7 +536,7 @@ nav {
     text-align: center;
     margin-bottom: 20px;
     color: white;
-    background:
+    
     
 }
 .Add-button {
@@ -1488,14 +1482,14 @@ nav {
     /*background-image:  url("https://www.theboutiqueasia.com/cdn/shop/files/Banner_1_1500x834.jpg?v=1746463664");*/
 }
 
-.big-hero{
+/*.big-hero{
    
     padding: 10px;
     margin: 30px;
     border-radius: 20px;
-    /*background-image: url(https://npf-unlayer.s3.ap-south-1.amazonaws.com/unlayer%2Fimages%2F1717766775849-acity-univercity-college.webp);*/
+    /*background-image: url(https://npf-unlayer.s3.ap-south-1.amazonaws.com/unlayer%2Fimages%2F1717766775849-acity-univercity-college.webp);
     background-position: center;
-}
+}*/
 
 .market-header h1{
     font-size:64px;
@@ -1669,5 +1663,92 @@ nav {
 .service-card:hover{
 
     transform:translateY(-8px);
+
+}
+
+/* =========================
+   MOBILE RESPONSIVENESS
+========================= */
+
+@media (max-width: 768px){
+
+    /* Header */
+
+    .market-header h1{
+        font-size: 42px;
+    }
+
+    .market-header p{
+        font-size: 16px;
+        padding: 0 15px;
+    }
+
+    .market-header input{
+        width: 90%;
+    }
+
+    /* Category buttons */
+
+    .categories{
+        display:flex;
+        overflow-x:auto;
+        gap:10px;
+        padding:10px;
+        justify-content:flex-start;
+    }
+
+    .categories button{
+        white-space:nowrap;
+        flex-shrink:0;
+    }
+
+    /* Section titles */
+
+    .section-title{
+        font-size:32px;
+        text-align:center;
+    }
+
+    /* Product cards */
+
+    .product-card{
+        flex:0 0 250px;
+        min-width:250px;
+    }
+
+    .product-card img{
+        height:180px;
+    }
+
+    /* Store cards */
+
+    .store-grid{
+        grid-template-columns:1fr;
+    }
+
+    .store-card{
+        width:100%;
+        max-width:350px;
+        margin:auto;
+    }
+
+    /* Services */
+
+    .service-grid{
+        grid-template-columns:1fr;
+    }
+
+    .service-card{
+        width:100%;
+        max-width:350px;
+        margin:auto;
+    }
+
+    /* Containers */
+
+    #featuredProducts,
+    #recentListings{
+        padding:15px;
+    }
 
 }
