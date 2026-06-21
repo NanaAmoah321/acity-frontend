@@ -9,23 +9,80 @@
 </head>
 <body>
 
-    <nav class="landing-nav">
+    <nav>
 
         <div class="logo">
-            <img src="images/acity_new_logo-removebg-preview.png">
+            <img
+                src="images/acity_new_logo-removebg-preview.png"
+                alt="acity logo"
+            >
         </div>
 
-        <div class="nav-links">
-            <a href="login.html" class="nav-item">
-                <i class="fa-solid fa-right-to-bracket"></i>
-                <span>Login</span>
-            </a>
-
-            <a href="register.html" class="nav-item">
-                <i class="fa-solid fa-user-plus"></i>
-                <span>Register</span>
-            </a>
+        <div class="menu-toggle" id="menuToggle">
+            ☰
         </div>
+
+        <div class="nav-links" id="navLinks">
+
+    <a href="index.html" class="nav-item">
+        <i class="fa-solid fa-house"></i>
+        <span>Home</span>
+    </a>
+
+    <a href="marketplace.html" class="nav-item">
+    <i class="fa-solid fa-store"></i>
+    <span>Marketplace</span>
+    </a>
+
+    <a href="login.html" class="nav-item">
+        <i class="fa-solid fa-right-to-bracket"></i>
+        <span>Login</span>
+    </a>
+
+    <a href="register.html" class="nav-item">
+        <i class="fa-solid fa-user-plus"></i>
+        <span>Register</span>
+    </a>
+
+    <a href="profile.html" class="nav-item">
+        <i class="fa-solid fa-user"></i>
+        <span>Profile</span>
+    </a>
+
+    <a href="inbox.html" class="nav-item">
+        <i class="fa-solid fa-comments"></i>
+        <span>Inbox</span>
+        <small id="messageCount"></small>
+    </a>
+
+    <a href="create-listing.html" class="nav-item">
+        <i class="fa-solid fa-plus"></i>
+        <span>Add Item</span>
+    </a>
+
+    <a href="services.html" class="nav-item">
+        <i class="fa-solid fa-screwdriver-wrench"></i>
+        <span>Skills Connect</span>
+    </a>
+
+    <a href="#" onclick="logout()" class="nav-item">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span>Logout</span>
+    </a>
+
+    <a 
+       href="admin.html"
+       class="nav-item">
+        <i class="fa-solid fa-shield-halved"></i>
+        <span>Admin</span>
+    </a>
+
+    <a href="myCart.html" class="nav-item">
+    <i class="fa-solid fa-cart-shopping"></i>
+    <span>My Cart</span>
+    </a>
+
+    </div>
 
     </nav>
 
@@ -241,7 +298,7 @@
 
 </footer>
 
-
-
+<script src="js/navbar.js"></script>
+<script src="js/auth.js"></script>
 </body>
 </html>

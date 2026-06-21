@@ -1,5 +1,5 @@
 const ServicesContainer =
-document.getElementById("ServicesContainer");
+document.getElementById("servicesContainer");
 
 const searchService =
 document.getElementById("searchService");
@@ -105,7 +105,7 @@ function displayServices() {
         const card =
         document.createElement("div");
 
-        card.classList.add("card");
+        card.classList.add("service-card");
 
         card.innerHTML = `
 
@@ -161,23 +161,21 @@ function displayServices() {
                 }
             </p>
 
-            <button
-                onclick="
-                viewService(
-                ${service.id}
-                )"
-            >
-                View Details
-            </button>
+            <div class="service-actions">
 
-            <button
-                onclick="
-                messageProvider(
-                ${service.user_id}
-                )"
-            >
-                Message Provider
-            </button>
+                <button
+                    onclick="viewService(${service.id})"
+                >
+                    View Details
+                </button>
+
+                <button
+                    onclick="messageProvider(${service.user_id})"
+                >
+                     Message
+                </button>
+
+            </div>
 
         `;
 

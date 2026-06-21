@@ -2,6 +2,30 @@ console.log("JS is connected");
 const ItemsContainer = document.getElementById('ItemsContainer');
 const searchInput = document.getElementById('searchInput');
 //const categoryFilter = document.getElementById('categoryFilter');
+let selectedCategory = "All";
+
+document
+.querySelectorAll(".categories button")
+.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        document
+        .querySelectorAll(".categories button")
+        .forEach(btn =>
+            btn.classList.remove("active")
+        );
+
+        button.classList.add("active");
+
+        selectedCategory =
+        button.textContent.trim();
+
+        loadItems();
+
+    });
+
+});
 
 function getStoreImage(category) {
 
@@ -30,7 +54,9 @@ async function loadItems() {
     const filteredStores =
     stores.filter(store => {
 
-      const matchesSearch =
+        console.log(store.store_category);
+
+        const matchesSearch =
 
         store.store_name
         .toLowerCase()
@@ -42,15 +68,19 @@ async function loadItems() {
         .toLowerCase()
         .includes(searchText);
 
-      //const matchesCategory =
+        const matchesCategory =
 
-        //selectedCategory === "All"
+            selectedCategory === "All"
 
-        //||
+            ||
 
-        //store.store_category === selectedCategory;
+            (store.store_category || "")
+            === selectedCategory;
 
-      return matchesSearch;
+        return (
+            matchesSearch &&
+            matchesCategory
+        );
 
     });
 
@@ -321,7 +351,7 @@ async function loadServices(){
 
     container.innerHTML += `
 
-    <div class="card">
+    <div class="service-card">
 
         <h3>
             ${service.title}

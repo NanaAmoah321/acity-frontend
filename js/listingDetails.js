@@ -62,7 +62,7 @@ try {
 
                 
 
-                <div class="card">
+                <div class="store-product-card">
 
                     <img
                         src="${product.image_url || `images/${product.category}.jpg`}"
