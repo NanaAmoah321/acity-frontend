@@ -169,6 +169,7 @@ nav {
         padding: 15px;
 
         position: relative;
+        ;
 
     }
 
@@ -1474,7 +1475,7 @@ nav {
 
 .market-header{
     text-align:center;
-    padding:60px 20px;
+    padding: 30px 20px;
     color:white;
     /*background-color: #222;*/
     margin: 30px;
@@ -1675,12 +1676,13 @@ nav {
     /* Header */
 
     .market-header{
-        padding-top : 90px;
+        padding-top : 30px;
         padding-bottom: 20px;
     }
 
     .market-header h1{
         font-size: 42px;
+        
     }
 
     .market-header p{
