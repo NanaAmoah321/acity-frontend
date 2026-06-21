@@ -1674,6 +1674,11 @@ nav {
 
     /* Header */
 
+    .market-header{
+        padding-top : 90px;
+        padding-bottom: 20px;
+    }
+
     .market-header h1{
         font-size: 42px;
     }
@@ -1695,6 +1700,7 @@ nav {
         gap:10px;
         padding:10px;
         justify-content:flex-start;
+        margin-top: 10px;
     }
 
     .categories button{
@@ -1707,6 +1713,7 @@ nav {
     .section-title{
         font-size:32px;
         text-align:center;
+        margin-top: 40px;
     }
 
     /* Product cards */
