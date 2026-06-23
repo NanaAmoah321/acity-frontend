@@ -1,12 +1,10 @@
-const token =
-localStorage.getItem(
-    "token"
-);
+const navbarToken =
+localStorage.getItem("token");
 
 async function
 loadUnreadCount() {
 
-    if (!token) return;
+    if (!navbarToken) return;
 
     try {
 
@@ -16,7 +14,7 @@ loadUnreadCount() {
             {
                 headers: {
                     Authorization:
-                    `Bearer ${token}`
+                    `Bearer ${navbarToken}`
                 }
             }
         );
@@ -48,8 +46,8 @@ loadUnreadCount() {
 
 loadUnreadCount();
 
-const menuToggle =
-document.getElementById("menuToggle");
+const menuToggle=
+document.getElementById("menu-toggle");
 
 const navLinks =
 document.getElementById("navLinks");
@@ -68,3 +66,21 @@ if (menuToggle) {
     );
 
 }
+
+const currentPage =
+window.location.pathname.split("/").pop();
+
+document
+.querySelectorAll(".nav-item")
+.forEach(link => {
+
+    const href =
+    link.getAttribute("href");
+
+    if(href === currentPage){
+
+        link.classList.add("active");
+
+    }
+
+});

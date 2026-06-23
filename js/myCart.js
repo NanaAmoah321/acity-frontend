@@ -23,68 +23,80 @@ async function loadInterested() {
 
   items.forEach(item => {
     const div = document.createElement("div");
-    div.classList.add("card");
+    div.classList.add("cart-card");
 
-    div.innerHTML = `
+    
+   div.innerHTML = `
+
+   <div class="cart-image-wrapper">
+
     <img
         src="${item.image_url || `images/${item.category}.jpg`}"
-        class="listing-image"
+        class="cart-image"
         onerror="this.src='images/Other.jpg'"
     >
 
-    <h3>${item.title}</h3>
+    </div>
 
-    <p class="product-price">
-        ₵${item.price}
-    </p>
+    <div class="cart-details">
 
-    <p>
+    <div class="cart-header">
+
+        <h3>${item.title}</h3>
+
+        <span class="cart-price">
+            ₵${item.price}
+        </span>
+
+    </div>
+
+    <p class="cart-description">
         ${item.description}
     </p>
 
-    <p class="product-status">
+    <div class="cart-meta">
 
-      Listing:
-      <strong>
-        ${item.status}
-      </strong>
+        <span class="listing-badge">
+            ${item.status}
+        </span>
 
-    </p>
+        <span class="order-badge">
+            ${item.order_status || "Not Ordered"}
+        </span>
 
-    <p class="order-status">
+    </div>
 
-      Order:
-      <strong>
-        ${item.order_status || "Not Ordered"}
-      </strong>
-
-    </p>
-
-    <div class="cart-buttons">
+    <div class="cart-actions">
 
         <button
+            class="btn-message"
             onclick="messageSeller(${item.user_id})"
         >
-            Message Seller
+            <i class="fa-solid fa-comments"></i>
+            Message
         </button>
 
         <button
+            class="btn-checkout"
             onclick="checkoutItem(${item.id})"
         >
+            <i class="fa-solid fa-credit-card"></i>
             Checkout
         </button>
 
         <button
+            class="btn-remove"
             onclick="removeFromCart(${item.id})"
         >
+            <i class="fa-solid fa-trash"></i>
             Remove
         </button>
 
     </div>
 
+    </div>
 
-    
-    
+
     `;
     container.appendChild(div);
   });

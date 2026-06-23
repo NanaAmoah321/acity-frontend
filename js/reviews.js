@@ -12,8 +12,18 @@ async function loadReviews() {
         `http://localhost:5000/api/reviews/rating/${reviewUser.id}`
     );
 
+    
+
     const rating =
     await ratingRes.json();
+
+    const ratingValue =
+    document.getElementById("ratingValue");
+
+    if (ratingValue) {
+       ratingValue.textContent =
+       Number(rating.average_rating || 0).toFixed(1);
+    }
 
     console.log("Rating:", rating);
 
@@ -21,16 +31,8 @@ async function loadReviews() {
         "ratingContainer"
     ).innerHTML = `
         <h3>
-            ⭐ ${
-                rating.average_rating
-                || "0.0"
-            }
-            (
-            ${
-                rating.total_reviews
-                || 0
-            }
-            Reviews)
+            ⭐ ${rating.average_rating || "0.0"}
+            (${rating.total_reviews || 0} Reviews)
         </h3>
     `;
 
@@ -41,6 +43,14 @@ async function loadReviews() {
 
     const reviews =
     await reviewsRes.json();
+
+    const reviewsCount =
+    document.getElementById("reviewsCount");
+
+    if (reviewsCount) {
+        reviewsCount.textContent =
+        reviews.length;
+    }
 
     console.log("Reviews:", reviews);
 
@@ -61,7 +71,7 @@ async function loadReviews() {
         const card =
         document.createElement("div");
 
-        card.classList.add("card");
+        card.classList.add("review-card");
 
         card.innerHTML = `
             <h3>${stars}</h3>

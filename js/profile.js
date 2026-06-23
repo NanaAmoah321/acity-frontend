@@ -1,12 +1,16 @@
 const user = JSON.parse(localStorage.getItem("user"));
 
 if (user) {
+  
   document.getElementById("userName").textContent = user.name;
   document.getElementById("userEmail").textContent = user.email;
+  
+
 
   // Load saved skills if they exist
   document.getElementById("skillsOffered").value = user.skillsOffered || "";
   document.getElementById("skillsNeeded").value = user.skillsNeeded || "";
+
 }
 
 function saveProfile() {
@@ -23,7 +27,7 @@ function saveProfile() {
   alert("Profile updated!");
 }
 
-const ItemsContainer = document.getElementById("ItemsContainer");
+const ItemsContainer = document.getElementById("myItemsContainer");
 
 async function loadMyItems() {
   const token = localStorage.getItem("token");
@@ -43,6 +47,8 @@ async function loadMyItems() {
     });
 
     const items = await res.json();
+    document.getElementById("itemsCount").textContent =
+    items.length;
 
     console.log("API RESPONSE:", items);
 
@@ -60,16 +66,33 @@ async function loadMyItems() {
 
     items.forEach(item => {
       const div = document.createElement("div");
-      div.classList.add("card");
+      div.classList.add("profile-card");
 
-      div.innerHTML = `
-        <h3>${item.title}</h3>
-        <p>${item.description}</p>
-        <p><strong>Category:</strong> ${item.category}</p>
-        <p><strong>Status:</strong> ${item.status}</p>
-        <button onclick="deleteItem(${item.id})">Delete</button>
-        <button onclick="editItem(${item.id})">Edit</button>
-      `;
+      console.log(item.image_url);
+
+     div.innerHTML = `
+      <img src="${item.image_url}" class="my-item-image">
+
+      <h3>${item.title}</h3>
+
+      <p class="item-price">
+        GH₵ ${item.price}
+      </p>
+
+      <p><strong>Category:</strong> ${item.category}</p>
+
+      <p><strong>Status:</strong> ${item.status}</p>
+
+      <div class="actions">
+        <button onclick="deleteItem(${item.id})">
+            Delete
+        </button>
+
+        <button onclick="editItem(${item.id})">
+            Edit
+        </button>
+      </div>
+     `;
 
       ItemsContainer.appendChild(div);
     });
@@ -104,7 +127,7 @@ async function editItem(id) {
 
   const itemCard =
   Array.from(
-    document.querySelectorAll(".card")
+    document.querySelectorAll(".profile-card")
   ).find(card =>
     card.innerHTML.includes(
       `editItem(${id})`
@@ -268,7 +291,7 @@ async function loadSellerOrders() {
 
         container.innerHTML += `
 
-        <div class="card">
+        <div class="order-card">
 
             <h3>
                 ${order.title}
@@ -292,13 +315,13 @@ async function loadSellerOrders() {
 
             </p>
 
-            <button
+            <button class = "accept-btn"
                 onclick="acceptOrder(${order.id})"
             >
                 Accept
             </button>
 
-            <button
+            <button class = "reject-btn"
                 onclick="rejectOrder(${order.id})"
             >
                 Reject

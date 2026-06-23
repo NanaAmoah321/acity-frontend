@@ -51,7 +51,7 @@ async function loadListings() {
 
     const container =
     document.getElementById(
-        "recentListings"
+        "adminRecentListings"
     );
 
     container.innerHTML = "";
@@ -61,7 +61,7 @@ async function loadListings() {
         const card =
         document.createElement("div");
 
-        card.classList.add("card");
+        card.classList.add("admin-listing-card");
 
         card.innerHTML = `
             <h3>${item.title}</h3>
@@ -71,11 +71,10 @@ async function loadListings() {
             </p>
 
             <button
-                onclick="
-                deleteListing(
-                ${item.id}
-                )"
+                class="btn-delete"
+                onclick="deleteListing(${item.id})"
             >
+                <i class="fa-solid fa-trash"></i>
                 Delete
             </button>
         `;
@@ -132,7 +131,7 @@ async function loadServices() {
 
     const container =
     document.getElementById(
-        "recentServices"
+        "adminRecentServices"
     );
 
     container.innerHTML = "";
@@ -142,7 +141,7 @@ async function loadServices() {
         const card =
         document.createElement("div");
 
-        card.classList.add("card");
+        card.classList.add("admin-service-card");
 
         card.innerHTML = `
             <h3>${service.title}</h3>
@@ -152,11 +151,10 @@ async function loadServices() {
             </p>
 
             <button
-                onclick="
-                deleteService(
-                ${service.id}
-                )"
+                class="btn-delete"
+                onclick="deleteService(${service.id})"
             >
+                <i class="fa-solid fa-trash"></i>
                 Delete
             </button>
         `;
@@ -210,7 +208,7 @@ async function loadUsers() {
 
     const container =
     document.getElementById(
-        "usersContainer"
+        "adminUsersContainer"
     );
 
     container.innerHTML = "";
@@ -220,7 +218,7 @@ async function loadUsers() {
         const card =
         document.createElement("div");
 
-        card.classList.add("card");
+        card.classList.add("admin-user-card");
 
         card.innerHTML = `
             <h3>${user.name}</h3>
@@ -232,32 +230,30 @@ async function loadUsers() {
                 ${user.role}
             </p>
 
-            <button
-                onclick="
-                makeAdmin(
-                ${user.id}
-                )"
-            >
-                Make Admin
-            </button>
+           <div class="admin-actions">
 
-            <button
-                onclick="
-                suspendUser(
-                ${user.id}
-                )"
-            >
-                Suspend
-            </button>
+                <button
+                    class="btn-admin"
+                    onclick="makeAdmin(${user.id})"
+                >
+                    Promote
+                </button>
 
-            <button
-                onclick="
-                deleteUser(
-                ${user.id}
-                )"
-            >
-                Delete
-            </button>
+                <button
+                    class="btn-suspend"
+                    onclick="suspendUser(${user.id})"
+                >
+                    Suspend
+                </button>
+
+                <button
+                    class="btn-delete"
+                    onclick="deleteUser(${user.id})"
+                >
+                    Delete
+                </button>
+
+            </div>
         `;
 
         container.appendChild(card);

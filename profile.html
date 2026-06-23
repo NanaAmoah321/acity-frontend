@@ -19,118 +19,214 @@
             >
         </div>
 
-        <div class="menu-toggle" id="menuToggle">
-            ☰
-        </div>
+        <button id="menu-toggle" class="menu-toggle">
+
+        <span></span>
+        <span></span>
+        <span></span>
+
+        </button>
 
         <div class="nav-links" id="navLinks">
 
     <a href="index.html" class="nav-item">
-        <i class="fa-solid fa-house"></i>
-        <span>Home</span>
-    </a>
-
+    <i class="fa-solid fa-house"></i>
+    <span class="menu-label">Home</span>
+    </a>        
+    
     <a href="marketplace.html" class="nav-item">
     <i class="fa-solid fa-store"></i>
-    <span>Marketplace</span>
+    <span class="menu-label">Marketplace</span>
     </a>
 
     <a href="login.html" class="nav-item">
         <i class="fa-solid fa-right-to-bracket"></i>
-        <span>Login</span>
+        <span class="menu-label">Login</span>
     </a>
 
     <a href="register.html" class="nav-item">
         <i class="fa-solid fa-user-plus"></i>
-        <span>Register</span>
+        <span class="menu-label">Register</span>
     </a>
 
     <a href="profile.html" class="nav-item">
         <i class="fa-solid fa-user"></i>
-        <span>Profile</span>
+        <span class="menu-label">Profile</span>
     </a>
 
     <a href="inbox.html" class="nav-item">
         <i class="fa-solid fa-comments"></i>
-        <span>Inbox</span>
+        <span class="menu-label">Inbox</span>
         <small id="messageCount"></small>
     </a>
 
     <a href="create-listing.html" class="nav-item">
         <i class="fa-solid fa-plus"></i>
-        <span>Add Item</span>
+        <span class="menu-label">Add Item</span>
     </a>
 
     <a href="services.html" class="nav-item">
         <i class="fa-solid fa-screwdriver-wrench"></i>
-        <span>Skills Connect</span>
+        <span class="menu-label">Skills Connect</span>
     </a>
 
     <a href="#" onclick="logout()" class="nav-item">
         <i class="fa-solid fa-right-from-bracket"></i>
-        <span>Logout</span>
+        <span class="menu-label">Logout</span>
     </a>
 
     <a 
        href="admin.html"
-       class="nav-item"
-       >
+       class="nav-item">
         <i class="fa-solid fa-shield-halved"></i>
-        <span>Admin</span>
+        <span class="menu-label">Admin</span>
     </a>
 
     <a href="myCart.html" class="nav-item">
     <i class="fa-solid fa-cart-shopping"></i>
-    <span>My Cart</span>
+    <span class="menu-label">My Cart</span>
     </a>
 
     </div>
 
     </nav>
 
-    <div class="form-container">
-        <h2>My Profile</h2>
-        <p>Welcome to your profile page</p>
+    <section class="profile-dashboard">
 
-        <p><strong>Name:</strong> <span id="userName"></span></p>
-        <p><strong>Email:</strong> <span id="userEmail"></span></p>
+        <section class="profile-sidebar">
 
-        <h3>Skills Offered</h3>
-        <input type="text" id="skillsOffered" placeholder="eg. Programming">
-        <h3>Skills Needed</h3>
-        <input type="text" id="skillsNeeded" placeholder="eg. web design">
+            <div class="profile-cover"></div>
 
-        <button class="login-register" onclick="saveProfile()">
-            Save Profile
-        </button>
+            <div class="profile-header">
 
-    </div>
+                <div class="profile-avatar">
+                    <i class="fa-solid fa-user"></i>
+                </div>
 
-    <section class="ItemsContainer">
-        <h2>My Items</h2>
-        <div id="ItemsContainer">
-            
-        </div>
+                <span class="profile-tag">
+                    Student Seller
+                </span>
 
-    </section>
+                <h1 id="userName"></h1>
 
-    <h2 id="incomingOrdersHeading">Incoming Orders</h2>
+                <p id="userEmail"></p>
 
-    <div id="sellerOrders">
-    </div>
+            </div>
 
-    
+            <div class="profile-stats">
 
-    <h2 id="reviewsHeading">Reviews</h2>
+            <div class="stat-card">
+                <span id="itemsCount">0</span>
+                <small>Listings</small>
+            </div>
 
-    <div class="reviews-section">
+            <div class="stat-card">
+                <span id="reviewsCount">0</span>
+                <small>Reviews</small>
+            </div>
+
+            <div class="stat-card">
+                <span id="ratingValue">0.0</span>
+                <small>Rating</small>
+            </div>
+
+            </div>
+
+            <div class="skills-section">
+
+            <label>
+            <i class="fa-solid fa-code"></i>
+            Skills Offered
+            </label>
+
+            <input
+            type="text"
+            id="skillsOffered"
+            placeholder="Programming, Graphic Design..."
+            >
+
+            <label>
+            <i class="fa-solid fa-lightbulb"></i>
+            Skills Needed
+            </label>
+
+            <input
+            type="text"
+            id="skillsNeeded"
+            placeholder="Web Design, UI/UX..."
+            >
+
+            </div>
+
+            <button
+            class="save-profile-btn"
+            onclick="saveProfile()"
+            >
+            <i class="fa-solid fa-floppy-disk"></i>
+            Save Changes
+            </button>
+
+            <div class="profile-achievements">
+
+                <h3>
+                    <i class="fa-solid fa-trophy"></i>
+                    Achievements
+                </h3>
+
+                <div class="achievement-badge">
+                    🏪 First Listing
+                </div>
+
+                <div class="achievement-badge">
+                    ⭐ 5 Star Seller
+                </div>
+
+                <div class="achievement-badge">
+                    📦 Order Completed
+                </div>
+
+                <div class="achievement-badge">
+                    💬 Active Seller
+                </div>
+
+            </div>
+
+        </section>
+
+        <div class="profile-right">
+
+        <section class="my-items-section">
+
+            <h2>My Items</h2>
+
+            <div id="myItemsContainer"></div>
+
+        </section>
+        <section class="incoming-orders-section">
+
+        <h2>Incoming Orders</h2>
+
+        <div id="sellerOrders"></div>
+
+        </section>
+
+        <section class="profile-reviews-section">
+
+        <h2>Reviews</h2>
 
         <div id="ratingContainer"></div>
 
         <div id="reviewsContainer"></div>
 
-    </div>
+         </section>
 
+        </div>
+
+    </section>
+
+    
+
+    
 
 
     <script src="js/profile.js"></script>

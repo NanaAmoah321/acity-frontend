@@ -19,111 +19,142 @@
             >
         </div>
 
-        <div class="menu-toggle" id="menuToggle">
-            ☰
-        </div>
+        <button id="menu-toggle" class="menu-toggle">
+
+        <span></span>
+        <span></span>
+        <span></span>
+
+        </button>
 
         <div class="nav-links" id="navLinks">
 
     <a href="index.html" class="nav-item">
-        <i class="fa-solid fa-house"></i>
-        <span>Home</span>
-    </a>
-
+    <i class="fa-solid fa-house"></i>
+    <span class="menu-label">Home</span>
+    </a>        
+    
     <a href="marketplace.html" class="nav-item">
     <i class="fa-solid fa-store"></i>
-    <span>Marketplace</span>
+    <span class="menu-label">Marketplace</span>
     </a>
 
     <a href="login.html" class="nav-item">
         <i class="fa-solid fa-right-to-bracket"></i>
-        <span>Login</span>
+        <span class="menu-label">Login</span>
     </a>
 
     <a href="register.html" class="nav-item">
         <i class="fa-solid fa-user-plus"></i>
-        <span>Register</span>
+        <span class="menu-label">Register</span>
     </a>
 
     <a href="profile.html" class="nav-item">
         <i class="fa-solid fa-user"></i>
-        <span>Profile</span>
+        <span class="menu-label">Profile</span>
     </a>
 
     <a href="inbox.html" class="nav-item">
         <i class="fa-solid fa-comments"></i>
-        <span>Inbox</span>
+        <span class="menu-label">Inbox</span>
         <small id="messageCount"></small>
     </a>
 
     <a href="create-listing.html" class="nav-item">
         <i class="fa-solid fa-plus"></i>
-        <span>Add Item</span>
+        <span class="menu-label">Add Item</span>
     </a>
 
     <a href="services.html" class="nav-item">
         <i class="fa-solid fa-screwdriver-wrench"></i>
-        <span>Skills Connect</span>
+        <span class="menu-label">Skills Connect</span>
     </a>
 
     <a href="#" onclick="logout()" class="nav-item">
         <i class="fa-solid fa-right-from-bracket"></i>
-        <span>Logout</span>
+        <span class="menu-label">Logout</span>
     </a>
 
-    <a href="admin.html" class="nav-item">
-       <i class="fa-solid fa-shield-halved"></i>
-        <span>Admin</span>
+    <a 
+       href="admin.html"
+       class="nav-item">
+        <i class="fa-solid fa-shield-halved"></i>
+        <span class="menu-label">Admin</span>
     </a>
 
     <a href="myCart.html" class="nav-item">
     <i class="fa-solid fa-cart-shopping"></i>
-    <span>My Cart</span>
+    <span class="menu-label">My Cart</span>
     </a>
 
     </div>
 
     </nav>
 
-<div class="container">
+<div class="admin-dashboard">
 
-    <h1>Admin Dashboard</h1>
+    <div class="dashboard-header">
+        <h1>Admin Dashboard</h1>
+        <p>Manage students, listings and services</p>
+    </div>
 
-    <div class="dashboard-grid">
+    <div class="stats-grid">
 
-        <div class="card">
-            <h2 id="usersCount">0</h2>
+        <div class="stat-card">
+            <h3 id="usersCount">0</h3>
             <p>Users</p>
         </div>
 
-        <div class="card">
-            <h2 id="listingsCount">0</h2>
+        <div class="stat-card">
+            <h3 id="listingsCount">0</h3>
             <p>Listings</p>
         </div>
 
-        <div class="card">
-            <h2 id="servicesCount">0</h2>
+        <div class="stat-card">
+            <h3 id="servicesCount">0</h3>
             <p>Services</p>
         </div>
 
-        <div class="card">
-            <h2 id="messagesCount">0</h2>
+        <div class="stat-card">
+            <h3 id="messagesCount">0</h3>
             <p>Messages</p>
         </div>
 
     </div>
 
-    <h2>Recent Listings</h2>
-    <div id="recentListings"></div>
+    <div class="admin-section">
 
-    <h2>Recent Services</h2>
-    <div id="recentServices"></div>
+        <div class="section-header">
+            <h2>Recent Listings</h2>
+        </div>
 
-    <h2>Users</h2>
-    <div id="usersContainer"></div>
+        <div id="adminRecentListings"></div>
+
+    </div>
+
+    <div class="admin-section">
+
+        <div class="section-header">
+            <h2>Recent Services</h2>
+        </div>
+
+        <div id="adminRecentServices"></div>
+
+    </div>
+
+    <div class="admin-section">
+
+        <div class="section-header">
+            <h2>Users</h2>
+        </div>
+
+        <div id="adminUsersContainer"></div>
+
+    </div>
+
+    
 
 </div>
-
 <script src="js/admin.js"></script>
 <script src="js/navbar.js"></script>
 
