@@ -40,6 +40,17 @@ async function loadMyItems() {
   }
 
   try {
+
+    ItemsContainer.innerHTML = "";
+
+    for(let i=0;i<3;i++){
+
+    ItemsContainer.innerHTML += `
+        <div class="profile-skeleton skeleton-card">
+        </div>
+    `;
+
+    }
     const res = await fetch("http://localhost:5000/api/listings/my", {
       headers: {
         "Authorization": `Bearer ${token}`
@@ -54,10 +65,24 @@ async function loadMyItems() {
 
     ItemsContainer.innerHTML = "";
 
-    if (!Array.isArray(items)) {
-      ItemsContainer.innerHTML = `<p>${items.message || "Error loading items"}</p>`;
-      return;
-    }
+    if (items.length === 0) {
+
+  ItemsContainer.innerHTML = `
+    <div class="empty-state">
+
+      <i class="fa-solid fa-box-open"></i>
+
+      <h3>No Listings Yet</h3>
+
+      <p>
+        Start selling by posting your first item.
+      </p>
+
+    </div>
+  `;
+
+  return;
+  }
 
     if (items.length === 0) {
       ItemsContainer.innerHTML = "<p>No items posted yet.</p>";
@@ -71,7 +96,11 @@ async function loadMyItems() {
       console.log(item.image_url);
 
      div.innerHTML = `
-      <img src="${item.image_url}" class="my-item-image">
+      <img
+        src="${item.image_url || `images/${item.category}.jpg`}"
+        class="my-item-image"
+        onerror="this.src='images/Other.jpg'"
+      >
 
       <h3>${item.title}</h3>
 
@@ -285,6 +314,23 @@ async function loadSellerOrders() {
 
         return;
 
+    }
+
+    if (orders.length === 0) {
+
+    container.innerHTML = `
+        <div class="empty-state">
+            <i class="fa-solid fa-store"></i>
+
+            <h3>Your Store Is Quiet</h3>
+
+            <p>
+                Share your listings to start receiving orders.
+            </p>
+        </div>
+    `;
+
+    return;
     }
 
     orders.forEach(order => {

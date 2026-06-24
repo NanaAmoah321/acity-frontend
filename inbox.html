@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Inbox</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acity Connect - inbox</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
@@ -75,7 +77,9 @@
 
     <a 
        href="admin.html"
-       class="nav-item">
+       class="nav-item"
+       id="adminLink"
+       style="display: none;">
         <i class="fa-solid fa-shield-halved"></i>
         <span class="menu-label">Admin</span>
     </a>
@@ -89,13 +93,14 @@
 
     </nav>
 
-<div class="container">
 
+    <div  class="container">
     <h2>Inbox</h2>
 
-    <div id="inboxContainer"></div>
+    <div class="inbox-list" id="inboxContainer"></div>
 
-</div>
+    </div>
+
 
 <script src="js/inbox.js"></script>
 <script src="js/navbar.js"></script>

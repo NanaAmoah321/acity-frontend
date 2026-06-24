@@ -35,6 +35,8 @@ function getStoreImage(category) {
 
 async function loadItems() {
 
+
+
     const res =
     await fetch(
         "http://localhost:5000/api/listings/stores"
@@ -43,6 +45,8 @@ async function loadItems() {
     const stores =
     await res.json();
 
+    console.log(stores);
+
     const searchText =
     searchInput.value.toLowerCase();
 
@@ -50,6 +54,7 @@ async function loadItems() {
     //categoryFilter.value;
 
     ItemsContainer.innerHTML = "";
+
 
     const filteredStores =
     stores.filter(store => {
@@ -266,6 +271,17 @@ function viewStore(userId) {
 
 async function loadFeaturedProducts(){
 
+    container.innerHTML = "";
+
+    for(let i=0;i<6;i++){
+
+    container.innerHTML += `
+        <div class="product-skeleton skeleton-card">
+        </div>
+    `;
+
+    }
+
     const res =
     await fetch(
         "http://localhost:5000/api/listings"
@@ -282,6 +298,19 @@ async function loadFeaturedProducts(){
     );
 
     container.innerHTML = "";
+
+    if (listings.length === 0) {
+
+    container.innerHTML = `
+        <div class="empty-state">
+            <i class="fa-solid fa-box-open"></i>
+            <h3>No Featured Products Yet</h3>
+            <p>Products posted by students will appear here.</p>
+        </div>
+    `;
+
+    return;
+    }
 
     listings
     .slice(0,15)
@@ -330,6 +359,17 @@ async function loadFeaturedProducts(){
 
 async function loadServices(){
 
+    container.innerHTML = "";
+
+    for(let i=0;i<3;i++){
+
+    container.innerHTML += `
+        <div class="service-skeleton skeleton-card">
+        </div>
+    `;
+
+    }
+
     const res =
     await fetch(
         "http://localhost:5000/api/services"
@@ -344,6 +384,19 @@ async function loadServices(){
     );
 
     container.innerHTML = "";
+
+    if (services.length === 0) {
+
+    container.innerHTML = `
+        <div class="empty-state">
+            <i class="fa-solid fa-screwdriver-wrench"></i>
+            <h3>No Services Yet</h3>
+            <p>Offer your first skill and start earning.</p>
+        </div>
+    `;
+
+    return;
+    }
 
     services
 .slice(0,6)
@@ -367,6 +420,7 @@ async function loadServices(){
 
         <p class="rate">
             GH₵ ${service.rate}
+            ${service.rate_type}
         </p>
 
         <div class="service-actions">
@@ -396,6 +450,17 @@ async function loadServices(){
 
 async function loadRecentListings(){
 
+    container.innerHTML = "";
+
+    for(let i=0;i<6;i++){
+
+    container.innerHTML += `
+        <div class="product-skeleton skeleton-card">
+        </div>
+    `;
+
+    }
+
     const res =
     await fetch(
         "http://localhost:5000/api/listings"
@@ -410,6 +475,19 @@ async function loadRecentListings(){
     );
 
     container.innerHTML = "";
+
+    if (listings.length === 0) {
+
+    container.innerHTML = `
+        <div class="empty-state">
+            <i class="fa-solid fa-tags"></i>
+            <h3>No Listings Yet</h3>
+            <p>Be the first student to post an item.</p>
+        </div>
+    `;
+
+    return;
+    }
 
     listings
     .slice(0,8)

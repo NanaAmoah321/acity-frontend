@@ -79,7 +79,9 @@
 
     <a 
        href="admin.html"
-       class="nav-item">
+       class="nav-item"
+       id="adminLink"
+       style="display: none;">
         <i class="fa-solid fa-shield-halved"></i>
         <span class="menu-label">Admin</span>
     </a>
@@ -93,69 +95,98 @@
 
 </nav>
 
-<div class="container">
 
-    <h2>Conversation</h2>
+<div class="chat-page">
 
-    <div id="conversationContainer"></div>
+    <div class="chat-card">
 
-    <textarea
-        id="messageInput"
-        placeholder="Type message..."
-    ></textarea>
+        <div class="chat-header">
 
-    <button id="sendBtn">
-        Send
-    </button>
+            <div class="chat-user">
 
-    <button id="reviewBtn">
-        Leave Review
-    </button>
+                <div class="chat-avatar">
+                    <i class="fa-solid fa-user"></i>
+                </div>
 
-    <div id="reviewForm"
-     style="display:none;">
+                <div>
 
-    <select id="rating">
+                    <h3 id="chatName">
+                        Conversation
+                    </h3>
 
-        <option value="5">
-            ⭐⭐⭐⭐⭐
-        </option>
+                    <span class="chat-status">
+                        Active Now
+                    </span>
 
-        <option value="4">
-            ⭐⭐⭐⭐
-        </option>
+                </div>
 
-        <option value="3">
-            ⭐⭐⭐
-        </option>
+            </div>
 
-        <option value="2">
-            ⭐⭐
-        </option>
+            <button id="reviewBtn" class="review-btn">
+                <i class="fa-solid fa-star"></i>
+                Leave Review
+            </button>
 
-        <option value="1">
-            ⭐
-        </option>
+        </div>
 
-    </select>
+        <div id="conversationContainer"></div>
 
-    <textarea
-        id="reviewComment"
-        placeholder="Write review..."
-    ></textarea>
+        <div class="chat-input-bar">
 
-    <button
-        id="submitReview"
-    >
-        Submit Review
-    </button>
+            <textarea
+                id="messageInput"
+                placeholder="Type a message..."
+            ></textarea>
+
+            <button id="sendBtn">
+                <i class="fa-solid fa-paper-plane"></i>
+            </button>
+
+        </div>
+
+    </div>
+
+
 
 </div>
+
+
+
+
+<div id="reviewModal" class="review-modal">
+
+    <div class="review-card">
+
+        <button id="closeReview" class="close-review">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <h2>Rate Seller</h2>
+
+        <select id="rating">
+
+            <option value="5">⭐⭐⭐⭐⭐</option>
+            <option value="4">⭐⭐⭐⭐</option>
+            <option value="3">⭐⭐⭐</option>
+            <option value="2">⭐⭐</option>
+            <option value="1">⭐</option>
+
+        </select>
+
+        <textarea
+            id="reviewComment"
+            placeholder="Share your experience..."
+        ></textarea>
+
+        <button id="submitReview">
+            Submit Review
+        </button>
+
+    </div>
 
 </div>
 
 <script src="js/conversation.js"></script>
 <script src="js/navbar.js"></script>
-
 </body>
 </html>

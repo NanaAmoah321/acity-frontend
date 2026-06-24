@@ -34,6 +34,9 @@ serviceForm.addEventListener(
             "rate"
         ).value;
 
+        const rate_type =
+        document.getElementById("rateType").value;
+
         const portfolio_url =
         document.getElementById(
             "portfolio_url"
@@ -58,6 +61,7 @@ serviceForm.addEventListener(
                     description,
                     category,
                     rate,
+                    rate_type,
                     portfolio_url
                 })
             }

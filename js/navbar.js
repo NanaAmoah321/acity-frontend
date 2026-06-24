@@ -1,6 +1,26 @@
 const navbarToken =
 localStorage.getItem("token");
 
+const user =
+JSON.parse(
+    localStorage.getItem("user")
+);
+
+const adminLink =
+document.getElementById(
+    "adminLink"
+);
+
+if (
+    user &&
+    user.role === "admin"
+) {
+
+    adminLink.style.display =
+    "flex";
+
+}
+
 async function
 loadUnreadCount() {
 
@@ -67,6 +87,57 @@ if (menuToggle) {
 
 }
 
+async function updateCartCount() {
+
+    const token =
+    localStorage.getItem("token");
+
+    if (!token) return;
+
+    try {
+
+        const res =
+        await fetch(
+            "http://localhost:5000/api/listings/interested",
+            {
+                headers: {
+                    Authorization:
+                    `Bearer ${token}`
+                }
+            }
+        );
+
+        const items =
+        await res.json();
+
+        const cartCount =
+        document.getElementById(
+            "cartCount"
+        );
+
+        if (cartCount) {
+
+            cartCount.textContent =
+            items.length;
+
+            cartCount.style.display =
+            items.length > 0
+            ? "flex"
+            : "none";
+
+        }
+
+    } catch (err) {
+
+        console.error(
+            "Cart count error:",
+            err
+        );
+
+    }
+
+}
+
 const currentPage =
 window.location.pathname.split("/").pop();
 
@@ -84,3 +155,5 @@ document
     }
 
 });
+
+updateCartCount(); 

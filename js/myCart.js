@@ -14,12 +14,18 @@ async function loadInterested() {
   const items = await res.json();
   currentItems = items;
 
-  container.innerHTML = "";
+    if(items.length === 0){
 
-  if (items.length === 0) {
-    container.innerHTML = "<p>No interested items yet.</p>";
-    return;
-  }
+        interestedContainer.innerHTML = `
+            <div class="empty-state">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <h3>Your Cart Is Empty</h3>
+                <p>Browse the marketplace and add items.</p>
+            </div>
+        `;
+
+        return;
+    }
 
   items.forEach(item => {
     const div = document.createElement("div");
@@ -298,7 +304,7 @@ function messageSeller(userId) {
     );
 
     window.location.href =
-    "message.html";
+    "conversation.html";
 
 }
 

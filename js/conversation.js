@@ -10,6 +10,9 @@ const receiver_id =
 localStorage.getItem("receiver_id");
 console.log("Receiver ID:", receiver_id);
 
+const chatName =
+document.getElementById("chatName");
+
 
 const conversationContainer =
 document.getElementById(
@@ -34,6 +37,26 @@ async function loadConversation() {
     console.log("Status:", res.status);
 
     const messages = await res.json();
+
+    if (
+    messages.length > 0 &&
+    chatName
+    ) {
+
+    const otherUser =
+    messages.find(
+        msg =>
+        msg.sender_id !== currentUser.id
+    );
+
+    if (otherUser) {
+
+        chatName.textContent =
+        otherUser.sender_name;
+
+    }
+
+    }
 
     console.log("Messages:", messages);
 
@@ -66,9 +89,15 @@ async function loadConversation() {
         : msg.sender_name;
 
     div.innerHTML = `
-        <div class="sender">
-            ${displayName}
-        </div>
+       ${
+            msg.sender_id !== currentUser.id
+            ?
+            `<div class="sender">
+                ${msg.sender_name}
+            </div>`
+            :
+            ""
+        }
 
         <div class="message-text">
             ${msg.message}
@@ -128,23 +157,24 @@ document
     }
 );
 
+const reviewModal =
+document.getElementById("reviewModal");
+
 document
-.getElementById(
-    "reviewBtn"
-)
-.addEventListener(
-    "click",
-    () => {
+.getElementById("reviewBtn")
+.addEventListener("click", () => {
 
-        document
-        .getElementById(
-            "reviewForm"
-        )
-        .style.display =
-        "block";
+    reviewModal.classList.add("active");
 
-    }
-);
+});
+
+document
+.getElementById("closeReview")
+.addEventListener("click", () => {
+
+    reviewModal.classList.remove("active");
+
+});
 
 document
 .getElementById(

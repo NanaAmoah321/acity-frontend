@@ -6,6 +6,17 @@ async function loadInbox() {
 
     try {
 
+        container.innerHTML = "";
+
+        for(let i=0;i<5;i++){
+
+        container.innerHTML += `
+        <div class="inbox-skeleton skeleton-card">
+        </div>
+        `;
+
+        }
+
         const res = await fetch(
             "http://localhost:5000/api/messages/conversations",
             {
@@ -17,36 +28,60 @@ async function loadInbox() {
 
         const messages = await res.json();
 
-        inboxContainer.innerHTML = "";
+        if(messages.length === 0){
 
-        if (messages.length === 0) {
-            inboxContainer.innerHTML =
-                "<p>No messages yet.</p>";
+            inboxContainer.innerHTML = `
+                <div class="empty-state">
+                    <i class="fa-solid fa-comments"></i>
+                    <h3>No Conversations</h3>
+                    <p>Your messages will appear here.</p>
+                </div>
+            `;
+
             return;
         }
 
+        
+
         messages.forEach(msg => {
+
+            console.log(msg);
 
             const card =
                 document.createElement("div");
 
-            card.classList.add("card");
+            card.classList.add("inbox-card");
 
             card.innerHTML = `
-                <h3>${msg.conversation_name}</h3>
-                <p>${msg.message}</p>
+                <div class="inbox-avatar">
+                    <i class="fa-solid fa-user"></i>
+                </div>
 
-                <button
-                    onclick="openConversation(${msg.conversation_user_id})"
-                >
-                    Open Conversation
-                </button>
+                <div class="inbox-info">
+                    <div class="inbox-top">
+                        <h4>${msg.conversation_name}</h4>
+                        <span>
+                            ${new Date(msg.created_at)
+                                .toLocaleTimeString([], {
+                                    hour:"2-digit",
+                                    minute:"2-digit"
+                                })}
+                            </span>
+                        </div>
 
-                <small>
-                    ${new Date(msg.created_at)
-                        .toLocaleString()}
-                </small>
-            `;
+                        <p>${msg.message}</p>
+                    </div>
+            `;  
+
+            card.onclick = () => {
+                localStorage.setItem(
+                    "receiver_id",
+                    msg.conversation_user_id
+                );
+
+                window.location =
+                "conversation.html";
+            };
 
             inboxContainer.appendChild(card);
 
@@ -60,16 +95,6 @@ async function loadInbox() {
 
 }
 
-function openConversation(userId) {
 
-    localStorage.setItem(
-        "receiver_id",
-        userId
-    );
-
-    window.location.href =
-        "conversation.html";
-
-}
 
 loadInbox();

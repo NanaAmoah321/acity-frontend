@@ -1,6 +1,21 @@
 const token =
 localStorage.getItem("token");
 
+const user =
+JSON.parse(
+    localStorage.getItem("user")
+);
+
+if (
+    !user ||
+    user.role !== "admin"
+) {
+
+    window.location.href =
+    "marketplace.html";
+
+}
+
 async function loadDashboard() {
 
     const res = await fetch(

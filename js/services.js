@@ -55,6 +55,19 @@ function displayServices() {
 
     ServicesContainer.innerHTML = "";
 
+    if (services.length === 0) {
+
+    ServicesContainer.innerHTML = `
+        <div class="empty-state">
+            <i class="fa-solid fa-screwdriver-wrench"></i>
+            <h3>No Services Yet</h3>
+            <p>Be the first student to post a service.</p>
+        </div>
+    `;
+
+    return;
+    }
+
     const filteredServices =
     services.filter(service => {
 
@@ -159,6 +172,7 @@ function displayServices() {
                 ₵${
                     service.rate
                 }
+                ${service.rate_type}
             </p>
 
             <div class="service-actions">
@@ -195,7 +209,7 @@ function messageProvider(userId) {
     );
 
     window.location.href =
-    "message.html";
+    "conversation.html";
 
 }
 

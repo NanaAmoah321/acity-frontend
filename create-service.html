@@ -78,7 +78,9 @@
 
     <a 
        href="admin.html"
-       class="nav-item">
+       class="nav-item"
+       id="adminLink"
+       style="display: none;">
         <i class="fa-solid fa-shield-halved"></i>
         <span class="menu-label">Admin</span>
     </a>
@@ -132,6 +134,33 @@
             placeholder="Enter your rate"
             required
         >
+        <label for="rateType">
+            Rate Type
+        </label>
+
+        <select id="rateType" required>
+
+            <option>
+                Per Hour
+            </option>
+
+            <option>
+                Per Session
+            </option>
+
+            <option>
+                Per Day
+            </option>
+
+            <option>
+                Per Project
+            </option>
+
+            <option>
+                Negotiable
+            </option>
+
+        </select>
 
         <label for="portfolio_url">Portfolio Link</label>
         <input
