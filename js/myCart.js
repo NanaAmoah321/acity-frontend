@@ -16,7 +16,7 @@ async function loadInterested() {
 
     if(items.length === 0){
 
-        interestedContainer.innerHTML = `
+        container.innerHTML = `
             <div class="empty-state">
                 <i class="fa-solid fa-cart-shopping"></i>
                 <h3>Your Cart Is Empty</h3>
@@ -122,6 +122,7 @@ async function removeFromCart(listingId) {
 
     alert(data.message || data.error);
     loadInterested(); 
+    updateCartCount(); 
   }
 }
 

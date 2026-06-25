@@ -335,47 +335,110 @@ async function loadSellerOrders() {
 
     orders.forEach(order => {
 
-        container.innerHTML += `
+    container.innerHTML += `
 
-        <div class="order-card">
+    <div class="order-card">
 
-            <h3>
-                ${order.title}
-            </h3>
+        <div class="order-header">
+
+            <h3>${order.title}</h3>
+
+            <span class="order-price">
+                GH₵ ${order.price}
+            </span>
+
+        </div>
+
+        <div class="order-details">
 
             <p>
-                Buyer:
+                <i class="fa-solid fa-user"></i>
+                <strong>Buyer:</strong>
                 ${order.buyer_name}
             </p>
 
             <p>
-                ₵${order.price}
+                <i class="fa-solid fa-truck"></i>
+                <strong>Delivery:</strong>
+                ${order.delivery_method === "room"
+                    ? "Room Delivery"
+                    : "Meet Up"}
             </p>
 
-            <p class="order-status">
+            ${
+                order.delivery_method === "room"
+                ? `
+                <p>
+                    <i class="fa-solid fa-building"></i>
+                    <strong>Hostel:</strong>
+                    ${order.hostel}
+                </p>
 
-              Status:
-              <strong>
-                   ${order.status}
-              </strong>
+                <p>
+                    <i class="fa-solid fa-door-open"></i>
+                    <strong>Room:</strong>
+                    ${order.room_number}
+                </p>
+                `
+                : `
+                <p>
+                    <i class="fa-solid fa-location-dot"></i>
+                    <strong>Meeting Point:</strong>
+                    ${order.meeting_location}
+                </p>
+                `
+            }
 
+            <p>
+                <i class="fa-solid fa-clock"></i>
+                <strong>Ordered:</strong>
+                ${new Date(order.created_at).toLocaleString([],{
+
+                  day:"numeric",
+
+                  month:"short",
+
+                  hour:"2-digit",
+
+                  minute:"2-digit"
+
+                })}
             </p>
 
-            <button class = "accept-btn"
+        </div>
+
+        <div class="order-status ${order.status}">
+            ${order.status.toUpperCase()}
+        </div>
+
+        <div class="order-actions">
+
+            <button
+                class="accept-btn"
                 onclick="acceptOrder(${order.id})"
             >
                 Accept
             </button>
 
-            <button class = "reject-btn"
+            <button
+                class="reject-btn"
                 onclick="rejectOrder(${order.id})"
             >
                 Reject
             </button>
 
+            <button
+                class="message-btn"
+                onclick="messageSeller(${order.buyer_id})"
+            >
+                Message Buyer
+            </button>
+
         </div>
 
-        `;
+    </div>
+
+    `;
 
     });
 

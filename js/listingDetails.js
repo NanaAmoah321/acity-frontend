@@ -108,64 +108,47 @@ loadStore();
 
 function messageSeller(userId) {
 
+    localStorage.setItem(
+        "receiver_id",
+        userId
+    );
 
-localStorage.setItem(
-    "receiver_id",
-    userId
-);
-
-window.location.href =
-"message.html";
-
+    window.location.href =
+    "conversation.html";
 
 }
 
 async function addToCart(listingId) {
+  const token = localStorage.getItem("token");
+  console.log("TOKEN:", token);
 
 
-const token =
-localStorage.getItem("token");
-
-if (!token) {
-
+  if (!token) {
     alert("Please login first");
     return;
+  }
 
-}
-
-try {
-
-    const res = await fetch(
-        "http://localhost:5000/api/listings/interest",
-        {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
-            },
-            body: JSON.stringify({
-                listing_id: listingId
-            })
-        }
-    );
+  try {
+    const res = await fetch("http://localhost:5000/api/listings/interest", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify({ listing_id: listingId })
+    });
 
     const data = await res.json();
+    console.log("Response:", data);
 
-    alert(data.message);
-    
-    updateCartCount();
+    if (res.ok) {
+      alert("Added to cart!");
+      updateCartCount();
+    } else {
+      alert(data.message);
+    }
 
-
-
-
-
-} catch (err) {
-
+  } catch (err) {
     console.error(err);
-
-    alert("Failed to add item");
-
-}
-
-
+  }
 }

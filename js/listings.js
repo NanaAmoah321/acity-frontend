@@ -48,7 +48,9 @@ async function loadItems() {
     console.log(stores);
 
     const searchText =
-    searchInput.value.toLowerCase();
+    searchInput
+    ? searchInput.value.toLowerCase()
+    : "";
 
     //const selectedCategory =
     //categoryFilter.value;
@@ -158,127 +160,21 @@ async function loadItems() {
     });
 
 }
-if (ItemsContainer) {
-    loadItems();
-
-    searchInput.addEventListener('input', loadItems);
-    //categoryFilter.addEventListener('change', loadItems);
-}
-
-const ItemForm = document.getElementById("ItemForm");
-
-if (ItemForm) {
-  ItemForm.addEventListener("submit", async function(e) {
-    e.preventDefault();
-
-    const token = localStorage.getItem("token");
-
-    const title = document.getElementById("title").value;
-    const description = document.getElementById("description").value;
-    const category = document.getElementById("category").value;
-    const status = document.getElementById("status").value;
-    const price = document.getElementById("price").value;
-    const image_url = document.getElementById("image_url").value;
-
-    console.log({
-      title,
-      description,
-      category,
-      status,
-      price,
-      image_url
-    });
-
-    const res = await fetch("http://localhost:5000/api/listings", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      },
-      body: JSON.stringify({ title, description, category, status, price, image_url })
-    });
-
-    const data = await res.json();
-
-    if (res.ok) {
-      alert("Item created successfully!");
-      window.location.href = "index.html";
-    } else {
-      alert(data.message || data.error);
-    }
-  });
-}
-
-async function addInterest(listingId) {
-  const token = localStorage.getItem("token");
-  console.log("TOKEN:", token);
-
-
-  if (!token) {
-    alert("Please login first");
-    return;
-  }
-
-  try {
-    const res = await fetch("http://localhost:5000/api/listings/interest", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      },
-      body: JSON.stringify({ listing_id: listingId })
-    });
-
-    const data = await res.json();
-    console.log("Response:", data);
-
-    if (res.ok) {
-      alert("Added to cart!");
-    } else {
-      alert(data.message);
-    }
-
-  } catch (err) {
-    console.error(err);
-  }
-}
-
-function messageSeller(userId) {
-
-    localStorage.setItem(
-        "receiver_id",
-        userId
-    );
-
-    window.location.href =
-    "message.html";
-
-}
-
-function viewListing(id) {
-
-    window.location.href =
-    `listing.html?id=${id}`;
-
-}
-
-function viewStore(userId) {
-
-    window.location.href =
-    `listing.html?id=${userId}`;
-
-}
 
 async function loadFeaturedProducts(){
 
+    const container =
+    document.getElementById("featuredProducts");
+
+    if (!container) return;
+
     container.innerHTML = "";
 
-    for(let i=0;i<6;i++){
+    for(let i = 0; i < 6; i++){
 
-    container.innerHTML += `
-        <div class="product-skeleton skeleton-card">
-        </div>
-    `;
+        container.innerHTML += `
+            <div class="product-skeleton skeleton-card"></div>
+        `;
 
     }
 
@@ -292,10 +188,8 @@ async function loadFeaturedProducts(){
     const listings =
     await res.json();
 
-    const container =
-    document.getElementById(
-        "featuredProducts"
-    );
+
+
 
     container.innerHTML = "";
 
@@ -359,6 +253,13 @@ async function loadFeaturedProducts(){
 
 async function loadServices(){
 
+    const container =
+    document.getElementById(
+        "servicesContainer"
+    );
+
+    if (!container) return;
+    
     container.innerHTML = "";
 
     for(let i=0;i<3;i++){
@@ -377,12 +278,7 @@ async function loadServices(){
 
     const services =
     await res.json();
-
-    const container =
-    document.getElementById(
-        "servicesContainer"
-    );
-
+    
     container.innerHTML = "";
 
     if (services.length === 0) {
@@ -450,6 +346,13 @@ async function loadServices(){
 
 async function loadRecentListings(){
 
+    const container =
+    document.getElementById(
+        "recentListings"
+    );
+
+    if (!container) return;
+
     container.innerHTML = "";
 
     for(let i=0;i<6;i++){
@@ -469,10 +372,7 @@ async function loadRecentListings(){
     const listings =
     await res.json();
 
-    const container =
-    document.getElementById(
-        "recentListings"
-    );
+    
 
     container.innerHTML = "";
 
@@ -523,6 +423,7 @@ async function loadRecentListings(){
 
 }
 
+
 function getCategoryImage(category){
 
     return `images/${category}.jpg`;
@@ -536,31 +437,26 @@ function viewService(id){
 
 }
 
-function messageProvider(userId) {
 
-    localStorage.setItem(
-        "receiver_id",
-        userId
-    );
 
-    window.location.href =
-    "message.html";
 
+
+if (ItemsContainer) {
+    loadItems();
+
+    if (searchInput) {
+        searchInput.addEventListener("input", loadItems);
+    }
 }
 
-function viewListing(id) {
-    window.location.href =
-    `listing.html?id=${id}`;
+if (document.getElementById("featuredProducts")) {
+    loadFeaturedProducts();
 }
 
-function viewStore(userId){
-
-    window.location.href =
-    `listing.html?id=${userId}`;
-
+if (document.getElementById("servicesContainer")) {
+    loadServices();
 }
 
-loadItems();
-loadFeaturedProducts();
-loadServices();
-loadRecentListings();
+if (document.getElementById("recentListings")) {
+    loadRecentListings();
+}

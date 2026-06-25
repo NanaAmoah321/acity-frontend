@@ -1,7 +1,7 @@
 const navbarToken =
 localStorage.getItem("token");
 
-const user =
+var user =
 JSON.parse(
     localStorage.getItem("user")
 );
@@ -13,7 +13,8 @@ document.getElementById(
 
 if (
     user &&
-    user.role === "admin"
+    user.role === "admin" &&
+    adminLink
 ) {
 
     adminLink.style.display =
@@ -138,6 +139,8 @@ async function updateCartCount() {
 
 }
 
+
+
 const currentPage =
 window.location.pathname.split("/").pop();
 
@@ -157,3 +160,49 @@ document
 });
 
 updateCartCount(); 
+
+
+async function updateNotificationCount(){
+
+    const token =
+    localStorage.getItem("token");
+
+    if(!token) return;
+
+    const res =
+    await fetch(
+
+        "http://localhost:5000/api/notifications/unread-count",
+
+        {
+
+            headers:{
+                Authorization:
+                `Bearer ${token}`
+            }
+
+        }
+
+    );
+
+    const data =
+    await res.json();
+
+    const badge =
+    document.getElementById(
+        "notificationCount"
+    );
+
+    if(!badge) return;
+
+    badge.textContent =
+    data.count;
+
+    badge.style.display =
+    data.count>0
+    ? "flex"
+    : "none";
+
+}
+
+updateNotificationCount();

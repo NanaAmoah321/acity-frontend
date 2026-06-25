@@ -21,6 +21,10 @@ document.getElementById(
 
 async function loadConversation() {
 
+    if(!conversationContainer){
+        return;
+    }
+
     console.log("Token:", token);
     console.log("Receiver ID:", receiver_id);
     console.log("Current User Token:", token);

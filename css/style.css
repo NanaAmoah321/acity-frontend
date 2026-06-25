@@ -485,6 +485,20 @@ nav {
     left: 30px;
     color: white;
     text-shadow: 0 2px 10px rgba(0,0,0,0.7);
+    
+}
+
+@media (max-width: 768px){
+
+    .store-overlay{
+        z-index: 2;
+    }
+
+    .store-overlay button{
+        position: relative;
+        z-index: 3;
+    }
+
 }
 
 .store-overlay h1 {
@@ -2986,6 +3000,87 @@ nav {
     color:rgba(255,255,255,.85);
 }
 
+.order-status{
+
+    display:inline-flex;
+    align-items:center;
+
+    padding:6px 14px;
+
+    border-radius:999px;
+
+    font-size:.8rem;
+    font-weight:600;
+}
+
+.order-status.pending{
+
+    background:#fff4d6;
+    color:#c08a00;
+
+}
+
+.order-status.accepted{
+
+    background:#e8fff0;
+    color:#1d8f4f;
+
+}
+
+.order-status.rejected{
+
+    background:#ffe8e8;
+    color:#c0392b;
+
+}
+
+.order-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.order-price{
+
+    font-size:1.3rem;
+    font-weight:700;
+
+    color:#ff3b3b;
+
+}
+
+.message-btn{
+
+    background:#3b82f6;
+
+    color:white;
+
+    border:none;
+
+    border-radius:10px;
+
+    padding:12px 22px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+}
+
+.order-details p{
+
+    margin:14px 0;
+
+}
+
+.order-details i{
+
+    width:24px;
+
+    color:#ff2d2d;
+
+}
+
 .profile-sidebar,
 .profile-sidebar h1,
 .profile-sidebar h2,
@@ -3433,6 +3528,12 @@ nav {
         margin-top:10px;
     }
 
+    
+
+
+
+
+
     #reviewsContainer{
         display:grid;
 
@@ -3722,10 +3823,10 @@ nav {
     
 
     .container{
-        width:100%;
+        width:auto;
         max-width:none;
 
-        margin:0;
+        margin:auto;
         padding:10px;
     }
 
@@ -4044,7 +4145,7 @@ textarea:disabled {
     position:relative;
 }
 
-
+#notificationCount,
 #messageCount,
 #cartCount{
     position:absolute;
@@ -4196,4 +4297,316 @@ textarea:disabled {
 .profile-skeleton{
     min-width:420px;
     height:420px;
+}
+
+.notifications-section{
+
+    max-width:900px;
+
+    margin:auto;
+
+}
+
+
+
+
+.notification-card.unread{
+
+    border-left:5px solid #ff2d2d;
+
+}
+
+
+
+.notification-info h3{
+
+    margin-bottom:6px;
+    color: white;
+
+}
+
+.notification-info small{
+
+    opacity:.7;
+
+}
+
+.notifications-page{
+
+    max-width:1000px;
+
+    margin:40px auto;
+
+    padding:30px;
+
+}
+
+.notifications-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:30px;
+
+}
+
+.notifications-header h1{
+
+    color:white;
+
+    font-size:3rem;
+
+    font-weight:800;
+
+}
+
+.notifications-header p{
+
+    color:#d0d8e5;
+
+}
+
+.mark-read-btn{
+
+    background:#ff2d2d;
+
+    color:white;
+
+    border:none;
+
+    padding:12px 22px;
+
+    border-radius:50px;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.mark-read-btn:hover{
+
+    transform:translateY(-2px);
+
+}
+
+.notification-filters{
+
+    display:flex;
+
+    gap:12px;
+
+    flex-wrap:wrap;
+
+    margin:30px 0;
+
+}
+
+.notification-filter{
+
+    background:rgba(255,255,255,.08);
+
+    color:white;
+
+    border:none;
+
+    padding:10px 20px;
+
+    border-radius:50px;
+
+    cursor:pointer;
+
+}
+
+.notification-filter.active{
+
+    background:#ff2d2d;
+
+}
+
+.notification-card{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+    padding: 18px 24px;
+
+    min-height: 120px;
+
+    margin-bottom:18px;
+
+    border-radius:20px;
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(16px);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    transition:.3s;
+
+    cursor:pointer;
+
+}
+
+.notification-card:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:0 20px 40px rgba(0,0,0,.25);
+
+}
+
+.notification-icon{
+
+    width:70px;
+
+    height:70px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:2rem;
+
+    color:white;
+
+    flex-shrink:0;
+
+}
+
+.icon-order{
+
+    background:#f59e0b;
+
+}
+
+.icon-message{
+
+    background:#3b82f6;
+
+}
+
+.icon-review{
+
+    background:#eab308;
+
+}
+
+.icon-service{
+
+    background:#8b5cf6;
+
+}
+
+.icon-success{
+
+    background:#22c55e;
+
+}
+
+.icon-danger{
+
+    background:#ef4444;
+
+}
+
+.notification-content{
+
+    flex:1;
+
+}
+
+.notification-top{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+.notification-top h3{
+
+    color:white;
+
+    font-size:1.4rem;
+
+    font-weight:700;
+
+}
+
+.notification-time{
+
+    color:#cbd5e1;
+
+    font-size:.9rem;
+
+}
+
+.notification-product{
+
+    display:inline-block;
+
+    margin:10px 0;
+
+    padding:8px 14px;
+
+    border-radius:10px;
+
+    background:rgba(255,255,255,.08);
+
+}
+
+.notification-arrow{
+
+    font-size:1.9rem;
+
+    color:white;
+
+    transition:.3s;
+
+}
+.notification-card:hover
+.notification-arrow{
+
+    transform:translateX(8px);
+
+}
+
+.notification-dot{
+
+    width:20px;
+
+    height:20px;
+
+    border-radius:50%;
+
+    background:#ff2d2d;
+
+}
+
+.notification-message{
+
+    color:#d7dce5;
+
+    margin-top:8px;
+
+    font-size:1rem;
+
+    line-height:1.6;
+
 }

@@ -6,11 +6,11 @@ async function loadInbox() {
 
     try {
 
-        container.innerHTML = "";
+        inboxContainer.innerHTML = "";
 
         for(let i=0;i<5;i++){
 
-        container.innerHTML += `
+        inboxContainer.innerHTML += `
         <div class="inbox-skeleton skeleton-card">
         </div>
         `;
@@ -27,6 +27,8 @@ async function loadInbox() {
         );
 
         const messages = await res.json();
+
+        inboxContainer.innerHTML = "";
 
         if(messages.length === 0){
 
