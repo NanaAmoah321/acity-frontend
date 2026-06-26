@@ -7,109 +7,205 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
-<body>
-    
-    <nav>
+<body class="auth-pages-background">
+    <div class="auth-page">
 
-        <div class="logo">
-            <img
-                src="images/acity_new_logo-removebg-preview.png"
-                alt="acity logo"
-            >
+    <div class="auth-left">
+
+        <img
+            src="images/acity_new_logo-removebg-preview.png"
+            class="auth-logo"
+            alt="Acity Connect"
+        >
+
+        <h1>
+            Join Acity Connect 
+        </h1>
+
+        <p class="auth-subtitle">
+
+            Your campus marketplace for buying, selling,
+            services and student connections.
+
+        </p>
+
+        <div class="auth-features">
+
+            <div>
+                <i class="fa-solid fa-store"></i>
+                Buy & Sell Safely
+            </div>
+
+            <div>
+                <i class="fa-solid fa-screwdriver-wrench"></i>
+                Offer Your Skills
+            </div>
+
+            <div>
+                <i class="fa-solid fa-comments"></i>
+                Message Students
+            </div>
+
+            <div>
+                <i class="fa-solid fa-star"></i>
+                Build Your Reputation
+            </div>
+
         </div>
 
-        <button id="menu-toggle" class="menu-toggle">
+    </div>
 
-        <span></span>
-        <span></span>
-        <span></span>
+    <div class="auth-right">
 
-        </button>
+        <div class="auth-card">
 
-        <div class="nav-links" id="navLinks">
+            <h2>Create Account</h2>
 
-    <a href="index.html" class="nav-item">
-    <i class="fa-solid fa-house"></i>
-    <span class="menu-label">Home</span>
-    </a>        
-    
-    <a href="marketplace.html" class="nav-item">
-    <i class="fa-solid fa-store"></i>
-    <span class="menu-label">Marketplace</span>
-    </a>
+            <p>
 
-    <a href="login.html" class="nav-item">
-        <i class="fa-solid fa-right-to-bracket"></i>
-        <span class="menu-label">Login</span>
-    </a>
+                Join the Academic City community.
 
-    <a href="register.html" class="nav-item">
-        <i class="fa-solid fa-user-plus"></i>
-        <span class="menu-label">Register</span>
-    </a>
+            </p>
 
-    <a href="profile.html" class="nav-item">
-        <i class="fa-solid fa-user"></i>
-        <span class="menu-label">Profile</span>
-    </a>
+            <form id="registerForm">
 
-    <a href="inbox.html" class="nav-item">
-        <i class="fa-solid fa-comments"></i>
-        <span class="menu-label">Inbox</span>
-        <small id="messageCount"></small>
-    </a>
+                <div class="input-group">
 
-    <a href="create-listing.html" class="nav-item">
-        <i class="fa-solid fa-plus"></i>
-        <span class="menu-label">Add Item</span>
-    </a>
+                    <i class="fa-solid fa-user"></i>
 
-    <a href="services.html" class="nav-item">
-        <i class="fa-solid fa-screwdriver-wrench"></i>
-        <span class="menu-label">Skills Connect</span>
-    </a>
+                    <input
+                        type="text"
+                        id="fullName"
+                        placeholder="Name"
+                        required
+                    >
 
-    <a href="#" onclick="logout()" class="nav-item">
-        <i class="fa-solid fa-right-from-bracket"></i>
-        <span class="menu-label">Logout</span>
-    </a>
+                </div>
 
-    <a 
-       href="admin.html"
-       class="nav-item"
-       id="adminLink"
-       style="display: none;">
-        <i class="fa-solid fa-shield-halved"></i>
-        <span class="menu-label">Admin</span>
-    </a>
+                <div class="input-group">
 
-    <a href="myCart.html" class="nav-item">
-    <i class="fa-solid fa-cart-shopping"></i>
-    <span class="menu-label">My Cart</span>
-    </a>
+                    <i class="fa-solid fa-envelope"></i>
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="student@acity.edu.gh"
+                        required
+                    >
+
+                </div>
+
+                
+
+                <div class="input-group">
+
+                    <i class="fa-solid fa-layer-group"></i>
+
+                    <select id="level" required>
+
+                        <option value="">
+                            Select Level
+                        </option>
+
+                        <option>100</option>
+
+                        <option>200</option>
+
+                        <option>300</option>
+
+                        <option>400</option>
+
+                    </select>
+
+                </div>
+
+                <div class="input-group">
+
+                    <i class="fa-solid fa-lock"></i>
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Password"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        class="toggle-password"
+                    >
+
+                        <i class="fa-solid fa-eye"></i>
+
+                    </button>
+
+                </div>
+
+                <div id="passwordStrength"></div>
+
+                <div class="input-group">
+
+                    <i class="fa-solid fa-lock"></i>
+
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        placeholder="Confirm Password"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        class="toggle-password"
+                    >
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+
+                </div>
+
+                <label class="terms">
+
+                    <input
+                        type="checkbox"
+                        required
+                    >
+
+                    I agree to the Terms &
+                    Privacy Policy
+
+                </label>
+
+                <button
+                    class="auth-btn"
+                    id="registerButton"
+                    type="submit"
+                >
+
+                    Create Account
+
+                </button>
+
+            </form>
+
+            <p class="switch-auth">
+
+                Already have an account?
+
+                <a href="login.html">
+
+                    Sign In
+
+                </a>
+
+            </p>
+
+        </div>
 
     </div>
 
-    </nav>
-   
-    <div class="form-container">
-        <h2>Register</h2>
-
-        <form id="registerForm">
-            <label for="fullName">Full Name: </label>
-            <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" placeholder="Enter your Acity email" required>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" placeholder="Enter password" required>
-            <button class="login-register" type="submit">Register</button>
-        </form>
-
-        <p>Already have an account? <a href="login.html">Login here</a></p>
-
-    </div>
+</div>
+<script src="js/toast.js"></script>
+<script src="js/auth.js"></script>
     
-    <script src="js/auth.js"></script>
-    <script type="module" src="/js/navbar.js"></script>
 </body>
 </html>

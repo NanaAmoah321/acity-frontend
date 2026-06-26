@@ -99,93 +99,138 @@
     </div>
 
     </nav>
-<div class="form-container">
+<section class="create-page">
 
-    <h2>Offer Your Skills</h2>
+    <div class="create-header">
 
-    <form id="serviceForm">
+        <div class="create-icon">
 
-        <label for="title">Service Title</label>
-        <input
-            type="text"
-            id="title"
-            placeholder="e.g. Web Developer"
-            required
-        >
+            <i class="fa-solid fa-screwdriver-wrench"></i>
 
-        <label for="description">Description</label>
-        <textarea
-            id="description"
-            placeholder="Describe the service you offer"
-            required
-        ></textarea>
+        </div>
 
-        <label for="category">Category</label>
-        <select id="category" required>
-            <option value="">Select Category</option>
-            <option value="Programming">Programming</option>
-            <option value="Graphic Design">Graphic Design</option>
-            <option value="Tutoring">Tutoring</option>
-            <option value="Photography">Photography</option>
-            <option value="Video Editing">Video Editing</option>
-            <option value="Writing">Writing</option>
-            <option value="Marketing">Marketing</option>
-            <option value="Other">Other</option>
-        </select>
+        <h1>Offer Your Skills</h1>
 
-        <label for="rate">Rate (₵)</label>
-        <input
-            type="number"
-            id="rate"
-            placeholder="Enter your rate"
-            required
-        >
-        <label for="rateType">
-            Rate Type
-        </label>
+        <p>
+            Turn your talents into income and connect with students looking for your services.
+        </p>
 
-        <select id="rateType" required>
+    </div>
 
-            <option>
-                Per Hour
-            </option>
+    <div class="create-card">
 
-            <option>
-                Per Session
-            </option>
+        <h2>Create Service</h2>
 
-            <option>
-                Per Day
-            </option>
+        <p class="form-subtitle">
+            Tell students what you can do.
+        </p>
 
-            <option>
-                Per Project
-            </option>
+        <form id="serviceForm">
 
-            <option>
-                Negotiable
-            </option>
+            <div class="input-group">
 
-        </select>
+                <i class="fa-solid fa-briefcase"></i>
 
-        <label for="portfolio_url">Portfolio Link</label>
-        <input
-            type="url"
-            id="portfolio_url"
-            placeholder="https://github.com/yourprofile"
-        >
+                <input
+                    type="text"
+                    id="title"
+                    placeholder="Service Title"
+                    required
+                >
 
-        <button
-            type="submit"
-            class="Add-button"
-        >
-            Create Service
-        </button>
+            </div>
 
-    </form>
+            <div class="input-group textarea-group">
 
+                <i class="fa-solid fa-align-left"></i>
+
+                <textarea
+                    id="description"
+                    placeholder="Describe your service..."
+                    required
+                ></textarea>
+
+            </div>
+
+            <div class="input-group select-group">
+
+                <i class="fa-solid fa-layer-group"></i>
+
+                <select id="category" required>
+
+                    <option value="">Select Category</option>
+                    <option value="Programming">Programming</option>
+                    <option value="Graphic Design">Graphic Design</option>
+                    <option value="Tutoring">Tutoring</option>
+                    <option value="Photography">Photography</option>
+                    <option value="Video Editing">Video Editing</option>
+                    <option value="Writing">Writing</option>
+                    <option value="Marketing">Marketing</option>
+                    <option value="Other">Other</option>
+
+                </select>
+
+            </div>
+
+            <div class="input-group">
+
+                <i class="fa-solid fa-coins"></i>
+
+                <input
+                    type="number"
+                    id="rate"
+                    placeholder="Rate (GH₵)"
+                    required
+                >
+
+            </div>
+
+            <div class="input-group select-group">
+
+                <i class="fa-solid fa-clock"></i>
+
+                <select id="rateType" required>
+
+                    <option>Per Hour</option>
+                    <option>Per Session</option>
+                    <option>Per Day</option>
+                    <option>Per Project</option>
+                    <option>Negotiable</option>
+
+                </select>
+
+            </div>
+
+            <div class="input-group">
+
+                <i class="fa-solid fa-globe"></i>
+
+                <input
+                    type="url"
+                    id="portfolio_url"
+                    placeholder="Portfolio Link (Optional)"
+                >
+
+            </div>
+
+            <button
+                class="auth-button"
+                type="submit"
+            >
+
+                <i class="fa-solid fa-plus"></i>
+
+                Create Service
+
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
 </div>
-
+<script src="js/toast.js"></script>
 <script src="js/create-service.js"></script>
 <script type="module" src="/js/navbar.js"></script>
 

@@ -312,5 +312,49 @@ document
     );
 
 });
+const markAllReadBtn =
+document.getElementById(
+    "markAllRead"
+);
 
+if(markAllReadBtn){
+
+    markAllReadBtn.addEventListener(
+
+        "click",
+
+        async()=>{
+
+            const token =
+            localStorage.getItem("token");
+
+            await fetch(
+
+                "http://localhost:5000/api/notifications/read-all",
+
+                {
+
+                    method:"PATCH",
+
+                    headers:{
+                        Authorization:`Bearer ${token}`
+                    }
+
+                }
+
+            );
+
+            loadNotifications();
+
+            if(window.updateNotificationCount){
+
+                window.updateNotificationCount();
+
+            }
+
+        }
+
+    );
+
+}
 loadNotifications();

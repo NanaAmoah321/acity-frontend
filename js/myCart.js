@@ -122,7 +122,7 @@ async function removeFromCart(listingId) {
 
     alert(data.message || data.error);
     loadInterested(); 
-    updateCartCount(); 
+    loadCartCount();
   }
 }
 

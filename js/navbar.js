@@ -22,50 +22,69 @@ if (
 
 }
 
-async function
-loadUnreadCount() {
+async function updateMessageCount(){
 
-    if (!navbarToken) return;
+    const badge =
+    document.getElementById("messageCount");
 
-    try {
+    if(!badge) return;
 
-        const res =
-        await fetch(
+    const token =
+    localStorage.getItem("token");
+
+    if(!token){
+
+        badge.style.display = "none";
+
+        return;
+
+    }
+
+    try{
+
+        const res = await fetch(
+
             "http://localhost:5000/api/messages/unread-count",
+
             {
-                headers: {
-                    Authorization:
-                    `Bearer ${navbarToken}`
+
+                headers:{
+                    Authorization:`Bearer ${token}`
                 }
+
             }
+
         );
 
         const data =
         await res.json();
 
-        const badge =
-        document.getElementById(
-            "messageCount"
-        );
+        if(Number(data.count) > 0){
 
-        if (
-            Number(data.count) > 0
-        ) {
+            badge.textContent =
+            data.count;
 
-            badge.innerText =
-            `(${data.count})`;
+            badge.style.display =
+            "flex";
+
+        }else{
+
+            badge.textContent =
+            "";
+
+            badge.style.display =
+            "none";
 
         }
 
-    } catch (err) {
+    }catch{
 
-        console.error(err);
+        badge.style.display =
+        "none";
 
     }
 
 }
-
-loadUnreadCount();
 
 const menuToggle=
 document.getElementById("menu-toggle");
@@ -88,56 +107,8 @@ if (menuToggle) {
 
 }
 
-async function updateCartCount() {
 
-    const token =
-    localStorage.getItem("token");
 
-    if (!token) return;
-
-    try {
-
-        const res =
-        await fetch(
-            "http://localhost:5000/api/listings/interested",
-            {
-                headers: {
-                    Authorization:
-                    `Bearer ${token}`
-                }
-            }
-        );
-
-        const items =
-        await res.json();
-
-        const cartCount =
-        document.getElementById(
-            "cartCount"
-        );
-
-        if (cartCount) {
-
-            cartCount.textContent =
-            items.length;
-
-            cartCount.style.display =
-            items.length > 0
-            ? "flex"
-            : "none";
-
-        }
-
-    } catch (err) {
-
-        console.error(
-            "Cart count error:",
-            err
-        );
-
-    }
-
-}
 
 
 
@@ -159,7 +130,7 @@ document
 
 });
 
-updateCartCount(); 
+
 
 
 async function updateNotificationCount(){
@@ -206,3 +177,80 @@ async function updateNotificationCount(){
 }
 
 updateNotificationCount();
+
+async function loadCartCount() {
+
+    const badge =
+    document.getElementById("cartCount");
+
+    if(!badge){
+
+        return;
+
+    }
+
+    const token =
+    localStorage.getItem("token");
+
+    if(!token){
+
+        badge.style.display = "none";
+        return;
+
+    }
+
+    try{
+
+        const res = await fetch(
+            "http://localhost:5000/api/listings/interested",
+            {
+                headers:{
+                    Authorization:`Bearer ${token}`
+                }
+            }
+        );
+
+        if(!res.ok){
+
+            badge.style.display = "none";
+            return;
+
+        }
+
+        const cart =
+        await res.json();
+
+        if(cart.length > 0){
+
+            badge.innerHTML = cart.length;
+
+            badge.style.display = "flex";
+
+        }else{
+
+            badge.innerHTML = "";
+
+            badge.style.display = "none";
+
+        }
+
+    }catch{
+
+        badge.style.display = "none";
+
+    }
+
+}
+
+document.addEventListener(
+
+    "DOMContentLoaded",
+
+    loadCartCount
+
+);
+
+window.loadCartCount = loadCartCount;
+updateMessageCount();
+window.updateMessageCount =
+updateMessageCount;

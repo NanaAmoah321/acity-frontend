@@ -8,107 +8,165 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 </head>
-<body>
+<body class="auth-pages-background">
 
-    <nav>
 
-        <div class="logo">
-            <img
-                src="images/acity_new_logo-removebg-preview.png"
-                alt="acity logo"
-            >
+<div class="floating-blob blob-1"></div>
+<div class="floating-blob blob-2"></div>
+<div class="floating-blob blob-3"></div>
+
+<div class="auth-page">
+
+    <div class="auth-left">
+
+        <img
+            src="images/acity_new_logo-removebg-preview.png"
+            class="auth-logo"
+            alt="Acity Connect"
+        >
+
+        <h1>
+            Welcome Back 
+        </h1>
+
+        <p class="auth-subtitle">
+
+            Buy. Sell. Learn. Connect.
+
+        </p>
+
+        <div class="auth-features">
+
+            <div>
+                <i class="fa-solid fa-store"></i>
+                Campus Marketplace
+            </div>
+
+            <div>
+                <i class="fa-solid fa-screwdriver-wrench"></i>
+                Skills Connect
+            </div>
+
+            <div>
+                <i class="fa-solid fa-comments"></i>
+                Student Messaging
+            </div>
+
+            <div>
+                <i class="fa-solid fa-shield-halved"></i>
+                Safe Campus Trading
+            </div>
+
         </div>
 
-        <button id="menu-toggle" class="menu-toggle">
+    </div>
 
-        <span></span>
-        <span></span>
-        <span></span>
+    <div class="auth-right">
 
-        </button>
+        <div class="auth-card">
 
-        <div class="nav-links" id="navLinks">
+            <h2>Sign In</h2>
 
-    <a href="index.html" class="nav-item">
-    <i class="fa-solid fa-house"></i>
-    <span class="menu-label">Home</span>
-    </a>        
+            <p>
+
+                Sign in to continue to Acity Connect.
+
+            </p>
+
+            <form id="loginForm">
+
+                <div class="input-group">
+
+                    <i class="fa-solid fa-envelope"></i>
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="student@acity.edu.gh"
+                        required
+                    >
+
+                </div>
+
+                <div class="input-group">
+
+                    <i class="fa-solid fa-lock"></i>
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Password"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        class="toggle-password"
+                    >
+
+                        <i 
+                            id="togglePasswordIcon"    
+                            class="fa-solid fa-eye"
+                        ></i>
+
+                    </button>
+
+                </div>
+
+                <div class="auth-options">
+
+                    <label>
+
+                        <input type="checkbox">
+
+                        Remember me
+
+                    </label>
+
+                    <a href="#">
+
+                        Forgot Password?
+
+                    </a>
+
+                </div>
+
+                <button
+                    class="auth-btn"
+                    id="loginButton"
+                    type="submit"
+                >
+                    <span>
+
+                        Sign In
+                    
+                    </span>
+                    
+
+                </button>
+
+            </form>
+
+            <p class="switch-auth">
+
+                Don't have an account?
+
+                <a href="register.html">
+
+                    Create one
+
+                </a>
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+<script src="js/toast.js"></script>
+<script src="js/auth.js"></script>
+
     
-    <a href="marketplace.html" class="nav-item">
-    <i class="fa-solid fa-store"></i>
-    <span class="menu-label">Marketplace</span>
-    </a>
-
-    <a href="login.html" class="nav-item">
-        <i class="fa-solid fa-right-to-bracket"></i>
-        <span class="menu-label">Login</span>
-    </a>
-
-    <a href="register.html" class="nav-item">
-        <i class="fa-solid fa-user-plus"></i>
-        <span class="menu-label">Register</span>
-    </a>
-
-    <a href="profile.html" class="nav-item">
-        <i class="fa-solid fa-user"></i>
-        <span class="menu-label">Profile</span>
-    </a>
-
-    <a href="inbox.html" class="nav-item">
-        <i class="fa-solid fa-comments"></i>
-        <span class="menu-label">Inbox</span>
-        <small id="messageCount"></small>
-    </a>
-
-    <a href="create-listing.html" class="nav-item">
-        <i class="fa-solid fa-plus"></i>
-        <span class="menu-label">Add Item</span>
-    </a>
-
-    <a href="services.html" class="nav-item">
-        <i class="fa-solid fa-screwdriver-wrench"></i>
-        <span class="menu-label">Skills Connect</span>
-    </a>
-
-    <a href="#" onclick="logout()" class="nav-item">
-        <i class="fa-solid fa-right-from-bracket"></i>
-        <span class="menu-label">Logout</span>
-    </a>
-
-    <a 
-       href="admin.html"
-       class="nav-item"
-       id="adminLink"
-       style="display: none;">
-        <i class="fa-solid fa-shield-halved"></i>
-        <span class="menu-label">Admin</span>
-    </a>
-
-    <a href="myCart.html" class="nav-item">
-    <i class="fa-solid fa-cart-shopping"></i>
-    <span class="menu-label">My Cart</span>
-    </a>
-
-    </div>
-
-    </nav>
-
-    <div class="form-container">
-        <h2>Login</h2>
-
-        <form id="loginForm">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" placeholder="Enter your Acity email" required>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" placeholder="Enter password" required>
-            <button class="login-register" type="submit">Login</button>
-        </form>
-
-        <p>Don't have an account? <a href="register.html">Register here</a></p>
-
-    </div>
-
-    <script src="js/auth.js"></script>
-    <script type="module" src="/js/navbar.js"></script>
 </body>
 </html>

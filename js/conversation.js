@@ -150,6 +150,12 @@ document
             }
         );
 
+        if(window.updateMessageCount){
+
+            window.updateMessageCount();
+
+        }
+
         document
         .getElementById(
             "messageInput"
@@ -157,6 +163,11 @@ document
         .value = "";
 
         loadConversation();
+        if(window.updateMessageCount){
+
+            window.updateMessageCount();
+
+        }
 
     }
 );
