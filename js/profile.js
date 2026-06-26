@@ -51,7 +51,7 @@ async function loadMyItems() {
     `;
 
     }
-    const res = await fetch("http://localhost:5000/api/listings/my", {
+    const res = await fetch("https://acity-backend.onrender.com/api/listings/my", {
       headers: {
         "Authorization": `Bearer ${token}`
       }
@@ -138,7 +138,7 @@ async function deleteItem(id) {
   const token = localStorage.getItem("token");
 
   if (confirm("Delete this item?")) {
-    await fetch(`http://localhost:5000/api/listings/${id}`, {
+    await fetch(`https://acity-backend.onrender.com/api/listings/${id}`, {
       method: "DELETE",
       headers: {
         "Authorization": `Bearer ${token}`
@@ -166,7 +166,7 @@ async function editItem(id) {
   const currentItem =
   (
     await fetch(
-      `http://localhost:5000/api/listings/${id}`
+      `https://acity-backend.onrender.com/api/listings/${id}`
     )
   ).json();
 
@@ -211,7 +211,7 @@ async function editItem(id) {
 
   const res =
   await fetch(
-    `http://localhost:5000/api/listings/${id}`,
+    `https://acity-backend.onrender.com/api/listings/${id}`,
     {
       method: "PUT",
 
@@ -284,7 +284,7 @@ async function loadSellerOrders() {
 
     const res =
     await fetch(
-        "http://localhost:5000/api/listings/seller-orders",
+        "https://acity-backend.onrender.com/api/listings/seller-orders",
         {
             headers: {
                 Authorization:
@@ -453,7 +453,7 @@ async function acceptOrder(orderId) {
 
     const res =
     await fetch(
-        `http://localhost:5000/api/listings/orders/${orderId}`,
+        `https://acity-backend.onrender.com/api/listings/orders/${orderId}`,
         {
             method: "PUT",
 
@@ -493,7 +493,7 @@ async function rejectOrder(orderId) {
 
     const res =
     await fetch(
-        `http://localhost:5000/api/listings/orders/${orderId}`,
+        `https://acity-backend.onrender.com/api/listings/orders/${orderId}`,
         {
             method: "PUT",
 

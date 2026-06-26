@@ -36,7 +36,7 @@ function getStoreImage(category) {
 async function searchMarketplace(query) {
 
     const res = await fetch(
-        `http://localhost:5000/api/listings/search?q=${encodeURIComponent(query)}`
+        `https://acity-backend.onrender.com/api/listings/search?q=${encodeURIComponent(query)}`
     );
 
     const listings = await res.json();
@@ -108,7 +108,7 @@ async function loadItems() {
 
     const res =
     await fetch(
-        "http://localhost:5000/api/listings/stores"
+        "https://acity-backend.onrender.com/api/listings/stores"
     );
 
     const stores =
@@ -249,7 +249,7 @@ async function loadFeaturedProducts(){
 
     const res =
     await fetch(
-        "http://localhost:5000/api/listings"
+        "https://acity-backend.onrender.com/api/listings"
     );
 
     
@@ -342,7 +342,7 @@ async function loadServices(){
 
     const res =
     await fetch(
-        "http://localhost:5000/api/services"
+        "https://acity-backend.onrender.com/api/services"
     );
 
     const services =
@@ -435,7 +435,7 @@ async function loadRecentListings(){
 
     const res =
     await fetch(
-        "http://localhost:5000/api/listings"
+        "https://acity-backend.onrender.com/api/listings"
     );
 
     const listings =

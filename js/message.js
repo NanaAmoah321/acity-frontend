@@ -15,7 +15,7 @@ sendBtn.addEventListener(
         document.getElementById("message").value;
 
         const res = await fetch(
-            "http://localhost:5000/api/messages",
+            "https://acity-backend.onrender.com/api/messages",
             {
                 method: "POST",
 

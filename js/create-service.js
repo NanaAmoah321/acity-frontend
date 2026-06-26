@@ -44,7 +44,7 @@ serviceForm.addEventListener(
 
         const res =
         await fetch(
-            "http://localhost:5000/api/services",
+            "https://acity-backend.onrender.com/api/services",
             {
                 method: "POST",
 

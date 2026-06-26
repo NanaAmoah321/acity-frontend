@@ -28,7 +28,7 @@ async function loadNotifications(){
 
     const res =
     await fetch(
-        "http://localhost:5000/api/notifications",
+        "https://acity-backend.onrender.com/api/notifications",
         {
             headers:{
                 Authorization:
@@ -200,7 +200,7 @@ async function openNotification(id, type, conversationUserId) {
     const token = localStorage.getItem("token");
 
     await fetch(
-        `http://localhost:5000/api/notifications/${id}/read`,
+        `https://acity-backend.onrender.com/api/notifications/${id}/read`,
         {
             method: "PATCH",
             headers: {
@@ -330,7 +330,7 @@ if(markAllReadBtn){
 
             await fetch(
 
-                "http://localhost:5000/api/notifications/read-all",
+                "https://acity-backend.onrender.com/api/notifications/read-all",
 
                 {
 

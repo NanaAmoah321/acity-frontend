@@ -30,7 +30,7 @@ async function loadConversation() {
     console.log("Current User Token:", token);
 
     const res = await fetch(
-        `http://localhost:5000/api/messages/conversation/${receiver_id}`,
+        `https://acity-backend.onrender.com/api/messages/conversation/${receiver_id}`,
         {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -131,7 +131,7 @@ document
         .value;
 
         await fetch(
-            "http://localhost:5000/api/messages",
+            "https://acity-backend.onrender.com/api/messages",
             {
                 method: "POST",
 
@@ -215,7 +215,7 @@ document
 
         const res =
         await fetch(
-            "http://localhost:5000/api/reviews",
+            "https://acity-backend.onrender.com/api/reviews",
             {
                 method: "POST",
 

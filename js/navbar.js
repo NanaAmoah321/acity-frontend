@@ -44,7 +44,7 @@ async function updateMessageCount(){
 
         const res = await fetch(
 
-            "http://localhost:5000/api/messages/unread-count",
+            "https://acity-backend.onrender.com/api/messages/unread-count",
 
             {
 
@@ -143,7 +143,7 @@ async function updateNotificationCount(){
     const res =
     await fetch(
 
-        "http://localhost:5000/api/notifications/unread-count",
+        "https://acity-backend.onrender.com/api/notifications/unread-count",
 
         {
 
@@ -202,7 +202,7 @@ async function loadCartCount() {
     try{
 
         const res = await fetch(
-            "http://localhost:5000/api/listings/interested",
+            "https://acity-backend.onrender.com/api/listings/interested",
             {
                 headers:{
                     Authorization:`Bearer ${token}`

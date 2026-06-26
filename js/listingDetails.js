@@ -8,7 +8,7 @@ async function loadStore() {
 try {
 
     const storeRes = await fetch(
-        `http://localhost:5000/api/listings/store/${userId}`
+        `https://acity-backend.onrender.com/api/listings/store/${userId}`
     );
 
     const store = await storeRes.json();
@@ -129,7 +129,7 @@ async function addToCart(listingId) {
   }
 
   try {
-    const res = await fetch("http://localhost:5000/api/listings/interest", {
+    const res = await fetch("https://acity-backend.onrender.com/api/listings/interest", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

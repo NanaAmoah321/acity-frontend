@@ -9,7 +9,7 @@ async function loadReviews() {
 
     const ratingRes =
     await fetch(
-        `http://localhost:5000/api/reviews/rating/${reviewUser.id}`
+        `https://acity-backend.onrender.com/api/reviews/rating/${reviewUser.id}`
     );
 
     
@@ -38,7 +38,7 @@ async function loadReviews() {
 
     const reviewsRes =
     await fetch(
-        `http://localhost:5000/api/reviews/${reviewUser.id}`
+        `https://acity-backend.onrender.com/api/reviews/${reviewUser.id}`
     );
 
     const reviews =

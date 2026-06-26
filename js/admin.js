@@ -19,7 +19,7 @@ if (
 async function loadDashboard() {
 
     const res = await fetch(
-        "http://localhost:5000/api/admin/stats",
+        "https://acity-backend.onrender.com/api/admin/stats",
         {
             headers: {
                 Authorization:
@@ -52,7 +52,7 @@ loadDashboard();
 async function loadListings() {
 
     const res = await fetch(
-        "http://localhost:5000/api/admin/listings",
+        "https://acity-backend.onrender.com/api/admin/listings",
         {
             headers: {
                 Authorization:
@@ -115,7 +115,7 @@ async function deleteListing(id) {
     }
 
     await fetch(
-        `http://localhost:5000/api/admin/listings/${id}`,
+        `https://acity-backend.onrender.com/api/admin/listings/${id}`,
         {
             method: "DELETE",
 
@@ -133,7 +133,7 @@ async function deleteListing(id) {
 async function loadServices() {
 
     const res = await fetch(
-        "http://localhost:5000/api/admin/services",
+        "https://acity-backend.onrender.com/api/admin/services",
         {
             headers: {
                 Authorization:
@@ -191,7 +191,7 @@ async function deleteService(id) {
     }
 
     await fetch(
-        `http://localhost:5000/api/admin/services/${id}`,
+        `https://acity-backend.onrender.com/api/admin/services/${id}`,
         {
             method: "DELETE",
 
@@ -209,7 +209,7 @@ async function deleteService(id) {
 async function loadUsers() {
 
     const res = await fetch(
-        "http://localhost:5000/api/admin/users",
+        "https://acity-backend.onrender.com/api/admin/users",
         {
             headers: {
                 Authorization:
@@ -280,7 +280,7 @@ async function loadUsers() {
 async function makeAdmin(id) {
 
     await fetch(
-        `http://localhost:5000/api/admin/users/${id}/admin`,
+        `https://acity-backend.onrender.com/api/admin/users/${id}/admin`,
         {
             method: "PUT",
 
@@ -298,7 +298,7 @@ async function makeAdmin(id) {
 async function suspendUser(id) {
 
     await fetch(
-        `http://localhost:5000/api/admin/users/${id}/suspend`,
+        `https://acity-backend.onrender.com/api/admin/users/${id}/suspend`,
         {
             method: "PUT",
 
@@ -319,7 +319,7 @@ async function deleteUser(id) {
         return;
 
     await fetch(
-        `http://localhost:5000/api/admin/users/${id}`,
+        `https://acity-backend.onrender.com/api/admin/users/${id}`,
         {
             method: "DELETE",
 

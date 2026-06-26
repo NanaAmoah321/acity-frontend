@@ -28,7 +28,7 @@ if (loginForm) {
         try{
 
             const res = await fetch(
-                "http://localhost:5000/api/auth/login",
+                "https://acity-backend.onrender.com/api/auth/login",
                 {
                     method:"POST",
                     headers:{
@@ -100,7 +100,7 @@ if (registerForm) {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
-  const res = await fetch("http://localhost:5000/api/auth/register", {
+  const res = await fetch("https://acity-backend.onrender.com/api/auth/register", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -199,7 +199,7 @@ document.getElementById("email").value;
 const res =
 await fetch(
 
-"http://localhost:5000/api/auth/forgot-password",
+"https://acity-backend.onrender.com/api/auth/forgot-password",
 
 {
 
@@ -279,7 +279,7 @@ if(resetPasswordForm){
             const res =
             await fetch(
 
-                `http://localhost:5000/api/auth/reset-password/${token}`,
+                `https://acity-backend.onrender.com/api/auth/reset-password/${token}`,
 
                 {
 

@@ -18,7 +18,7 @@ async function loadInbox() {
         }
 
         const res = await fetch(
-            "http://localhost:5000/api/messages/conversations",
+            "https://acity-backend.onrender.com/api/messages/conversations",
             {
                 headers: {
                     "Authorization": `Bearer ${token}`
