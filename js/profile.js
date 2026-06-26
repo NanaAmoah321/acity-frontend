@@ -523,3 +523,14 @@ async function rejectOrder(orderId) {
     loadSellerOrders();
 
 }
+function messageSeller(userId){
+
+    localStorage.setItem(
+        "receiver_id",
+        userId
+    );
+
+    window.location.href =
+        "conversation.html";
+
+}

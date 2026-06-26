@@ -1,3 +1,5 @@
+
+
 body {
     background-image: linear-gradient(rgba(0,0,0,0.5)),url("https://npf-unlayer.s3.ap-south-1.amazonaws.com/unlayer%2Fimages%2F1717766775849-acity-univercity-college.webp");
     background-size: cover;
@@ -7,6 +9,7 @@ body {
     margin: 0;
     min-height: 100vh;
     font-family: Arial, sans-serif;
+    
     
         
 }
@@ -49,6 +52,7 @@ input, textarea, select {
 
 nav {
     background: rgba(255,255,255,0.15);
+    
     backdrop-filter: blur(10px);
     padding: 1px;
     display: flex;
@@ -348,6 +352,7 @@ nav {
     max-width: 400px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     height: auto;
+    
 }
 
 .service-actions{
@@ -406,6 +411,7 @@ nav {
     overflow: hidden;
     background:rgba(255,255,255,.08);
     backdrop-filter:blur(20px);
+
 }
 
 
@@ -2007,7 +2013,7 @@ nav {
     flex:0 0 300px;
     background:rgba(255,255,255,.08);
     backdrop-filter:blur(20px);
-
+    
 }
 
 .product-card:hover{
@@ -2050,6 +2056,40 @@ nav {
 }
 
 
+.product-info button{
+
+    margin-top:16px;
+
+    width:100%;
+
+    padding:12px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#ff2d2d;
+
+    color:#fff;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.product-info button:hover{
+
+    background:#e11d48;
+
+    transform:translateY(-2px);
+
+}
+
 
 @media (max-width:768px){
 
@@ -2060,6 +2100,7 @@ nav {
         min-width: 220px;
         background:rgba(255,255,255,.08);
         backdrop-filter:blur(20px);
+
     }
 
     .product-card img{
@@ -2534,6 +2575,7 @@ nav {
     background:#efefdc;
     border-radius:20px;
     overflow:hidden;
+    
 }
 
 .profile-card h3{
@@ -4090,7 +4132,7 @@ label {
 
     font-weight: 600;
 
-    color: #333;
+    color: white
 
 }
 
@@ -4460,6 +4502,8 @@ textarea:disabled {
 
     cursor:pointer;
 
+    
+
 }
 
 .notification-card:hover{
@@ -4653,7 +4697,7 @@ textarea:disabled {
 
 }
 
-.auth-left{
+/*.auth-left{
 
     display:flex;
 
@@ -4661,9 +4705,9 @@ textarea:disabled {
 
     justify-content:center;
 
-    transform:translateY(-100px);
+    transform:translateY(-30px);
 
-    padding:70px;
+    padding:70px 70px 100px;
 
     color:white;
 
@@ -4671,6 +4715,15 @@ textarea:disabled {
 
     overflow:hidden;
 
+}*/
+
+.auth-left{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding:70px;
+    color:white;
+    position:relative;
 }
 
 .auth-left::before{
@@ -5697,5 +5750,175 @@ textarea:disabled {
     font-size:2.3rem;
 
 }
+
+}
+
+.upload-area{
+
+    position:relative;
+
+    
+
+    min-height:300px;
+
+    border:2px dashed rgba(255,255,255,.18);
+
+    border-radius:24px;
+
+    background:rgba(255,255,255,.04);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    flex-direction:column;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    overflow:hidden;
+
+    padding:30px;
+
+}
+
+.upload-area:hover{
+
+    border-color:#ff3131;
+
+    background:rgba(255,49,49,.08);
+
+}
+
+.upload-area.dragover{
+
+    border-color:#ff3131;
+
+    background:rgba(255,49,49,.12);
+
+}
+
+#uploadContent{
+
+    text-align:center;
+
+    transition:.25s;
+
+}
+
+#uploadContent i{
+
+    font-size:65px;
+
+    color:#ff3131;
+
+    margin-bottom:18px;
+
+}
+
+#uploadContent h3{
+
+    color:white;
+
+    font-size:26px;
+
+    margin-bottom:8px;
+
+}
+
+#uploadContent p{
+
+    color:#cbd5e1;
+
+    margin-bottom:8px;
+
+}
+
+#uploadContent small{
+
+    color:#94a3b8;
+
+}
+
+#previewImage{
+
+    display:block;
+
+    width:100%;
+
+    max-width:100%;
+
+    height:300px;
+
+    object-fit:contain;
+
+    border-radius:18px;
+
+}
+
+.image-actions{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:15px;
+
+    margin-top:20px;
+
+}
+
+.secondary-btn{
+
+    padding:12px 24px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#2563eb;
+
+    color:white;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+    transition:.25s;
+
+}
+
+.secondary-btn:hover{
+
+    background:#1d4ed8;
+
+}
+
+.danger-btn{
+
+    padding:12px 24px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#ef4444;
+
+    color:white;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+    transition:.25s;
+
+}
+
+.danger-btn:hover{
+
+    background:#dc2626;
 
 }

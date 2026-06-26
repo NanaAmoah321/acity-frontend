@@ -33,6 +33,75 @@ function getStoreImage(category) {
 
 }
 
+async function searchMarketplace(query) {
+
+    const res = await fetch(
+        `http://localhost:5000/api/listings/search?q=${encodeURIComponent(query)}`
+    );
+
+    const listings = await res.json();
+
+    ItemsContainer.innerHTML = "";
+
+    if (listings.length === 0) {
+
+        ItemsContainer.innerHTML = `
+            <div class="empty-state">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <h3>No Results Found</h3>
+                <p>Try another search term.</p>
+            </div>
+        `;
+
+        return;
+    }
+
+    listings.forEach(item => {
+
+        const card = document.createElement("div");
+
+        card.classList.add("product-card");
+
+        card.innerHTML = `
+
+            <img
+                src="${
+                    item.image_url && item.image_url.trim()
+                    ? item.image_url
+                    : `images/${item.category || "Other"}.jpg`
+                }"
+                onerror="this.src='images/Other.jpg'"
+            >
+
+            <div class="product-info">
+
+                <h3>${item.title}</h3>
+
+                <p class="price">
+                    GH₵ ${item.price}
+                </p>
+
+                <p>
+                    Sold by
+                    <strong>${item.seller_name}</strong>
+                </p>
+
+                <button
+                    onclick="viewListing(${item.user_id})"
+                >
+                    View Item
+                </button>
+
+            </div>
+
+        `;
+
+        ItemsContainer.appendChild(card);
+
+    });
+
+}
+
 async function loadItems() {
 
 
@@ -442,11 +511,30 @@ function viewService(id){
 
 
 if (ItemsContainer) {
+
     loadItems();
 
     if (searchInput) {
-        searchInput.addEventListener("input", loadItems);
+
+        searchInput.addEventListener("input", () => {
+
+            const query =
+            searchInput.value.trim();
+
+            if(query.length > 0){
+
+                searchMarketplace(query);
+
+            }else{
+
+                loadItems();
+
+            }
+
+        });
+
     }
+
 }
 
 if (document.getElementById("featuredProducts")) {
