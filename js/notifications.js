@@ -183,7 +183,7 @@ function renderNotifications(){
 
             <div class="notification-arrow">
 
-                →
+                <i class="fa-solid fa-chevron-right"></i>
 
             </div>
 
@@ -217,11 +217,11 @@ async function openNotification(id, type, conversationUserId) {
     }
 
     localStorage.setItem(
-        "receiver_id",
+        "openConversationWith",
         conversationUserId
     );
 
-    window.location.href = "conversation.html";
+    window.location.href = "inbox.html";
     return;
     }
 

@@ -10,7 +10,15 @@ const adminLink =
 document.getElementById(
     "adminLink"
 );
+const mobileUser =
+document.getElementById("mobileUserName");
 
+if(user && mobileUser){
+
+    mobileUser.textContent =
+    user.name;
+
+}
 if (
     user &&
     user.role === "admin" &&
@@ -86,24 +94,47 @@ async function updateMessageCount(){
 
 }
 
-const menuToggle=
+const menuToggle =
 document.getElementById("menu-toggle");
 
-const navLinks =
-document.getElementById("navLinks");
+const mobileMenu =
+document.getElementById("mobileMenu");
 
-if (menuToggle) {
+const mobileOverlay =
+document.getElementById("mobileOverlay");
 
-    menuToggle.addEventListener(
-        "click",
-        () => {
+const closeMenu =
+document.getElementById("closeMenu");
 
-            navLinks.classList.toggle(
-                "active"
-            );
+function closeDrawer(){
 
-        }
-    );
+    mobileMenu.classList.remove("active");
+
+    mobileOverlay.classList.remove("active");
+
+}
+
+if(menuToggle){
+
+    menuToggle.onclick = ()=>{
+
+        mobileMenu.classList.add("active");
+
+        mobileOverlay.classList.add("active");
+
+    };
+
+}
+
+if(closeMenu){
+
+    closeMenu.onclick = closeDrawer;
+
+}
+
+if(mobileOverlay){
+
+    mobileOverlay.onclick = closeDrawer;
 
 }
 
@@ -249,6 +280,32 @@ document.addEventListener(
     loadCartCount
 
 );
+
+const profileToggle =
+document.getElementById("profileToggle");
+
+const profileMenu =
+document.querySelector(".profile-menu");
+
+if(profileToggle){
+
+    profileToggle.onclick = ()=>{
+
+        profileMenu.classList.toggle("open");
+
+    };
+
+    window.addEventListener("click",(e)=>{
+
+        if(!profileMenu.contains(e.target)){
+
+            profileMenu.classList.remove("open");
+
+        }
+
+    });
+
+}
 
 window.loadCartCount = loadCartCount;
 updateMessageCount();

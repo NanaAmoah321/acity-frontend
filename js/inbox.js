@@ -361,4 +361,31 @@ function backToInbox(){
 
 
 
-loadInbox();
+loadInbox().then(() => {
+
+    const userId =
+    localStorage.getItem("openConversationWith");
+
+    if(userId){
+
+        openConversation(Number(userId));
+
+        localStorage.removeItem(
+            "openConversationWith"
+        );
+
+        if(window.innerWidth <= 900){
+
+            document.querySelector(
+                ".conversation-sidebar"
+            ).style.display = "none";
+
+            document.querySelector(
+                ".chat-area"
+            ).classList.add("active");
+
+        }
+
+    }
+
+});

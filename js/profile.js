@@ -442,7 +442,10 @@ async function loadSellerOrders() {
             : ""
         }
 
-        <button class="message-btn">
+        <button
+            class="message-btn"
+            onclick="messageSeller(${order.buyer_id})"
+        >
             <i class="fa-solid fa-comments"></i>
             Message
         </button>
@@ -538,11 +541,11 @@ async function rejectOrder(orderId) {
 function messageSeller(userId){
 
     localStorage.setItem(
-        "receiver_id",
+        "openConversationWith",
         userId
     );
 
     window.location.href =
-        "conversation.html";
+        "inbox.html";
 
 }

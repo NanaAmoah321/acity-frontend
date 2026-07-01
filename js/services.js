@@ -235,12 +235,12 @@ function displayServices() {
 function messageProvider(userId) {
 
     localStorage.setItem(
-        "receiver_id",
+        "openConversationWith",
         userId
     );
 
     window.location.href =
-    "conversation.html";
+    "inbox.html";
 
 }
 

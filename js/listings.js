@@ -437,13 +437,9 @@ async function loadServices(){
 
 <div class="featured-card">
 
-    <div class="featured-image">
+    <div class="service-icon">
 
-        <img
-
-        src="images/services.jpg"
-
-        >
+        <i class="fa-solid fa-graduation-cap"></i>
 
     </div>
 
@@ -623,7 +619,7 @@ function getCategoryImage(category){
 function viewService(id){
 
     window.location.href =
-    `service.html?id=${id}`;
+    `services.html?id=${id}`;
 
 }
 

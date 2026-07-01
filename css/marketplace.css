@@ -1040,3 +1040,31 @@ font-size:24px;
 }
 
 }
+
+
+
+.service-icon{
+
+    width:100%;
+
+    height:180px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:#FFF1F2;
+
+    border-bottom:1px solid #ECECEC;
+
+}
+
+.service-icon i{
+
+    font-size:72px;
+
+    color:var(--primary);
+
+}
