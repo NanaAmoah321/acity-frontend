@@ -1,35 +1,36 @@
 const user = JSON.parse(localStorage.getItem("user"));
 
 if (user) {
-  
-  document.getElementById("userName").textContent = user.name;
-  document.getElementById("userEmail").textContent = user.email;
-  
 
+    document.getElementById("userName").textContent = user.name;
+    document.getElementById("userEmail").textContent = user.email;
 
-  // Load saved skills if they exist
-  document.getElementById("skillsOffered").value = user.skillsOffered || "";
-  document.getElementById("skillsNeeded").value = user.skillsNeeded || "";
+    const aboutMe = document.getElementById("aboutMe");
+
+    if (aboutMe) {
+        aboutMe.value = user.aboutMe || "";
+    }
 
 }
-
 function saveProfile() {
-  if (!user) return;
 
-  const skillsOffered = document.getElementById("skillsOffered").value;
-  const skillsNeeded = document.getElementById("skillsNeeded").value;
+    if (!user) return;
 
-  user.skillsOffered = skillsOffered;
-  user.skillsNeeded = skillsNeeded;
+    const aboutMe =
+        document.getElementById("aboutMe")?.value || "";
 
-  localStorage.setItem("user", JSON.stringify(user));
+    user.aboutMe = aboutMe;
 
-  alert("Profile updated!");
+    localStorage.setItem("user", JSON.stringify(user));
+
+    alert("Profile updated!");
+
 }
 
 const ItemsContainer = document.getElementById("myItemsContainer");
 
 async function loadMyItems() {
+  console.log("Loading my items...");
   const token = localStorage.getItem("token");
 
   
@@ -58,8 +59,14 @@ async function loadMyItems() {
     });
 
     const items = await res.json();
-    document.getElementById("itemsCount").textContent =
-    items.length;
+
+    console.log(items);
+    const count =
+document.getElementById("itemsCount");
+
+if(count){
+    count.textContent = items.length;
+}
 
     console.log("API RESPONSE:", items);
 
@@ -84,45 +91,61 @@ async function loadMyItems() {
   return;
   }
 
-    if (items.length === 0) {
-      ItemsContainer.innerHTML = "<p>No items posted yet.</p>";
-      return;
-    }
+    
 
-    items.forEach(item => {
+    items
+    .slice(0, 6)
+    .forEach(item => {
       const div = document.createElement("div");
       div.classList.add("profile-card");
 
       console.log(item.image_url);
 
-     div.innerHTML = `
-      <img
+     div.className = "my-item-card";
+
+div.innerHTML = `
+
+<div class="listing-card">
+
+    <img
         src="${item.image_url || `images/${item.category}.jpg`}"
-        class="my-item-image"
+        class="listing-image"
         onerror="this.src='images/Other.jpg'"
-      >
+    >
 
-      <h3>${item.title}</h3>
+    <div class="listing-content">
 
-      <p class="item-price">
-        GH₵ ${item.price}
-      </p>
+        <h3>${item.title}</h3>
 
-      <p><strong>Category:</strong> ${item.category}</p>
+        <div class="listing-price">
+            GH₵${item.price}
+        </div>
 
-      <p><strong>Status:</strong> ${item.status}</p>
+        <span class="listing-status">
+            ${item.status}
+        </span>
 
-      <div class="actions">
-        <button onclick="deleteItem(${item.id})">
-            Delete
-        </button>
+        <div class="listing-actions">
 
-        <button onclick="editItem(${item.id})">
-            Edit
-        </button>
-      </div>
-     `;
+            <button onclick="editItem(${item.id})">
+                <i class="fa-solid fa-pen"></i>
+            </button>
 
+            <button onclick="markSold(${item.id})">
+                <i class="fa-solid fa-check"></i>
+            </button>
+
+            <button onclick="deleteItem(${item.id})">
+                <i class="fa-solid fa-trash"></i>
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+`;
       ItemsContainer.appendChild(div);
     });
 
@@ -274,7 +297,18 @@ async function editItem(id) {
   }
 
 }
+function formatDate(date) {
 
+    return new Date(date).toLocaleString("en-GB",{
+
+        day:"numeric",
+        month:"short",
+        hour:"2-digit",
+        minute:"2-digit"
+
+    });
+
+}
 async function loadSellerOrders() {
 
     const token =
@@ -339,105 +373,83 @@ async function loadSellerOrders() {
 
     <div class="order-card">
 
-        <div class="order-header">
+    <div class="order-header">
+
+        <div>
 
             <h3>${order.title}</h3>
 
             <span class="order-price">
-                GH₵ ${order.price}
+                GH₵${order.price}
             </span>
 
         </div>
 
-        <div class="order-details">
+        <span class="order-status ${order.status.toLowerCase()}">
+            ${order.status.charAt(0).toUpperCase() + order.status.slice(1)}
+        </span>
 
-            <p>
-                <i class="fa-solid fa-user"></i>
-                <strong>Buyer:</strong>
-                ${order.buyer_name}
-            </p>
+    </div>
 
-            <p>
-                <i class="fa-solid fa-truck"></i>
-                <strong>Delivery:</strong>
-                ${order.delivery_method === "room"
-                    ? "Room Delivery"
-                    : "Meet Up"}
-            </p>
+    <div class="order-body">
 
-            ${
-                order.delivery_method === "room"
-                ? `
-                <p>
-                    <i class="fa-solid fa-building"></i>
-                    <strong>Hostel:</strong>
-                    ${order.hostel}
-                </p>
-
-                <p>
-                    <i class="fa-solid fa-door-open"></i>
-                    <strong>Room:</strong>
-                    ${order.room_number}
-                </p>
-                `
-                : `
-                <p>
-                    <i class="fa-solid fa-location-dot"></i>
-                    <strong>Meeting Point:</strong>
-                    ${order.meeting_location}
-                </p>
-                `
-            }
-
-            <p>
-                <i class="fa-solid fa-clock"></i>
-                <strong>Ordered:</strong>
-                ${new Date(order.created_at).toLocaleString([],{
-
-                  day:"numeric",
-
-                  month:"short",
-
-                  hour:"2-digit",
-
-                  minute:"2-digit"
-
-                })}
-            </p>
-
+        <div class="order-info">
+            <i class="fa-solid fa-user"></i>
+            <span><strong>Buyer:</strong> ${order.buyer_name}</span>
         </div>
 
-        <div class="order-status ${order.status}">
-            ${order.status.toUpperCase()}
+        <div class="order-info">
+            <i class="fa-solid fa-truck"></i>
+            <span><strong>Delivery:</strong> ${order.delivery_method}</span>
         </div>
 
-        <div class="order-actions">
+        ${
+            order.delivery_method === "room"
+            ? `
+            <div class="order-info">
+                <i class="fa-solid fa-building"></i>
+                <span>${order.hostel}</span>
+            </div>
 
-            <button
-                class="accept-btn"
-                onclick="acceptOrder(${order.id})"
-            >
-                Accept
-            </button>
+            <div class="order-info">
+                <i class="fa-solid fa-door-open"></i>
+                <span>${order.room_number}</span>
+            </div>
+            `
+            : `
+            <div class="order-info">
+                <i class="fa-solid fa-location-dot"></i>
+                <span>${order.meeting_point}</span>
+            </div>
+            `
+        }
 
-            <button
-                class="reject-btn"
-                onclick="rejectOrder(${order.id})"
-            >
-                Reject
-            </button>
-
-            <button
-                class="message-btn"
-                onclick="messageSeller(${order.buyer_id})"
-            >
-                Message Buyer
-            </button>
-
+        <div class="order-info">
+            <i class="fa-solid fa-clock"></i>
+            <span>${formatDate(order.created_at)}</span>
         </div>
 
     </div>
 
+    <div class="order-actions">
+
+        ${
+            order.status === "pending"
+            ? `
+            <button class="accept-btn">Accept</button>
+            <button class="reject-btn">Reject</button>
+            `
+            : ""
+        }
+
+        <button class="message-btn">
+            <i class="fa-solid fa-comments"></i>
+            Message
+        </button>
+
+    </div>
+
+    </div>
     `;
 
     });

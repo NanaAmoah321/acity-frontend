@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Acity Connect - Marketplace</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/buttons.css">
+    <link rel="stylesheet" href="css/cards.css">
+    <link rel="stylesheet" href="css/marketplace.css">
+    <link rel="stylesheet" href="css/toast.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
@@ -98,148 +103,243 @@
 
     </nav>
 
+    <main class="marketplace">
+
+    <!-- HERO -->
+
     <section class="marketplace-hero">
 
-    <div class="hero-text">
+        <div class="hero-content">
 
-        <h1>
+            <span class="hero-badge">
 
-            Find it.
-            <br>
-            Buy it.
-            <br>
+                Campus Marketplace
 
-            <span>Sell it.</span>
+            </span>
 
-        </h1>
+            <h1>
 
-        <p>
+                Find it.
 
-            Your campus marketplace for everything you need.
+                <br>
 
-        </p>
+                Buy it.
 
-    </div>
+                <br>
 
-    <div class="hero-search">
+                <span>Sell it.</span>
 
-        <i class="fa-solid fa-magnifying-glass"></i>
+            </h1>
 
-        <input
-            id="searchInput"
-            type="text"
-            placeholder="Search for items or stores..."
-        >
+            <p>
 
-    </div>
+                Discover products, trusted student stores,
+                and campus services—all in one place.
 
-    <div class="mobile-categories">
+            </p>
 
-    <button class="active">
+        </div>
 
-    <i class="fa-solid fa-border-all"></i>
+        <div class="hero-search">
 
-    <span>All</span>
+            <i class="fa-solid fa-magnifying-glass"></i>
 
-    </button>
+            <input
+                id="searchInput"
+                type="text"
+                placeholder="Search items, stores..."
+            >
 
-    <button>
+        </div>
 
-    <i class="fa-solid fa-laptop"></i>
+        <div class="mobile-categories">
 
-    <span>Electronics</span>
+<button class="active" data-category="All">
+<i class="fa-solid fa-border-all"></i>
+<span>All</span>
+</button>
 
-    </button>
+<button data-category="Electronics">
+<i class="fa-solid fa-laptop"></i>
+<span>Electronics</span>
+</button>
 
-    <button>
+<button data-category="Books">
+<i class="fa-solid fa-book"></i>
+<span>Books</span>
+</button>
 
-    <i class="fa-solid fa-book"></i>
+<button data-category="Clothing">
+<i class="fa-solid fa-shirt"></i>
+<span>Clothing</span>
+</button>
 
-    <span>Books</span>
+<button data-category="Hostel Items">
+<i class="fa-solid fa-bed"></i>
+<span>Hostel</span>
+</button>
 
-    </button>
+<button data-category="Academic">
+<i class="fa-solid fa-graduation-cap"></i>
+<span>Academic</span>
+</button>
 
-    <button>
+<button data-category="Other">
+<i class="fa-solid fa-ellipsis"></i>
+<span>Other</span>
+</button>
 
-    <i class="fa-solid fa-shirt"></i>
+</div>
+    </section>
 
-    <span>Clothing</span>
 
-    </button>
 
-    <button>
+    <!-- TRENDING -->
 
-    <i class="fa-solid fa-bed"></i>
+    <section class="market-section">
 
-    <span>Hostel</span>
+        <div class="section-header">
 
-    </button>
+            <div>
 
-    <button>
+                <h2>🔥 Trending on Campus</h2>
 
-    <i class="fa-solid fa-ellipsis"></i>
+                <p>Popular student listings</p>
 
-    <span>More</span>
+            </div>
 
-    </button>
+            <a href="#">See All</a>
 
-    </div>
+        </div>
+
+        <div id="featuredProducts"></div>
 
     </section>
-    
-
-        
-
-    
 
 
-<section>
 
-    <h2 class="section-title">
-        Featured Products
-    </h2>
+    <!-- STORES -->
 
-    <div id="featuredProducts"
-         class="product-grid">
-    </div>
+    <section class="market-section">
 
-</section>
+        <div class="section-header">
 
-<section>
+            <div>
 
-    <h2 class="section-title">
-        Campus Stores
-    </h2>
+                <h2>🏪 Popular Stores</h2>
 
-    <div id="ItemsContainer"
-        class="store-grid">
-    </div>
+                <p>Trusted student sellers</p>
 
-</section>
+            </div>
 
-<section>
+            <a href="#">See All</a>
 
-    <h2 class="section-title">
-        Student Services
-    </h2>
+        </div>
 
-    <div id="servicesContainer"
-         class="service-grid">
-    </div>
+        <div id="ItemsContainer"></div>
 
-</section>
+    </section>
 
-<section>
 
-    <h2 class="section-title">
-        Recent Listings
-    </h2>
 
-    <div id="recentListings"
-         class="product-grid">
-    </div>
+    <!-- SERVICES -->
 
-</section>
+    <section class="market-section">
+
+        <div class="section-header">
+
+            <div>
+
+                <h2>🛠 Student Services</h2>
+
+                <p>Skills around campus</p>
+
+            </div>
+
+            <a href="services.html">
+
+                See All
+
+            </a>
+
+        </div>
+
+        <div id="servicesContainer"></div>
+
+    </section>
+
+
+
+    <!-- RECENT -->
+
+    <section class="market-section">
+
+        <div class="section-header">
+
+            <div>
+
+                <h2>✨ Recently Added</h2>
+
+                <p>Fresh listings</p>
+
+            </div>
+
+            <a href="#">See All</a>
+
+        </div>
+
+        <div id="recentListings"></div>
+
+    </section>
+
+
+
+    <!-- CTA -->
+
+    <section class="sell-banner">
+
+        <div>
+
+            <h2>
+
+                Ready to earn?
+
+            </h2>
+
+            <p>
+
+                Sell your unused items and reach
+                thousands of Academic City students.
+
+            </p>
+
+        </div>
+
+        <a
+            href="create-listing.html"
+            class="sell-btn"
+        >
+
+            Sell Now
+
+        </a>
+
+    </section>
+
+    <a
+    href="create-listing.html"
+    class="fab-sell"
+    title="Create Listing"
+    >
+
+    <i class="fa-solid fa-plus"></i>
+
+    </a>
+
+</main>
+
+
+
 
     
 <script src="js/toast.js"></script>

@@ -11,7 +11,7 @@ document
     button.addEventListener("click", () => {
 
         document
-        .querySelectorAll(".categories button")
+        .querySelectorAll(".mobile-categories button")
         .forEach(btn =>
             btn.classList.remove("active")
         );
@@ -19,7 +19,7 @@ document
         button.classList.add("active");
 
         selectedCategory =
-        button.textContent.trim();
+        button.dataset.category;
 
         loadItems();
 
@@ -65,12 +65,18 @@ async function searchMarketplace(query) {
         card.innerHTML = `
 
             <img
-                src="${
-                    item.image_url && item.image_url.trim()
-                    ? item.image_url
-                    : `images/${item.category || "Other"}.jpg`
-                }"
-                onerror="this.src='images/Other.jpg'"
+
+            src="${
+            item.image_url &&
+            item.image_url.trim()
+
+            ? item.image_url
+
+            : `images/${item.category || "Other"}.jpg`
+            }"
+
+            onerror="this.src='images/Other.jpg'"
+
             >
 
             <div class="product-info">
@@ -173,55 +179,57 @@ async function loadItems() {
 
         card.innerHTML = `
 
-            <img
-                src="${getStoreImage(store.store_category)}"
-                class="store-image"
-            >
+<img
 
-            <div class="store-info">
+src="${getStoreImage(store.store_category)}"
 
-                <h3>
-                    ${store.store_name}'s Store
-                </h3>
+class="store-image"
 
-                <p class="store-category">
-                ${store.store_category || "General"} Store
-                </p>
+>
 
+<div class="store-info">
 
-                <p>
-                    ⭐ ${
-                        store.average_rating
-                        || "No rating"
-                    }
-                    (
-                    ${
-                        store.total_reviews
-                        || 0
-                    }
-                    Reviews)
-                </p>
+    <span class="store-category">
 
-                <p>
-                    ${
-                        store.total_products
-                    }
-                    Products
-                </p>
+        ${store.store_category || "General"}
 
-                <button
-                    onclick="
-                    viewStore(
-                    ${store.user_id}
-                    )"
-                >
-                    Visit Store
-                </button>
+    </span>
 
-            </div>
+    <h3>
 
-        `;
+        ${store.store_name}
 
+    </h3>
+
+    <p>
+
+        ⭐
+
+        ${store.average_rating || "New Store"}
+
+    </p>
+
+    <p>
+
+        ${store.total_products}
+
+        Products
+
+    </p>
+
+    <button
+
+        onclick="viewStore(${store.user_id})"
+
+    >
+
+        Visit Store
+
+    </button>
+
+</div>
+
+`;
         ItemsContainer.appendChild(
             card
         );
@@ -230,7 +238,7 @@ async function loadItems() {
 
 }
 
-async function loadFeaturedProducts(){
+async function loadFeaturedProducts() {
 
     const container =
     document.getElementById("featuredProducts");
@@ -239,10 +247,35 @@ async function loadFeaturedProducts(){
 
     container.innerHTML = "";
 
-    for(let i = 0; i < 6; i++){
+    // Loading Skeletons
+    for (let i = 0; i < 6; i++) {
 
         container.innerHTML += `
-            <div class="product-skeleton skeleton-card"></div>
+
+        <div class="featured-card skeleton-card">
+
+            <div class="featured-image skeleton"></div>
+
+            <div class="featured-info">
+
+                <div class="skeleton skeleton-pill"></div>
+
+                <div class="skeleton skeleton-title"></div>
+
+                <div class="skeleton skeleton-price"></div>
+
+                <div class="featured-footer">
+
+                    <div class="skeleton skeleton-store"></div>
+
+                    <div class="skeleton skeleton-circle"></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
         `;
 
     }
@@ -252,69 +285,102 @@ async function loadFeaturedProducts(){
         "https://acity-backend.onrender.com/api/listings"
     );
 
-    
-
     const listings =
     await res.json();
 
-
-
-
     container.innerHTML = "";
 
+    // Empty State
     if (listings.length === 0) {
 
-    container.innerHTML = `
+        container.innerHTML = `
+
         <div class="empty-state">
+
             <i class="fa-solid fa-box-open"></i>
+
             <h3>No Featured Products Yet</h3>
-            <p>Products posted by students will appear here.</p>
-        </div>
-    `;
 
-    return;
-    }
+            <p>
 
-    listings
-    .slice(0,15)
-    .forEach(item=>{
+                Student listings will appear here once they're posted.
 
-       console.log(
-          item.title,
-          item.image_url
-        );
-
-        console.log(item);
-
-        container.innerHTML += `
-
-        <div class="product-card" onclick="viewListing(${item.user_id})">
-
-            <img
-              src="${
-                item.image_url && item.image_url.trim()
-                ? item.image_url
-                : `images/${item.category || "Other"}.jpg`
-                }"
-            >
-
-            <div class="product-info">
-
-                <h3>${item.title}</h3>
-
-                <p class="price">
-                    GH₵ ${item.price}
-                </p>
-
-                <p>
-                    ${item.category}
-                </p>
-
-            </div>
+            </p>
 
         </div>
 
         `;
+
+        return;
+
+    }
+
+    listings
+    .slice(0, 15)
+    .forEach(item => {
+
+        container.innerHTML += `
+
+<div
+class="featured-card"
+onclick="viewListing(${item.user_id})">
+
+    <div class="featured-image">
+
+        <img
+
+        src="${
+        item.image_url && 
+        item.image_url.trim()
+
+        ? item.image_url
+
+        : `images/${item.category || "Other"}.jpg`
+        }"
+
+        onerror="this.src='images/Other.jpg'"
+
+       >
+
+    </div>
+
+    <div class="featured-info">
+
+        <span class="featured-category">
+
+            ${item.category}
+
+        </span>
+
+        <h3>
+
+            ${item.title}
+
+        </h3>
+
+        <p class="featured-price">
+
+            GH₵${item.price}
+
+        </p>
+
+        <div class="featured-footer">
+
+            <span>
+
+                ${item.seller_name}
+
+            </span>
+
+            <i class="fa-solid fa-arrow-right"></i>
+
+        </div>
+
+    </div>
+
+</div>
+
+`;
 
     });
 
@@ -369,46 +435,61 @@ async function loadServices(){
 
     container.innerHTML += `
 
-    <div class="service-card">
+<div class="featured-card">
+
+    <div class="featured-image">
+
+        <img
+
+        src="images/services.jpg"
+
+        >
+
+    </div>
+
+    <div class="featured-info">
+
+        <span class="featured-category">
+
+            ${service.category}
+
+        </span>
 
         <h3>
+
             ${service.title}
+
         </h3>
 
-        <p class="provider">
-            ${service.provider_name}
+        <p class="featured-price">
+
+            GH₵${service.rate}
+
         </p>
 
-        <p class="category">
-            ${service.category}
-        </p>
+        <div class="featured-footer">
 
-        <p class="rate">
-            GH₵ ${service.rate}
-            ${service.rate_type}
-        </p>
+            <span>
 
-        <div class="service-actions">
+                ${service.provider_name}
 
-            <button
-                onclick="viewService(${service.id})"
-                class="details-btn"
-            >
-                View Details
-            </button>
+            </span>
 
-            <button
-                onclick="messageProvider(${service.user_id})"
-                class="message-btn"
-            >
-                Message
-            </button>
+            <i
+
+            onclick="viewService(${service.id})"
+
+            class="fa-solid fa-arrow-right"
+
+            ></i>
 
         </div>
 
     </div>
 
-    `;
+</div>
+
+`;
 
 });
 }
@@ -464,30 +545,70 @@ async function loadRecentListings(){
 
         container.innerHTML += `
 
-        <div class="product-card" onclick="viewListing(${item.user_id})">
+<div
 
-            <img
-              src="${
-                 item.image_url && item.image_url.trim()
-                 ? item.image_url
-                 : `images/${item.category || "Other"}.jpg`
-              }"
-            >
+class="featured-card"
 
-            <div class="product-info">
+onclick="viewListing(${item.user_id})"
 
-                <h3>${item.title}</h3>
+>
 
-                <p>
-                    GH₵ ${item.price}
-                </p>
+<div class="featured-image">
 
-            </div>
+<img
 
-        </div>
+src="${
+item.image_url &&
+item.image_url.trim()
 
-        `;
+? item.image_url
 
+: `images/${item.category || "Other"}.jpg`
+}"
+
+onerror="this.src='images/Other.jpg'"
+
+>
+
+</div>
+
+<div class="featured-info">
+
+<span class="featured-category">
+
+${item.category}
+
+</span>
+
+<h3>
+
+${item.title}
+
+</h3>
+
+<p class="featured-price">
+
+GH₵${item.price}
+
+</p>
+
+<div class="featured-footer">
+
+<span>
+
+${item.seller_name}
+
+</span>
+
+<i class="fa-solid fa-arrow-right"></i>
+
+</div>
+
+</div>
+
+</div>
+
+`;
     });
 
 }

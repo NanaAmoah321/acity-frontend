@@ -27,14 +27,7 @@ async function loadReviews() {
 
     console.log("Rating:", rating);
 
-    document.getElementById(
-        "ratingContainer"
-    ).innerHTML = `
-        <h3>
-            ⭐ ${rating.average_rating || "0.0"}
-            (${rating.total_reviews || 0} Reviews)
-        </h3>
-    `;
+    
 
     const reviewsRes =
     await fetch(
@@ -55,11 +48,33 @@ async function loadReviews() {
     console.log("Reviews:", reviews);
 
     const container =
-    document.getElementById(
-        "reviewsContainer"
-    );
+    document.getElementById("reviewsContainer");
+
+    if(!container) return;
 
     container.innerHTML = "";
+
+    if(reviews.length === 0){
+
+    container.innerHTML = `
+
+        <div class="empty-state">
+
+            <i class="fa-solid fa-star"></i>
+
+            <h3>No Reviews Yet</h3>
+
+            <p>
+                Once students review you, they'll appear here.
+            </p>
+
+        </div>
+
+    `;
+
+    return;
+
+}
 
     reviews.forEach(review => {
 
@@ -74,12 +89,36 @@ async function loadReviews() {
         card.classList.add("review-card");
 
         card.innerHTML = `
-            <h3>${stars}</h3>
-            <p>${review.comment}</p>
-            <small>
-                By ${review.reviewer_name}
-            </small>
-        `;
+
+<div class="review-top">
+
+    <div class="review-avatar">
+
+        ${review.reviewer_name.charAt(0)}
+
+    </div>
+
+    <div>
+
+        <h4>${review.reviewer_name}</h4>
+
+        <div class="review-stars">
+
+            ${stars}
+
+        </div>
+
+    </div>
+
+</div>
+
+<p class="review-comment">
+
+    "${review.comment}"
+
+</p>
+
+`;
 
         container.appendChild(card);
 

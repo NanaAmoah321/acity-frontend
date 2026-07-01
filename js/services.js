@@ -58,11 +58,19 @@ function displayServices() {
     if (services.length === 0) {
 
     ServicesContainer.innerHTML = `
-        <div class="empty-state">
-            <i class="fa-solid fa-screwdriver-wrench"></i>
-            <h3>No Services Yet</h3>
-            <p>Be the first student to post a service.</p>
-        </div>
+    <div class="empty-state">
+
+    <i class="fa-solid fa-screwdriver-wrench"></i>
+
+    <h3>No Services Found</h3>
+
+    <p>
+
+        Try changing your search or category.
+
+    </p>
+
+    </div>
     `;
 
     return;
@@ -122,76 +130,99 @@ function displayServices() {
 
         card.innerHTML = `
 
-            <h3>${service.title}</h3>
+<div class="service-image">
 
-            <p>
-                ${service.description}
-            </p>
+    <i class="fa-solid fa-${getServiceIcon(service.category)}"></i>
 
-            <p>
-                <strong>
-                    Provider:
-                </strong>
+</div>
 
-                ${
-                    service.provider_name
-                }
-            </p>
+<div class="service-info">
 
-            <p>
-                ⭐ ${
-                    service.average_rating
-                    || "No rating"
-                }
+    <span class="service-category">
 
-                (
-                    ${
-                        service.total_reviews
-                        || 0
-                    }
+        ${service.category}
 
-                    Reviews
-                )
-            </p>
+    </span>
 
-            <p>
-                <strong>
-                    Category:
-                </strong>
+    <h3>
 
-                ${
-                    service.category
-                }
-            </p>
+        ${service.title}
 
-            <p>
-                <strong>
-                    Rate:
-                </strong>
+    </h3>
 
-                ₵${
-                    service.rate
-                }
-                ${service.rate_type}
-            </p>
+    <p class="service-description">
 
-            <div class="service-actions">
+        ${service.description}
 
-                <button
-                    onclick="viewService(${service.id})"
-                >
-                    View Details
-                </button>
+    </p>
 
-                <button
-                    onclick="messageProvider(${service.user_id})"
-                >
-                     Message
-                </button>
+    <div class="service-meta">
 
-            </div>
+        <span>
 
-        `;
+            ⭐ ${service.average_rating || "New"}
+
+        </span>
+
+        <span>
+
+            ${service.total_reviews || 0} Reviews
+
+        </span>
+
+    </div>
+
+    <div class="service-footer">
+
+        <div>
+
+            <strong>
+
+                GH₵${service.rate}
+
+            </strong>
+
+            <small>
+
+                / ${service.rate_type}
+
+            </small>
+
+        </div>
+
+        <span class="provider">
+
+            ${service.provider_name}
+
+        </span>
+
+    </div>
+
+    <div class="service-actions">
+
+        <button
+            class="btn btn-secondary"
+            onclick="messageProvider(${service.user_id})"
+        >
+
+            Message
+
+        </button>
+
+        <button
+            class="btn btn-primary"
+            onclick="viewService(${service.id})"
+        >
+
+            View
+
+        </button>
+
+    </div>
+
+</div>
+
+       `;
 
         ServicesContainer.appendChild(
             card
@@ -225,6 +256,37 @@ searchService.addEventListener(
     displayServices
 );
 
+function getServiceIcon(category){
+
+    switch(category){
+
+        case "Programming":
+            return "code";
+
+        case "Graphic Design":
+            return "palette";
+
+        case "Tutoring":
+            return "graduation-cap";
+
+        case "Photography":
+            return "camera";
+
+        case "Video Editing":
+            return "film";
+
+        case "Writing":
+            return "pen";
+
+        case "Marketing":
+            return "bullhorn";
+
+        default:
+            return "briefcase";
+
+    }
+
+}
 
 
 loadServices();

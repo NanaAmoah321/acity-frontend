@@ -1,12 +1,47 @@
 <!DOCTYPE html>
 <html>
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acity Connect - inbox</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-</head>
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Inbox | Acity Connect</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/navbar.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/buttons.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/inbox.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/toast.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
 </head>
 <body>
 
@@ -98,16 +133,124 @@
     </div>
 
     </nav>
+ 
 
+<main class="inbox-page">
 
-    <div  class="container">
-    <h2>Inbox</h2>
+    <aside class="conversation-sidebar">
 
-    <div class="inbox-list" id="inboxContainer"></div>
+        <div class="sidebar-header">
 
-    </div>
+            <h1>Inbox</h1>
+
+            <div class="conversation-search">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                <input
+                    type="text"
+                    id="conversationSearch"
+                    placeholder="Search conversations..."
+                >
+
+            </div>
+
+        </div>
+
+        <div
+            id="conversationList"
+            class="conversation-list"
+        >
+
+        </div>
+
+    </aside>
+
+    <section class="chat-area">
+
+        <div
+            id="emptyChat"
+            class="empty-chat"
+        >
+
+            <i class="fa-solid fa-comments"></i>
+
+            <h2>Select a conversation</h2>
+
+            <p>
+
+                Choose a conversation from the left to start chatting.
+
+            </p>
+
+        </div>
+
+        <div
+            id="chatPanel"
+            class="chat-panel"
+            style="display:none;"
+        >
+
+            <div
+                id="chatHeader"
+                class="chat-header"
+            >
+
+            </div>
+
+            <div
+                id="listingPreview"
+                class="listing-preview"
+            >
+
+            </div>
+
+            <div
+                id="messagesContainer"
+                class="messages-container"
+            >
+
+            </div>
+
+            <form
+                id="messageForm"
+                class="message-form"
+            >
+
+                <button
+                    type="button"
+                    class="attach-btn"
+                >
+
+                    <i class="fa-solid fa-paperclip"></i>
+
+                </button>
+
+                <input
+                    id="messageInput"
+                    placeholder="Type your message..."
+                    autocomplete="off"
+                >
+
+                <button
+                    type="submit"
+                    class="send-btn"
+                >
+
+                    <i class="fa-solid fa-paper-plane"></i>
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </section>
+
+</main>
 
 <script src="js/toast.js"></script>
+<script src="js/auth.js"></script>
 <script src="js/inbox.js"></script>
 <script type="module" src="js/navbar.js"></script>
 

@@ -3,9 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Item - Acity connect</title>
+    <title>ACity Connect</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/buttons.css">
+    <link rel="stylesheet" href="css/forms.css">
+    <link rel="stylesheet" href="css/create-listing.css">
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="css/toast.css">
+    
 </head>
 <body>
     <nav>
@@ -213,7 +221,7 @@
     <button
         type="button"
         id="changeImageBtn"
-        class="secondary-btn"
+        class="btn btn-secondary"
     >
         <i class="fa-solid fa-pen"></i>
         Change Image
@@ -222,7 +230,7 @@
     <button
         type="button"
         id="removeImageBtn"
-        class="danger-btn"
+        class="btn btn-danger"
     >
         <i class="fa-solid fa-trash"></i>
         Remove
@@ -233,11 +241,18 @@
 
                 
 
-                <button class="auth-button" type="submit">
+                <button
+                class="btn btn-primary btn-block"
+                id="publishButton"
+                type="submit">
 
-                    <i class="fa-solid fa-plus"></i>
+                <i class="fa-solid fa-paper-plane"></i>
 
-                    Create Listing
+                <span>
+
+                Publish Listing
+
+                </span>
 
                 </button>
 

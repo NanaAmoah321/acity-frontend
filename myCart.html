@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Cart - Acity Connect</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/cart.css">
+    <link rel="stylesheet" href="css/toast.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 </head>
@@ -97,16 +100,126 @@
     </div>
 
     </nav>
-    <section class="cart-section">
-        <h2>My Cart</h2>
-        <div id="interestedContainer"></div>
-    </section>
+    <main class="cart-page">
+
+    <div class="cart-container">
+
+        <div class="cart-header">
+
+            <a href="marketplace.html" class="back-link">
+
+                <i class="fa-solid fa-arrow-left"></i>
+
+                Continue Shopping
+
+            </a>
+
+            <h1>
+
+                My Cart
+
+            </h1>
+
+            <p>
+
+                Items you've saved for checkout.
+
+            </p>
+
+        </div>
+
+        <div class="cart-layout">
+
+            <section class="cart-items">
+
+                <div id="interestedContainer"></div>
+
+            </section>
+
+            <aside class="cart-summary">
+
+                <h2>
+
+                    Order Summary
+
+                </h2>
+
+                <div class="summary-row">
+
+                    <span>Items</span>
+
+                    <span id="summaryItems">
+
+                        0
+
+                    </span>
+
+                </div>
+
+                <div class="summary-row">
+
+                    <span>Subtotal</span>
+
+                    <span id="summarySubtotal">
+
+                        ₵0
+
+                    </span>
+
+                </div>
+
+                <div class="summary-row">
+
+                    <span>Delivery</span>
+
+                    <span>
+
+                        Free
+
+                    </span>
+
+                </div>
+
+                <hr>
+
+                <div class="summary-total">
+
+                    <span>Total</span>
+
+                    <strong id="summaryTotal">
+
+                        ₵0
+
+                    </strong>
+
+                </div>
+
+                <button
+                    class="checkout-all-btn"
+                    onclick="checkoutAll()"
+                >
+
+                    Checkout All
+
+                </button>
+
+            </aside>
+
+        </div>
+
+    </div>
+
+    </main>
     
     <div id="checkoutModal" class="checkout-modal">
 
         <div class="checkout-content">
 
         <h2>Checkout</h2>
+
+        <p class="checkout-subtitle">
+            Review your order before placing it.
+        </p>
 
         <div class="checkout-product">
 

@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Offer a Service - Acity Connect</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/buttons.css">
+    <link rel="stylesheet" href="css/forms.css">
+    <link rel="stylesheet" href="css/create-listing.css">
+    <link rel="stylesheet" href="css/toast.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
@@ -112,7 +117,11 @@
         <h1>Offer Your Skills</h1>
 
         <p>
-            Turn your talents into income and connect with students looking for your services.
+
+        Reach hundreds of Academic City students
+        looking for programming, tutoring,
+        design, photography and more.
+
         </p>
 
     </div>
@@ -122,7 +131,8 @@
         <h2>Create Service</h2>
 
         <p class="form-subtitle">
-            Tell students what you can do.
+            Complete the details below to publish
+            your service.
         </p>
 
         <form id="serviceForm">
@@ -134,7 +144,7 @@
                 <input
                     type="text"
                     id="title"
-                    placeholder="Service Title"
+                    placeholder="eg. Graphic Design"
                     required
                 >
 
@@ -152,77 +162,133 @@
 
             </div>
 
-            <div class="input-group select-group">
+           <div class="form-section">
 
-                <i class="fa-solid fa-layer-group"></i>
+    <label>
 
-                <select id="category" required>
+        Category
 
-                    <option value="">Select Category</option>
-                    <option value="Programming">Programming</option>
-                    <option value="Graphic Design">Graphic Design</option>
-                    <option value="Tutoring">Tutoring</option>
-                    <option value="Photography">Photography</option>
-                    <option value="Video Editing">Video Editing</option>
-                    <option value="Writing">Writing</option>
-                    <option value="Marketing">Marketing</option>
-                    <option value="Other">Other</option>
+    </label>
 
-                </select>
+    <div class="input-group select-group">
 
-            </div>
+        <i class="fa-solid fa-layer-group"></i>
 
-            <div class="input-group">
+        <select id="category" required>
 
-                <i class="fa-solid fa-coins"></i>
+            <option value="">Select Category</option>
+            <option value="Programming">Programming</option>
+            <option value="Graphic Design">Graphic Design</option>
+            <option value="Tutoring">Tutoring</option>
+            <option value="Photography">Photography</option>
+            <option value="Video Editing">Video Editing</option>
+            <option value="Writing">Writing</option>
+            <option value="Marketing">Marketing</option>
+            <option value="Other">Other</option>
 
-                <input
-                    type="number"
-                    id="rate"
-                    placeholder="Rate (GH₵)"
-                    required
-                >
+        </select>
 
-            </div>
+    </div>
 
-            <div class="input-group select-group">
+</div>
 
-                <i class="fa-solid fa-clock"></i>
+           <div class="form-section">
 
-                <select id="rateType" required>
+    <label>
 
-                    <option>Per Hour</option>
-                    <option>Per Session</option>
-                    <option>Per Day</option>
-                    <option>Per Project</option>
-                    <option>Negotiable</option>
+        Rate & Type
 
-                </select>
+    </label>
 
-            </div>
+    <div class="form-row">
 
-            <div class="input-group">
+        <div class="input-group">
 
-                <i class="fa-solid fa-globe"></i>
+            <i class="fa-solid fa-coins"></i>
 
-                <input
-                    type="url"
-                    id="portfolio_url"
-                    placeholder="Portfolio Link (Optional)"
-                >
+            <input
 
-            </div>
+                type="number"
 
-            <button
-                class="auth-button"
-                type="submit"
+                id="rate"
+
+                placeholder="e.g. 150"
+
+                required
+
             >
 
-                <i class="fa-solid fa-plus"></i>
+        </div>
 
-                Create Service
+        <div class="input-group select-group">
+
+            <i class="fa-solid fa-clock"></i>
+
+            <select id="rateType">
+
+                <option>Per Hour</option>
+                <option>Per Session</option>
+                <option>Per Day</option>
+                <option>Per Project</option>
+                <option>Negotiable</option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+</div>
+
+           <div class="form-section">
+
+<label>
+
+Portfolio Link (Optional)
+
+</label>
+
+<div class="input-group">
+
+<i class="fa-solid fa-globe"></i>
+
+<input
+
+type="url"
+
+id="portfolio_url"
+
+placeholder="https://yourportfolio.com"
+
+>
+
+</div>
+
+</div>
+
+            <button
+            class="btn btn-primary btn-block"
+            id="publishServiceButton"
+            type="submit">
+
+            <i class="fa-solid fa-paper-plane"></i>
+
+            <span>
+
+            Publish Service
+
+            </span>
 
             </button>
+
+            <p class="publish-note">
+
+<i class="fa-solid fa-lock"></i>
+
+Your service will be visible to all
+Academic City students after publishing.
+
+</p>
 
         </form>
 

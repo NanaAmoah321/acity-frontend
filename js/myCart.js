@@ -14,6 +14,39 @@ async function loadInterested() {
   const items = await res.json();
   currentItems = items;
 
+  const subtotal =
+items.reduce(
+
+    (sum,item)=>
+
+    sum + Number(item.price),
+
+    0
+
+);
+
+document.getElementById(
+
+    "summaryItems"
+
+).textContent = items.length;
+
+document.getElementById(
+
+    "summarySubtotal"
+
+).textContent =
+
+`₵${subtotal}`;
+
+document.getElementById(
+
+    "summaryTotal"
+
+).textContent =
+
+`₵${subtotal}`;
+
     if(items.length === 0){
 
         container.innerHTML = `
@@ -26,6 +59,8 @@ async function loadInterested() {
 
         return;
     }
+
+    container.innerHTML = "";
 
   items.forEach(item => {
     const div = document.createElement("div");
@@ -135,9 +170,13 @@ function getStatusText(status) {
 
 let selectedItem = null;
 
+let checkoutAllMode = false;
+
 
 
 function checkoutItem(id) {
+
+    checkoutAllMode = false;
 
     const item =
     currentItems.find(
@@ -189,6 +228,43 @@ function checkoutItem(id) {
     )
     .style.display =
     "flex";
+
+}
+
+function checkoutAll() {
+
+    if (currentItems.length === 0) {
+
+        showToast("Your cart is empty", "error");
+        return;
+
+    }
+
+    checkoutAllMode = true;
+
+    selectedItem = null;
+
+    document.getElementById("checkoutTitle").textContent =
+        `${currentItems.length} Items`;
+
+    document.getElementById("checkoutPrice").textContent =
+        `₵${currentItems.reduce((sum, item) => sum + Number(item.price), 0)}`;
+
+    document.getElementById("checkoutImage").src =
+        currentItems[0].image_url ||
+        `images/${currentItems[0].category}.jpg`;
+
+    const total =
+        currentItems.reduce((sum, item) => sum + Number(item.price), 0);
+
+    document.getElementById("productTotal").textContent =
+        `₵${total}`;
+
+    document.getElementById("grandTotal").textContent =
+        `₵${total}`;
+
+    document.getElementById("checkoutModal").style.display =
+        "flex";
 
 }
 
@@ -315,6 +391,88 @@ async function placeOrder() {
     localStorage.getItem(
         "token"
     );
+
+    try {
+
+    const itemsToOrder = checkoutAllMode
+        ? currentItems
+        : [selectedItem];
+
+    for (const item of itemsToOrder) {
+
+        const res = await fetch(
+            "https://acity-backend.onrender.com/api/listings/orders",
+            {
+
+                method: "POST",
+
+                headers: {
+
+                    "Content-Type":"application/json",
+
+                    "Authorization":
+                    `Bearer ${token}`
+
+                },
+
+                body: JSON.stringify({
+
+                    listing_id: item.id,
+
+                    seller_id: item.user_id,
+
+                    delivery_method: deliveryMethod,
+
+                    hostel,
+
+                    room_number,
+
+                    meeting_location
+
+                })
+
+            }
+        );
+
+        if (!res.ok) {
+
+            const data = await res.json();
+
+            throw new Error(
+                data.message || "Order failed"
+            );
+
+        }
+
+    }
+
+    showToast(
+
+        checkoutAllMode
+        ? "All orders placed!"
+        : "Order placed!"
+
+    );
+
+    closeCheckout();
+
+    loadInterested();
+
+    loadCartCount();
+
+} catch(err){
+
+    console.error(err);
+
+    showToast(
+
+        err.message,
+
+        "error"
+
+    );
+
+}
 
     const deliveryMethod =
     document.querySelector(

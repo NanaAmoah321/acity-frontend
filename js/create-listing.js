@@ -100,6 +100,8 @@ uploadArea.addEventListener(
 
         e.preventDefault();
 
+   
+
         uploadArea.classList.remove(
             "dragover"
         );
@@ -117,6 +119,19 @@ if (ItemForm) {
     ItemForm.addEventListener("submit", async (e) => {
 
         e.preventDefault();
+
+        const publishButton =
+        document.getElementById("publishButton");
+
+        publishButton.disabled = true;
+
+        publishButton.innerHTML = `
+
+        <i class="fa-solid fa-spinner fa-spin"></i>
+
+        Publishing...
+
+        `;
 
         const token =
         localStorage.getItem("token");

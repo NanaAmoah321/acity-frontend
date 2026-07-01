@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile - Acity Connect</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/buttons.css">
+    <link rel="stylesheet" href="css/profile.css">
+    <link rel="stylesheet" href="css/toast.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
@@ -104,136 +108,171 @@
 
     </nav>
 
-    <section class="profile-dashboard">
+    <section class="profile-hero">
 
-        <section class="profile-sidebar">
+    <div class="profile-hero-content">
 
-            <div class="profile-cover"></div>
+        <div class="profile-avatar-large">
 
-            <div class="profile-header">
+            <i class="fa-solid fa-user"></i>
 
-                <div class="profile-avatar">
-                    <i class="fa-solid fa-user"></i>
-                </div>
+        </div>
 
-                <span class="profile-tag">
-                    Student Seller
-                </span>
+        <span class="profile-role">
+
+            Student Marketplace Seller
+
+        </span>
+
+        <h1 id="userName"></h1>
+
+        <p id="userEmail"></p>
+
+        <div class="profile-meta">
+
+    <span>
+
+        <i class="fa-solid fa-graduation-cap"></i>
+
+        Level 300
+
+    </span>
+
+    <span>
+
+        <i class="fa-solid fa-location-dot"></i>
+
+        Academic City
+
+    </span>
+
+        </div>
+
+
+
+        <button class="btn btn-primary">
+
+            <i class="fa-solid fa-pen"></i>
+
+            Edit Profile
+
+        </button>
+
+    </div>
+
+</section>
+
+    <section class="profile-main">
+
+    <section class="profile-summary">
+
+        <div class="profile-left">
+
+            <div class="profile-avatar-large">
+                <i class="fa-solid fa-user"></i>
+            </div>
+
+            <div>
 
                 <h1 id="userName"></h1>
 
                 <p id="userEmail"></p>
 
+                <div class="profile-info">
+
+                <textarea
+                    id="aboutMe"
+                    placeholder="Tell other students about yourself..."
+                ></textarea>
+
+                <button
+                    class="btn btn-primary"
+                    onclick="saveProfile()"
+                >
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    Save Profile
+                </button>
+
+                </div>
+
             </div>
 
-            <div class="profile-stats">
+        </div>
+
+        <div class="profile-stats">
 
             <div class="stat-card">
-                <span id="itemsCount">0</span>
-                <small>Listings</small>
+                <h2 id="itemsCount">0</h2>
+                <p>Listings</p>
             </div>
 
             <div class="stat-card">
-                <span id="reviewsCount">0</span>
-                <small>Reviews</small>
+                <h2 id="ratingValue">0.0</h2>
+                <p>Rating</p>
             </div>
 
             <div class="stat-card">
-                <span id="ratingValue">0.0</span>
-                <small>Rating</small>
+                <h2 id="reviewsCount">0</h2>
+                <p>Reviews</p>
             </div>
 
-            </div>
+        </div>
 
-            <div class="skills-section">
+    </section>
 
-            <label>
-            <i class="fa-solid fa-code"></i>
-            Skills Offered
-            </label>
+    <div class="profile-grid">
 
-            <input
-            type="text"
-            id="skillsOffered"
-            placeholder="Programming, Graphic Design..."
-            >
+        <section class="dashboard-panel">
 
-            <label>
-            <i class="fa-solid fa-lightbulb"></i>
-            Skills Needed
-            </label>
+            <div class="panel-header">
 
-            <input
-            type="text"
-            id="skillsNeeded"
-            placeholder="Web Design, UI/UX..."
-            >
+                <h2>My Listings</h2>
+
+                <a href="#">View All</a>
 
             </div>
 
-            <button
-            class="save-profile-btn"
-            onclick="saveProfile()"
-            >
-            <i class="fa-solid fa-floppy-disk"></i>
-            Save Changes
-            </button>
-
-            <div class="profile-achievements">
-
-                <h3>
-                    <i class="fa-solid fa-trophy"></i>
-                    Achievements
-                </h3>
-
-                <div class="achievement-badge">
-                    🏪 First Listing
-                </div>
-
-                <div class="achievement-badge">
-                    ⭐ 5 Star Seller
-                </div>
-
-                <div class="achievement-badge">
-                    📦 Order Completed
-                </div>
-
-                <div class="achievement-badge">
-                    💬 Active Seller
-                </div>
-
-            </div>
+            <div
+                id="myItemsContainer"
+                class="listings-grid"
+            ></div>
 
         </section>
 
-        <div class="profile-right">
+        <section class="dashboard-panel">
 
-        <section class="my-items-section">
+            <div class="panel-header">
 
-            <h2>My Items</h2>
+                <h2>Incoming Orders</h2>
 
-            <div id="myItemsContainer"></div>
+                <a href="#">View All</a>
+
+            </div>
+
+            <div
+                id="sellerOrders"
+                class="orders-list"
+            ></div>
 
         </section>
-        <section class="incoming-orders-section">
 
-        <h2>Incoming Orders</h2>
+    </div>
 
-        <div id="sellerOrders"></div>
+    <section class="dashboard-panel reviews-panel">
 
-        </section>
+        <div class="panel-header">
 
-        <section class="profile-reviews-section">
+            <h2>Reviews</h2>
 
-        <h2>Reviews</h2>
-
-        <div id="ratingContainer"></div>
+        </div>
 
         <div id="reviewsContainer"></div>
 
-         </section>
+    </section>
 
-        </div>
+</section>
+
+        
 
     </section>
 
