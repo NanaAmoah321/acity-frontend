@@ -68,7 +68,7 @@
 
     border:none;
 
-    background:#fff;
+    background:var(--surface);
 
     padding:12px 20px;
 
@@ -102,7 +102,7 @@
 
 .notification-card{
 
-    background:white;
+    background:var(--surface);
 
     border-radius:22px;
 
@@ -134,7 +134,7 @@
 
     border-left:5px solid var(--primary);
 
-    background:#FFF8F8;
+    background:rgba(239,68,68,.06);
 
 }
 
@@ -216,7 +216,7 @@
 
 .notification-message{
 
-    color:#64748B;
+    color:var(--text-light);
 
     margin:10px 0;
 

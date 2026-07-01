@@ -2,12 +2,28 @@
    PAGE BACKGROUND
 ========================================== */
 
+:root{
+
+    --page-bg:
+        radial-gradient(circle at top left,#FFF5F5 0%,transparent 35%),
+        radial-gradient(circle at top right,#F8FAFC 0%,transparent 35%),
+        #F7F9FC;
+
+}
+
+body.dark{
+
+    --page-bg:
+        radial-gradient(circle at top left,rgba(239,68,68,.08) 0%,transparent 35%),
+        radial-gradient(circle at top right,rgba(59,130,246,.05) 0%,transparent 35%),
+        #0F172A;
+
+}
+
 body{
 
-    background:
-    radial-gradient(circle at top left,#FFF5F5 0%,transparent 35%),
-    radial-gradient(circle at top right,#F8FAFC 0%,transparent 35%),
-    #F7F9FC;
+    background:var(--page-bg);
+    color:var(--text);
 
 }
 
@@ -124,7 +140,7 @@ body{
 
     padding:56px;
 
-    background:rgba(255,255,255,.82);
+    background:var(--background);
 
     backdrop-filter:blur(16px);
 
@@ -350,7 +366,7 @@ gap:32px;
 
     gap:10px;
 
-    color:#6B7280;
+    color:var(--text-light);
 
     font-size:14px;
 

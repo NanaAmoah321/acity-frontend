@@ -7,8 +7,11 @@
     padding:80px 20px 50px;
 
     background:
-    radial-gradient(circle at top left,#FFF2F2 0%,transparent 35%),
-    #F7F9FC;
+    linear-gradient(
+        135deg,
+        rgba(239,68,68,.06),
+        var(--background)
+    );
 
     text-align:center;
 
@@ -103,7 +106,7 @@
 
 .profile-card{
 
-    background:white;
+    background:var(--surface);
 
     border-radius:24px;
 
@@ -135,7 +138,7 @@
 
 .stat-card{
 
-    background:#F8FAFC;
+    background:var(--background);
 
     border-radius:18px;
 
@@ -159,7 +162,7 @@
 
 .stat-card small{
 
-    color:#64748B;
+    color:var(--text-light);
 
 }
 
@@ -251,7 +254,7 @@ grid-template-columns:1fr;
 
 .profile-meta span{
 
-    background:white;
+    background:var(--surface);
 
     padding:10px 18px;
 
@@ -306,7 +309,7 @@ grid-template-columns:1fr;
 
     gap:20px;
 
-    background:#fff;
+    background:var(--surface);
 
     padding:20px;
 
@@ -428,7 +431,7 @@ grid-template-columns:1fr;
 
 .dashboard-panel{
 
-    background:white;
+    background:var(--surface);
 
     border-radius:25px;
 
@@ -470,7 +473,7 @@ grid-template-columns:1fr;
 
     margin-top:40px;
 
-    background:white;
+    background:var(--surface);
 
     padding:30px;
 
@@ -503,7 +506,7 @@ grid-template-columns:1fr;
 }
 
 .order-card{
-    background:#fff;
+    background:var(--surface);
     border:1px solid #eee;
     border-radius:18px;
     padding:24px;
@@ -607,7 +610,7 @@ grid-template-columns:1fr;
 }
 
 .profile-summary{
-    background:#fff;
+    background:var(--surface);
     border-radius:24px;
     padding:35px;
     display:flex;
@@ -640,7 +643,7 @@ grid-template-columns:1fr;
 }
 
 .dashboard-panel{
-    background:#fff;
+    background:var(--surface);
     border-radius:24px;
     padding:30px;
     box-shadow:0 10px 30px rgba(0,0,0,.08);
@@ -681,7 +684,7 @@ grid-template-columns:1fr;
 .stat-card{
     width:120px;
     height:110px;
-    background:#f8fafc;
+    background:var(--background);
     border-radius:18px;
     display:flex;
     flex-direction:column;
@@ -699,7 +702,7 @@ grid-template-columns:1fr;
 }
 
 .listing-card{
-    background:#fff;
+    background:var(--surface);
     border:1px solid #eee;
     border-radius:20px;
     overflow:hidden;
@@ -746,7 +749,7 @@ grid-template-columns:1fr;
 
 .review-card{
 
-    background:#fff;
+    background:var(--surface);
 
     border:1px solid #eee;
 

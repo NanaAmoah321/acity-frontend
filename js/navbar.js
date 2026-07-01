@@ -307,6 +307,204 @@ if(profileToggle){
 
 }
 
+const themeSelect =
+document.getElementById("themeSelect");
+
+const themeIcon =
+document.getElementById("themeIcon");
+
+const appearanceBtn =
+document.getElementById("appearanceBtn");
+
+const appearanceMenu =
+document.getElementById("appearanceMenu");
+
+function applyTheme(theme){
+
+    document.body.classList.remove("dark");
+
+    if(theme === "dark"){
+
+        document.body.classList.add("dark");
+
+    }
+
+    if(theme === "system"){
+
+        if(
+
+            window.matchMedia(
+
+                "(prefers-color-scheme: dark)"
+
+            ).matches
+
+        ){
+
+            document.body.classList.add("dark");
+
+        }
+
+    }
+
+    updateThemeIcon(theme);
+
+}
+
+function updateThemeIcon(theme){
+
+    if(!themeIcon) return;
+
+    switch(theme){
+
+        case "light":
+
+            themeIcon.className =
+            "fa-solid fa-sun";
+
+            break;
+
+        case "dark":
+
+            themeIcon.className =
+            "fa-solid fa-moon";
+
+            break;
+
+        default:
+
+            themeIcon.className =
+            "fa-solid fa-circle-half-stroke";
+
+    }
+
+}
+
+function saveTheme(theme){
+
+    localStorage.setItem(
+        "theme",
+        theme
+    );
+
+    applyTheme(theme);
+
+    // Update active option
+    document
+    .querySelectorAll(".theme-option")
+    .forEach(option=>{
+
+        option.classList.remove("active");
+
+    });
+
+    document
+    .querySelector(
+        `.theme-option[data-theme="${theme}"]`
+    )
+    ?.classList.add("active");
+
+}
+
+
+const savedTheme =
+
+localStorage.getItem("theme")
+
+||
+
+"system";
+
+saveTheme(savedTheme);
+
+document
+.querySelectorAll(".theme-option")
+.forEach(option=>{
+
+    option.addEventListener(
+
+        "click",
+
+        ()=>{
+
+            saveTheme(
+
+                option.dataset.theme
+
+            );
+
+            appearanceMenu.classList.remove("open");
+
+        }
+
+    );
+
+});
+
+window.matchMedia(
+
+    "(prefers-color-scheme: dark)"
+
+).addEventListener(
+
+    "change",
+
+    ()=>{
+
+        if(
+
+            localStorage.getItem("theme")
+
+            ===
+
+            "system"
+
+        ){
+
+            applyTheme("system");
+
+        }
+
+    }
+
+);
+
+
+
+
+appearanceBtn?.addEventListener(
+
+    "click",
+
+    ()=>{
+
+        appearanceMenu.classList.toggle("open");
+
+    }
+
+);
+
+const themeToggle =
+document.getElementById("themeToggle");
+
+if(themeToggle){
+
+    themeToggle.addEventListener("click",()=>{
+
+        const current =
+            localStorage.getItem("theme") || "system";
+
+        const themes = ["system","light","dark"];
+
+        const next =
+            themes[(themes.indexOf(current)+1)%themes.length];
+
+        saveTheme(next);
+
+    });
+
+}
+
 window.loadCartCount = loadCartCount;
 updateMessageCount();
 window.updateMessageCount =

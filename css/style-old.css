@@ -234,7 +234,7 @@ nav {
     .menu-toggle span{
     width:24px;
     height:3px;
-    background:white;
+    background:var(--surface);
     border-radius:999px;
     }
 
@@ -1940,7 +1940,7 @@ nav {
 }
 
 .categories button{
-    background:white;
+    background:var(--surface);
     border:none;
     padding:14px 24px;
     border-radius:15px;
@@ -3194,7 +3194,7 @@ nav {
 
     border-radius:50%;
 
-    background:white;
+    background:var(--surface);
 
     display:flex;
     align-items:center;
@@ -5971,7 +5971,7 @@ textarea:disabled {
 
     align-items:center;
 
-    background:white;
+    background:var(--surface);
 
     border-radius:18px;
 
@@ -6029,7 +6029,7 @@ textarea:disabled {
 
     border:none;
 
-    background:white;
+    background:var(--surface);
 
     border-radius:18px;
 
@@ -6189,7 +6189,7 @@ textarea:disabled {
 
     min-width:210px;
 
-    background:#fff;
+    background:var(--surface);
 
     border-radius:22px;
 

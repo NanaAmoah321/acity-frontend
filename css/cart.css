@@ -6,7 +6,7 @@ CART PAGE
 
     min-height:100vh;
 
-    background:#f6f8fc;
+    background:var(--background);
 
     padding:40px 0 70px;
 
@@ -72,7 +72,7 @@ CART CARD
 
 .cart-card{
 
-    background:#fff;
+    background:var(--surface);
 
     border-radius:22px;
 
@@ -275,7 +275,7 @@ SUMMARY
 
 .cart-summary{
 
-    background:#fff;
+    background:var(--surface);
 
     border-radius:22px;
 
@@ -451,11 +451,11 @@ RESPONSIVE
 .checkout-content h2{
     font-size:2rem;
     margin-bottom:8px;
-    color:#111827;
+    color:var(--text);
 }
 
 .checkout-content>p{
-    color:#6b7280;
+    color:var(--text-light);
     margin-bottom:30px;
 }
 
@@ -468,7 +468,7 @@ RESPONSIVE
     display:flex;
     gap:20px;
     align-items:center;
-    background:#f8fafc;
+    background:var(--background);
     border-radius:18px;
     padding:18px;
     margin-bottom:30px;
@@ -512,7 +512,7 @@ RESPONSIVE
     text-align:center;
     cursor:pointer;
     transition:.25s;
-    background:white;
+    background:var(--surface);
 }
 
 .delivery-card:hover{
@@ -631,7 +631,7 @@ RESPONSIVE
 }
 
 .cancel-order{
-    background:#f3f4f6;
+    background:var(--surface-alt);
     color:#374151;
 }
 
@@ -672,7 +672,7 @@ RESPONSIVE
 }
 
 .checkout-subtitle{
-    color:#6b7280;
+    color:var(--text-light);
     margin-bottom:25px;
 }
 

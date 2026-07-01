@@ -100,7 +100,7 @@
 
     gap:15px;
 
-    background:white;
+    background:var(--surface);
 
     border-radius:20px;
 
@@ -170,7 +170,7 @@
 
     height:95px;
 
-    background:white;
+    background:var(--surface);
 
     border:none;
 
@@ -378,7 +378,7 @@ height:82px;
 
     min-height:260px;
 
-    background:white;
+    background:var(--surface);
 
     border-radius:26px;
 
@@ -434,7 +434,7 @@ height:82px;
 
     overflow:hidden;
 
-    background:white;
+    background:var(--surface);
 
     box-shadow:var(--shadow);
 
@@ -558,7 +558,7 @@ font-size:1.5rem;
 
     flex:0 0 310px;
 
-    background:white;
+    background:var(--surface);
 
     border-radius:24px;
 
@@ -760,7 +760,7 @@ font-size:24px;
 
     flex:0 0 340px;
 
-    background:white;
+    background:var(--surface);
 
     border-radius:24px;
 
@@ -912,7 +912,7 @@ font-size:24px;
 
     border-radius:18px;
 
-    background:white;
+    background:var(--surface);
 
     color:var(--primary);
 

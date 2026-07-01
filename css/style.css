@@ -16,32 +16,91 @@
     box-sizing:border-box;
 }
 
+html{
+
+    transition:
+    background-color .3s,
+    color .3s;
+
+}
+
+body,
+nav,
+div,
+section,
+article,
+aside,
+main,
+button,
+input,
+textarea,
+.card,
+.dashboard-panel,
+.profile-card,
+.notification-card,
+.inbox-card{
+
+    transition:
+
+        background-color .3s,
+
+        color .3s,
+
+        border-color .3s,
+
+        box-shadow .3s;
+
+}
+
 
 /* ---------- VARIABLES ---------- */
 
 :root{
 
-    --primary:#E53935;
-    --primary-dark:#C62828;
+    /* Brand */
+    --primary:#EF4444;
+    --primary-hover:#DC2626;
 
-    --background:#F8FAFC;
+    /* Backgrounds */
+    --background:var(--surface);
     --surface:#FFFFFF;
+    --surface-2:#F4F6F8;
 
-    --text:#111827;
-    --text-light:#6B7280;
+    /* Text */
+    --text:#0F172A;
+    --text-light:#64748B;
 
+    /* Borders */
     --border:#E5E7EB;
 
+    /* Status */
     --success:#22C55E;
     --warning:#F59E0B;
     --danger:#EF4444;
 
-    --shadow:
-    0 12px 35px rgba(0,0,0,.08);
+    /* Shadows */
+    --shadow:0 12px 35px rgba(15,23,42,.08);
 
-    --radius:20px;
-
+    /* Animation */
     --transition:.3s ease;
+
+}
+
+body.dark{
+
+    --background:#0F172A;
+
+    --surface:#1E293B;
+
+    --surface-2:#273449;
+
+    --text:#F8FAFC;
+
+    --text-light:#CBD5E1;
+
+    --border:#334155;
+
+    --shadow:0 15px 40px rgba(0,0,0,.45);
 
 }
 
@@ -56,6 +115,12 @@ body{
 
     color:var(--text);
 
+    transition:
+        background .3s,
+        color .3s;
+
+
+        
     line-height:1.6;
 
 }
@@ -125,7 +190,7 @@ select{
 
     border-radius:14px;
 
-    background:white;
+    background:var(--surface);
 
     transition:var(--transition);
 
@@ -218,7 +283,7 @@ h3{
 
 .btn-secondary{
 
-    background:white;
+    background:var(--surface);
 
     color:var(--text);
 
@@ -228,7 +293,7 @@ h3{
 
 .btn-secondary:hover{
 
-    background:#F3F4F6;
+    background:var(--surface-alt);
 
 }
 
@@ -245,7 +310,7 @@ h3{
 
 .card{
 
-    background:white;
+    background:var(--surface);
 
     border-radius:var(--radius);
 

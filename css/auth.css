@@ -86,7 +86,7 @@
 
     gap:15px;
 
-    background:white;
+    background:var(--surface);
 
     padding:18px;
 
@@ -122,7 +122,7 @@
 
     width:100%;
 
-    background:white;
+    background:var(--surface);
 
     border-radius:28px;
 

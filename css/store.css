@@ -25,7 +25,7 @@
 
 .store-card{
 
-    background:#fff;
+    background:var(--surface);
 
     border-radius:28px;
 
@@ -165,7 +165,7 @@
 
 .follow-btn{
 
-    background:white;
+    background:var(--surface);
 
     border:2px solid #ececec !important;
 
@@ -277,7 +277,7 @@ SEARCH BAR
 
     border-radius:16px;
 
-    background:#fff;
+    background:var(--surface);
 
     padding:0 20px 0 55px;
 
@@ -305,7 +305,7 @@ SEARCH BAR
 
     padding:0 20px;
 
-    background:#fff;
+    background:var(--surface);
 
     font-size:15px;
 
@@ -333,7 +333,7 @@ CATEGORY PILLS
 
     border:none;
 
-    background:#fff;
+    background:var(--surface);
 
     color:#444;
 
@@ -385,7 +385,7 @@ PRODUCT CARD
 
 .featured-card{
 
-    background:#fff;
+    background:var(--surface);
 
     border-radius:22px;
 

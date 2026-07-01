@@ -54,7 +54,7 @@
 
 .btn-secondary{
 
-    background:white;
+    background:var(--surface);
 
     color:var(--text);
 
@@ -64,7 +64,7 @@
 
 .btn-secondary:hover{
 
-    background:#F8FAFC;
+    background:var(--background);
 
 }
 
