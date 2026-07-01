@@ -6,10 +6,18 @@ document.getElementById("searchService");
 
 let selectedCategory = "All";
 document
-.querySelectorAll(".categories button")
+.querySelectorAll(".mobile-categories button")
 .forEach(button => {
 
     button.addEventListener("click", () => {
+
+        document
+        .querySelectorAll(".mobile-categories button")
+        .forEach(btn =>
+            btn.classList.remove("active")
+        );
+
+        button.classList.add("active");
 
         selectedCategory =
         button.dataset.category;
@@ -81,15 +89,27 @@ function displayServices() {
 
         const matchesSearch =
 
-            service.title
-            .toLowerCase()
-            .includes(searchText)
+    (service.title || "")
+        .toLowerCase()
+        .includes(searchText)
 
-            ||
+    ||
 
-            service.description
-            .toLowerCase()
-            .includes(searchText);
+    (service.description || "")
+        .toLowerCase()
+        .includes(searchText)
+
+    ||
+
+    (service.provider_name || "")
+        .toLowerCase()
+        .includes(searchText)
+
+    ||
+
+    (service.category || "")
+        .toLowerCase()
+        .includes(searchText);
 
         const matchesCategory =
 
@@ -97,8 +117,13 @@ function displayServices() {
 
             ||
 
-            service.category ===
-            selectedCategory;
+            (service.category || "")
+                .toLowerCase()
+                .trim() ===
+
+            selectedCategory
+                .toLowerCase()
+                .trim();
 
         return (
             matchesSearch &&
@@ -112,10 +137,22 @@ function displayServices() {
     ) {
 
         ServicesContainer.innerHTML = `
-            <p>
-                No services found.
-            </p>
-        `;
+
+<div class="empty-state">
+
+    <i class="fa-solid fa-screwdriver-wrench"></i>
+
+    <h3>No matching services</h3>
+
+    <p>
+
+        Try another keyword or category.
+
+    </p>
+
+</div>
+
+`;
 
         return;
 
@@ -209,14 +246,7 @@ function displayServices() {
 
         </button>
 
-        <button
-            class="btn btn-primary"
-            onclick="viewService(${service.id})"
-        >
-
-            View
-
-        </button>
+        
 
     </div>
 

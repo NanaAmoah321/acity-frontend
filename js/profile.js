@@ -157,20 +157,86 @@ div.innerHTML = `
 
 loadMyItems();
   
-async function deleteItem(id) {
-  const token = localStorage.getItem("token");
+async function deleteItem(id){
 
-  if (confirm("Delete this item?")) {
-    await fetch(`https://acity-backend.onrender.com/api/listings/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Authorization": `Bearer ${token}`
-      }
-    });
+    const token = localStorage.getItem("token");
 
-    alert("Item deleted!");
-    loadMyItems();
-  }
+    if(!confirm("Delete this listing?")){
+
+        return;
+
+    }
+
+    const res = await fetch(
+
+        `https://acity-backend.onrender.com/api/listings/${id}`,
+
+        {
+
+            method:"DELETE",
+
+            headers:{
+
+                Authorization:`Bearer ${token}`
+
+            }
+
+        }
+
+    );
+
+    const data = await res.json();
+
+    if(res.ok){
+
+        alert("Listing deleted.");
+
+        loadMyItems();
+
+    }else{
+
+        alert(data.message || data.error);
+
+    }
+
+}
+
+async function markSold(id){
+
+    const token = localStorage.getItem("token");
+
+    const res = await fetch(
+
+        `https://acity-backend.onrender.com/api/listings/${id}/sold`,
+
+        {
+
+            method:"PUT",
+
+            headers:{
+
+                Authorization:`Bearer ${token}`
+
+            }
+
+        }
+
+    );
+
+    const data = await res.json();
+
+    if(res.ok){
+
+        alert("Listing marked as sold.");
+
+        loadMyItems();
+
+    }else{
+
+        alert(data.message || data.error);
+
+    }
+
 }
 
 async function editItem(id) {

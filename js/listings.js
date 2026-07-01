@@ -3,25 +3,23 @@ const ItemsContainer = document.getElementById('ItemsContainer');
 const searchInput = document.getElementById('searchInput');
 //const categoryFilter = document.getElementById('categoryFilter');
 let selectedCategory = "All";
+let allStores = [];
 
 document
-.querySelectorAll(".categories button")
+.querySelectorAll(".mobile-categories button")
 .forEach(button => {
 
     button.addEventListener("click", () => {
 
         document
         .querySelectorAll(".mobile-categories button")
-        .forEach(btn =>
-            btn.classList.remove("active")
-        );
+        .forEach(btn => btn.classList.remove("active"));
 
         button.classList.add("active");
 
-        selectedCategory =
-        button.dataset.category;
+        selectedCategory = button.dataset.category;
 
-        loadItems();
+        renderStores(allStores);
 
     });
 
@@ -33,7 +31,9 @@ function getStoreImage(category) {
 
 }
 
-async function searchMarketplace(query) {
+
+
+/*async function searchMarketplace(query) {
 
     const res = await fetch(
         `https://acity-backend.onrender.com/api/listings/search?q=${encodeURIComponent(query)}`
@@ -106,9 +106,9 @@ async function searchMarketplace(query) {
 
     });
 
-}
+}*/
 
-async function loadItems() {
+/*async function loadItems() {
 
 
 
@@ -151,13 +151,14 @@ async function loadItems() {
         .includes(searchText);
 
         const matchesCategory =
-
-            selectedCategory === "All"
-
-            ||
+            selectedCategory === "All" ||
 
             (store.store_category || "")
-            === selectedCategory;
+                .toLowerCase()
+                .trim() ===
+            selectedCategory
+                .toLowerCase()
+                .trim();
 
         return (
             matchesSearch &&
@@ -233,6 +234,142 @@ class="store-image"
         ItemsContainer.appendChild(
             card
         );
+
+    });
+
+}*/
+
+async function loadItems() {
+
+    const res = await fetch(
+        "https://acity-backend.onrender.com/api/listings/stores"
+    );
+
+    allStores = await res.json();
+
+    renderStores(allStores);
+
+}
+
+function renderStores(stores){
+
+    const searchText = searchInput
+        ? searchInput.value.toLowerCase().trim()
+        : "";
+
+    const filteredStores = stores.filter(store => {
+
+        const matchesSearch =
+
+            store.store_name
+                .toLowerCase()
+                .includes(searchText)
+
+            ||
+
+            (store.store_category || "")
+                .toLowerCase()
+                .includes(searchText);
+
+            (store.seller_name || "")
+                .toLowerCase()
+                .includes(searchText);
+
+        const matchesCategory =
+
+            selectedCategory === "All"
+
+            ||
+
+            (store.store_category || "")
+                .toLowerCase()
+                .trim() ===
+            selectedCategory
+                .toLowerCase()
+                .trim();
+
+        return matchesSearch && matchesCategory;
+
+    });
+
+    ItemsContainer.innerHTML = "";
+
+    if(filteredStores.length === 0){
+
+        ItemsContainer.innerHTML = `
+
+        <div class="empty-state">
+
+            <i class="fa-solid fa-store-slash"></i>
+
+            <h3>No Stores Found</h3>
+
+            <p>
+
+                Try another search or category.
+
+            </p>
+
+        </div>
+
+        `;
+
+        return;
+
+    }
+
+    filteredStores.forEach(store=>{
+
+        const card = document.createElement("div");
+
+        card.className = "store-card";
+
+        card.innerHTML = `
+
+<img
+src="${getStoreImage(store.store_category)}"
+class="store-image"
+>
+
+<div class="store-info">
+
+    <span class="store-category">
+
+        ${store.store_category || "General"}
+
+    </span>
+
+    <h3>
+
+        ${store.store_name}
+
+    </h3>
+
+    <p>
+
+        ⭐ ${store.average_rating || "New Store"}
+
+    </p>
+
+    <p>
+
+        ${store.total_products} Products
+
+    </p>
+
+    <button
+        onclick="viewStore(${store.user_id})"
+    >
+
+        Visit Store
+
+    </button>
+
+</div>
+
+`;
+
+        ItemsContainer.appendChild(card);
 
     });
 
@@ -623,6 +760,27 @@ function viewService(id){
 
 }
 
+function viewListing(id) {
+
+    window.location.href =
+    `listing.html?id=${id}`;
+
+}
+
+function viewStore(userId) {
+
+    window.location.href =
+    `listing.html?id=${userId}`;
+
+}
+
+function viewService(id) {
+
+    window.location.href =
+    `service.html?id=${id}`;
+
+}
+
 
 
 
@@ -635,18 +793,7 @@ if (ItemsContainer) {
 
         searchInput.addEventListener("input", () => {
 
-            const query =
-            searchInput.value.trim();
-
-            if(query.length > 0){
-
-                searchMarketplace(query);
-
-            }else{
-
-                loadItems();
-
-            }
+            renderStores(allStores);
 
         });
 
