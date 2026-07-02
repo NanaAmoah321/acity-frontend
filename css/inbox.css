@@ -606,3 +606,39 @@
     }
 
 }
+
+.chat-image{
+
+    max-width:240px;
+
+    border-radius:14px;
+
+    margin-top:8px;
+
+    cursor:pointer;
+
+}
+
+.chat-file{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    margin-top:10px;
+
+    padding:12px;
+
+    border-radius:12px;
+
+    background:var(--surface);
+
+    color:var(--text);
+
+    text-decoration:none;
+
+    border:1px solid var(--border);
+
+}

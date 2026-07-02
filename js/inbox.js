@@ -136,6 +136,7 @@ card.onclick = () => {
 }*/
 
 let activeUserId = null;
+let selectedAttachment = null;
 
 async function openConversation(userId){
 
@@ -263,22 +264,74 @@ function renderConversation(messages){
 
         bubble.innerHTML = `
 
-            ${message.message}
+    ${
+        message.message
+        ?
+        `<div>${message.message}</div>`
+        :
+        ""
+    }
 
-            <span class="message-time">
+    ${
+        message.file_url
 
-                ${new Date(message.created_at)
-                .toLocaleTimeString([],{
+        ?
 
-                    hour:"2-digit",
+        message.file_type.startsWith("image/")
 
-                    minute:"2-digit"
+        ?
 
-                })}
+        `
 
-            </span>
+        <img
+            src="${message.file_url}"
+            class="chat-image"
+        >
 
-        `;
+        `
+
+        :
+
+        `
+
+        <a
+
+            href="${message.file_url}"
+
+            target="_blank"
+
+            class="chat-file"
+
+        >
+
+            <i class="fa-solid fa-file"></i>
+
+            ${message.file_name}
+
+        </a>
+
+        `
+
+        :
+
+        ""
+
+    }
+
+    <span class="message-time">
+
+        ${new Date(message.created_at)
+        .toLocaleTimeString([],{
+
+            hour:"2-digit",
+
+            minute:"2-digit"
+
+        })}
+
+    </span>
+
+`;
 
         container.appendChild(bubble);
 
@@ -300,12 +353,47 @@ async function sendMessage(e){
     const input =
     document.getElementById("messageInput");
 
-    if(!input.value.trim()) return;
+    if(
+        !input.value.trim()
+        &&
+        !selectedAttachment
+    ) return;
 
     const token =
     localStorage.getItem("token");
 
-    await fetch(
+    const formData =
+    new FormData();
+
+    formData.append(
+
+        "receiver_id",
+
+        activeUserId
+
+    );
+
+    formData.append(
+
+        "message",
+
+        input.value
+
+    );
+
+    if(selectedAttachment){
+
+        formData.append(
+
+            "attachment",
+
+            selectedAttachment
+
+        );
+
+    }
+
+    const res = await fetch(
 
         "https://acity-backend.onrender.com/api/messages",
 
@@ -315,27 +403,50 @@ async function sendMessage(e){
 
             headers:{
 
-                "Content-Type":"application/json",
-
                 Authorization:`Bearer ${token}`
 
             },
 
-            body:JSON.stringify({
-
-                receiver_id:activeUserId,
-
-                message:input.value
-
-            })
+            body:formData
 
         }
 
     );
 
-    input.value="";
+    const data =
+    await res.json();
 
-    openConversation(activeUserId);
+    if(!res.ok){
+
+        showToast(
+
+            data.error ||
+
+            "Failed to send",
+
+            "error"
+
+        );
+
+        return;
+
+    }
+
+    input.value = "";
+
+    selectedAttachment = null;
+
+    document.getElementById(
+
+        "attachmentInput"
+
+    ).value = "";
+
+    openConversation(
+
+        activeUserId
+
+    );
 
 }
 
@@ -359,6 +470,46 @@ function backToInbox(){
 
 }
 
+const attachBtn =
+document.getElementById("attachBtn");
+
+const attachmentInput =
+document.getElementById("attachmentInput");
+
+attachBtn.addEventListener(
+
+    "click",
+
+    ()=>{
+
+        attachmentInput.click();
+
+    }
+
+);
+
+attachmentInput.addEventListener(
+
+    "change",
+
+    ()=>{
+
+        selectedAttachment =
+        attachmentInput.files[0];
+
+        if(selectedAttachment){
+
+            showToast(
+
+                `${selectedAttachment.name} selected`
+
+            );
+
+        }
+
+    }
+
+);
 
 
 loadInbox().then(() => {
