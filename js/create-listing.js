@@ -156,7 +156,7 @@ if (ItemForm) {
 
         formData.append(
             "stock_quantity",
-            document.getElementById("stockQuantity").value
+            document.getElementById("stock_quantity").value
         );
 
         
