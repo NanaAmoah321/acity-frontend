@@ -698,7 +698,11 @@ font-size:1.5rem;
 
     border-radius:50%;
 
-    background:#F5F5F5;
+    background:var(--surface);
+
+    color:var(--text);
+
+    border:1px solid var(--border);
 
     transition:.25s;
 
@@ -708,9 +712,12 @@ font-size:1.5rem;
 
     background:var(--primary);
 
-    color:white;
+    color:#fff;
+
+    transform:translateX(4px);
 
 }
+
 
 /* ==========================================
    MOBILE
@@ -864,8 +871,8 @@ font-size:24px;
 
     background:linear-gradient(
         135deg,
-        var(--primary),
-        var(--primary-dark)
+        #ff4d4f,
+        #e53935
     );
 
     color:white;
