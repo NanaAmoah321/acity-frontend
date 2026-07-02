@@ -154,6 +154,11 @@ if (ItemForm) {
             document.getElementById("category").value
         );
 
+        formData.append(
+            "stock_quantity",
+            document.getElementById("stockQuantity").value
+        );
+
         
 
         formData.append(
