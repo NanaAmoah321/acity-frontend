@@ -289,8 +289,21 @@ const totalQuantity = currentItems.reduce(
 
 );
 
-document.getElementById("checkoutTitle").textContent =
-    `${currentItems.length} Items`;
+const titles = currentItems
+    .map(item => item.title)
+    .join(", ");
+
+document.getElementById("checkoutTitle").innerHTML = `
+
+    <div class="checkout-title">
+
+        <h3>${currentItems.length} Items</h3>
+
+        <small>${titles}</small>
+
+    </div>
+
+`;
 
 document.getElementById("checkoutPrice").innerHTML = `
 
