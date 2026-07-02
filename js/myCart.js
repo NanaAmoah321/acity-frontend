@@ -14,12 +14,12 @@ async function loadInterested() {
   const items = await res.json();
   currentItems = items;
 
-  const subtotal =
+const subtotal =
 items.reduce(
 
     (sum,item)=>
 
-    sum + Number(item.price),
+    sum + (Number(item.price) * item.quantity),
 
     0
 
@@ -186,7 +186,7 @@ function checkoutItem(id) {
     checkoutAllMode = false;
 
     const item =
-    Items.find(
+    currentItems.find(
         product =>
         product.id === id
     );
@@ -240,7 +240,7 @@ function checkoutItem(id) {
 
 function checkoutAll() {
 
-    if (Items.length === 0) {
+    if (currentItems.length === 0) {
 
         showToast("Your cart is empty", "error");
         return;
@@ -252,17 +252,10 @@ function checkoutAll() {
     selectedItem = null;
 
     document.getElementById("checkoutTitle").textContent =
-        `${Items.length} Items`;
+        `${currentItems.length} Items`;
 
     document.getElementById("checkoutPrice").textContent =
-        `₵${Items.reduce((sum, item) => sum + Number(item.price), 0)}`;
-
-    document.getElementById("checkoutImage").src =
-        Items[0].image_url ||
-        `images/${Items[0].category}.jpg`;
-
-    const subtotal =
-    Items.reduce(
+    `₵${currentItems.reduce(
 
     (sum,item)=>
 
@@ -270,7 +263,21 @@ function checkoutAll() {
 
     0
 
-);
+    )}`;
+    document.getElementById("checkoutImage").src =
+        currentItems[0].image_url ||
+        `images/${currentItems[0].category}.jpg`;
+
+    const subtotal =
+    currentItems.reduce(
+
+    (sum,item)=>
+
+    sum + (Number(item.price) * item.quantity),
+
+    0
+
+    );
 
     document.getElementById("productTotal").textContent =
         `₵${subtotal}`;
@@ -407,6 +414,11 @@ async function placeOrder() {
         "token"
     );
 
+    const deliveryMethod =
+    document.querySelector(
+        'input[name="deliveryMethod"]:checked'
+    )?.value;
+
     try {
 
     const itemsToOrder = checkoutAllMode
@@ -489,10 +501,10 @@ async function placeOrder() {
 
 }
 
-    const deliveryMethod =
+    /*const deliveryMethod =
     document.querySelector(
         'input[name="deliveryMethod"]:checked'
-    )?.value;
+    )?.value;*/
 
     if (!deliveryMethod) {
 

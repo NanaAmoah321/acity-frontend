@@ -383,23 +383,23 @@ function renderProducts(products){
                 <div class="listing-stock">
 
 ${
-    listing.stock_quantity > 5
+    product.stock_quantity > 5
 
     ?
 
     `<span class="stock-good">
         <i class="fa-solid fa-box"></i>
-        ${listing.stock_quantity} Available
+        ${product.stock_quantity} Available
     </span>`
 
     :
 
-    listing.stock_quantity > 0
+    product.stock_quantity > 0
 
     ?
 
     `<span class="stock-low">
-        🔥 Only ${listing.stock_quantity} left
+        🔥 Only ${product.stock_quantity} left
     </span>`
 
     :
@@ -420,7 +420,7 @@ ${
                     </span>
 
                     ${
-                        listing.stock_quantity > 0
+                        product.stock_quantity > 0
 
                         ?
 
@@ -428,7 +428,7 @@ ${
 
                         <button
                         class="btn-primary"
-                        onclick="addToCart(${listing.id})"
+                        onclick="addToCart(${product.id})"
                         >
 
                         Add to Cart
