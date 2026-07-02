@@ -380,6 +380,37 @@ function renderProducts(products){
 
                 </div>
 
+                <div class="listing-stock">
+
+${
+    listing.stock_quantity > 5
+
+    ?
+
+    `<span class="stock-good">
+        <i class="fa-solid fa-box"></i>
+        ${listing.stock_quantity} Available
+    </span>`
+
+    :
+
+    listing.stock_quantity > 0
+
+    ?
+
+    `<span class="stock-low">
+        🔥 Only ${listing.stock_quantity} left
+    </span>`
+
+    :
+
+    `<span class="stock-out">
+        ❌ Out of Stock
+    </span>`
+}
+
+</div>
+
                 <div class="featured-footer">
 
                     <span>
@@ -388,15 +419,40 @@ function renderProducts(products){
 
                     </span>
 
-                    <button
-                        onclick="addToCart(${product.id})"
-                    >
+                    ${
+                        listing.stock_quantity > 0
 
-                        <i class="fa-solid fa-cart-shopping"></i>
+                        ?
 
-                        Add To Cart
+                        `
 
-                    </button>
+                        <button
+                        class="btn-primary"
+                        onclick="addToCart(${listing.id})"
+                        >
+
+                        Add to Cart
+
+                        </button>
+
+                        `
+
+                            :
+
+                            `
+
+                        <button
+                        class="btn-secondary"
+                        disabled
+                        >
+
+                        Out of Stock
+
+                        </button>
+
+                        `
+
+                        }
 
                 </div>
 
@@ -477,68 +533,7 @@ function setupStoreFilters(){
 
 }
 
-/*async function addToCart(listingId) {
 
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-
-        showToast("Please login first", "error");
-        return;
-
-    }
-
-    try {
-
-        const res = await fetch(
-            "https://acity-backend.onrender.com/api/listings/interest",
-            {
-
-                method: "POST",
-
-                headers: {
-
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
-
-                },
-
-                body: JSON.stringify({
-
-                    listing_id: listingId
-
-                })
-
-            }
-        );
-
-        const data = await res.json();
-
-        if (res.ok) {
-
-            showToast("Added to cart!");
-
-            if (typeof updateCartCount === "function") {
-
-                loadCartCount();
-
-            }
-
-        } else {
-
-            showToast(data.message || "Couldn't add item to cart", "error");
-
-        }
-
-    } catch (err) {
-
-        console.error(err);
-
-        showToast("Something went wrong", "error");
-
-    }
-
-}*/
 
 
 async function addToCart(listingId) {

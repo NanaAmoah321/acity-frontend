@@ -91,6 +91,13 @@ document.getElementById(
 
     </div>
 
+    <div class="cart-quantity">
+
+    Quantity:
+    <strong>${item.quantity}</strong>
+
+    </div>
+
     <p class="cart-description">
         ${item.description}
     </p>
@@ -107,33 +114,33 @@ document.getElementById(
 
     </div>
 
-    <div class="cart-actions">
+    <div class="quantity-controls">
 
-        <button
-            class="btn-message"
-            onclick="messageSeller(${item.user_id})"
-        >
-            <i class="fa-solid fa-comments"></i>
-            Message
-        </button>
+    <button
+        onclick="changeQuantity(${item.id},-1)"
+    >
 
-        <button
-            class="btn-checkout"
-            onclick="checkoutItem(${item.id})"
-        >
-            <i class="fa-solid fa-credit-card"></i>
-            Checkout
-        </button>
+        <i class="fa-solid fa-minus"></i>
 
-        <button
-            class="btn-remove"
-            onclick="removeFromCart(${item.id})"
-        >
-            <i class="fa-solid fa-trash"></i>
-            Remove
-        </button>
+    </button>
 
-    </div>
+    <span>
+
+        ${item.quantity}
+
+    </span>
+
+    <button
+        onclick="changeQuantity(${item.id},1)"
+    >
+
+        <i class="fa-solid fa-plus"></i>
+
+    </button>
+
+</div>
+
+<div class="cart-actions">
 
     </div>
 
@@ -179,7 +186,7 @@ function checkoutItem(id) {
     checkoutAllMode = false;
 
     const item =
-    currentItems.find(
+    Items.find(
         product =>
         product.id === id
     );
@@ -194,11 +201,11 @@ function checkoutItem(id) {
     item.title;
 
     document
-    .getElementById(
-        "checkoutPrice"
-    )
-    .textContent =
-    `₵${item.price}`;
+.getElementById(
+    "checkoutPrice"
+)
+.textContent =
+`₵${Number(item.price) * item.quantity}`;
 
     document
     .getElementById(
@@ -213,14 +220,14 @@ function checkoutItem(id) {
         "productTotal"
     )
     .textContent =
-    `₵${item.price}`;
+    `₵${Number(item.price) * item.quantity}`;
 
     document
     .getElementById(
         "grandTotal"
     )
     .textContent =
-    `₵${item.price}`;
+    `₵${Number(item.price) * item.quantity}`;
 
     document
     .getElementById(
@@ -233,7 +240,7 @@ function checkoutItem(id) {
 
 function checkoutAll() {
 
-    if (currentItems.length === 0) {
+    if (Items.length === 0) {
 
         showToast("Your cart is empty", "error");
         return;
@@ -245,23 +252,31 @@ function checkoutAll() {
     selectedItem = null;
 
     document.getElementById("checkoutTitle").textContent =
-        `${currentItems.length} Items`;
+        `${Items.length} Items`;
 
     document.getElementById("checkoutPrice").textContent =
-        `₵${currentItems.reduce((sum, item) => sum + Number(item.price), 0)}`;
+        `₵${Items.reduce((sum, item) => sum + Number(item.price), 0)}`;
 
     document.getElementById("checkoutImage").src =
-        currentItems[0].image_url ||
-        `images/${currentItems[0].category}.jpg`;
+        Items[0].image_url ||
+        `images/${Items[0].category}.jpg`;
 
-    const total =
-        currentItems.reduce((sum, item) => sum + Number(item.price), 0);
+    const subtotal =
+    Items.reduce(
+
+    (sum,item)=>
+
+    sum + (Number(item.price) * item.quantity),
+
+    0
+
+);
 
     document.getElementById("productTotal").textContent =
-        `₵${total}`;
+        `₵${subtotal}`;
 
     document.getElementById("grandTotal").textContent =
-        `₵${total}`;
+        `₵${subtotal}`;
 
     document.getElementById("checkoutModal").style.display =
         "flex";
@@ -578,6 +593,52 @@ async function placeOrder() {
         );
 
     }
+
+}
+
+async function changeQuantity(listingId, change){
+
+    const token = localStorage.getItem("token");
+
+    const res = await fetch(
+
+        `https://acity-backend.onrender.com/api/listings/cart/${listingId}`,
+
+        {
+
+            method:"PUT",
+
+            headers:{
+
+                "Content-Type":"application/json",
+
+                Authorization:`Bearer ${token}`
+
+            },
+
+            body:JSON.stringify({
+
+                change
+
+            })
+
+        }
+
+    );
+
+    const data = await res.json();
+
+    if(!res.ok){
+
+        alert(data.message || data.error);
+
+        return;
+
+    }
+
+    loadInterested();
+
+    loadCartCount();
 
 }
 loadInterested();

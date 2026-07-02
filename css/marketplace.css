@@ -1068,3 +1068,35 @@ font-size:24px;
     color:var(--primary);
 
 }
+
+.stock{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    margin-top:10px;
+
+    margin-bottom:10px;
+
+    font-size:.9rem;
+
+    font-weight:600;
+
+    color:#64748B;
+
+}
+
+.stock i{
+
+    color:var(--primary);
+
+}
+
+body.dark .stock{
+
+    color:#CBD5E1;
+
+}

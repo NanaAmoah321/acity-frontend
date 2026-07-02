@@ -858,3 +858,33 @@ PRODUCT CARD
     }
 
 }
+
+.listing-stock{
+
+    margin:16px 0;
+
+}
+
+.stock-good{
+
+    color:#16A34A;
+
+    font-weight:700;
+
+}
+
+.stock-low{
+
+    color:#F59E0B;
+
+    font-weight:700;
+
+}
+
+.stock-out{
+
+    color:#DC2626;
+
+    font-weight:700;
+
+}

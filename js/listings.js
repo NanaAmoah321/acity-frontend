@@ -501,6 +501,18 @@ onclick="viewListing(${item.user_id})">
 
         </p>
 
+        <p class="stock">
+
+        ${
+            item.stock_quantity > 5
+            ? `<i class="fa-solid fa-box"></i> ${item.stock_quantity} in stock`
+            : item.stock_quantity > 0
+                ? `<i class="fa-solid fa-fire"></i> Only ${item.stock_quantity} left`
+                : `<i class="fa-solid fa-circle-xmark"></i> Out of stock`
+        }
+
+        </p>
+
         <div class="featured-footer">
 
             <span>
@@ -722,6 +734,18 @@ ${item.title}
 <p class="featured-price">
 
 GH₵${item.price}
+
+</p>
+
+<p class="stock">
+
+        ${
+            item.stock_quantity > 5
+            ? `<i class="fa-solid fa-box"></i> ${item.stock_quantity} in stock`
+            : item.stock_quantity > 0
+                ? `<i class="fa-solid fa-fire"></i> Only ${item.stock_quantity} left`
+                : `<i class="fa-solid fa-circle-xmark"></i> Out of stock`
+        }
 
 </p>
 
