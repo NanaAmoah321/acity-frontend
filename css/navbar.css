@@ -482,6 +482,8 @@ nav{
 
     flex-direction:column;
 
+    overflow:hidden;
+
 }
 
 .mobile-menu.active{
@@ -584,6 +586,8 @@ nav{
 
     flex:1;
 
+    min-height:0;
+
     display:flex;
 
     flex-direction:column;
@@ -597,6 +601,8 @@ nav{
     overflow-x:hidden;
 
     -webkit-overflow-scrolling:touch;
+
+    padding-bottom:calc(40px + env(safe-area-inset-bottom));
 
 }
 
