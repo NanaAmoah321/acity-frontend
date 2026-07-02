@@ -409,108 +409,16 @@ function messageSeller(userId) {
 
 async function placeOrder() {
 
-    const token =
-    localStorage.getItem(
-        "token"
-    );
+    const token = localStorage.getItem("token");
 
     const deliveryMethod =
     document.querySelector(
         'input[name="deliveryMethod"]:checked'
     )?.value;
 
-    try {
-
-    const itemsToOrder = checkoutAllMode
-        ? currentItems
-        : [selectedItem];
-
-    for (const item of itemsToOrder) {
-
-        const res = await fetch(
-            "https://acity-backend.onrender.com/api/listings/orders",
-            {
-
-                method: "POST",
-
-                headers: {
-
-                    "Content-Type":"application/json",
-
-                    "Authorization":
-                    `Bearer ${token}`
-
-                },
-
-                body: JSON.stringify({
-
-                    listing_id: item.id,
-
-                    seller_id: item.user_id,
-
-                    delivery_method: deliveryMethod,
-
-                    hostel,
-
-                    room_number,
-
-                    meeting_location
-
-                })
-
-            }
-        );
-
-        if (!res.ok) {
-
-            const data = await res.json();
-
-            throw new Error(
-                data.message || "Order failed"
-            );
-
-        }
-
-    }
-
-    showToast(
-
-        checkoutAllMode
-        ? "All orders placed!"
-        : "Order placed!"
-
-    );
-
-    closeCheckout();
-
-    loadInterested();
-
-    loadCartCount();
-
-} catch(err){
-
-    console.error(err);
-
-    showToast(
-
-        err.message,
-
-        "error"
-
-    );
-
-}
-
-    /*const deliveryMethod =
-    document.querySelector(
-        'input[name="deliveryMethod"]:checked'
-    )?.value;*/
-
     if (!deliveryMethod) {
 
-        alert(
-            "Select a delivery method"
-        );
+        alert("Select a delivery method");
 
         return;
 
@@ -520,10 +428,7 @@ async function placeOrder() {
     let room_number = null;
     let meeting_location = null;
 
-    if (
-        deliveryMethod ===
-        "room"
-    ) {
+    if (deliveryMethod === "room") {
 
         hostel =
         document.getElementById(
@@ -537,10 +442,7 @@ async function placeOrder() {
 
     }
 
-    if (
-        deliveryMethod ===
-        "meetup"
-    ) {
+    if (deliveryMethod === "meetup") {
 
         meeting_location =
         document.getElementById(
@@ -551,57 +453,107 @@ async function placeOrder() {
 
     try {
 
-        const res =
-        await fetch(
-            "https://acity-backend.onrender.com/api/listings/orders",
-            {
-                method: "POST",
+        const itemsToOrder =
+        checkoutAllMode
+        ? currentItems
+        : [selectedItem];
 
-                headers: {
-                    "Content-Type":
-                    "application/json",
+        for (const item of itemsToOrder) {
 
-                    "Authorization":
-                    `Bearer ${token}`
-                },
+            const res = await fetch(
 
-                body: JSON.stringify({
+                "https://acity-backend.onrender.com/api/listings/orders",
 
-                    listing_id:
-                    selectedItem.id,
+                {
 
-                    seller_id:
-                    selectedItem.user_id,
+                    method: "POST",
 
-                    delivery_method:
-                    deliveryMethod,
+                    headers: {
 
-                    hostel,
+                        "Content-Type":"application/json",
 
-                    room_number,
+                        "Authorization":
+                        `Bearer ${token}`
 
-                    meeting_location
+                    },
 
-                })
+                    body: JSON.stringify({
+
+                        listing_id: item.id,
+
+                        seller_id: item.user_id,
+
+                        quantity: item.quantity,
+
+                        delivery_method: deliveryMethod,
+
+                        hostel,
+
+                        room_number,
+
+                        meeting_location
+
+                    })
+
+                }
+
+            );
+
+            const data = await res.json();
+
+            if (!res.ok) {
+
+                throw new Error(
+                    data.message || "Order failed"
+                );
 
             }
-        );
 
-        const data =
-        await res.json();
+            // Remove purchased item from cart
+            await fetch(
 
-        alert(
-            data.message
+                `https://acity-backend.onrender.com/api/listings/cart/${item.id}`,
+
+                {
+
+                    method: "DELETE",
+
+                    headers: {
+
+                        Authorization:`Bearer ${token}`
+
+                    }
+
+                }
+
+            );
+
+        }
+
+        showToast(
+
+            checkoutAllMode
+            ? "All orders placed!"
+            : "Order placed!"
+
         );
 
         closeCheckout();
+
+        loadInterested();
+
+        loadCartCount();
 
     } catch(err) {
 
         console.error(err);
 
-        alert(
-            "Failed to create order"
+        showToast(
+
+            err.message,
+
+            "error"
+
         );
 
     }
