@@ -30,7 +30,9 @@ CART PAGE
 
     font-size:3rem;
 
-    color:#172033;
+    color: var(--text);
+
+    opacity: 1;
 
     margin:15px 0 8px;
 
@@ -106,6 +108,8 @@ CART CARD
 
     background:#f3f4f7;
 
+    align-self:center;
+
 }
 
 .cart-image{
@@ -142,7 +146,9 @@ CART CARD
 
     font-size:1.5rem;
 
-    color:#172033;
+    color: var(--text);
+
+    opacity: 1;
 
 }
 
@@ -293,7 +299,9 @@ SUMMARY
 
     margin-bottom:25px;
 
-    color:#172033;
+    color: var(--text);
+
+    opacity: 1;
 
 }
 
