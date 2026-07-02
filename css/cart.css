@@ -420,17 +420,39 @@ RESPONSIVE
 ========================== */
 
 .checkout-modal{
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,.55);
 
-    display: none;
-    justify-content: center;
-    align-items: center;
+    position:fixed;
 
-    overflow-y: auto;
-    padding: 30px;
-    z-index: 9999;
+    inset:0;
+
+    background:rgba(0,0,0,.65);
+
+    backdrop-filter:blur(8px);
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    overflow-y:auto;
+
+    padding:30px;
+
+    z-index:9999;
+
+}
+
+.checkout-modal{
+
+    background: var(--surface);
+
+    color: var(--text);
+
+    border: 1px solid var(--border);
+
+    box-shadow: 0 25px 70px rgba(0,0,0,.35);
+
 }
 
 .checkout-content{
@@ -438,8 +460,10 @@ RESPONSIVE
     max-height: 90vh;
 
     overflow-y: auto;
+    color:var(--text);
 
-    background: #fff;
+    box-shadow:0 25px 70px rgba(0,0,0,.35);
+    background:var(--surface);
     border-radius: 24px;
     padding: 32px;
     animation:popIn .25s ease;
@@ -462,7 +486,7 @@ RESPONSIVE
     color:var(--text);
 }
 
-.checkout-content>p{
+.checkout-content p{
     color:var(--text-light);
     margin-bottom:30px;
 }
@@ -512,27 +536,85 @@ RESPONSIVE
     margin-bottom:25px;
 }
 
+.delivery-options{
+
+    background: var(--surface-2);
+
+    border: 2px solid var(--border);
+
+    color: var(--text);
+
+    transition: .25s;
+
+}
+
+.delivery-options:hover{
+
+    border-color: var(--primary);
+
+    transform: translateY(-2px);
+
+}
+
+.delivery-options.selected{
+
+    background: rgba(244,63,94,.12);
+
+    border-color: var(--primary);
+
+    color: var(--primary);
+
+}
+
 .delivery-card{
-    position:relative;
-    border:2px solid #e5e7eb;
+
+    background:var(--surface-2);
+
+    border:2px solid var(--border);
+
     border-radius:18px;
-    padding:25px;
-    text-align:center;
+
+    padding:28px 20px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:10px;
+
     cursor:pointer;
+
     transition:.25s;
-    background:var(--surface);
+
+    color:var(--text);
+
+    font-size:32px;
+
 }
 
 .delivery-card:hover{
-    border-color:#ef4444;
+
+    border-color:var(--primary);
+
     transform:translateY(-3px);
+
 }
 
 .delivery-card.selected{
-    border-color:#ef4444;
-    background:#fef2f2;
+    border-color:var(--primary);
+    background:rgba(244,63,94,.12);
 }
+.delivery-card:has(input:checked){
 
+    border-color:var(--primary);
+
+    background:rgba(244,63,94,.12);
+
+}
 .delivery-card input{
     display:none;
 }
@@ -540,12 +622,129 @@ RESPONSIVE
 .delivery-card h3{
     margin-top:12px;
     font-size:1.1rem;
+    color:var(--text);
+
+    
+
+    margin:0;
 }
 
 .delivery-card{
     font-size:2rem;
 }
 
+.delivery-options i{
+
+    font-size:30px;
+
+    color: var(--primary);
+
+    margin-bottom:12px;
+
+}
+
+.delivery-options h3{
+
+    color: var(--text);
+
+}
+
+.delivery-options p{
+
+    color: var(--text-light);
+
+}
+
+.checkout-modal input,
+.checkout-modal select,
+.checkout-modal textarea{
+
+    width:100%;
+
+    background: var(--surface-2);
+
+    color: var(--text);
+
+    border:1px solid var(--border);
+
+    border-radius:12px;
+
+    padding:14px;
+
+    transition:.2s;
+
+}
+
+.checkout-modal input:focus,
+.checkout-modal select:focus,
+.checkout-modal textarea:focus{
+
+    outline:none;
+
+    border-color:var(--primary);
+
+    box-shadow:0 0 0 4px rgba(244,63,94,.15);
+
+}
+
+.checkout-modal input::placeholder,
+.checkout-modal textarea::placeholder{
+
+    color: var(--text-light);
+
+}
+
+.checkout-modal label{
+
+    color: var(--text);
+
+    font-weight:600;
+
+}
+
+.checkout-divider{
+
+    border-top:1px solid var(--border);
+
+    margin:22px 0;
+
+}
+
+.checkout-btn{
+
+    background:var(--primary);
+
+    color:white;
+
+}
+
+.checkout-btn:hover{
+
+    background:var(--primary-dark);
+
+}
+
+.cancel-btn{
+
+    background:transparent;
+
+    color:var(--text-light);
+
+}
+
+.cancel-btn:hover{
+
+    color:var(--text);
+
+}
+
+.checkout-overlay{
+
+    background:rgba(0,0,0,.65);
+
+    backdrop-filter:blur(8px);
+
+}
 
 /* ==========================
    DELIVERY FIELDS
@@ -625,26 +824,26 @@ RESPONSIVE
 }
 
 .place-order{
-    background:#ef4444;
+    background:var(--primary);
     color:white;
 }
 
 .place-order:hover{
-    background:#dc2626;
+    background:var(--primary-dark);
 }
 
 .place-order:disabled{
-    background:#d1d5db;
+    background:var(--surface-2);
     cursor:not-allowed;
 }
 
 .cancel-order{
-    background:var(--surface-alt);
-    color:#374151;
+    background:transparent;
+    color:var(--text-light);
 }
 
 .cancel-order:hover{
-    background:#e5e7eb;
+    background:var(--text);
 }
 
 
