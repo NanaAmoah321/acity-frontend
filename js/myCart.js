@@ -200,12 +200,30 @@ function checkoutItem(id) {
     .textContent =
     item.title;
 
-    document
+document
 .getElementById(
     "checkoutPrice"
 )
-.textContent =
-`₵${Number(item.price) * item.quantity}`;
+.innerHTML = `
+
+    <div class="checkout-meta">
+
+        <span>
+
+            Quantity:
+            <strong>${item.quantity}</strong>
+
+        </span>
+
+        <span>
+
+            ₵${Number(item.price) * item.quantity}
+
+        </span>
+
+    </div>
+
+`;
 
     document
     .getElementById(
@@ -251,19 +269,45 @@ function checkoutAll() {
 
     selectedItem = null;
 
-    document.getElementById("checkoutTitle").textContent =
-        `${currentItems.length} Items`;
+    const totalPrice = currentItems.reduce(
 
-    document.getElementById("checkoutPrice").textContent =
-    `₵${currentItems.reduce(
+    (sum, item) =>
 
-    (sum,item)=>
-
-    sum + (Number(item.price) * item.quantity),
+        sum + (Number(item.price) * item.quantity),
 
     0
 
-    )}`;
+);
+
+const totalQuantity = currentItems.reduce(
+
+    (sum, item) =>
+
+        sum + Number(item.quantity),
+
+    0
+
+);
+
+document.getElementById("checkoutTitle").textContent =
+    `${currentItems.length} Items`;
+
+document.getElementById("checkoutPrice").innerHTML = `
+
+    <div class="checkout-meta">
+
+        <span>
+            Total Quantity:
+            <strong>${totalQuantity}</strong>
+        </span>
+
+        <span>
+            ₵${totalPrice}
+        </span>
+
+    </div>
+
+`;
     document.getElementById("checkoutImage").src =
         currentItems[0].image_url ||
         `images/${currentItems[0].category}.jpg`;

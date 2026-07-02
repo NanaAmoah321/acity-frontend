@@ -771,7 +771,8 @@ RESPONSIVE
 
 .checkout-summary{
     margin-top:25px;
-    background:#f9fafb;
+    background:var(--surface-2);
+    border:1px solid var(--border);
     padding:22px;
     border-radius:18px;
 }
@@ -781,11 +782,12 @@ RESPONSIVE
     display:flex;
     justify-content:space-between;
     margin:12px 0;
+    color:var(--text);
 }
 
 .checkout-summary hr{
     border:none;
-    border-top:1px solid #e5e7eb;
+    border-top:1px solid var(--border);
     margin:18px 0;
 }
 
@@ -802,7 +804,7 @@ RESPONSIVE
     position: sticky;
     bottom: 0;
 
-    background: white;
+    background: transparent;
 
     padding-top: 20px;
     margin-top: 20px;
@@ -811,40 +813,71 @@ RESPONSIVE
     gap: 15px;
 }
 
-.place-order,
 .cancel-order{
+
     flex:1;
-    padding:16px;
+
+    height:58px;
+
     border:none;
-    border-radius:14px;
-    font-size:1rem;
-    font-weight:700;
-    cursor:pointer;
-    transition:.25s;
-}
 
-.place-order{
-    background:var(--primary);
-    color:white;
-}
+    border-radius:16px;
 
-.place-order:hover{
-    background:var(--primary-dark);
-}
-
-.place-order:disabled{
     background:var(--surface-2);
-    cursor:not-allowed;
-}
 
-.cancel-order{
-    background:transparent;
-    color:var(--text-light);
+    color:var(--text);
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.25s;
+
 }
 
 .cancel-order:hover{
-    background:var(--text);
+
+    background:var(--surface);
+
 }
+
+.place-order{
+
+    flex:1;
+
+    height:58px;
+
+    border:none;
+
+    border-radius:16px;
+
+    background:var(--primary);
+
+    color:#fff;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.place-order:hover{
+
+    background:var(--primary-dark);
+
+}
+
+.place-order:disabled{
+
+    opacity:.5;
+
+    cursor:not-allowed;
+
+}
+
+
 
 
 /* ==========================
@@ -954,5 +987,27 @@ RESPONSIVE
     color:var(--primary);
 
     font-weight:700;
+
+}
+
+.checkout-meta{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-top:12px;
+
+    color:var(--text-light);
+
+    font-size:15px;
+
+}
+
+.checkout-meta strong{
+
+    color:var(--primary);
 
 }
