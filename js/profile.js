@@ -1,29 +1,165 @@
-const user = JSON.parse(localStorage.getItem("user"));
 
-if (user) {
 
-    document.getElementById("userName").textContent = user.name;
-    document.getElementById("userEmail").textContent = user.email;
+async function loadProfile(){
 
-    const aboutMe = document.getElementById("aboutMe");
+    const token =
+    localStorage.getItem("token");
 
-    if (aboutMe) {
-        aboutMe.value = user.aboutMe || "";
+    const res = await fetch(
+
+        "https://acity-backend.onrender.com/api/auth/profile",
+
+        {
+
+            headers:{
+
+                Authorization:`Bearer ${token}`
+
+            }
+
+        }
+
+    );
+
+    const user = await res.json();
+
+    if(!res.ok){
+
+        showToast(
+
+            user.error,
+
+            "error"
+
+        );
+
+        return;
+
     }
 
+    localStorage.setItem(
+
+        "user",
+
+        JSON.stringify(user)
+
+    );
+
+    const mobileUser =
+document.getElementById(
+    "mobileUserName"
+);
+
+if(mobileUser){
+
+    mobileUser.textContent =
+    user.name;
+
 }
-function saveProfile() {
 
-    if (!user) return;
+    document.querySelectorAll(".userName").forEach(el => {
 
-    const aboutMe =
-        document.getElementById("aboutMe")?.value || "";
+        el.textContent = user.name;
 
-    user.aboutMe = aboutMe;
+   });
 
-    localStorage.setItem("user", JSON.stringify(user));
+    document.querySelectorAll(".userEmail").forEach(el => {
 
-    alert("Profile updated!");
+        el.textContent = user.email;
+
+    });
+
+    document.getElementById("userBio").textContent =
+    user.bio || "No bio added yet.";
+
+    document.getElementById(
+        "userLevel"
+    ).textContent =
+
+        user.level
+
+        ?
+
+        `Level ${user.level}`
+
+        :
+
+        "Level not set";
+
+    document.getElementById(
+        "editName"
+    ).value = user.name || "";
+
+    document.getElementById(
+        "editLevel"
+    ).value = user.level || "";
+
+    document.getElementById(
+        "editBio"
+    ).value = user.bio || "";
+
+    
+
+}
+async function saveProfile(){
+
+    const token =
+    localStorage.getItem("token");
+
+    const res = await fetch(
+
+        "https://acity-backend.onrender.com/api/auth/profile",
+
+        {
+
+            method:"PUT",
+
+            headers:{
+
+                "Content-Type":"application/json",
+
+                Authorization:`Bearer ${token}`
+
+            },
+
+            body:JSON.stringify({
+
+                name:
+                document.getElementById("editName").value,
+
+                level:
+                document.getElementById("editLevel").value,
+
+                bio:
+                document.getElementById("editBio").value
+
+            })
+
+        }
+
+    );
+
+    const data =
+    await res.json();
+
+    if(!res.ok){
+
+        showToast(
+            data.error,
+            "error"
+        );
+
+        return;
+
+    }
+
+    await loadProfile();
+
+    closeEditProfile();
+
+    showToast(
+        "Profile updated successfully!"
+    );
 
 }
 
@@ -59,6 +195,9 @@ async function loadMyItems() {
     });
 
     const items = await res.json();
+
+    document.getElementById("listingCount").textContent =
+    items.length;
 
     console.log(items);
     const count =
@@ -377,26 +516,27 @@ function formatDate(date) {
 }
 async function loadSellerOrders() {
 
-    const token =
-    localStorage.getItem(
-        "token"
-    );
+    const token = localStorage.getItem("token");
 
-    const res =
-    await fetch(
+    const res = await fetch(
         "https://acity-backend.onrender.com/api/listings/seller-orders",
         {
-            headers: {
-                Authorization:
-                `Bearer ${token}`
+            headers:{
+                Authorization:`Bearer ${token}`
             }
         }
     );
 
-    const orders =
-    await res.json();
+    const orders = await res.json();
 
-    console.log("ORDERS RESPONSE:", orders);
+    console.log("Seller Orders:", orders);
+
+    document.getElementById("totalOrdersCompleted").textContent =
+    orders.length;
+
+
+
+
 
     const container =
     document.getElementById(
@@ -615,3 +755,21 @@ function messageSeller(userId){
         "inbox.html";
 
 }
+
+function openEditProfile(){
+
+    document.getElementById(
+        "editProfileModal"
+    ).style.display = "flex";
+
+}
+
+function closeEditProfile(){
+
+    document.getElementById(
+        "editProfileModal"
+    ).style.display = "none";
+
+}
+loadProfile();
+loadSellerOrders();

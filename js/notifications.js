@@ -98,13 +98,20 @@ function renderNotifications(){
 
             <i class="fa-solid fa-bell-slash"></i>
 
-            <h3>No Notifications</h3>
+            <h3>You're all caught up!</h3>
 
             <p>
 
                 Nothing here yet.
 
             </p>
+
+            <small>
+
+            Orders, messages, reviews and important updates
+            will appear here.
+
+            </small>
 
         </div>
 

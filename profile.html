@@ -434,33 +434,74 @@
 
         </span>
 
-        <h1 id="userName"></h1>
+        <h1 class="userName"></h1>
 
-        <p id="userEmail"></p>
+        <p class="userEmail"></p>
+
+        <p id="userBio" class="profile-bio"></p>
 
         <div class="profile-meta">
 
-    <span>
+       <span>
 
         <i class="fa-solid fa-graduation-cap"></i>
 
-        Level 300
+        <span id="userLevel">Level</span>
 
-    </span>
+        </span>
 
-    <span>
+        <span>
 
         <i class="fa-solid fa-location-dot"></i>
 
         Academic City
 
-    </span>
+        </span>
 
         </div>
 
+    <div class="profile-stats-mini">
+
+    <div class="mini-stat">
+
+        <h3 id="listingCount">0</h3>
+
+        <span>Listings</span>
+
+    </div>
+
+    <div class="mini-stat">
+
+        <h3 id="ratingValue">0.0</h3>
+
+        <span>Rating</span>
+
+    </div>
+
+    <div class="mini-stat">
+
+        <h3 id="reviewCount">0</h3>
+
+        <span>Reviews</span>
+
+    </div>
+
+    <div class="mini-stat">
+
+        <h3 id="totalOrdersCompleted">0</h3>
+
+        <span>Total Orders</span>
+
+    </div>
+
+    </div>
 
 
-        <button class="btn btn-primary">
+
+        <button
+            class="btn btn-primary"
+            onclick="openEditProfile()"
+        >
 
             <i class="fa-solid fa-pen"></i>
 
@@ -474,61 +515,7 @@
 
     <section class="profile-main">
 
-    <section class="profile-summary">
-
-        <div class="profile-left">
-
-            <div class="profile-avatar-large">
-                <i class="fa-solid fa-user"></i>
-            </div>
-
-            <div>
-
-                <h1 id="userName"></h1>
-
-                <p id="userEmail"></p>
-
-                <div class="profile-info">
-
-                <textarea
-                    id="aboutMe"
-                    placeholder="Tell other students about yourself..."
-                ></textarea>
-
-                <button
-                    class="btn btn-primary"
-                    onclick="saveProfile()"
-                >
-                    <i class="fa-solid fa-floppy-disk"></i>
-                    Save Profile
-                </button>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="profile-stats">
-
-            <div class="stat-card">
-                <h2 id="itemsCount">0</h2>
-                <p>Listings</p>
-            </div>
-
-            <div class="stat-card">
-                <h2 id="ratingValue">0.0</h2>
-                <p>Rating</p>
-            </div>
-
-            <div class="stat-card">
-                <h2 id="reviewsCount">0</h2>
-                <p>Reviews</p>
-            </div>
-
-        </div>
-
-    </section>
+    
 
     <div class="profile-grid">
 
@@ -588,7 +575,84 @@
 
     
 
-    
+    <div
+    id="editProfileModal"
+    class="modal-overlay"
+>
+
+    <div class="edit-profile-modal">
+
+        <h2>Edit Profile</h2>
+
+        <div class="form-group">
+
+            <label>Name</label>
+
+            <input
+                id="editName"
+                type="text"
+            >
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Level</label>
+
+            <select id="editLevel">
+
+                <option>100</option>
+
+                <option>200</option>
+
+                <option>300</option>
+
+                <option>400</option>
+
+                <option>Graduate</option>
+
+            </select>
+
+        </div>
+
+        
+
+        <div class="form-group">
+
+            <label>Bio</label>
+
+            <textarea
+                id="editBio"
+                rows="4"
+            ></textarea>
+
+        </div>
+
+        <div class="modal-buttons">
+
+            <button
+                class="btn btn-secondary"
+                onclick="closeEditProfile()"
+            >
+
+                Cancel
+
+            </button>
+
+            <button
+                class="btn btn-primary"
+                onclick="saveProfile()"
+            >
+
+                Save Changes
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
 
     <script src="js/toast.js"></script>
     <script src="js/profile.js"></script>

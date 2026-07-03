@@ -25,6 +25,9 @@ async function loadReviews() {
        Number(rating.average_rating || 0).toFixed(1);
     }
 
+    document.getElementById("ratingValue").textContent =
+    ratingValue.textContent;
+
     console.log("Rating:", rating);
 
     
@@ -36,6 +39,9 @@ async function loadReviews() {
 
     const reviews =
     await reviewsRes.json();
+
+    document.getElementById("reviewCount").textContent =
+    reviews.length;
 
     const reviewsCount =
     document.getElementById("reviewsCount");

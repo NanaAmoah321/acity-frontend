@@ -4,6 +4,14 @@ const searchInput = document.getElementById('searchInput');
 //const categoryFilter = document.getElementById('categoryFilter');
 let selectedCategory = "All";
 let allStores = [];
+function getSearchQuery(){
+
+    return (
+        new URLSearchParams(window.location.search)
+            .get("search") || ""
+    ).toLowerCase();
+
+}
 
 document
 .querySelectorAll(".mobile-categories button")
@@ -33,211 +41,7 @@ function getStoreImage(category) {
 
 
 
-/*async function searchMarketplace(query) {
 
-    const res = await fetch(
-        `https://acity-backend.onrender.com/api/listings/search?q=${encodeURIComponent(query)}`
-    );
-
-    const listings = await res.json();
-
-    ItemsContainer.innerHTML = "";
-
-    if (listings.length === 0) {
-
-        ItemsContainer.innerHTML = `
-            <div class="empty-state">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <h3>No Results Found</h3>
-                <p>Try another search term.</p>
-            </div>
-        `;
-
-        return;
-    }
-
-    listings.forEach(item => {
-
-        const card = document.createElement("div");
-
-        card.classList.add("product-card");
-
-        card.innerHTML = `
-
-            <img
-
-            src="${
-            item.image_url &&
-            item.image_url.trim()
-
-            ? item.image_url
-
-            : `images/${item.category || "Other"}.jpg`
-            }"
-
-            onerror="this.src='images/Other.jpg'"
-
-            >
-
-            <div class="product-info">
-
-                <h3>${item.title}</h3>
-
-                <p class="price">
-                    GH₵ ${item.price}
-                </p>
-
-                <p>
-                    Sold by
-                    <strong>${item.seller_name}</strong>
-                </p>
-
-                <button
-                    onclick="viewListing(${item.user_id})"
-                >
-                    View Item
-                </button>
-
-            </div>
-
-        `;
-
-        ItemsContainer.appendChild(card);
-
-    });
-
-}*/
-
-/*async function loadItems() {
-
-
-
-    const res =
-    await fetch(
-        "https://acity-backend.onrender.com/api/listings/stores"
-    );
-
-    const stores =
-    await res.json();
-
-    console.log(stores);
-
-    const searchText =
-    searchInput
-    ? searchInput.value.toLowerCase()
-    : "";
-
-    //const selectedCategory =
-    //categoryFilter.value;
-
-    ItemsContainer.innerHTML = "";
-
-
-    const filteredStores =
-    stores.filter(store => {
-
-        console.log(store.store_category);
-
-        const matchesSearch =
-
-        store.store_name
-        .toLowerCase()
-        .includes(searchText)
-
-        ||
-
-        (store.store_category || "")
-        .toLowerCase()
-        .includes(searchText);
-
-        const matchesCategory =
-            selectedCategory === "All" ||
-
-            (store.store_category || "")
-                .toLowerCase()
-                .trim() ===
-            selectedCategory
-                .toLowerCase()
-                .trim();
-
-        return (
-            matchesSearch &&
-            matchesCategory
-        );
-
-    });
-
-    filteredStores.forEach(store => {
-
-      console.log(store);
-
-      const card =
-      document.createElement("div");
-
-      card.classList.add(
-          "store-card"
-      );
-
-        card.innerHTML = `
-
-<img
-
-src="${getStoreImage(store.store_category)}"
-
-class="store-image"
-
->
-
-<div class="store-info">
-
-    <span class="store-category">
-
-        ${store.store_category || "General"}
-
-    </span>
-
-    <h3>
-
-        ${store.store_name}
-
-    </h3>
-
-    <p>
-
-        ⭐
-
-        ${store.average_rating || "New Store"}
-
-    </p>
-
-    <p>
-
-        ${store.total_products}
-
-        Products
-
-    </p>
-
-    <button
-
-        onclick="viewStore(${store.user_id})"
-
-    >
-
-        Visit Store
-
-    </button>
-
-</div>
-
-`;
-        ItemsContainer.appendChild(
-            card
-        );
-
-    });
-
-}*/
 
 async function loadItems() {
 
@@ -269,7 +73,9 @@ function renderStores(stores){
 
             (store.store_category || "")
                 .toLowerCase()
-                .includes(searchText);
+                .includes(searchText)
+
+            ||
 
             (store.seller_name || "")
                 .toLowerCase()
@@ -422,8 +228,38 @@ async function loadFeaturedProducts() {
         "https://acity-backend.onrender.com/api/listings"
     );
 
-    const listings =
-    await res.json();
+    let listings =
+await res.json();
+
+if(getSearchQuery()){
+
+    listings = listings.filter(item=>
+
+        item.title
+            .toLowerCase()
+            .includes(getSearchQuery())
+
+        ||
+
+        item.description
+            .toLowerCase()
+            .includes(getSearchQuery())
+
+        ||
+
+        item.category
+            .toLowerCase()
+            .includes(getSearchQuery())
+
+        ||
+
+        item.seller_name
+            .toLowerCase()
+            .includes(getSearchQuery())
+
+    );
+
+}
 
     container.innerHTML = "";
 

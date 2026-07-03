@@ -140,8 +140,26 @@ document.getElementById(
 
 </div>
 
-<div class="cart-actions">
 
+
+    <div class="cart-actions">
+
+    <button
+        class="checkout-btn"
+        onclick="checkoutItem(${item.id})"
+    >
+        <i class="fa-solid fa-credit-card"></i>
+        Checkout
+    </button>
+
+    <button
+        class="remove-btn"
+        onclick="removeFromCart(${item.id})"
+    >
+        <i class="fa-solid fa-trash"></i>
+        Remove
+    </button>
+    
     </div>
 
 

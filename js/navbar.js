@@ -505,6 +505,73 @@ if(themeToggle){
 
 }
 
+const navbarSearch =
+document.getElementById("navbarSearch");
+
+const params =
+new URLSearchParams(window.location.search);
+
+if(navbarSearch){
+
+    navbarSearch.value =
+    params.get("search") || "";
+
+}
+
+if(navbarSearch){
+
+    navbarSearch.addEventListener("keydown",e=>{
+
+        if(e.key !== "Enter") return;
+
+        const query =
+        navbarSearch.value.trim();
+
+        if(!query) return;
+
+        window.location.href =
+        `marketplace.html?search=${encodeURIComponent(query)}`;
+
+    });
+
+}
+
+navbarSearch?.addEventListener("input", (e) => {
+
+    const query = e.target.value.trim();
+
+    if (window.location.pathname.includes("marketplace.html")) {
+
+        const url = new URL(window.location);
+
+        if(query){
+
+            url.searchParams.set("search", query);
+
+        }else{
+
+            url.searchParams.delete("search");
+
+        }
+
+        history.replaceState({}, "", url);
+
+        if(typeof loadFeaturedProducts === "function"){
+
+            loadFeaturedProducts();
+
+        }
+
+        if(typeof renderStores === "function"){
+
+            renderStores(allStores);
+
+        }
+
+    }
+
+});
+
 window.loadCartCount = loadCartCount;
 updateMessageCount();
 window.updateMessageCount =
