@@ -85,7 +85,7 @@ class="store-image"
         ${store.store_category || "General"}
     </span>
     <h3>
-        ${store.store_name}
+        ${store.store_name}'s Store
     </h3>
     <p>
         ⭐ ${store.average_rating || "New Store"}

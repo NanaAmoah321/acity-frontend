@@ -8,7 +8,8 @@ nav{
     max-width:1600px;
     margin:16px auto;
     height:78px;
-    padding:0 24px;
+    padding:0 18px;
+    gap:20px;
     display:flex;
     align-items:center;
     justify-content:space-between;
@@ -59,6 +60,7 @@ nav{
 .nav-center{
     display:flex;
     align-items:center;
+    flex-shrink:0;
     gap:10px;
 }
 .nav-item{
@@ -87,9 +89,12 @@ nav{
     display:flex;
     align-items:center;
     gap:14px;
+    
+    justify-content:flex-end;
+    
 }
 .search-box{
-    width:320px;
+    width:420px;
     height:48px;
     display:flex;
     align-items:center;
@@ -452,4 +457,37 @@ nav{
 }
 .theme-option.active .check{
     opacity:1;
+}
+
+@media (min-width:901px) and (max-width:1200px){
+
+    .nav-left{
+        display:none;
+    }
+
+    .nav-center a[href="create-listing.html"]{
+        display:none;
+    }
+
+}
+
+/* Large laptops/desktops */
+@media (max-width:1400px){
+    .search-box{
+        width:360px;
+    }
+}
+
+/* Tablets */
+@media (max-width:1200px){
+    .search-box{
+        width:260px;
+    }
+}
+
+/* Small tablets */
+@media (max-width:1050px){
+    .search-box{
+        width:200px;
+    }
 }
