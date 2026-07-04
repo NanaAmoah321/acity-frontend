@@ -854,6 +854,20 @@
 
 }
 
+.revenue-value{
+
+    font-size: clamp(1rem, 2.6vw, 2.8rem);
+
+    line-height: 1;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+}
+
 .mini-stat{
 
     width:140px;
@@ -884,7 +898,7 @@
 
     color:var(--primary);
 
-    font-size:2rem;
+    font-size:1.6rem;
 
     margin-bottom:8px;
 

@@ -527,12 +527,12 @@ async function loadSellerOrders() {
         }
     );
 
-    const orders = await res.json();
+    const data = await res.json();
 
-    console.log("Seller Orders:", orders);
+    const orders = data.orders;
 
-    document.getElementById("totalOrdersCompleted").textContent =
-    orders.length;
+    document.getElementById("totalRevenue").textContent =
+        `₵${data.revenue.toFixed(0)}`;
 
 
 
@@ -642,8 +642,19 @@ async function loadSellerOrders() {
         ${
             order.status === "pending"
             ? `
-            <button class="accept-btn">Accept</button>
-            <button class="reject-btn">Reject</button>
+            <button
+                class="accept-btn"
+                onclick="acceptOrder(${order.id})"
+            >
+                Accept
+                </button>
+
+            <button
+                class="reject-btn"
+                onclick="rejectOrder(${order.id})"
+            >
+                Reject
+            </button>
             `
             : ""
         }
@@ -697,11 +708,10 @@ async function acceptOrder(orderId) {
     const data =
     await res.json();
 
-    alert(
-        data.message
-    );
+    showToast(data.message);
 
     loadSellerOrders();
+    loadListings();
 
 }
 
@@ -737,11 +747,10 @@ async function rejectOrder(orderId) {
     const data =
     await res.json();
 
-    alert(
-        data.message
-    );
+    showToast(data.message);
 
     loadSellerOrders();
+    loadListings();
 
 }
 function messageSeller(userId){
