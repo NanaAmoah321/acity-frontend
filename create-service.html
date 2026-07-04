@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -14,422 +13,211 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
-
-
  <nav>
-
     <!-- LEFT -->
-
     <div class="nav-left">
-
         <div class="logo">
-
             <img src="images/acity_new_logo-removebg-preview.png">
-
             <div class="logo-text">
-
-                
-
             </div>
-
         </div>
-
     </div>
-
-
-
     <!-- CENTER -->
-
     <div class="nav-center">
-
         <a href="index.html" class="nav-item">
-
             <i class="fa-solid fa-house"></i>
-
             <span>Home</span>
-
         </a>
-
         <a href="marketplace.html" class="nav-item">
-
             <i class="fa-solid fa-store"></i>
-
             <span>Marketplace</span>
-
         </a>
-
         <a href="services.html" class="nav-item">
-
             <i class="fa-solid fa-screwdriver-wrench"></i>
-
             <span>Skills</span>
-
         </a>
-
         <a href="create-listing.html" class="nav-item">
-
             <i class="fa-solid fa-plus"></i>
-
             <span>Sell</span>
-
         </a>
-
     </div>
-
-
-
     <!-- RIGHT -->
-
     <div class="nav-right">
-
         <div class="search-box">
-
             <i class="fa-solid fa-magnifying-glass"></i>
-
             <input
                 type="text"
                 placeholder="Search items..."
             >
-
         </div>
-
-
-
         <a href="inbox.html" class="icon-btn">
-
             <i class="fa-solid fa-comments"></i>
-
             <small id="messageCount"></small>
-
         </a>
-
         <button id="themeToggle" class="theme-toggle">
-
                     <i id="themeIcon" class="fa-solid fa-circle-half-stroke"></i>
-
                 </button>
-
-
-
         <a href="notifications.html" class="icon-btn">
-
             <i class="fa-solid fa-bell"></i>
-
             <small id="notificationCount"></small>
-
         </a>
-
-
-
         <a href="myCart.html" class="icon-btn">
-
             <i class="fa-solid fa-cart-shopping"></i>
-
             <small id="cartCount"></small>
-
         </a>
-
-
-
         <div class="profile-menu">
-
             <button id="profileToggle">
-
                 <i class="fa-solid fa-user-circle"></i>
-
                 <span>Account</span>
-
                 <i class="fa-solid fa-chevron-down"></i>
-
             </button>
-
-
-
             <div class="profile-dropdown">
-
                 <a href="profile.html">
-
                     <i class="fa-solid fa-user"></i>
-
                     My Profile
-
                 </a>
-
-
-
                 <a href="inbox.html">
-
                     <i class="fa-solid fa-comments"></i>
-
                     Inbox
-
                 </a>
-
-
-
                 <a href="notifications.html">
-
                     <i class="fa-solid fa-bell"></i>
-
                     Notifications
-
                 </a>
-
-
-
                 <a
                     href="admin.html"
                     id="adminLink"
                     style="display:none;"
                 >
-
                     <i class="fa-solid fa-shield-halved"></i>
-
                     Admin Dashboard
-
                 </a>
-
-
-
                 <hr>
-
-
-
                 <a href="#" onclick="logout()">
-
                     <i class="fa-solid fa-right-from-bracket"></i>
-
                     Logout
-
                 </a>
-
             </div>
-
         </div>
-
     </div>
-
-
-
    <button id="menu-toggle" class="menu-toggle">
-
     <i class="fa-solid fa-bars"></i>
-
 </button>
-
 </nav>
-
 <div class="mobile-menu" id="mobileMenu">
-
     <div class="mobile-menu-header">
-
         <div class="mobile-profile">
-
             <div class="mobile-avatar">
-
                 <i class="fa-solid fa-user"></i>
-
             </div>
-
             <div>
-
                 <h3 id="mobileUserName">Account</h3>
-
                 <small>Acity Connect</small>
-
             </div>
-
         </div>
-
         <button id="closeMenu" class="close-menu">
-
             <i class="fa-solid fa-xmark"></i>
-
         </button>
-
     </div>
-
     <div class="mobile-links">
-
         <a href="index.html">
-
             <i class="fa-solid fa-house"></i>
-
             Home
-
         </a>
-
         <a href="marketplace.html">
-
             <i class="fa-solid fa-store"></i>
-
             Marketplace
-
         </a>
-
         <a href="services.html">
-
             <i class="fa-solid fa-screwdriver-wrench"></i>
-
             Skills Connect
-
         </a>
-
         <a href="create-listing.html">
-
             <i class="fa-solid fa-plus"></i>
-
             Sell Item
-
         </a>
-
         <hr>
-
         <a href="inbox.html">
-
             <i class="fa-solid fa-comments"></i>
-
             Inbox
-
             <small id="mobileMessageCount"></small>
-
         </a>
-
         <button id="themeToggle" class="theme-toggle">
-
             <i id="themeIcon" class="fa-solid fa-circle-half-stroke"></i>
-
         </button>
-
         <a href="notifications.html">
-
             <i class="fa-solid fa-bell"></i>
-
             Notifications
-
             <small id="mobileNotificationCount"></small>
-
         </a>
-
         <a href="myCart.html">
-
             <i class="fa-solid fa-cart-shopping"></i>
-
             My Cart
-
             <small id="mobileCartCount"></small>
-
         </a>
-
         <a href="profile.html">
-
             <i class="fa-solid fa-user"></i>
-
             Profile
-
         </a>
-
         <a
             href="admin.html"
             id="mobileAdminLink"
             style="display:none;"
         >
-
             <i class="fa-solid fa-shield-halved"></i>
-
             Admin
-
         </a>
-
         <hr>
-
         <a href="#" onclick="logout()">
-
             <i class="fa-solid fa-right-from-bracket"></i>
-
             Logout
-
         </a>
-
     </div>
-
 </div>
-
 <div class="mobile-overlay" id="mobileOverlay"></div>
-
-
 <section class="create-page">
-
     <div class="create-header">
-
         <div class="create-icon">
-
             <i class="fa-solid fa-screwdriver-wrench"></i>
-
         </div>
-
         <h1>Offer Your Skills</h1>
-
         <p>
-
         Reach hundreds of Academic City students
         looking for programming, tutoring,
         design, photography and more.
-
         </p>
-
     </div>
-
     <div class="create-card">
-
         <h2>Create Service</h2>
-
         <p class="form-subtitle">
             Complete the details below to publish
             your service.
         </p>
-
         <form id="serviceForm">
-
             <div class="input-group">
-
                 <i class="fa-solid fa-briefcase"></i>
-
                 <input
                     type="text"
                     id="title"
                     placeholder="eg. Graphic Design"
                     required
                 >
-
             </div>
-
             <div class="input-group textarea-group">
-
                 <i class="fa-solid fa-align-left"></i>
-
                 <textarea
                     id="description"
                     placeholder="Describe your service..."
                     required
                 ></textarea>
-
             </div>
-
            <div class="form-section">
-
     <label>
-
         Category
-
     </label>
-
     <div class="input-group select-group">
-
         <i class="fa-solid fa-layer-group"></i>
-
         <select id="category" required>
-
             <option value="">Select Category</option>
             <option value="Programming">Programming</option>
             <option value="Graphic Design">Graphic Design</option>
@@ -439,121 +227,68 @@
             <option value="Writing">Writing</option>
             <option value="Marketing">Marketing</option>
             <option value="Other">Other</option>
-
         </select>
-
     </div>
-
 </div>
-
            <div class="form-section">
-
     <label>
-
         Rate & Type
-
     </label>
-
     <div class="form-row">
-
         <div class="input-group">
-
             <i class="fa-solid fa-coins"></i>
-
             <input
-
                 type="number"
-
                 id="rate"
-
                 placeholder="e.g. 150"
-
                 required
-
             >
-
         </div>
-
         <div class="input-group select-group">
-
             <i class="fa-solid fa-clock"></i>
-
             <select id="rateType">
-
                 <option>Per Hour</option>
                 <option>Per Session</option>
                 <option>Per Day</option>
                 <option>Per Project</option>
                 <option>Negotiable</option>
-
             </select>
-
         </div>
-
     </div>
-
 </div>
-
            <div class="form-section">
-
 <label>
-
 Portfolio Link (Optional)
-
 </label>
-
 <div class="input-group">
-
 <i class="fa-solid fa-globe"></i>
-
 <input
-
 type="url"
-
 id="portfolio_url"
-
 placeholder="https://yourportfolio.com"
-
 >
-
 </div>
-
 </div>
-
             <button
             class="btn btn-primary btn-block"
             id="publishServiceButton"
             type="submit">
-
             <i class="fa-solid fa-paper-plane"></i>
-
             <span>
-
             Publish Service
-
             </span>
-
             </button>
-
             <p class="publish-note">
-
 <i class="fa-solid fa-lock"></i>
-
 Your service will be visible to all
 Academic City students after publishing.
-
 </p>
-
         </form>
-
     </div>
-
 </section>
 </div>
 <script src="js/toast.js"></script>
 <script src="js/create-service.js"></script>
 <script type="module" src="js/navbar.js"></script>
-
-
 </body>
 </html>

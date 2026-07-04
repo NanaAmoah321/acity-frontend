@@ -13,652 +13,334 @@
 </head>
 <body>
     <nav>
-
     <!-- LEFT -->
-
     <div class="nav-left">
-
         <div class="logo">
-
             <img src="images/acity_new_logo-removebg-preview.png">
-
             <div class="logo-text">
-
-                
-
             </div>
-
         </div>
-
     </div>
-
-
-
     <!-- CENTER -->
-
     <div class="nav-center">
-
         <a href="index.html" class="nav-item">
-
             <i class="fa-solid fa-house"></i>
-
             <span>Home</span>
-
         </a>
-
         <a href="marketplace.html" class="nav-item">
-
             <i class="fa-solid fa-store"></i>
-
             <span>Marketplace</span>
-
         </a>
-
         <a href="services.html" class="nav-item">
-
             <i class="fa-solid fa-screwdriver-wrench"></i>
-
             <span>Skills</span>
-
         </a>
-
         <a href="create-listing.html" class="nav-item">
-
             <i class="fa-solid fa-plus"></i>
-
             <span>Sell</span>
-
         </a>
-
     </div>
-
-
-
     <!-- RIGHT -->
-
     <div class="nav-right">
-
         <div class="search-box">
-
             <i class="fa-solid fa-magnifying-glass"></i>
-
             <input
                 type="text"
                 placeholder="Search items..."
             >
-
         </div>
-
-
-
         <a href="inbox.html" class="icon-btn">
-
             <i class="fa-solid fa-comments"></i>
-
             <small id="messageCount"></small>
-
         </a>
-
-
         <button id="themeToggle" class="theme-toggle">
-
                     <i id="themeIcon" class="fa-solid fa-circle-half-stroke"></i>
-
                 </button>
-
-
-
         <a href="notifications.html" class="icon-btn">
-
             <i class="fa-solid fa-bell"></i>
-
             <small id="notificationCount"></small>
-
         </a>
-
-
-
         <a href="myCart.html" class="icon-btn">
-
             <i class="fa-solid fa-cart-shopping"></i>
-
             <small id="cartCount"></small>
-
         </a>
-
-
-
         <div class="profile-menu">
-
             <button id="profileToggle">
-
                 <i class="fa-solid fa-user-circle"></i>
-
                 <span>Account</span>
-
                 <i class="fa-solid fa-chevron-down"></i>
-
             </button>
-
-
-
             <div class="profile-dropdown">
-
                 <a href="profile.html">
-
                     <i class="fa-solid fa-user"></i>
-
                     My Profile
-
                 </a>
-
-
-
                 <a href="inbox.html">
-
                     <i class="fa-solid fa-comments"></i>
-
                     Inbox
-
                 </a>
-
-           
-
-
-
                 <a href="notifications.html">
-
                     <i class="fa-solid fa-bell"></i>
-
                     Notifications
-
                 </a>
-
-
-
                 <a
                     href="admin.html"
                     id="adminLink"
                     style="display:none;"
                 >
-
                     <i class="fa-solid fa-shield-halved"></i>
-
                     Admin Dashboard
-
                 </a>
-
-
-
                 <hr>
-
-
-
                 <a href="#" onclick="logout()">
-
                     <i class="fa-solid fa-right-from-bracket"></i>
-
                     Logout
-
                 </a>
-
             </div>
-
         </div>
-
     </div>
-
-
-
    <button id="menu-toggle" class="menu-toggle">
-
     <i class="fa-solid fa-bars"></i>
-
 </button>
-
 </nav>
-
 <div class="mobile-menu" id="mobileMenu">
-
     <div class="mobile-menu-header">
-
         <div class="mobile-profile">
-
             <div class="mobile-avatar">
-
                 <i class="fa-solid fa-user"></i>
-
             </div>
-
             <div>
-
                 <h3 id="mobileUserName">Account</h3>
-
                 <small>Acity Connect</small>
-
             </div>
-
         </div>
-
         <button id="closeMenu" class="close-menu">
-
             <i class="fa-solid fa-xmark"></i>
-
         </button>
-
     </div>
-
     <div class="mobile-links">
-
         <a href="index.html">
-
             <i class="fa-solid fa-house"></i>
-
             Home
-
         </a>
-
         <a href="marketplace.html">
-
             <i class="fa-solid fa-store"></i>
-
             Marketplace
-
         </a>
-
         <a href="services.html">
-
             <i class="fa-solid fa-screwdriver-wrench"></i>
-
             Skills Connect
-
         </a>
-
         <a href="create-listing.html">
-
             <i class="fa-solid fa-plus"></i>
-
             Sell Item
-
         </a>
-
         <hr>
-
         <a href="inbox.html">
-
             <i class="fa-solid fa-comments"></i>
-
             Inbox
-
             <small id="mobileMessageCount"></small>
-
         </a>
-
         <a href="notifications.html">
-
             <i class="fa-solid fa-bell"></i>
-
             Notifications
-
             <small id="mobileNotificationCount"></small>
-
         </a>
-
         <a href="myCart.html">
-
             <i class="fa-solid fa-cart-shopping"></i>
-
             My Cart
-
             <small id="mobileCartCount"></small>
-
         </a>
-
         <div class="mobile-theme">
-
     <button
         id="appearanceBtn"
         class="appearance-btn"
     >
-
         <div class="appearance-left">
-
             <i class="fa-solid fa-circle-half-stroke"></i>
-
             <span>Appearance</span>
-
         </div>
-
         <i class="fa-solid fa-chevron-right"></i>
-
     </button>
-
     <div
         id="appearanceMenu"
         class="appearance-menu"
     >
-
         <div
             class="theme-option"
             data-theme="light"
         >
-
             <i class="fa-solid fa-sun"></i>
-
             <span>Light</span>
-
             <i class="fa-solid fa-check check"></i>
-
         </div>
-
         <div
             class="theme-option"
             data-theme="dark"
         >
-
             <i class="fa-solid fa-moon"></i>
-
             <span>Dark</span>
-
             <i class="fa-solid fa-check check"></i>
-
         </div>
-
         <div
             class="theme-option"
             data-theme="system"
         >
-
             <i class="fa-solid fa-desktop"></i>
-
             <span>System</span>
-
             <i class="fa-solid fa-check check"></i>
-
         </div>
-
     </div>
-
 </div>
-
         <a href="profile.html">
-
             <i class="fa-solid fa-user"></i>
-
             Profile
-
         </a>
-
         <a
             href="admin.html"
             id="mobileAdminLink"
             style="display:none;"
         >
-
             <i class="fa-solid fa-shield-halved"></i>
-
             Admin
-
         </a>
-
         <hr>
-
         <a href="#" onclick="logout()">
-
             <i class="fa-solid fa-right-from-bracket"></i>
-
             Logout
-
         </a>
-
     </div>
-
 </div>
-
 <div class="mobile-overlay" id="mobileOverlay"></div>
-
-
     <section class="profile-hero">
-
     <div class="profile-hero-content">
-
         <div class="profile-avatar-large">
-
             <i class="fa-solid fa-user"></i>
-
         </div>
-
         <span class="profile-role">
-
             Student Marketplace Seller
-
         </span>
-
         <h1 class="userName"></h1>
-
         <p class="userEmail"></p>
-
         <p id="userBio" class="profile-bio"></p>
-
         <div class="profile-meta">
-
        <span>
-
         <i class="fa-solid fa-graduation-cap"></i>
-
         <span id="userLevel">Level</span>
-
         </span>
-
         <span>
-
         <i class="fa-solid fa-location-dot"></i>
-
         Academic City
-
         </span>
-
         </div>
-
     <div class="profile-stats-mini">
-
     <div class="mini-stat">
-
         <h3 id="listingCount">0</h3>
-
         <span>Listings</span>
-
     </div>
-
     <div class="mini-stat">
-
         <h3 id="ratingValue">0.0</h3>
-
         <span>Rating</span>
-
     </div>
-
     <div class="mini-stat">
-
         <h3 id="reviewCount">0</h3>
-
         <span>Reviews</span>
-
     </div>
-
     <div class="mini-stat">
-
         <h3 id="totalRevenue" class="revenue-value">GH₵0.00</h3>
-
         <span>Revenue</span>
-
     </div>
-
     </div>
-
-
-
         <button
             class="btn btn-primary"
             onclick="openEditProfile()"
         >
-
             <i class="fa-solid fa-pen"></i>
-
             Edit Profile
-
         </button>
-
     </div>
-
 </section>
-
     <section class="profile-main">
-
-    
-
     <div class="profile-grid">
-
         <section class="dashboard-panel">
-
             <div class="panel-header">
-
                 <h2>My Listings</h2>
-
                 <a href="#">View All</a>
-
             </div>
-
             <div
                 id="myItemsContainer"
                 class="listings-grid"
             ></div>
-
         </section>
-
         <section class="dashboard-panel">
-
             <div class="panel-header">
-
                 <h2>Incoming Orders</h2>
-
                 <a href="#">View All</a>
-
             </div>
-
             <div
                 id="sellerOrders"
                 class="orders-list"
             ></div>
-
         </section>
-
     </div>
-
     <section class="dashboard-panel reviews-panel">
-
         <div class="panel-header">
-
             <h2>Reviews</h2>
-
         </div>
-
         <div id="reviewsContainer"></div>
-
     </section>
-
 </section>
-
-        
-
     </section>
-
-    
-
     <div
     id="editProfileModal"
     class="modal-overlay"
 >
-
     <div class="edit-profile-modal">
-
         <h2>Edit Profile</h2>
-
         <div class="form-group">
-
             <label>Name</label>
-
             <input
                 id="editName"
                 type="text"
             >
-
         </div>
-
         <div class="form-group">
-
             <label>Level</label>
-
             <select id="editLevel">
-
                 <option>100</option>
-
                 <option>200</option>
-
                 <option>300</option>
-
                 <option>400</option>
-
                 <option>Graduate</option>
-
             </select>
-
         </div>
-
-        
-
         <div class="form-group">
-
             <label>Bio</label>
-
             <textarea
                 id="editBio"
                 rows="4"
             ></textarea>
-
         </div>
-
         <div class="modal-buttons">
-
             <button
                 class="btn btn-secondary"
                 onclick="closeEditProfile()"
             >
-
                 Cancel
-
             </button>
-
             <button
                 class="btn btn-primary"
                 onclick="saveProfile()"
             >
-
                 Save Changes
-
             </button>
-
         </div>
-
     </div>
-
 </div>
-
     <script src="js/toast.js"></script>
     <script src="js/profile.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/reviews.js"></script>
     <script type="module" src="js/navbar.js"></script>
-    
 </body>
 </html>

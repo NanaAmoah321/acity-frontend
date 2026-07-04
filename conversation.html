@@ -4,87 +4,67 @@
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
-
     <title>Conversation</title>
-
     <link rel="stylesheet" href="css/style.css">
-
     <link rel="stylesheet" href="css/navbar.css">
     <link rel="stylesheet" href="css/toast.css">
 </head>
 <body>
-
 <nav>
-
         <div class="logo">
             <img
                 src="images/acity_new_logo-removebg-preview.png"
                 alt="acity logo"
             >
         </div>
-
         <button id="menu-toggle" class="menu-toggle">
-
         <span></span>
         <span></span>
         <span></span>
-
         </button>
-
         <div class="nav-links" id="navLinks">
-
     <a href="index.html" class="nav-item">
     <i class="fa-solid fa-house"></i>
     <span class="menu-label">Home</span>
     </a>        
-    
     <a href="marketplace.html" class="nav-item">
     <i class="fa-solid fa-store"></i>
     <span class="menu-label">Marketplace</span>
     </a>
-
     <a href="login.html" class="nav-item">
         <i class="fa-solid fa-right-to-bracket"></i>
         <span class="menu-label">Login</span>
     </a>
-
     <a href="register.html" class="nav-item">
         <i class="fa-solid fa-user-plus"></i>
         <span class="menu-label">Register</span>
     </a>
-
     <a href="profile.html" class="nav-item">
         <i class="fa-solid fa-user"></i>
         <span class="menu-label">Profile</span>
     </a>
-
     <a href="inbox.html" class="nav-item">
         <i class="fa-solid fa-comments"></i>
         <span class="menu-label">Inbox</span>
         <small id="messageCount"></small>
     </a>
-
     <a href="notifications.html" class="nav-item">
     <i class="fa-solid fa-bell"></i>
     <span class="menu-label">Notifications</span>
     <small id="notificationCount"></small>
     </a>
-
     <a href="create-listing.html" class="nav-item">
         <i class="fa-solid fa-plus"></i>
         <span class="menu-label">Add Item</span>
     </a>
-
     <a href="services.html" class="nav-item">
         <i class="fa-solid fa-screwdriver-wrench"></i>
         <span class="menu-label">Skills Connect</span>
     </a>
-
     <a href="#" onclick="logout()" class="nav-item">
         <i class="fa-solid fa-right-from-bracket"></i>
         <span class="menu-label">Logout</span>
     </a>
-
     <a 
        href="admin.html"
        class="nav-item"
@@ -93,116 +73,71 @@
         <i class="fa-solid fa-shield-halved"></i>
         <span class="menu-label">Admin</span>
     </a>
-
    <a href="myCart.html" class="nav-item">
-
     <i class="fa-solid fa-cart-shopping"></i>
-
     <span class="menu-label">
         My Cart
     </span>
-
     <small id="cartCount"></small>
-
    </a>
-
     </div>
-
 </nav>
-
-
 <div class="chat-page">
-
     <div class="chat-card">
-
         <div class="chat-header">
-
             <div class="chat-user">
-
                 <div class="chat-avatar">
                     <i class="fa-solid fa-user"></i>
                 </div>
-
                 <div>
-
                     <h3 id="chatName">
                         Conversation
                     </h3>
-
                     <span class="chat-status">
                         Active Now
                     </span>
-
                 </div>
-
             </div>
-
             <button id="reviewBtn" class="review-btn">
                 <i class="fa-solid fa-star"></i>
                 Leave Review
             </button>
-
         </div>
-
         <div id="conversationContainer"></div>
-
         <div class="chat-input-bar">
-
             <textarea
                 id="messageInput"
                 placeholder="Type a message..."
             ></textarea>
-
             <button id="sendBtn">
                 <i class="fa-solid fa-paper-plane"></i>
             </button>
-
         </div>
-
     </div>
-
-
-
 </div>
-
-
-
-
 <div id="reviewModal" class="review-modal">
-
     <div class="review-card">
-
         <button id="closeReview" class="close-review">
             <i class="fa-solid fa-xmark"></i>
         </button>
-
         <h2>Rate Seller</h2>
-
         <select id="rating">
-
             <option value="5">⭐⭐⭐⭐⭐</option>
             <option value="4">⭐⭐⭐⭐</option>
             <option value="3">⭐⭐⭐</option>
             <option value="2">⭐⭐</option>
             <option value="1">⭐</option>
-
         </select>
-
         <textarea
             id="reviewComment"
             placeholder="Share your experience..."
         ></textarea>
-
         <button id="submitReview">
             Submit Review
         </button>
-
     </div>
-
 </div>
-
 <script src="js/conversation.js"></script>
-
 <script type="module" src="js/navbar.js"></script>
 </body>
 </html>

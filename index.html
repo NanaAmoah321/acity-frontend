@@ -10,576 +10,307 @@
     <link rel="stylesheet" href="css/toast.css">
     <link rel="stylesheet" href="css/buttons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    
 </head>
 <body>
-
     <nav>
-
     <!-- LEFT -->
-
     <div class="nav-left">
-
         <div class="logo">
-
             <img src="images/acity_new_logo-removebg-preview.png">
-
             <div class="logo-text">
-
-                
-
             </div>
-
         </div>
-
     </div>
-
-
-
     <!-- CENTER -->
-
     <div class="nav-center">
-
         <a href="index.html" class="nav-item">
-
             <i class="fa-solid fa-house"></i>
-
             <span>Home</span>
-
         </a>
-
         <a href="marketplace.html" class="nav-item">
-
             <i class="fa-solid fa-store"></i>
-
             <span>Marketplace</span>
-
         </a>
-
         <a href="services.html" class="nav-item">
-
             <i class="fa-solid fa-screwdriver-wrench"></i>
-
             <span>Services</span>
-
         </a>
-
         <a href="create-listing.html" class="nav-item">
-
             <i class="fa-solid fa-plus"></i>
-
             <span>Sell</span>
-
         </a>
-
     </div>
-
-
-
     <!-- RIGHT -->
-
     <div class="nav-right">
-
         <div class="search-box">
-
             <i class="fa-solid fa-magnifying-glass"></i>
-
             <input
                 type="text"
                 placeholder="Search items..."
             >
-
         </div>
-
-
-
         <a href="inbox.html" class="icon-btn">
-
             <i class="fa-solid fa-comments"></i>
-
             <small id="messageCount"></small>
-
         </a>
-
         <button id="themeToggle" class="theme-toggle">
-
             <i id="themeIcon" class="fa-solid fa-circle-half-stroke"></i>
-
         </button>
-
-
-
         <a href="notifications.html" class="icon-btn">
-
             <i class="fa-solid fa-bell"></i>
-
             <small id="notificationCount"></small>
-
         </a>
-
-
-
         <a href="myCart.html" class="icon-btn">
-
             <i class="fa-solid fa-cart-shopping"></i>
-
             <small id="cartCount"></small>
-
         </a>
-
-
-
         <div class="profile-menu">
-
             <button id="profileToggle">
-
                 <i class="fa-solid fa-user-circle"></i>
-
                 <span>Account</span>
-
                 <i class="fa-solid fa-chevron-down"></i>
-
             </button>
-
-
-
             <div class="profile-dropdown">
-
                 <a href="profile.html">
-
                     <i class="fa-solid fa-user"></i>
-
                     My Profile
-
                 </a>
-
-
-
                 <a href="inbox.html">
-
                     <i class="fa-solid fa-comments"></i>
-
                     Inbox
-
                 </a>
-
-
-
                 <a href="notifications.html">
-
                     <i class="fa-solid fa-bell"></i>
-
                     Notifications
-
                 </a>
-
-
-
                 <a
                     href="admin.html"
                     id="adminLink"
                     style="display:none;"
                 >
-
                     <i class="fa-solid fa-shield-halved"></i>
-
                     Admin Dashboard
-
                 </a>
-
-
-
                 <hr>
-
-
-
                 <a href="#" onclick="logout()">
-
                     <i class="fa-solid fa-right-from-bracket"></i>
-
                     Logout
-
                 </a>
-
             </div>
-
         </div>
-
     </div>
-
-
-
    <button id="menu-toggle" class="menu-toggle">
-
     <i class="fa-solid fa-bars"></i>
-
 </button>
-
 </nav>
-
 <div class="mobile-menu" id="mobileMenu">
-
     <div class="mobile-menu-header">
-
         <div class="mobile-profile">
-
             <div class="mobile-avatar">
-
                 <i class="fa-solid fa-user"></i>
-
             </div>
-
             <div>
-
                 <h3 id="mobileUserName">Account</h3>
-
                 <small>Acity Connect</small>
-
             </div>
-
         </div>
-
         <button id="closeMenu" class="close-menu">
-
             <i class="fa-solid fa-xmark"></i>
-
         </button>
-
     </div>
-
     <div class="mobile-links">
-
         <a href="index.html">
-
             <i class="fa-solid fa-house"></i>
-
             Home
-
         </a>
-
         <a href="marketplace.html">
-
             <i class="fa-solid fa-store"></i>
-
             Marketplace
-
         </a>
-
         <a href="services.html">
-
             <i class="fa-solid fa-screwdriver-wrench"></i>
-
             Skills Connect
-
         </a>
-
         <a href="create-listing.html">
-
             <i class="fa-solid fa-plus"></i>
-
             Sell Item
-
         </a>
-
         <hr>
-
         <a href="inbox.html">
-
             <i class="fa-solid fa-comments"></i>
-
             Inbox
-
             <small id="mobileMessageCount"></small>
-
         </a>
-
         <a href="notifications.html">
-
             <i class="fa-solid fa-bell"></i>
-
             Notifications
-
             <small id="mobileNotificationCount"></small>
-
         </a>
-
         <a href="myCart.html">
-
             <i class="fa-solid fa-cart-shopping"></i>
-
             My Cart
-
             <small id="mobileCartCount"></small>
-
         </a>
-
         <div class="mobile-theme">
-
     <button
         id="appearanceBtn"
         class="appearance-btn"
     >
-
         <div class="appearance-left">
-
             <i class="fa-solid fa-circle-half-stroke"></i>
-
             <span>Appearance</span>
-
         </div>
-
         <i class="fa-solid fa-chevron-right"></i>
-
     </button>
-
     <div
         id="appearanceMenu"
         class="appearance-menu"
     >
-
         <div
             class="theme-option"
             data-theme="light"
         >
-
             <i class="fa-solid fa-sun"></i>
-
             <span>Light</span>
-
             <i class="fa-solid fa-check check"></i>
-
         </div>
-
         <div
             class="theme-option"
             data-theme="dark"
         >
-
             <i class="fa-solid fa-moon"></i>
-
             <span>Dark</span>
-
             <i class="fa-solid fa-check check"></i>
-
         </div>
-
         <div
             class="theme-option"
             data-theme="system"
         >
-
             <i class="fa-solid fa-desktop"></i>
-
             <span>System</span>
-
             <i class="fa-solid fa-check check"></i>
-
         </div>
-
     </div>
-
 </div>
-
         <a href="profile.html">
-
             <i class="fa-solid fa-user"></i>
-
             Profile
-
         </a>
-
         <a
             href="admin.html"
             id="mobileAdminLink"
             style="display:none;"
         >
-
             <i class="fa-solid fa-shield-halved"></i>
-
             Admin
-
         </a>
-
         <hr>
-
         <a href="#" onclick="logout()">
-
             <i class="fa-solid fa-right-from-bracket"></i>
-
             Logout
-
         </a>
-
     </div>
-
 </div>
-
 <div class="mobile-overlay" id="mobileOverlay"></div>
-
-
-
     <section class="landing-hero">
-
         <div class="hero-content">
-
             <h1>ACity Connect</h1>
-
             <h2>
                 The Marketplace & Skills Platform
                 for Academic City Students
             </h2>
-
             <p>
                 Buy and sell products,
                 discover student services,
                 and connect with the Academic City community.
             </p>
-
             <div class="hero-buttons">
-
                 <a href="register.html" class="primary-btn">
                     Get Started
                 </a>
-
                 <a href="marketplace.html" class="secondary-btn">
                     Explore Marketplace
                 </a>
-
-
-
-
             </div>
-
-            
-
         </div>
-
     </section>
-
     <section class="features">
-
     <h2>Why ACity Connect?</h2>
-
     <p class="features-subtitle">
         Everything you need to buy, sell, learn, and connect
         with the Academic City community.
     </p>
-
     <div class="feature-grid">
-
         <div class="feature-card">
-
             <div class="feature-icon">
                 📚
             </div>
-
             <h3>Marketplace</h3>
-
             <p>
                 Buy and sell books, electronics,
                 clothing, hostel items, and more
                 from fellow students.
             </p>
-
         </div>
-
         <div class="feature-card">
-
             <div class="feature-icon">
                 🛠️
             </div>
-
             <h3>Skills Connect</h3>
-
             <p>
                 Find tutors, programmers,
                 designers, photographers,
                 and student services.
             </p>
-
         </div>
-
         <div class="feature-card">
-
             <div class="feature-icon">
                 💬
             </div>
-
             <h3>Direct Messaging</h3>
-
             <p>
                 Communicate directly with buyers,
                 sellers, and service providers
                 in real time.
             </p>
-
              </div>
-
         </div>
-
      </section>
-
     <section class="stats">
-
     <div class="stat">
-
         <h2>100+</h2>
-
         <p>Listings</p>
-
     </div>
-
     <div class="stat">
-
         <h2>20+</h2>
-
         <p>Stores</p>
-
     </div>
-
     <div class="stat">
-
         <h2>50+</h2>
-
         <p>Students</p>
-
     </div>
-
     <div class="stat">
-
         <h2>10+</h2>
-
         <p>Services</p>
-
     </div>
-
     </section>
-
     <section class="preview">
-
     <h2>Marketplace Preview</h2>
-
     <p>
         Browse student stores, discover products,
         and connect with sellers.
     </p>
-
     <img
         src="images/marketplace-preview.png"
         class="preview-image"
     >
-
     </section>
-
     <section class="demo-section">
-
     <h2>See ACity Connect In Action</h2>
-
     <p>
         Buy, sell, hire services and connect
         with fellow students.
     </p>
-
     <video
         controls
         autoplay
@@ -587,78 +318,55 @@
         loop
         playsinline
     >
-
         <source
             src="videos/acity-demo.mp4"
             type="video/mp4"
         >
-
     </video>
-
     </section>
-
     <section class="cta">
-
     <h2>
         Ready to Join ACity Connect?
     </h2>
-
     <p>
         Start buying, selling,
         and connecting today.
     </p>
-
     <a href="register.html">
         Register Now
     </a>
-
 </section>
-
 <footer class="footer">
-
     <div class="footer-content">
-
         <img
             src="images/acity_new_logo-removebg-preview.png"
             class="footer-logo"
         >
-
         <h3>ACity Connect</h3>
-
         <p>
             The Marketplace & Skills Platform
             for Academic City Students.
         </p>
-
         <div class="footer-links">
-
             <a href="marketplace.html">
                 Marketplace
             </a>
-
             <a href="services.html">
                 Skills Connect
             </a>
-
             <a href="login.html">
                 Login
             </a>
-
             <a href="register.html">
                 Register
             </a>
-
         </div>
-
         <p class="copyright">
             © 2026 ACity Connect.
             For the Academic City Community.
         </p>
-
     </div>
-
 </footer>
-
 <script type="module" src="js/navbar.js"></script>
 <script src="js/auth.js"></script>
 </body>

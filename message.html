@@ -9,222 +9,105 @@
 </head>
 </head>
 <body>
-
 <nav>
-
     <!-- LEFT -->
-
     <div class="nav-left">
-
         <div class="logo">
-
             <img src="images/acity_new_logo-removebg-preview.png">
-
             <div class="logo-text">
-
-                
-
             </div>
-
         </div>
-
     </div>
-
-
-
     <!-- CENTER -->
-
     <div class="nav-center">
-
         <a href="index.html" class="nav-item">
-
             <i class="fa-solid fa-house"></i>
-
             <span>Home</span>
-
         </a>
-
         <a href="marketplace.html" class="nav-item">
-
             <i class="fa-solid fa-store"></i>
-
             <span>Marketplace</span>
-
         </a>
-
         <a href="services.html" class="nav-item">
-
             <i class="fa-solid fa-screwdriver-wrench"></i>
-
             <span>Skills</span>
-
         </a>
-
         <a href="create-listing.html" class="nav-item">
-
             <i class="fa-solid fa-plus"></i>
-
             <span>Sell</span>
-
         </a>
-
     </div>
-
-
-
     <!-- RIGHT -->
-
     <div class="nav-right">
-
         <div class="search-box">
-
             <i class="fa-solid fa-magnifying-glass"></i>
-
             <input
                 type="text"
                 placeholder="Search items..."
             >
-
         </div>
-
-
-
         <a href="inbox.html" class="icon-btn">
-
             <i class="fa-solid fa-comments"></i>
-
             <small id="messageCount"></small>
-
         </a>
-
-
-
         <a href="notifications.html" class="icon-btn">
-
             <i class="fa-solid fa-bell"></i>
-
             <small id="notificationCount"></small>
-
         </a>
-
-
-
         <a href="myCart.html" class="icon-btn">
-
             <i class="fa-solid fa-cart-shopping"></i>
-
             <small id="cartCount"></small>
-
         </a>
-
-
-
         <div class="profile-menu">
-
             <button id="profileToggle">
-
                 <i class="fa-solid fa-user-circle"></i>
-
                 <span>Account</span>
-
                 <i class="fa-solid fa-chevron-down"></i>
-
             </button>
-
-
-
             <div class="profile-dropdown">
-
                 <a href="profile.html">
-
                     <i class="fa-solid fa-user"></i>
-
                     My Profile
-
                 </a>
-
-
-
                 <a href="inbox.html">
-
                     <i class="fa-solid fa-comments"></i>
-
                     Inbox
-
                 </a>
-
-
-
                 <a href="notifications.html">
-
                     <i class="fa-solid fa-bell"></i>
-
                     Notifications
-
                 </a>
-
-
-
                 <a
                     href="admin.html"
                     id="adminLink"
                     style="display:none;"
                 >
-
                     <i class="fa-solid fa-shield-halved"></i>
-
                     Admin Dashboard
-
                 </a>
-
-
-
                 <hr>
-
-
-
                 <a href="#" onclick="logout()">
-
                     <i class="fa-solid fa-right-from-bracket"></i>
-
                     Logout
-
                 </a>
-
             </div>
-
         </div>
-
     </div>
-
-
-
    <button id="menu-toggle" class="menu-toggle">
-
     <i class="fa-solid fa-bars"></i>
-
 </button>
-
 </nav>
-
-
 <div class="form-container">
-
     <h2>Send Message</h2>
-
     <textarea
         id="message"
         placeholder="Type your message..."
     ></textarea>
-
     <button id="sendBtn">
         Send Message
     </button>
-
 </div>
-
 <script src="js/message.js"></script>
 <script src="js/navbar.js"></script>
-
 </body>
 </html>

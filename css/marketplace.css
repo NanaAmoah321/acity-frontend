@@ -1,1109 +1,566 @@
 /* ==========================================
    MARKETPLACE
 ========================================== */
-
 .marketplace{
-
     width:100%;
-
     padding-bottom:80px;
-
 }
-
 /* ==========================================
    HERO
 ========================================== */
-
 .marketplace-hero{
-
     max-width:1300px;
-
     margin:50px auto;
-
     padding:0 5%;
-
 }
-
 .hero-content{
-
     max-width:700px;
-
 }
-
 .hero-badge{
-
     display:inline-flex;
-
     align-items:center;
-
     gap:8px;
-
     padding:8px 18px;
-
     background:#FEECEC;
-
     color:var(--primary);
-
     border-radius:999px;
-
     font-size:14px;
-
     font-weight:700;
-
 }
-
 .hero-content h1{
-
     margin-top:22px;
-
     font-size:4.4rem;
-
     line-height:.92;
-
     font-weight:900;
-
     letter-spacing:-2px;
-
 }
-
 .hero-content h1 span{
-
     color:var(--primary);
-
 }
-
 .hero-content p{
-
     margin-top:25px;
-
     font-size:18px;
-
     color:var(--text-light);
-
     line-height:1.8;
-
     max-width:560px;
-
 }
-
 /* ==========================================
    SEARCH
 ========================================== */
-
 .hero-search{
-
     margin-top:45px;
-
     display:flex;
-
     align-items:center;
-
     gap:15px;
-
     background:var(--surface);
-
     border-radius:20px;
-
     padding:18px 22px;
-
     box-shadow:var(--shadow);
-
 }
-
 .hero-search i{
-
     font-size:20px;
-
     color:#999;
-
 }
-
 .hero-search input{
-
     border:none;
-
     outline:none;
-
     background:none;
-
     box-shadow:none;
-
     padding:0;
-
     font-size:16px;
-
     flex:1;
-
 }
-
 /* ==========================================
    CATEGORIES
 ========================================== */
-
 .mobile-categories{
-
     display:flex;
-
     gap:18px;
-
     margin-top:40px;
-
     overflow-x:auto;
-
     padding-bottom:8px;
-
     scrollbar-width:none;
-
 }
-
 .mobile-categories::-webkit-scrollbar{
-
     display:none;
-
 }
-
 .mobile-categories button{
-
     flex:0 0 auto;
-
     width:95px;
-
     height:95px;
-
     background:var(--surface);
-
     border:none;
-
     border-radius:22px;
-
     display:flex;
-
     flex-direction:column;
-
     justify-content:center;
-
     align-items:center;
-
     gap:10px;
-
     box-shadow:var(--shadow);
-
     transition:.25s;
-
 }
-
 .mobile-categories button:hover{
-
     transform:translateY(-5px);
-
 }
-
 .mobile-categories button.active{
-
     background:var(--primary);
-
 }
-
 .mobile-categories button.active i,
-
 .mobile-categories button.active span{
-
     color:white;
-
 }
-
 .mobile-categories button i{
-
     font-size:25px;
-
     color:var(--primary);
-
 }
-
 .mobile-categories button span{
-
     font-size:13px;
-
     font-weight:600;
-
 }
-
 /* ==========================================
    MOBILE
 ========================================== */
-
 @media(max-width:768px){
-
 .marketplace-hero{
-
 margin-top:20px;
-
 padding:0 20px;
-
 }
-
 .hero-content h1{
-
 font-size:3rem;
-
 }
-
 .hero-content p{
-
 font-size:15px;
-
 }
-
 .hero-search{
-
 margin-top:30px;
-
 padding:15px 18px;
-
 }
-
 .mobile-categories{
-
 gap:12px;
-
 }
-
 .mobile-categories button{
-
 width:82px;
-
 height:82px;
-
 }
-
 }
-
 /* ==========================================
    MARKET SECTIONS
 ========================================== */
-
 .market-section{
-
     max-width:1300px;
-
     margin:70px auto;
-
     padding:0 5%;
-
 }
-
-/* ================= HEADER ================= */
-
 .section-header{
-
     display:flex;
-
     justify-content:space-between;
-
     align-items:flex-end;
-
     margin-bottom:28px;
-
 }
-
 .section-header h2{
-
     font-size:2rem;
-
     font-weight:800;
-
     color:var(--text);
-
 }
-
 .section-header p{
-
     margin-top:8px;
-
     color:var(--text-light);
-
 }
-
 .section-header a{
-
     color:var(--primary);
-
     font-weight:700;
-
     transition:.25s;
-
 }
-
 .section-header a:hover{
-
     opacity:.75;
-
 }
-
-/* ================= HORIZONTAL ROW ================= */
-
 #featuredProducts,
 #ItemsContainer,
 #servicesContainer,
 #recentListings{
-
     display:flex;
-
     gap:24px;
-
     overflow-x:auto;
-
     scroll-behavior:smooth;
-
     padding-bottom:12px;
-
     scrollbar-width:none;
-
 }
-
 #featuredProducts::-webkit-scrollbar,
 #ItemsContainer::-webkit-scrollbar,
 #servicesContainer::-webkit-scrollbar,
 #recentListings::-webkit-scrollbar{
-
     display:none;
-
 }
-
-/* ================= EMPTY STATE ================= */
-
 .empty-state{
-
     width:100%;
-
     min-height:260px;
-
     background:var(--surface);
-
     border-radius:26px;
-
     display:flex;
-
     flex-direction:column;
-
     justify-content:center;
-
     align-items:center;
-
     text-align:center;
-
     padding:40px;
-
     box-shadow:var(--shadow);
-
 }
-
 .empty-state i{
-
     font-size:52px;
-
     color:var(--primary);
-
     margin-bottom:20px;
-
 }
-
 .empty-state h3{
-
     margin-bottom:10px;
-
 }
-
 .empty-state p{
-
     color:var(--text-light);
-
     max-width:320px;
-
 }
-
-/* ================= SKELETON ================= */
-
 .skeleton-card{
-
     flex:0 0 300px;
-
     height:360px;
-
     border-radius:24px;
-
     overflow:hidden;
-
     background:var(--surface);
-
     box-shadow:var(--shadow);
-
 }
-
 .skeleton{
-
     animation:loading 1.3s infinite alternate;
-
     background:#ececec;
-
 }
-
 .skeleton-title{
-
     width:75%;
-
     height:18px;
-
     border-radius:8px;
-
     margin:18px;
-
 }
-
 .skeleton-price{
-
     width:40%;
-
     height:18px;
-
     border-radius:8px;
-
     margin:18px;
-
 }
-
 .skeleton-pill{
-
     width:90px;
-
     height:28px;
-
     border-radius:999px;
-
     margin:18px;
-
 }
-
 .skeleton-store{
-
     width:90px;
-
     height:16px;
-
     border-radius:8px;
-
 }
-
 .skeleton-circle{
-
     width:36px;
-
     height:36px;
-
     border-radius:50%;
-
 }
-
 @keyframes loading{
-
     from{
-
         opacity:.45;
-
     }
-
     to{
-
         opacity:1;
-
     }
-
 }
-
-/* ================= MOBILE ================= */
-
 @media(max-width:768px){
-
 .market-section{
-
 padding:0 20px;
-
 margin:50px auto;
-
 }
-
 .section-header{
-
 align-items:flex-start;
-
 flex-direction:column;
-
 gap:10px;
-
 }
-
 .section-header h2{
-
 font-size:1.5rem;
-
 }
-
 }
-
 /* ==========================================
    FEATURED / PRODUCT CARDS
 ========================================== */
-
 .featured-card{
-
     flex:0 0 310px;
-
     background:var(--surface);
-
     border-radius:24px;
-
     overflow:hidden;
-
     box-shadow:var(--shadow);
-
     transition:.3s ease;
-
     cursor:pointer;
-
 }
-
 .featured-card:hover{
-
     transform:translateY(-8px);
-
 }
-
 .featured-image{
-
     position:relative;
-
     width:100%;
-
     height:220px;
-
     overflow:hidden;
-
 }
-
 .featured-image img{
-
     width:100%;
-
     height:100%;
-
     object-fit:cover;
-
     transition:.35s;
-
 }
-
 .featured-card:hover img{
-
     transform:scale(1.08);
-
 }
-
-/* ---------- INFO ---------- */
-
 .featured-info{
-
     padding:22px;
-
 }
-
 .featured-category{
-
     display:inline-flex;
-
     padding:6px 14px;
-
     border-radius:999px;
-
     background:#FEECEC;
-
     color:var(--primary);
-
     font-size:12px;
-
     font-weight:700;
-
 }
-
 .featured-info h3{
-
     margin-top:16px;
-
     margin-bottom:12px;
-
     font-size:21px;
-
     line-height:1.3;
-
     color:var(--text);
-
 }
-
 .featured-price{
-
     font-size:28px;
-
     font-weight:800;
-
     color:var(--primary);
-
     margin-bottom:20px;
-
 }
-
-/* ---------- FOOTER ---------- */
-
 .featured-footer{
-
     display:flex;
-
     justify-content:space-between;
-
     align-items:center;
-
     border-top:1px solid var(--border);
-
     padding-top:18px;
-
 }
-
 .featured-footer span{
-
     color:var(--text-light);
-
     font-size:14px;
-
 }
-
 .featured-footer i{
-
     width:42px;
-
     height:42px;
-
     display:flex;
-
     justify-content:center;
-
     align-items:center;
-
     border-radius:50%;
-
     background:var(--surface);
-
     color:var(--text);
-
     border:1px solid var(--border);
-
     transition:.25s;
-
 }
-
 .featured-card:hover .featured-footer i{
-
     background:var(--primary);
-
     color:#fff;
-
     transform:translateX(4px);
-
 }
-
-
 /* ==========================================
    MOBILE
 ========================================== */
-
 @media(max-width:768px){
-
 .featured-card{
-
 width:270px;
-
 flex:0 0 270px;
-
 }
-
 .featured-image{
-
 height:190px;
-
 }
-
 .featured-info{
-
 padding:18px;
-
 }
-
 .featured-info h3{
-
 font-size:18px;
-
 }
-
 .featured-price{
-
 font-size:24px;
-
 }
-
 }
-
 /* ==========================================
    STORE CARD
 ========================================== */
-
 .store-card{
-
     flex:0 0 340px;
-
     background:var(--surface);
-
     border-radius:24px;
-
     overflow:hidden;
-
     box-shadow:var(--shadow);
-
 }
-
 .store-image{
-
     width:100%;
-
     height:190px;
-
     object-fit:cover;
-
 }
-
 .store-info{
-
     padding:22px;
-
 }
-
 .store-category{
-
     display:inline-block;
-
     background:#FEECEC;
-
     color:var(--primary);
-
     padding:6px 14px;
-
     border-radius:999px;
-
     font-size:12px;
-
     font-weight:700;
-
 }
-
 .store-info h3{
-
     margin:16px 0 10px;
-
 }
-
 .store-info p{
-
     color:var(--text-light);
-
     margin-bottom:8px;
-
 }
-
 .store-info button{
-
     margin-top:18px;
-
     width:100%;
-
     padding:14px;
-
     border:none;
-
     border-radius:14px;
-
     background:var(--primary);
-
     color:white;
-
     font-weight:700;
-
     cursor:pointer;
-
     transition:.25s;
-
 }
-
 .store-info button:hover{
-
     background:var(--primary-dark);
-
 }
-
 /* ==========================================
    SELL BANNER
 ========================================== */
-
 .sell-banner{
-
     max-width:1300px;
-
     margin:90px auto 40px;
-
     padding:50px;
-
     border-radius:32px;
-
     background:linear-gradient(
         135deg,
         #ff4d4f,
         #e53935
     );
-
     color:white;
-
     display:flex;
-
     justify-content:space-between;
-
     align-items:center;
-
     gap:30px;
-
 }
-
 .sell-banner h2{
-
     color:white;
-
     font-size:2.4rem;
-
     margin-bottom:12px;
-
 }
-
 .sell-banner p{
-
     color:rgba(255,255,255,.85);
-
     max-width:500px;
-
     line-height:1.7;
-
 }
-
 .sell-btn{
-
     display:inline-flex;
-
     align-items:center;
-
     justify-content:center;
-
     padding:18px 34px;
-
     border-radius:18px;
-
     background:var(--surface);
-
     color:var(--primary);
-
     font-weight:700;
-
     transition:.25s;
-
     white-space:nowrap;
-
 }
-
 .sell-btn:hover{
-
     transform:translateY(-4px);
-
 }
-
 /* ==========================================
    FLOATING SELL BUTTON
 ========================================== */
-
 .fab-sell{
-
     position:fixed;
-
     right:25px;
-
     bottom:25px;
-
     width:65px;
-
     height:65px;
-
     border-radius:50%;
-
     background:var(--primary);
-
     color:white;
-
     display:flex;
-
     justify-content:center;
-
     align-items:center;
-
     font-size:28px;
-
     box-shadow:0 15px 35px rgba(229,57,53,.35);
-
     z-index:100;
-
     transition:.25s;
-
 }
-
 .fab-sell:hover{
-
     transform:scale(1.08);
-
 }
-
 /* ==========================================
    SECTION SPACING
 ========================================== */
-
 .market-section + .market-section{
-
     margin-top:80px;
-
 }
-
 /* ==========================================
    CARD ANIMATION
 ========================================== */
-
 .featured-card,
 .store-card{
-
     animation:fadeUp .45s ease;
-
 }
-
 /* ==========================================
    MOBILE
 ========================================== */
-
 @media(max-width:768px){
-
 .sell-banner{
-
 padding:35px 24px;
-
 margin:60px 20px;
-
 flex-direction:column;
-
 text-align:center;
-
 }
-
 .sell-banner h2{
-
 font-size:1.9rem;
-
 }
-
 .sell-btn{
-
 width:100%;
-
 }
-
 .fab-sell{
-
 right:18px;
-
 bottom:18px;
-
 width:58px;
-
 height:58px;
-
 font-size:24px;
-
 }
-
 }
-
-
-
 .service-icon{
-
     width:100%;
-
     height:180px;
-
     display:flex;
-
     align-items:center;
-
     justify-content:center;
-
     background:#FFF1F2;
-
     border-bottom:1px solid #ECECEC;
-
 }
-
 .service-icon i{
-
     font-size:72px;
-
     color:var(--primary);
-
 }
-
 .stock{
-
     display:flex;
-
     align-items:center;
-
     gap:8px;
-
     margin-top:10px;
-
     margin-bottom:10px;
-
     font-size:.9rem;
-
     font-weight:600;
-
     color:#64748B;
-
 }
-
 .stock i{
-
     color:var(--primary);
-
 }
-
 body.dark .stock{
-
     color:#CBD5E1;
-
 }

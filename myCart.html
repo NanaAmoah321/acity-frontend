@@ -13,613 +13,323 @@
 </head>
 <body>
      <nav>
-
     <!-- LEFT -->
-
     <div class="nav-left">
-
         <div class="logo">
-
             <img src="images/acity_new_logo-removebg-preview.png">
-
             <div class="logo-text">
-
-                
-
             </div>
-
         </div>
-
     </div>
-
-
-
     <!-- CENTER -->
-
     <div class="nav-center">
-
         <a href="index.html" class="nav-item">
-
             <i class="fa-solid fa-house"></i>
-
             <span>Home</span>
-
         </a>
-
         <a href="marketplace.html" class="nav-item">
-
             <i class="fa-solid fa-store"></i>
-
             <span>Marketplace</span>
-
         </a>
-
         <a href="services.html" class="nav-item">
-
             <i class="fa-solid fa-screwdriver-wrench"></i>
-
             <span>Skills</span>
-
         </a>
-
         <a href="create-listing.html" class="nav-item">
-
             <i class="fa-solid fa-plus"></i>
-
             <span>Sell</span>
-
         </a>
-
     </div>
-
-
-
     <!-- RIGHT -->
-
     <div class="nav-right">
-
         <div class="search-box">
-
             <i class="fa-solid fa-magnifying-glass"></i>
-
             <input
                 type="text"
                 placeholder="Search items..."
             >
-
         </div>
-
-
-
         <a href="inbox.html" class="icon-btn">
-
             <i class="fa-solid fa-comments"></i>
-
             <small id="messageCount"></small>
-
         </a>
-
         <button id="themeToggle" class="theme-toggle">
-
                     <i id="themeIcon" class="fa-solid fa-circle-half-stroke"></i>
-
                 </button>
-
-
-
         <a href="notifications.html" class="icon-btn">
-
             <i class="fa-solid fa-bell"></i>
-
             <small id="notificationCount"></small>
-
         </a>
-
-
-
         <a href="myCart.html" class="icon-btn">
-
             <i class="fa-solid fa-cart-shopping"></i>
-
             <small id="cartCount"></small>
-
         </a>
-
-
-
         <div class="profile-menu">
-
             <button id="profileToggle">
-
                 <i class="fa-solid fa-user-circle"></i>
-
                 <span>Account</span>
-
                 <i class="fa-solid fa-chevron-down"></i>
-
             </button>
-
-
-
             <div class="profile-dropdown">
-
                 <a href="profile.html">
-
                     <i class="fa-solid fa-user"></i>
-
                     My Profile
-
                 </a>
-
-
-
                 <a href="inbox.html">
-
                     <i class="fa-solid fa-comments"></i>
-
                     Inbox
-
                 </a>
-
-             
-
-
-
                 <a href="notifications.html">
-
                     <i class="fa-solid fa-bell"></i>
-
                     Notifications
-
                 </a>
-
-
-
                 <a
                     href="admin.html"
                     id="adminLink"
                     style="display:none;"
                 >
-
                     <i class="fa-solid fa-shield-halved"></i>
-
                     Admin Dashboard
-
                 </a>
-
-
-
                 <hr>
-
-
-
                 <a href="#" onclick="logout()">
-
                     <i class="fa-solid fa-right-from-bracket"></i>
-
                     Logout
-
                 </a>
-
             </div>
-
         </div>
-
     </div>
-
-
-
    <button id="menu-toggle" class="menu-toggle">
-
     <i class="fa-solid fa-bars"></i>
-
 </button>
-
 </nav>
-
 <div class="mobile-menu" id="mobileMenu">
-
     <div class="mobile-menu-header">
-
         <div class="mobile-profile">
-
             <div class="mobile-avatar">
-
                 <i class="fa-solid fa-user"></i>
-
             </div>
-
             <div>
-
                 <h3 id="mobileUserName">Account</h3>
-
                 <small>Acity Connect</small>
-
             </div>
-
         </div>
-
         <button id="closeMenu" class="close-menu">
-
             <i class="fa-solid fa-xmark"></i>
-
         </button>
-
     </div>
-
     <div class="mobile-links">
-
         <a href="index.html">
-
             <i class="fa-solid fa-house"></i>
-
             Home
-
         </a>
-
         <a href="marketplace.html">
-
             <i class="fa-solid fa-store"></i>
-
             Marketplace
-
         </a>
-
         <a href="services.html">
-
             <i class="fa-solid fa-screwdriver-wrench"></i>
-
             Skills Connect
-
         </a>
-
         <a href="create-listing.html">
-
             <i class="fa-solid fa-plus"></i>
-
             Sell Item
-
         </a>
-
         <hr>
-
         <a href="inbox.html">
-
             <i class="fa-solid fa-comments"></i>
-
             Inbox
-
             <small id="mobileMessageCount"></small>
-
         </a>
-
         <a href="notifications.html">
-
             <i class="fa-solid fa-bell"></i>
-
             Notifications
-
             <small id="mobileNotificationCount"></small>
-
         </a>
-
         <a href="myCart.html">
-
             <i class="fa-solid fa-cart-shopping"></i>
-
             My Cart
-
             <small id="mobileCartCount"></small>
-
         </a>
-
         <div class="mobile-theme">
-
     <button
         id="appearanceBtn"
         class="appearance-btn"
     >
-
         <div class="appearance-left">
-
             <i class="fa-solid fa-circle-half-stroke"></i>
-
             <span>Appearance</span>
-
         </div>
-
         <i class="fa-solid fa-chevron-right"></i>
-
     </button>
-
     <div
         id="appearanceMenu"
         class="appearance-menu"
     >
-
         <div
             class="theme-option"
             data-theme="light"
         >
-
             <i class="fa-solid fa-sun"></i>
-
             <span>Light</span>
-
             <i class="fa-solid fa-check check"></i>
-
         </div>
-
         <div
             class="theme-option"
             data-theme="dark"
         >
-
             <i class="fa-solid fa-moon"></i>
-
             <span>Dark</span>
-
             <i class="fa-solid fa-check check"></i>
-
         </div>
-
         <div
             class="theme-option"
             data-theme="system"
         >
-
             <i class="fa-solid fa-desktop"></i>
-
             <span>System</span>
-
             <i class="fa-solid fa-check check"></i>
-
         </div>
-
     </div>
-
 </div>
-
         <a href="profile.html">
-
             <i class="fa-solid fa-user"></i>
-
             Profile
-
         </a>
-
         <a
             href="admin.html"
             id="mobileAdminLink"
             style="display:none;"
         >
-
             <i class="fa-solid fa-shield-halved"></i>
-
             Admin
-
         </a>
-
         <hr>
-
         <a href="#" onclick="logout()">
-
             <i class="fa-solid fa-right-from-bracket"></i>
-
             Logout
-
         </a>
-
     </div>
-
 </div>
-
 <div class="mobile-overlay" id="mobileOverlay"></div>
-
     <main class="cart-page">
-
     <div class="cart-container">
-
         <div class="cart-header">
-
             <a href="marketplace.html" class="back-link">
-
                 <i class="fa-solid fa-arrow-left"></i>
-
                 Continue Shopping
-
             </a>
-
             <h1>
-
                 My Cart
-
             </h1>
-
             <p>
-
                 Items you've saved for checkout.
-
             </p>
-
         </div>
-
         <div class="cart-layout">
-
             <section class="cart-items">
-
                 <div id="interestedContainer"></div>
-
             </section>
-
             <aside class="cart-summary">
-
                 <h2>
-
                     Order Summary
-
                 </h2>
-
                 <div class="summary-row">
-
                     <span>Items</span>
-
                     <span id="summaryItems">
-
                         0
-
                     </span>
-
                 </div>
-
                 <div class="summary-row">
-
                     <span>Subtotal</span>
-
                     <span id="summarySubtotal">
-
                         ₵0
-
                     </span>
-
                 </div>
-
                 <div class="summary-row">
-
                     <span>Delivery</span>
-
                     <span>
-
                         Free
-
                     </span>
-
                 </div>
-
                 <hr>
-
                 <div class="summary-total">
-
                     <span>Total</span>
-
                     <strong id="summaryTotal">
-
                         ₵0
-
                     </strong>
-
                 </div>
-
                 <button
                     class="checkout-all-btn"
                     onclick="checkoutAll()"
                 >
-
                     Checkout All
-
                 </button>
-
             </aside>
-
         </div>
-
     </div>
-
     </main>
-    
     <div id="checkoutModal" class="checkout-modal">
-
         <div class="checkout-content">
-
         <h2>Checkout</h2>
-
         <p class="checkout-subtitle">
             Review your order before placing it.
         </p>
-
         <div class="checkout-product">
-
             <img
                 id="checkoutImage"
                 src=""
             >
-
             <div>
-
                 <h3 id="checkoutTitle">
                 </h3>
-
                 <p id="checkoutPrice">
                 </p>
-
             </div>
-
         </div>
-
         <div class="delivery-options">
-
             <label class="delivery-card">
-
                 <input
                     type="radio"
                     name="deliveryMethod"
                     value="room"
                 >
-
                 🏠
-
                 <h3>Room Delivery</h3>
-
             </label>
-
             <label class="delivery-card">
-
                 <input
                     type="radio"
                     name="deliveryMethod"
                     value="meetup"
                 >
-
                 🤝
-
                 <h3>Meet Up</h3>
-
             </label>
-
         </div>
-
         <div id="deliveryFields"></div>
-        
-
         <div class="checkout-summary">
-
             <p>
                 Product:
                 <span id="productTotal">
                     ₵0
                 </span>
             </p>
-
             <p>
                 Delivery:
                 <span id="deliveryFee">
                     Free
                 </span>
             </p>
-
             <hr>
-
             <h3>
                 Total:
                 <span id="grandTotal">
                     ₵0
                 </span>
             </h3>
-
         </div>
-        
         <div class="checkout-buttons">
-
             <button
                 id="placeOrderBtn"
                 class="place-order"
@@ -628,23 +338,17 @@
             >
                 Place Order
             </button>
-
             <button
                 class="cancel-order"
                 onclick="closeCheckout()"
             >
                 Cancel
             </button>
-
         </div>
-
         </div>
-
     </div>
-
     <script src="js/toast.js"></script>
     <script src="js/myCart.js"></script>
     <script type="module" src="js/navbar.js"></script>
-
 </body>
 </html>

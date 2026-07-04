@@ -2,28 +2,17 @@
    ACITY CONNECT DESIGN SYSTEM
    Global Styles Only
 ========================================== */
-
-/* ---------- GOOGLE FONT ---------- */
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-
-
-/* ---------- RESET ---------- */
-
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
 }
-
 html{
-
     transition:
     background-color .3s,
     color .3s;
-
 }
-
 body,
 nav,
 div,
@@ -39,380 +28,173 @@ textarea,
 .profile-card,
 .notification-card,
 .inbox-card{
-
     transition:
-
         background-color .3s,
-
         color .3s,
-
         border-color .3s,
-
         box-shadow .3s;
-
 }
-
-
-/* ---------- VARIABLES ---------- */
-
 :root{
-
-    /* Brand */
     --primary:#EF4444;
     --primary-hover:#DC2626;
-
-    /* Backgrounds */
     --background:var(--surface);
     --surface:#FFFFFF;
     --surface-2:#F4F6F8;
-
-    /* Text */
     --text:#0F172A;
     --text-light:#64748B;
-
-    /* Borders */
     --border:#E5E7EB;
-
-    /* Status */
     --success:#22C55E;
     --warning:#F59E0B;
     --danger:#EF4444;
-
-    /* Shadows */
     --shadow:0 12px 35px rgba(15,23,42,.08);
-
-    /* Animation */
     --transition:.3s ease;
-
 }
-
 body.dark{
-
     --background:#0F172A;
-
     --surface:#1E293B;
-
     --surface-2:#273449;
-
     --text:#F8FAFC;
-
     --text-light:#CBD5E1;
-
     --border:#334155;
-
     --shadow:0 15px 40px rgba(0,0,0,.45);
-
 }
-
-
-/* ---------- BODY ---------- */
-
 body{
-
     font-family:"Inter",sans-serif;
-
     background:var(--background);
-
     color:var(--text);
-
     transition:
         background .3s,
         color .3s;
-
-
-        
     line-height:1.6;
-
 }
-
-
-/* ---------- IMAGES ---------- */
-
 img{
-
     max-width:100%;
-
     display:block;
-
 }
-
-
-/* ---------- LINKS ---------- */
-
 a{
-
     text-decoration:none;
-
     color:inherit;
-
 }
-
-
-/* ---------- LISTS ---------- */
-
 ul{
-
     list-style:none;
-
 }
-
-
-/* ---------- BUTTONS ---------- */
-
 button{
-
     font-family:inherit;
-
     cursor:pointer;
-
     border:none;
-
     transition:var(--transition);
-
 }
-
-
-/* ---------- INPUTS ---------- */
-
 input,
 textarea,
 select{
-
     width:100%;
-
     padding:14px 18px;
-
     font-family:inherit;
-
     font-size:15px;
-
     border:1px solid var(--border);
-
     border-radius:14px;
-
     background:var(--surface);
-
     transition:var(--transition);
-
 }
-
 input:focus,
 textarea:focus,
 select:focus{
-
     outline:none;
-
     border-color:var(--primary);
-
     box-shadow:
     0 0 0 4px rgba(229,57,53,.12);
-
 }
-
-
-/* ---------- HEADINGS ---------- */
-
 h1{
-
     font-size:3rem;
     font-weight:800;
-
 }
-
 h2{
-
     font-size:2.2rem;
     font-weight:700;
-
 }
-
 h3{
-
     font-size:1.3rem;
     font-weight:600;
-
 }
-
-
-/* ---------- CONTAINER ---------- */
-
 .container{
-
     width:min(1400px,92%);
-
     margin:auto;
-
 }
-
-
-/* ---------- BUTTON SYSTEM ---------- */
-
 .btn{
-
     display:inline-flex;
-
     align-items:center;
-
     justify-content:center;
-
     gap:10px;
-
     padding:14px 28px;
-
     border-radius:14px;
-
     font-weight:600;
-
 }
-
 .btn-primary{
-
     background:var(--primary);
-
     color:white;
-
 }
-
 .btn-primary:hover{
-
     background:var(--primary-dark);
-
     transform:translateY(-2px);
-
 }
-
 .btn-secondary{
-
     background:var(--surface);
-
     color:var(--text);
-
     border:1px solid var(--border);
-
 }
-
 .btn-secondary:hover{
-
     background:var(--surface-alt);
-
 }
-
 .btn-danger{
-
     background:var(--danger);
-
     color:white;
-
 }
-
-
-/* ---------- CARD ---------- */
-
 .card{
-
     background:var(--surface);
-
     border-radius:var(--radius);
-
     box-shadow:var(--shadow);
-
 }
-
-
-/* ---------- UTILITIES ---------- */
-
 .text-center{
-
     text-align:center;
-
 }
-
 .flex{
-
     display:flex;
-
 }
-
 .grid{
-
     display:grid;
-
 }
-
 .hidden{
-
     display:none;
-
 }
-
-
-/* ---------- SCROLLBAR ---------- */
-
 ::-webkit-scrollbar{
-
     width:10px;
     height:10px;
-
 }
-
 ::-webkit-scrollbar-thumb{
-
     background:#d1d5db;
-
     border-radius:999px;
-
 }
-
 ::-webkit-scrollbar-track{
-
     background:transparent;
-
 }
-
-
-/* ---------- ANIMATIONS ---------- */
-
 @keyframes fadeUp{
-
     from{
-
         opacity:0;
-
         transform:translateY(20px);
-
     }
-
     to{
-
         opacity:1;
-
         transform:translateY(0);
-
     }
-
 }
-
 .fade-up{
-
     animation:fadeUp .5s ease;
-
 }
-
-
-/* ---------- MOBILE ---------- */
-
 @media(max-width:768px){
-
     h1{
-
         font-size:2.3rem;
-
     }
-
     h2{
-
         font-size:1.8rem;
-
     }
-
 }

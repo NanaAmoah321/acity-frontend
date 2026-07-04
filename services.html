@@ -14,526 +14,265 @@
 </head>
 <body>
     <nav>
-
     <!-- LEFT -->
-
     <div class="nav-left">
-
         <div class="logo">
-
             <img src="images/acity_new_logo-removebg-preview.png">
-
             <div class="logo-text">
-
-                
-
             </div>
-
         </div>
-
     </div>
-
-
-
     <!-- CENTER -->
-
     <div class="nav-center">
-
         <a href="index.html" class="nav-item">
-
             <i class="fa-solid fa-house"></i>
-
             <span>Home</span>
-
         </a>
-
         <a href="marketplace.html" class="nav-item">
-
             <i class="fa-solid fa-store"></i>
-
             <span>Marketplace</span>
-
         </a>
-
         <a href="services.html" class="nav-item">
-
             <i class="fa-solid fa-screwdriver-wrench"></i>
-
             <span>Services</span>
-
         </a>
-
         <a href="create-service.html" class="nav-item">
-
             <i class="fa-solid fa-plus"></i>
-
             <span>Offer Service</span>
-
         </a>
-
     </div>
-
-
-
     <!-- RIGHT -->
-
     <div class="nav-right">
-
         <div class="search-box">
-
             <i class="fa-solid fa-magnifying-glass"></i>
-
             <input
                 type="text"
                 placeholder="Search items..."
             >
-
         </div>
-
-
-
         <a href="inbox.html" class="icon-btn">
-
             <i class="fa-solid fa-comments"></i>
-
             <small id="messageCount"></small>
-
         </a>
-
         <button id="themeToggle" class="theme-toggle">
-
     <i id="themeIcon" class="fa-solid fa-circle-half-stroke"></i>
-
 </button>
-
-
-
         <a href="notifications.html" class="icon-btn">
-
             <i class="fa-solid fa-bell"></i>
-
             <small id="notificationCount"></small>
-
         </a>
-
-
-
         <a href="myCart.html" class="icon-btn">
-
             <i class="fa-solid fa-cart-shopping"></i>
-
             <small id="cartCount"></small>
-
         </a>
-
-
-
         <div class="profile-menu">
-
             <button id="profileToggle">
-
                 <i class="fa-solid fa-user-circle"></i>
-
                 <span>Account</span>
-
                 <i class="fa-solid fa-chevron-down"></i>
-
             </button>
-
-
-
             <div class="profile-dropdown">
-
                 <a href="profile.html">
-
                     <i class="fa-solid fa-user"></i>
-
                     My Profile
-
                 </a>
-
-
-
                 <a href="inbox.html">
-
                     <i class="fa-solid fa-comments"></i>
-
                     Inbox
-
                 </a>
-
-
-
                 <a href="notifications.html">
-
                     <i class="fa-solid fa-bell"></i>
-
                     Notifications
-
                 </a>
-
-
-
                 <a
                     href="admin.html"
                     id="adminLink"
                     style="display:none;"
                 >
-
                     <i class="fa-solid fa-shield-halved"></i>
-
                     Admin Dashboard
-
                 </a>
-
-
-
                 <hr>
-
-
-
                 <a href="#" onclick="logout()">
-
                     <i class="fa-solid fa-right-from-bracket"></i>
-
                     Logout
-
                 </a>
-
             </div>
-
         </div>
-
     </div>
-
-
-
    <button id="menu-toggle" class="menu-toggle">
-
     <i class="fa-solid fa-bars"></i>
-
 </button>
-
 </nav>
-
 <div class="mobile-menu" id="mobileMenu">
-
     <div class="mobile-menu-header">
-
         <div class="mobile-profile">
-
             <div class="mobile-avatar">
-
                 <i class="fa-solid fa-user"></i>
-
             </div>
-
             <div>
-
                 <h3 id="mobileUserName">Account</h3>
-
                 <small>Acity Connect</small>
-
             </div>
-
         </div>
-
         <button id="closeMenu" class="close-menu">
-
             <i class="fa-solid fa-xmark"></i>
-
         </button>
-
     </div>
-
     <div class="mobile-links">
-
         <a href="index.html">
-
             <i class="fa-solid fa-house"></i>
-
             Home
-
         </a>
-
         <a href="marketplace.html">
-
             <i class="fa-solid fa-store"></i>
-
             Marketplace
-
         </a>
-
         <a href="services.html">
-
             <i class="fa-solid fa-screwdriver-wrench"></i>
-
             Skills Connect
-
         </a>
-
         <a href="create-service.html">
-
             <i class="fa-solid fa-plus"></i>
-
             Offer Service
-
         </a>
-
         <hr>
-
         <a href="inbox.html">
-
             <i class="fa-solid fa-comments"></i>
-
             Inbox
-
             <small id="mobileMessageCount"></small>
-
         </a>
-
         <a href="notifications.html">
-
             <i class="fa-solid fa-bell"></i>
-
             Notifications
-
             <small id="mobileNotificationCount"></small>
-
         </a>
-
         <a href="myCart.html">
-
             <i class="fa-solid fa-cart-shopping"></i>
-
             My Cart
-
             <small id="mobileCartCount"></small>
-
         </a>
-
         <div class="mobile-theme">
-
     <button
         id="appearanceBtn"
         class="appearance-btn"
     >
-
         <div class="appearance-left">
-
             <i class="fa-solid fa-circle-half-stroke"></i>
-
             <span>Appearance</span>
-
         </div>
-
         <i class="fa-solid fa-chevron-right"></i>
-
     </button>
-
     <div
         id="appearanceMenu"
         class="appearance-menu"
     >
-
         <div
             class="theme-option"
             data-theme="light"
         >
-
             <i class="fa-solid fa-sun"></i>
-
             <span>Light</span>
-
             <i class="fa-solid fa-check check"></i>
-
         </div>
-
         <div
             class="theme-option"
             data-theme="dark"
         >
-
             <i class="fa-solid fa-moon"></i>
-
             <span>Dark</span>
-
             <i class="fa-solid fa-check check"></i>
-
         </div>
-
         <div
             class="theme-option"
             data-theme="system"
         >
-
             <i class="fa-solid fa-desktop"></i>
-
             <span>System</span>
-
             <i class="fa-solid fa-check check"></i>
-
         </div>
-
     </div>
-
 </div>
-
         <a href="profile.html">
-
             <i class="fa-solid fa-user"></i>
-
             Profile
-
         </a>
-
         <a
             href="admin.html"
             id="mobileAdminLink"
             style="display:none;"
         >
-
             <i class="fa-solid fa-shield-halved"></i>
-
             Admin
-
         </a>
-
         <hr>
-
         <a href="#" onclick="logout()">
-
             <i class="fa-solid fa-right-from-bracket"></i>
-
             Logout
-
         </a>
-
     </div>
-
 </div>
-
 <div class="mobile-overlay" id="mobileOverlay"></div>
-
-
     <section class="services-hero">
-
     <div class="hero-content">
-
     <span class="hero-badge">
-
         Services
-
     </span>
-
     <h1>
-
-        
-
         ACITY
-
         <br>
-
         <span>CONNECT.</span>
-
     </h1>
-
     <p>
-
         Find talented Academic City students for
         programming, tutoring, design,
         photography and more.
-
     </p>
-
     </div>
-
     <div class="hero-search">
-
     <i class="fa-solid fa-magnifying-glass"></i>
-
     <input
-
         id="searchService"
-
         placeholder="Search services..."
-
     >
-
     </div>
-
     </section>
-
-    
-        
-
         <section class="mobile-categories">
-
             <button
             class="active"
             data-category="All">
-
             <i class="fa-solid fa-border-all"></i>
-
             <span>All</span>
-
             </button>
-            
             <button data-category="Programming">
-
             <i class="fa-solid fa-code"></i>
-
             <span>Programming</span>
-
             </button>
             <button data-category="Graphic Design">
-
             <i class="fa-solid fa-palette"></i>
-
             <span>Design</span>
-
             </button>
             <button data-category="Tutoring">
-
 <i class="fa-solid fa-graduation-cap"></i>
-
 <span>Tutoring</span>
-
 </button>
-
 <button data-category="Photography">
-
 <i class="fa-solid fa-camera"></i>
-
 <span>Photo</span>
-
 </button>
-            
             <button data-category="Video Editing">
-
 <i class="fa-solid fa-film"></i>
-
 <span>Video</span>
-
 </button>
            <button data-category="Writing">
-
 <i class="fa-solid fa-pen"></i>
-
 <span>Writing</span>
-
 </button>
             <button data-category="Marketing">
-
 <i class="fa-solid fa-bullhorn"></i>
-
 <span>Marketing</span>
-
 </button>
-
         </section>
-    
-
     <h2 class="section-title">
     Student Services
     </h2>
@@ -541,11 +280,8 @@
         id="servicesContainer"
         class="service-grid">
     </div>
-
 <script src="js/toast.js"></script>
 <script src="js/services.js"></script>
 <script type="module" src="js/navbar.js"></script>
-
-
 </body>
 </html>
