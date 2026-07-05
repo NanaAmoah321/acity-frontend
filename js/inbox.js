@@ -41,12 +41,12 @@ async function loadInbox() {
             card.classList.add("conversation-card");
             card.innerHTML = `
 <div class="conversation-avatar">
-    ${msg.conversation_name.charAt(0).toUpperCase()}
+    ${msg.conversation_name?.charAt(0).toUpperCase() || "U"}
 </div>
 <div class="conversation-content">
     <div class="conversation-top">
         <span class="conversation-name">
-            ${msg.conversation_name}
+            ${msg.conversation_name || "Conversation"}
         </span>
         <span class="conversation-time">
             ${new Date(msg.created_at).toLocaleTimeString([],{
@@ -129,7 +129,7 @@ header.innerHTML = `
 
     <div class="conversation-avatar">
 
-        ${conversationName.charAt(0).toUpperCase()}
+        ${(conversationName || "U").charAt(0).toUpperCase()}
 
     </div>
 
@@ -137,7 +137,7 @@ header.innerHTML = `
 
         <h3>
 
-            ${conversationName}
+            ${conversationName || "Conversation"}
 
         </h3>
 
@@ -258,7 +258,7 @@ else if(service){
     );
 
 }
-    renderConversationContext();
+    
     renderConversation(messages);
 }
 function renderConversation(messages){
@@ -429,6 +429,9 @@ loadInbox().then(() => {
     localStorage.getItem("openConversationName");
 
     if(userId){
+
+        console.log("openConversationWith:", userId);
+        console.log("Number:", Number(userId));
 
         openConversation(
 

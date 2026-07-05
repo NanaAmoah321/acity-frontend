@@ -93,6 +93,7 @@ function displayServices() {
         return;
     }
     filteredServices.forEach(service => {
+        console.log(service);
         const card =
         document.createElement("div");
         card.classList.add("service-card");
@@ -135,7 +136,7 @@ function displayServices() {
         <button
             class="btn btn-secondary"
             onclick="messageProvider(
-                ${service.provider_id},
+                ${service.user_id},
                 '${service.provider_name}',
                 ${service.id},
                 '${service.title.replace(/'/g,"\\'")}',
@@ -161,6 +162,12 @@ function messageProvider(
     serviceCategory,
     serviceImage
 ){
+
+    console.log({
+    providerId,
+    providerName,
+    serviceId
+    });
 
     localStorage.removeItem(
         "conversationListing"

@@ -38,6 +38,7 @@ nav{
 .nav-left{
     display:flex;
     align-items:center;
+    flex:0 0 auto;
 }
 .logo{
     display:flex;
@@ -58,21 +59,37 @@ nav{
     font-size:.95rem;
 }
 .nav-center{
+    flex:1;
     display:flex;
+    justify-content:center;
     align-items:center;
-    flex-shrink:0;
-    gap:10px;
+    gap:8px;
+    min-width:0;
 }
 .nav-item{
+    flex:1;
+    min-width:0;
+
     display:flex;
     align-items:center;
-    gap:10px;
-    padding:12px 18px;
+    justify-content:center;
+    gap:8px;
+
+    padding:12px 10px;
+
     border-radius:14px;
+
     color:var(--text-light);
+
     font-weight:600;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
     transition:.25s;
-    position:relative;
 }
 .nav-item:hover{
     background:var(--surface-2);
@@ -85,24 +102,42 @@ nav{
 .nav-item i{
     font-size:18px;
 }
+.nav-item span{
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
 .nav-right{
     display:flex;
     align-items:center;
-    gap:14px;
-    
     justify-content:flex-end;
-    
+    gap:10px;
+
+    flex:0 1 auto;
+    min-width:0;
 }
 .search-box{
-    width:420px;
+    flex:1;
+
+    max-width:320px;
+
+    min-width:140px;
+
     height:48px;
+
     display:flex;
+
     align-items:center;
+
     gap:12px;
+
     padding:0 18px;
+
     background:var(--background);
+
     border:1px solid var(--border);
+
     border-radius:999px;
+
     transition:.25s;
 }
 .search-box:focus-within{
@@ -162,16 +197,28 @@ nav{
 }
 #profileToggle{
     height:48px;
-    padding:0 18px;
+
+    padding:0 14px;
+
     border:none;
+
     background:var(--surface);
+
     border-radius:999px;
+
     border:1px solid var(--border);
+
     display:flex;
+
     align-items:center;
-    gap:10px;
+
+    gap:8px;
+
     cursor:pointer;
+
     font-weight:600;
+
+    white-space:nowrap;
 }
 #profileToggle:hover{
     box-shadow:0 8px 20px rgba(0,0,0,.08);
@@ -474,7 +521,7 @@ nav{
 /* Large laptops/desktops */
 @media (max-width:1400px){
     .search-box{
-        width:360px;
+        width:350px;
     }
 }
 
