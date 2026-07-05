@@ -53,7 +53,7 @@ function renderStore(){
         <div class="store-actions">
             <button
                 class="message-btn"
-                onclick="messageSeller(${store.seller.id})"
+                onclick="messageSeller(${store.seller.id}, '${store.seller.seller_name}')"
             >
                 <i class="fa-solid fa-comments"></i>
                 Message Seller
@@ -338,11 +338,21 @@ async function addToCart(listingId) {
         console.error(err);
     }
 }
-function messageSeller(userId) {
+function messageSeller(userId, userName){
+
+    localStorage.removeItem("conversationListing");
+
     localStorage.setItem(
         "openConversationWith",
         userId
     );
+
+    localStorage.setItem(
+        "openConversationName",
+        userName
+    );
+
     window.location.href =
         "inbox.html";
+
 }

@@ -1,3 +1,7 @@
+console.log(
+    JSON.parse(localStorage.getItem("conversationListing"))
+);
+
 const conversationList =
 document.getElementById("conversationList");
 async function loadInbox() {
@@ -60,13 +64,23 @@ async function loadInbox() {
 </div>
 `;
 card.onclick = () => {
-    openConversation(msg.conversation_user_id);
+
+    openConversation(
+
+        msg.conversation_user_id,
+
+        msg.conversation_name
+
+    );
+
     if(window.innerWidth <= 900){
+
         document.querySelector(".conversation-sidebar").style.display = "none";
+
         document.querySelector(".chat-area").classList.add("active");
-        /*document.getElementById("chatPanel").style.display = "flex";
-        document.getElementById("emptyChat").style.display = "none";*/
+
     }
+
 };
             conversationList.appendChild(card);
         });
@@ -79,7 +93,7 @@ card.onclick = () => {
 }*/
 let activeUserId = null;
 let selectedAttachment = null;
-async function openConversation(userId){
+async function openConversation(userId, conversationName){
     ("Opening conversation with", userId);
     activeUserId = userId;
     const token = localStorage.getItem("token");
@@ -102,6 +116,7 @@ async function openConversation(userId){
     (messages);
     const header =
 document.getElementById("chatHeader");
+
 header.innerHTML = `
 <button
     class="back-btn"
@@ -109,20 +124,141 @@ header.innerHTML = `
 >
     <i class="fa-solid fa-arrow-left"></i>
 </button>
+
 <div class="chat-user">
+
     <div class="conversation-avatar">
-        ${messages[0]?.sender_name?.charAt(0) || "U"}
+
+        ${conversationName.charAt(0).toUpperCase()}
+
     </div>
+
     <div>
+
         <h3>
-            ${messages[0]?.sender_name || "Conversation"}
+
+            ${conversationName}
+
         </h3>
+
         <small>
+
             Active conversation
+
         </small>
+
     </div>
+
 </div>
 `;
+
+const context =
+document.getElementById("conversationContext");
+
+const listing =
+JSON.parse(
+    localStorage.getItem("conversationListing")
+);
+
+const service =
+JSON.parse(
+    localStorage.getItem("conversationService")
+);
+
+context.style.display = "none";
+context.innerHTML = "";
+
+if(listing){
+
+    context.style.display = "block";
+
+    context.innerHTML = `
+
+        <div class="context-card">
+
+            <img
+                class="context-image"
+                src="${listing.image || `images/${listing.category}.jpg`}"
+                onerror="this.src='images/Other.jpg'"
+            >
+
+            <div class="context-info">
+
+                <div class="context-type">
+
+                    Marketplace Item
+
+                </div>
+
+                <div class="context-title">
+
+                    ${listing.title}
+
+                </div>
+
+                <div class="context-subtitle">
+
+                    GH₵${listing.price}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    `;
+
+    localStorage.removeItem(
+        "conversationListing"
+    );
+
+}
+else if(service){
+
+    context.style.display = "block";
+
+    context.innerHTML = `
+
+        <div class="context-card">
+
+            <div class="context-image">
+
+                <i class="fa-solid fa-briefcase"></i>
+
+            </div>
+
+            <div class="context-info">
+
+                <div class="context-type">
+
+                    Service
+
+                </div>
+
+                <div class="context-title">
+
+                    ${service.title}
+
+                </div>
+
+                <div class="context-subtitle">
+
+                    ${service.category}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    `;
+
+    localStorage.removeItem(
+        "conversationService"
+    );
+
+}
+    renderConversationContext();
     renderConversation(messages);
 }
 function renderConversation(messages){
@@ -257,12 +393,7 @@ async function sendMessage(e){
         activeUserId
     );
 }
-/*function backToInbox(){
-    if(window.innerWidth <= 900){
-        document.querySelector(".conversation-sidebar").style.display = "block";
-        document.querySelector(".chat-area").style.display = "none";
-    }
-}*/
+
 function backToInbox(){
     document.querySelector(".chat-area").classList.remove("active");
     document.querySelector(".conversation-sidebar").style.display = "block";
@@ -290,20 +421,43 @@ attachmentInput.addEventListener(
     }
 );
 loadInbox().then(() => {
+
     const userId =
     localStorage.getItem("openConversationWith");
+
+    const conversationName =
+    localStorage.getItem("openConversationName");
+
     if(userId){
-        openConversation(Number(userId));
+
+        openConversation(
+
+            Number(userId),
+
+            conversationName
+
+        );
+
         localStorage.removeItem(
             "openConversationWith"
         );
+
+        localStorage.removeItem(
+            "openConversationName"
+        );
+
         if(window.innerWidth <= 900){
+
             document.querySelector(
                 ".conversation-sidebar"
             ).style.display = "none";
+
             document.querySelector(
                 ".chat-area"
             ).classList.add("active");
+
         }
+
     }
+
 });

@@ -37,6 +37,7 @@ document.getElementById(
         return;
     }
     container.innerHTML = "";
+    console.log(items);
   items.forEach(item => {
     const div = document.createElement("div");
     div.classList.add("cart-card");
@@ -93,6 +94,24 @@ document.getElementById(
         <i class="fa-solid fa-credit-card"></i>
         Checkout
     </button>
+
+    <button
+        class="message-btn"
+        onclick="messageSeller(
+            ${item.seller_id},
+            '${item.seller_name}',
+            ${item.id},
+            '${item.title.replace(/'/g,"\\'")}',
+            ${item.price},
+            '${item.image_url || ""}',
+            '${item.category}',
+            '${item.status}'
+        )"
+    >
+        <i class="fa-solid fa-comments"></i>
+        Message Seller
+    </button>
+
     <button
         class="remove-btn"
         onclick="removeFromCart(${item.id})"
@@ -307,18 +326,90 @@ document
         }
     }
 );
+
 function closeCheckout() {
     document
         .getElementById("checkoutModal")
         .style.display = "none";
 }
-function messageSeller(userId) {
+
+
+function messageSeller(
+
+
+
+    userId,
+
+    userName,
+
+    listingId,
+
+    title,
+
+    price,
+
+    image,
+
+    category,
+
+    status
+
+){
+
     localStorage.setItem(
+
         "openConversationWith",
+
         userId
+
     );
+
+    localStorage.setItem(
+
+        "openConversationName",
+
+        userName
+
+    );
+
+    localStorage.setItem(
+
+        "conversationListing",
+
+        JSON.stringify({
+
+            id: listingId,
+
+            title,
+
+            price,
+
+            image,
+
+            category,
+
+            status
+
+        })
+
+    );
+
+    console.log({
+    userId,
+    userName,
+    listingId,
+    title,
+    price,
+    image,
+    category,
+    status
+
+   });
+
     window.location.href =
-    "inbox.html";
+
+        "inbox.html";
+
 }
 async function placeOrder() {
     const token = localStorage.getItem("token");

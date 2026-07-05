@@ -429,7 +429,7 @@ async function loadSellerOrders() {
         }
         <button
             class="message-btn"
-            onclick="messageSeller(${order.buyer_id})"
+            onclick="messageSeller(${order.buyer_id}, '${order.buyer_name}')"
         >
             <i class="fa-solid fa-comments"></i>
             Message
@@ -496,13 +496,21 @@ async function rejectOrder(orderId) {
     loadSellerOrders();
     loadListings();
 }
-function messageSeller(userId){
+function messageSeller(userId, userName){
+
     localStorage.setItem(
         "openConversationWith",
         userId
     );
+
+    localStorage.setItem(
+        "openConversationName",
+        userName
+    );
+
     window.location.href =
-        "inbox.html";
+    "inbox.html";
+
 }
 function openEditProfile(){
     document.getElementById(

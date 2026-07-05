@@ -134,7 +134,14 @@ function displayServices() {
     <div class="service-actions">
         <button
             class="btn btn-secondary"
-            onclick="messageProvider(${service.user_id})"
+            onclick="messageProvider(
+                ${service.provider_id},
+                '${service.provider_name}',
+                ${service.id},
+                '${service.title.replace(/'/g,"\\'")}',
+                '${service.category}',
+                '${service.image_url || ""}'
+            )"
         >
             Message
         </button>
@@ -146,13 +153,47 @@ function displayServices() {
         );
     });
 }
-function messageProvider(userId) {
+function messageProvider(
+    providerId,
+    providerName,
+    serviceId,
+    serviceTitle,
+    serviceCategory,
+    serviceImage
+){
+
+    localStorage.removeItem(
+        "conversationListing"
+    );
+
+    localStorage.setItem(
+        "conversationService",
+        JSON.stringify({
+
+            id: serviceId,
+
+            title: serviceTitle,
+
+            category: serviceCategory,
+
+            image: serviceImage
+
+        })
+    );
+
     localStorage.setItem(
         "openConversationWith",
-        userId
+        providerId
     );
+
+    localStorage.setItem(
+        "openConversationName",
+        providerName
+    );
+
     window.location.href =
-    "inbox.html";
+        "inbox.html";
+
 }
 function viewService(id) {
     window.location.href =
