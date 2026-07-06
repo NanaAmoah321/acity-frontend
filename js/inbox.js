@@ -19,6 +19,17 @@ if(currentUser){
 
 }
 
+
+const reviewModal =
+document.getElementById(
+    "reviewModal"
+);
+
+const closeReview =
+document.getElementById(
+    "closeReview"
+);
+
 const conversationList =
 document.getElementById("conversationList");
 
@@ -155,11 +166,11 @@ card.onclick = () => {
         console.error(err);
     }
 }
-/*function openConversation(userId, conversation){
-    ("Open:", userId);
-}*/
+
 let activeUserId = null;
 let selectedAttachment = null;
+
+
 async function openConversation(userId, conversationName){
     ("Opening conversation with", userId);
     activeUserId = userId;
@@ -185,39 +196,50 @@ async function openConversation(userId, conversationName){
 document.getElementById("chatHeader");
 
 header.innerHTML = `
-<button
-    class="back-btn"
-    onclick="backToInbox()"
->
-    <i class="fa-solid fa-arrow-left"></i>
-</button>
-
 <div class="chat-user">
 
+    <button
+        class="back-btn"
+        onclick="backToInbox()"
+    >
+        <i class="fa-solid fa-arrow-left"></i>
+    </button>
+
     <div class="conversation-avatar">
-
-        ${(conversationName || "U").charAt(0).toUpperCase()}
-
+        ${conversationName.charAt(0).toUpperCase()}
     </div>
 
     <div>
 
-        <h3>
+        <h3>${conversationName}</h3>
 
-            ${conversationName || "Conversation"}
-
-        </h3>
-
-        <small>
-
-            Active conversation
-
-        </small>
+        <small>Active conversation</small>
 
     </div>
 
 </div>
+
+<button
+    id="reviewBtn"
+    class="btn btn-outline btn-sm"
+>
+    <i class="fa-solid fa-star"></i>
+    Leave Review
+</button>
 `;
+
+document
+.getElementById("reviewBtn")
+.addEventListener(
+    "click",
+    ()=>{
+
+        reviewModal.classList.add(
+            "active"
+        );
+
+    }
+);
 
 const context =
 document.getElementById("conversationContext");
@@ -325,7 +347,10 @@ else if(service){
     );
 
 }
-    
+    reviewBtn.style.display =
+    "inline-flex";
+
+
     renderConversation(messages);
     const container =
     document.getElementById(
@@ -600,6 +625,85 @@ socket.on(
 
             container.scrollTop =
             container.scrollHeight;
+
+        }
+
+    }
+);
+
+
+
+closeReview.addEventListener(
+    "click",
+    ()=>{
+
+        reviewModal.classList.remove(
+            "active"
+        );
+
+    }
+);
+
+document
+.getElementById("submitReview")
+.addEventListener(
+    "click",
+    async ()=>{
+
+        const token =
+        localStorage.getItem("token");
+
+        const rating =
+        document.getElementById(
+            "rating"
+        ).value;
+
+        const comment =
+        document.getElementById(
+            "reviewComment"
+        ).value;
+
+        const res =
+        await fetch(
+            "https://acity-backend.onrender.com/api/reviews",
+            {
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json",
+                    Authorization:`Bearer ${token}`
+                },
+                body:JSON.stringify({
+
+                    reviewed_user_id:
+                    activeUserId,
+
+                    rating,
+
+                    comment
+
+                })
+            }
+        );
+
+        const data =
+        await res.json();
+
+        if(res.ok){
+
+            showToast(
+                "Review submitted"
+            );
+
+            reviewModal.classList.remove(
+                "active"
+            );
+
+        }else{
+
+            showToast(
+                data.error,
+                "error"
+            );
 
         }
 
