@@ -10,10 +10,14 @@ JSON.parse(
     localStorage.getItem("user")
 );
 
-socket.emit(
-    "join",
-    currentUser.id
-);
+if(currentUser){
+
+    socket.emit(
+        "join",
+        currentUser.id
+    );
+
+}
 
 const conversationList =
 document.getElementById("conversationList");
@@ -273,6 +277,85 @@ else if(service){
 }
     
     renderConversation(messages);
+    const container =
+    document.getElementById(
+        "messagesContainer"
+    );
+
+    container.scrollTop =
+    container.scrollHeight;
+}
+
+function createMessageBubble(message){
+
+    const bubble =
+    document.createElement("div");
+
+    bubble.dataset.messageId =
+    message.id;
+
+    bubble.className =
+        `message ${
+            message.sender_id ==
+            currentUser.id
+            ? "sent"
+            : "received"
+        }`;
+
+    bubble.innerHTML = `
+        
+            ${
+                message.message?.trim()
+                ?
+                `<div>${message.message}</div>`
+                :
+                ""
+            }
+        
+
+        ${
+            message.file_url
+            ?
+            message.file_type &&
+            message.file_type.startsWith("image/")
+            ?
+            `
+            <img
+                src="${message.file_url}"
+                class="chat-image"
+            >
+            `
+            :
+            `
+            <a
+                href="${message.file_url}"
+                target="_blank"
+                class="chat-file"
+            >
+                <i class="fa-solid fa-file"></i>
+                ${message.file_name}
+            </a>
+            `
+            :
+            ""
+        }
+
+        <span class="message-time">
+
+            ${new Date(message.created_at)
+            .toLocaleTimeString([],{
+
+                hour:"2-digit",
+
+                minute:"2-digit"
+
+            })}
+
+        </span>
+    `;
+
+    return bubble;
+
 }
 function renderConversation(messages){
     const container =
@@ -290,66 +373,21 @@ function renderConversation(messages){
         return;
     }
     messages.forEach(message=>{
-        const bubble =
-        document.createElement("div");
-        bubble.className =
-            `message ${
-                message.sender_id ==
-                JSON.parse(localStorage.getItem("user")).id
-                ?
-                "sent"
-                :
-                "received"
-            }`;
-        bubble.innerHTML = `
-    ${
-        message.message
-        ?
-        `<div>${message.message}</div>`
-        :
-        ""
-    }
-    ${
-        message.file_url
-        ?
-        message.file_type.startsWith("image/")
-        ?
-        `
-        <img
-            src="${message.file_url}"
-            class="chat-image"
-        >
-        `
-        :
-        `
-        <a
-            href="${message.file_url}"
-            target="_blank"
-            class="chat-file"
-        >
-            <i class="fa-solid fa-file"></i>
-            ${message.file_name}
-        </a>
-        `
-        :
-        ""
-    }
-    <span class="message-time">
-        ${new Date(message.created_at)
-        .toLocaleTimeString([],{
-            hour:"2-digit",
-            minute:"2-digit"
-        })}
-    </span>
-`;
-        container.appendChild(bubble);
+
+    container.appendChild(
+        createMessageBubble(message)
+    );
+
     });
-    container.scrollTop =
-    container.scrollHeight;
 }
+
+
+
+
 document
 .getElementById("messageForm")
 .addEventListener("submit",sendMessage);
+
 async function sendMessage(e){
     e.preventDefault();
     const input =
@@ -494,42 +532,16 @@ socket.on(
                 "messagesContainer"
             );
 
-            const bubble =
-            document.createElement("div");
-
-            bubble.className =
-            `message ${
-                message.sender_id ==
-                currentUser.id
-                ? "sent"
-                : "received"
-            }`;
-
-            bubble.innerHTML = `
-                ${
-                    message.message
-                    ?
-                    `<div>${message.message}</div>`
-                    :
-                    ""
-                }
-
-                <span class="message-time">
-
-                    ${new Date(message.created_at)
-                    .toLocaleTimeString([],{
-
-                        hour:"2-digit",
-
-                        minute:"2-digit"
-
-                    })}
-
-                </span>
-            `;
+            if(
+                document.querySelector(
+                    `[data-message-id="${message.id}"]`
+                )
+            ){
+                return;
+            }
 
             container.appendChild(
-                bubble
+                createMessageBubble(message)
             );
 
             container.scrollTop =
