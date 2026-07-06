@@ -180,46 +180,100 @@ div.innerHTML = `
   }
 }
 loadMyItems();
+
 async function deleteItem(id){
-    const token = localStorage.getItem("token");
-    if(!confirm("Delete this listing?")){
-        return;
-    }
-    const res = await fetch(
-        `https://acity-backend.onrender.com/api/listings/${id}`,
-        {
-            method:"DELETE",
-            headers:{
-                Authorization:`Bearer ${token}`
+
+    showConfirmModal({
+
+        title:"Delete Listing",
+
+        message:"This listing will be permanently deleted.",
+
+        icon:"fa-trash",
+
+        confirmText:"Delete",
+
+        confirmClass:"btn-danger",
+
+        onConfirm: async ()=>{
+
+            const token = localStorage.getItem("token");
+
+            const res = await fetch(
+                `https://acity-backend.onrender.com/api/listings/${id}`,
+                {
+                    method:"DELETE",
+                    headers:{
+                        Authorization:`Bearer ${token}`
+                    }
+                }
+            );
+
+            const data = await res.json();
+
+            if(res.ok){
+
+                showToast("Listing deleted.");
+
+                loadMyItems();
+
+            }else{
+
+                showToast(data.message || data.error);
+
             }
+
         }
-    );
-    const data = await res.json();
-    if(res.ok){
-        showToast("Listing deleted.");
-        loadMyItems();
-    }else{
-        showToast(data.message || data.error);
-    }
+
+    });
+
 }
 async function markSold(id){
-    const token = localStorage.getItem("token");
-    const res = await fetch(
-        `https://acity-backend.onrender.com/api/listings/${id}/sold`,
-        {
-            method:"PUT",
-            headers:{
-                Authorization:`Bearer ${token}`
+
+    showConfirmModal({
+
+        title:"Mark as Sold",
+
+        message:"This listing will no longer be available for purchase.",
+
+        icon:"fa-check",
+
+        confirmText:"Mark Sold",
+
+        confirmClass:"btn-success",
+
+        onConfirm: async ()=>{
+
+            const token = localStorage.getItem("token");
+
+            const res = await fetch(
+                `https://acity-backend.onrender.com/api/listings/${id}/sold`,
+                {
+                    method:"PUT",
+                    headers:{
+                        Authorization:`Bearer ${token}`
+                    }
+                }
+            );
+
+            const data = await res.json();
+
+            if(res.ok){
+
+                showToast("Listing marked as sold.");
+
+                loadMyItems();
+
+            }else{
+
+                showToast(data.message || data.error);
+
             }
+
         }
-    );
-    const data = await res.json();
-    if(res.ok){
-        showToast("Listing marked as sold.");
-        loadMyItems();
-    }else{
-        showToast(data.message || data.error);
-    }
+
+    });
+
 }
 async function editItem(id) {
   const token = localStorage.getItem("token");
@@ -440,61 +494,95 @@ async function loadSellerOrders() {
     });
 }
 loadSellerOrders();
-async function acceptOrder(orderId) {
-    const token =
-    localStorage.getItem(
-        "token"
-    );
-    const res =
-    await fetch(
-        `https://acity-backend.onrender.com/api/listings/orders/${orderId}`,
-        {
-            method: "PUT",
-            headers: {
-                "Content-Type":
-                "application/json",
-                Authorization:
-                `Bearer ${token}`
-            },
-            body: JSON.stringify({
-                status:
-                "accepted"
-            })
+async function acceptOrder(orderId){
+
+    showConfirmModal({
+
+        title:"Accept Order",
+
+        message:"Accept this customer's order?",
+
+        icon:"fa-check",
+
+        confirmText:"Accept",
+
+        confirmClass:"btn-success",
+
+        onConfirm: async ()=>{
+
+            const token = localStorage.getItem("token");
+
+            const res = await fetch(
+                `https://acity-backend.onrender.com/api/listings/orders/${orderId}`,
+                {
+                    method:"PUT",
+                    headers:{
+                        "Content-Type":"application/json",
+                        Authorization:`Bearer ${token}`
+                    },
+                    body:JSON.stringify({
+                        status:"accepted"
+                    })
+                }
+            );
+
+            const data = await res.json();
+
+            showToast(data.message);
+
+            loadSellerOrders();
+
+            loadListings();
+
         }
-    );
-    const data =
-    await res.json();
-    showToast(data.message);
-    loadSellerOrders();
-    loadListings();
+
+    });
+
 }
-async function rejectOrder(orderId) {
-    const token =
-    localStorage.getItem(
-        "token"
-    );
-    const res =
-    await fetch(
-        `https://acity-backend.onrender.com/api/listings/orders/${orderId}`,
-        {
-            method: "PUT",
-            headers: {
-                "Content-Type":
-                "application/json",
-                Authorization:
-                `Bearer ${token}`
-            },
-            body: JSON.stringify({
-                status:
-                "rejected"
-            })
+async function rejectOrder(orderId){
+
+    showConfirmModal({
+
+        title:"Reject Order",
+
+        message:"Reject this customer's order?",
+
+        icon:"fa-xmark",
+
+        confirmText:"Reject",
+
+        confirmClass:"btn-danger",
+
+        onConfirm: async ()=>{
+
+            const token = localStorage.getItem("token");
+
+            const res = await fetch(
+                `https://acity-backend.onrender.com/api/listings/orders/${orderId}`,
+                {
+                    method:"PUT",
+                    headers:{
+                        "Content-Type":"application/json",
+                        Authorization:`Bearer ${token}`
+                    },
+                    body:JSON.stringify({
+                        status:"rejected"
+                    })
+                }
+            );
+
+            const data = await res.json();
+
+            showToast(data.message);
+
+            loadSellerOrders();
+
+            loadListings();
+
         }
-    );
-    const data =
-    await res.json();
-    showToast(data.message);
-    loadSellerOrders();
-    loadListings();
+
+    });
+
 }
 function messageSeller(userId, userName){
 

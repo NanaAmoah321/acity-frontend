@@ -278,6 +278,7 @@
     width:100%;
     border-radius:30px;
     box-shadow:var(--shadow);
+    margin:auto;
 }
 .demo-section{
     padding:100px 0;

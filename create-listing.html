@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/navbar.css">
     <link rel="stylesheet" href="css/buttons.css">
     <link rel="stylesheet" href="css/forms.css">
+    <link rel="stylesheet" href="css/modal.css">
     <link rel="stylesheet" href="css/create-listing.css">
     <link
     rel="stylesheet"
@@ -336,7 +337,55 @@
             </form>
     </div>
     </section>
+
+    <div id="confirmModal" class="modal-overlay">
+
+    <div class="modal">
+
+        <div class="modal-icon">
+
+            <i
+                id="modalIcon"
+                class="fa-solid fa-triangle-exclamation"
+            ></i>
+
+        </div>
+
+        <h2 id="modalTitle">
+
+            Confirm Action
+
+        </h2>
+
+        <p id="modalMessage">
+
+            Are you sure you want to continue?
+
+        </p>
+
+        <div class="modal-actions">
+
+            <button
+                id="modalCancel"
+                class="btn btn-secondary"
+            >
+                Cancel
+            </button>
+
+            <button
+                id="modalConfirm"
+                class="btn btn-danger"
+            >
+                Confirm
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
     <script src="js/toast.js"></script>
+    <script src="js/modal.js"></script>
     <script src="js/create-listing.js"></script>
     <script type="module" src="js/navbar.js"></script>
 </body>

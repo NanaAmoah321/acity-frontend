@@ -124,20 +124,46 @@ document.getElementById(
     container.appendChild(div);
   });
 }
-async function removeFromCart(listingId) {
-  const token = localStorage.getItem("token");
-  if (confirm("Remove this item from cart?")) {
-    const res = await fetch(`https://acity-backend.onrender.com/api/listings/cart/${listingId}`, {
-      method: "DELETE",
-      headers: {
-        "Authorization": `Bearer ${token}`     
-      }
+async function removeFromCart(listingId){
+
+    showConfirmModal({
+
+        title:"Remove Item",
+
+        message:"Remove this item from your cart?",
+
+        icon:"fa-cart-shopping",
+
+        confirmText:"Remove",
+
+        confirmClass:"btn-danger",
+
+        onConfirm: async ()=>{
+
+            const token = localStorage.getItem("token");
+
+            const res = await fetch(
+                `https://acity-backend.onrender.com/api/listings/cart/${listingId}`,
+                {
+                    method:"DELETE",
+                    headers:{
+                        Authorization:`Bearer ${token}`
+                    }
+                }
+            );
+
+            const data = await res.json();
+
+            showToast(data.message || data.error);
+
+            loadInterested();
+
+            loadCartCount();
+
+        }
+
     });
-    const data = await res.json();
-    showToast(data.message || data.error);
-    loadInterested(); 
-    loadCartCount();
-  }
+
 }
 function getStatusText(status) {
   if (status === "available") return "Pending (waiting for seller)";
@@ -148,6 +174,7 @@ function getStatusText(status) {
 let selectedItem = null;
 let checkoutAllMode = false;
 function checkoutItem(id) {
+    
     checkoutAllMode = false;
     const item =
     currentItems.find(

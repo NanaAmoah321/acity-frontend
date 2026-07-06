@@ -65,9 +65,13 @@
     transform:translateY(-50%);
     color:var(--text-light);
 }
-.input-group input,
+
 .input-group select{
     padding-left:48px;
+}
+.input-group input{
+    width:100%;
+    padding:14px 56px 14px 48px;
 }
 .upload-box{
     border:2px dashed var(--border);

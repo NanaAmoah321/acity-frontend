@@ -17,10 +17,13 @@
     text-decoration:none;
 }
 .btn-primary{
-    box-shadow:
-    0 15px 35px rgba(239,68,68,.25);
+    background:var(--primary);
+    color:white;
+    box-shadow:0 15px 35px rgba(239,68,68,.25);
 }
 .btn-primary:hover{
+    background:var(--primary-hover);
+    color:white;
     transform:translateY(-3px);
 }
 .btn-secondary{

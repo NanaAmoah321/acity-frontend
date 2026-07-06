@@ -521,7 +521,7 @@ nav{
 /* Large laptops/desktops */
 @media (max-width:1400px){
     .search-box{
-        width:350px;
+        width:360px;
     }
 }
 

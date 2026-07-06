@@ -1,6 +1,19 @@
 console.log(
     JSON.parse(localStorage.getItem("conversationListing"))
 );
+const socket = io(
+    "https://acity-backend.onrender.com"
+);
+
+const currentUser =
+JSON.parse(
+    localStorage.getItem("user")
+);
+
+socket.emit(
+    "join",
+    currentUser.id
+);
 
 const conversationList =
 document.getElementById("conversationList");
@@ -389,9 +402,7 @@ async function sendMessage(e){
     document.getElementById(
         "attachmentInput"
     ).value = "";
-    openConversation(
-        activeUserId
-    );
+    
 }
 
 function backToInbox(){
@@ -464,3 +475,67 @@ loadInbox().then(() => {
     }
 
 });
+socket.on(
+    "new_message",
+    (message)=>{
+
+        loadInbox();
+
+        if(
+            activeUserId &&
+            (
+                message.sender_id == activeUserId ||
+                message.receiver_id == activeUserId
+            )
+        ){
+
+            const container =
+            document.getElementById(
+                "messagesContainer"
+            );
+
+            const bubble =
+            document.createElement("div");
+
+            bubble.className =
+            `message ${
+                message.sender_id ==
+                currentUser.id
+                ? "sent"
+                : "received"
+            }`;
+
+            bubble.innerHTML = `
+                ${
+                    message.message
+                    ?
+                    `<div>${message.message}</div>`
+                    :
+                    ""
+                }
+
+                <span class="message-time">
+
+                    ${new Date(message.created_at)
+                    .toLocaleTimeString([],{
+
+                        hour:"2-digit",
+
+                        minute:"2-digit"
+
+                    })}
+
+                </span>
+            `;
+
+            container.appendChild(
+                bubble
+            );
+
+            container.scrollTop =
+            container.scrollHeight;
+
+        }
+
+    }
+);

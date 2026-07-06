@@ -395,8 +395,10 @@ RESPONSIVE
     background:var(--primary);
     color:white;
 }
+
 .checkout-btn:hover{
-    background:var(--primary-dark);
+    background:var(--primary-hover);
+    color:white;
 }
 .cancel-btn{
     background:transparent;
@@ -595,4 +597,75 @@ RESPONSIVE
     color:var(--text-light);
     font-size:14px;
     line-height:1.5;
+}
+
+.empty-state{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:14px;
+    padding:80px 20px;
+    text-align:center;
+    color:var(--text-muted);
+}
+.empty-state i{
+    font-size:60px;
+    color:var(--primary);
+    opacity:.8;
+}
+.empty-state h3{
+    color:var(--text);
+    font-size:1.8rem;
+    margin:0;
+}
+.empty-state p{
+    margin:0;
+    font-size:1rem;
+}
+.empty-state small{
+    max-width:420px;
+    line-height:1.6;
+    color:var(--text-muted);
+}
+
+.skeleton-card{
+    flex:0 0 300px;
+    height:360px;
+    border-radius:24px;
+    overflow:hidden;
+    background:var(--surface);
+    box-shadow:var(--shadow);
+}
+.skeleton{
+    animation:loading 1.3s infinite alternate;
+    background:#ececec;
+}
+.skeleton-title{
+    width:75%;
+    height:18px;
+    border-radius:8px;
+    margin:18px;
+}
+.skeleton-price{
+    width:40%;
+    height:18px;
+    border-radius:8px;
+    margin:18px;
+}
+.skeleton-pill{
+    width:90px;
+    height:28px;
+    border-radius:999px;
+    margin:18px;
+}
+.skeleton-store{
+    width:90px;
+    height:16px;
+    border-radius:8px;
+}
+.skeleton-circle{
+    width:36px;
+    height:36px;
+    border-radius:50%;
 }

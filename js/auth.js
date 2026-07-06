@@ -79,10 +79,30 @@ if (registerForm) {
 });
 }
 function logout() {
+  showConfirmModal({
+
+    title:"Logout",
+
+    message:"Are you sure you want to log out?",
+
+    icon:"fa-right-from-bracket",
+
+    confirmText:"Logout",
+
+    confirmClass:"btn-primary",
+
+    onConfirm:()=>{
+
+        logout();
+
+    }
+
+    });  
   localStorage.removeItem("token");
   localStorage.removeItem("user");
   window.location.href = "login.html";
 }
+
 const userData = localStorage.getItem("user");
 if (userData) {
   const user = JSON.parse(userData);
