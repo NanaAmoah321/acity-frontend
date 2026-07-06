@@ -21,6 +21,54 @@ if(currentUser){
 
 const conversationList =
 document.getElementById("conversationList");
+
+function updateConversationCard(message){
+
+    const otherUserId =
+    message.sender_id == currentUser.id
+        ? message.receiver_id
+        : message.sender_id;
+
+    const card =
+    document.querySelector(
+        `.conversation-card[data-user-id="${otherUserId}"]`
+    );
+
+    if(!card){
+
+        loadInbox();
+        return;
+
+    }
+
+    const preview =
+    card.querySelector(
+        ".conversation-preview"
+    );
+
+    preview.textContent =
+    message.message ||
+    "Attachment";
+
+    const time =
+    card.querySelector(
+        ".conversation-time"
+    );
+
+    time.textContent =
+    new Date(message.created_at)
+    .toLocaleTimeString([],{
+
+        hour:"2-digit",
+
+        minute:"2-digit"
+
+    });
+
+    conversationList.prepend(card);
+
+}
+
 async function loadInbox() {
     const token = localStorage.getItem("token");
     try {
@@ -55,6 +103,8 @@ async function loadInbox() {
             (msg);
             const card =
                 document.createElement("div");
+            card.dataset.userId =
+            msg.conversation_user_id;
             card.classList.add("conversation-card");
             card.innerHTML = `
 <div class="conversation-avatar">
@@ -469,6 +519,8 @@ attachmentInput.addEventListener(
         }
     }
 );
+
+
 loadInbox().then(() => {
 
     const userId =
@@ -517,7 +569,9 @@ socket.on(
     "new_message",
     (message)=>{
 
-        loadInbox();
+        updateConversationCard(
+            message
+        );
 
         if(
             activeUserId &&
