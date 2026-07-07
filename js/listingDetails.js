@@ -60,6 +60,7 @@ function renderStore(){
             </button>
             <button
                 class="follow-btn"
+                id="followBtn"
             >
                 <i class="fa-regular fa-bookmark"></i>
                 Follow Store
@@ -168,6 +169,135 @@ function renderStore(){
 `;
 renderProducts(store.products);
 setupStoreFilters();
+setupFollowButton();
+
+async function setupFollowButton(){
+
+    const button =
+    document.getElementById(
+        "followBtn"
+    );
+
+    const token =
+localStorage.getItem(
+    "token"
+);
+
+if(!token){
+
+    return;
+
+}
+
+const statusRes =
+await fetch(
+
+    `https://acity-backend.onrender.com/api/follow/${store.seller.id}`,
+
+    {
+
+        headers:{
+
+            Authorization:`Bearer ${token}`
+
+        }
+
+    }
+
+);
+
+const status =
+await statusRes.json();
+
+if(status.following){
+
+    button.innerHTML = `
+        <i class="fa-solid fa-bookmark"></i>
+        Following
+    `;
+
+}
+
+    if(!button){
+
+        return;
+
+    }
+
+    button.addEventListener(
+        "click",
+        async ()=>{
+
+            
+
+            if(!token){
+
+                showToast(
+                    "Please login first.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+            const res =
+            await fetch(
+
+                "https://acity-backend.onrender.com/api/follow",
+
+                {
+
+                    method:"POST",
+
+                    headers:{
+
+                        "Content-Type":"application/json",
+
+                        Authorization:`Bearer ${token}`
+
+                    },
+
+                    body:JSON.stringify({
+
+                        following_user_id:
+                        store.seller.id
+
+                    })
+
+                }
+
+            );
+
+            const data =
+            await res.json();
+
+            showToast(
+                data.message
+            );
+
+            if(data.following){
+
+                button.innerHTML = `
+                    <i class="fa-solid fa-bookmark"></i>
+                    Following
+                `;
+
+            }else{
+
+                button.innerHTML = `
+                    <i class="fa-regular fa-bookmark"></i>
+                    Follow Store
+                `;
+
+            }
+
+        }
+
+    );
+
+}
+
 }
 function renderProducts(products){
     const container =

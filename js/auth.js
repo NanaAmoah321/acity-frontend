@@ -69,7 +69,20 @@ if (registerForm) {
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ name, email, password })
+    body: JSON.stringify({
+
+    name,
+
+    email,
+
+    password,
+
+    receive_marketplace_updates:
+    document.getElementById(
+        "receiveMarketplaceUpdates"
+    ).checked
+
+    })
   });
   const data = await res.json();
   showToast(data.message || data.error);
@@ -78,6 +91,7 @@ if (registerForm) {
   }
 });
 }
+
 function logout() {
   showConfirmModal({
 
