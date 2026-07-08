@@ -188,20 +188,31 @@ document.getElementById("appearanceBtn");
 const appearanceMenu =
 document.getElementById("appearanceMenu");
 function applyTheme(theme){
+
     document.body.classList.remove("dark");
+
     if(theme === "dark"){
+
         document.body.classList.add("dark");
-    }
-    if(theme === "system"){
+
+    }else if(theme === "system"){
+
         if(
             window.matchMedia(
                 "(prefers-color-scheme: dark)"
             ).matches
         ){
+
             document.body.classList.add("dark");
+
         }
+
     }
+
     updateThemeIcon(theme);
+
+    localStorage.setItem("theme", theme);
+
 }
 function updateThemeIcon(theme){
     if(!themeIcon) return;
@@ -239,7 +250,7 @@ function saveTheme(theme){
 const savedTheme =
 localStorage.getItem("theme")
 ||
-"system";
+"light";
 saveTheme(savedTheme);
 document
 .querySelectorAll(".theme-option")
@@ -279,7 +290,7 @@ document.getElementById("themeToggle");
 if(themeToggle){
     themeToggle.addEventListener("click",()=>{
         const current =
-            localStorage.getItem("theme") || "system";
+            localStorage.getItem("theme") || "light";
         const themes = ["system","light","dark"];
         const next =
             themes[(themes.indexOf(current)+1)%themes.length];

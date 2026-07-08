@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="css/services.css">
 <link rel="stylesheet" href="css/toast.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="icon" type="image/png" href="/favicon.png">
 </head>
 <body>
     <nav>
@@ -38,7 +39,7 @@
         </a>
         <a href="create-service.html" class="nav-item">
             <i class="fa-solid fa-plus"></i>
-            <span>Offer</span>
+            <span>Offer Services</span>
         </a>
     </div>
     <!-- RIGHT -->
@@ -131,13 +132,22 @@
         </a>
         <a href="create-service.html">
             <i class="fa-solid fa-plus"></i>
-            Offer Service
+            Offer Services
         </a>
         <hr>
         <a href="inbox.html">
             <i class="fa-solid fa-comments"></i>
             Inbox
             <small id="mobileMessageCount"></small>
+        </a>
+        <a
+                    href="admin.html"
+                    id="adminLink"
+                    style="display:none;"
+                >
+                    <i class="fa-solid fa-shield-halved"></i>
+                    Admin Dashboard
+                    
         </a>
         <a href="notifications.html">
             <i class="fa-solid fa-bell"></i>
@@ -279,6 +289,8 @@
     </div>
 <script src="js/toast.js"></script>
 <script src="js/services.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/modal.js"></script>
 <script type="module" src="js/navbar.js"></script>
 </body>
 </html>

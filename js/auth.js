@@ -93,28 +93,31 @@ if (registerForm) {
 }
 
 function logout() {
-  showConfirmModal({
 
-    title:"Logout",
+    showConfirmModal({
 
-    message:"Are you sure you want to log out?",
+        title: "Logout",
 
-    icon:"fa-right-from-bracket",
+        message: "Are you sure you want to log out?",
 
-    confirmText:"Logout",
+        icon: "fa-right-from-bracket",
 
-    confirmClass:"btn-primary",
+        confirmText: "Logout",
 
-    onConfirm:()=>{
+        confirmClass: "btn-primary",
 
-        logout();
+        onConfirm: () => {
 
-    }
+            localStorage.removeItem("token");
 
-    });  
-  localStorage.removeItem("token");
-  localStorage.removeItem("user");
-  window.location.href = "login.html";
+            localStorage.removeItem("user");
+
+            window.location.href = "login.html";
+
+        }
+
+    });
+
 }
 
 const userData = localStorage.getItem("user");
