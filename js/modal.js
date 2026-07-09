@@ -9,67 +9,75 @@ function showConfirmModal({
     onConfirm
 }){
 
-    document.getElementById("modalTitle").textContent = title;
+    const modal = document.getElementById("confirmModal");
 
+    if(!modal) return;
+
+    document.getElementById("modalTitle").textContent = title;
     document.getElementById("modalMessage").textContent = message;
 
-    const iconElement =
-    document.getElementById("modalIcon");
+    const iconElement = document.getElementById("modalIcon");
+    iconElement.className = `fa-solid ${icon}`;
 
-    iconElement.className =
-    `fa-solid ${icon}`;
-
-    const confirmButton =
-    document.getElementById("modalConfirm");
-
-    confirmButton.textContent =
-    confirmText;
-
-    confirmButton.className =
-    `btn ${confirmClass}`;
+    const confirmButton = document.getElementById("modalConfirm");
+    confirmButton.textContent = confirmText;
+    confirmButton.className = `btn ${confirmClass}`;
 
     confirmCallback = onConfirm;
 
-    document
-    .getElementById("confirmModal")
-    .classList.add("show");
-
+    modal.classList.add("show");
 }
 
 function closeConfirmModal(){
 
-    document
-    .getElementById("confirmModal")
-    .classList.remove("show");
+    const modal = document.getElementById("confirmModal");
+
+    if(modal){
+
+        modal.classList.remove("show");
+
+    }
 
 }
 
-document
-.getElementById("modalCancel")
-.addEventListener("click", closeConfirmModal);
+const modalCancel = document.getElementById("modalCancel");
 
-document
-.getElementById("modalConfirm")
-.addEventListener("click", ()=>{
+if(modalCancel){
 
-    closeConfirmModal();
+    modalCancel.addEventListener("click", closeConfirmModal);
 
-    if(confirmCallback){
+}
 
-        confirmCallback();
+const modalConfirm = document.getElementById("modalConfirm");
 
-    }
+if(modalConfirm){
 
-});
-
-document
-.getElementById("confirmModal")
-.addEventListener("click",(e)=>{
-
-    if(e.target.id==="confirmModal"){
+    modalConfirm.addEventListener("click", ()=>{
 
         closeConfirmModal();
 
-    }
+        if(confirmCallback){
 
-});
+            confirmCallback();
+
+        }
+
+    });
+
+}
+
+const confirmModal = document.getElementById("confirmModal");
+
+if(confirmModal){
+
+    confirmModal.addEventListener("click",(e)=>{
+
+        if(e.target.id==="confirmModal"){
+
+            closeConfirmModal();
+
+        }
+
+    });
+
+}

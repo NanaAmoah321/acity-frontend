@@ -54,6 +54,8 @@ textarea,
     --danger:#EF4444;
     --shadow:0 12px 35px rgba(15,23,42,.08);
     --transition:.3s ease;
+    --radius:18px;
+    --surface-alt:#F8FAFC;
 }
 body.dark{
     --background:#0F172A;
@@ -63,7 +65,24 @@ body.dark{
     --text-light:#CBD5E1;
     --border:#334155;
     --shadow:0 15px 40px rgba(0,0,0,.45);
+    --surface-alt:#334155;
 }
+
+ 
+
+
+body.dark input:focus,
+body.dark textarea:focus,
+body.dark select:focus{
+    color:#FFFFFF;
+    background:var(--surface);
+}
+
+body.dark option{
+    background:var(--surface);
+    color:#FFFFFF;
+}
+
 body{
     font-family:"Inter",sans-serif;
     background:var(--background);
