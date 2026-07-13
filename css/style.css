@@ -190,7 +190,7 @@ h3{
     display:grid;
 }
 .hidden{
-    display:none;
+    display:none !important;
 }
 ::-webkit-scrollbar{
     width:10px;

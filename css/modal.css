@@ -85,3 +85,83 @@
 .modal-actions button{
     flex:1;
 }
+
+/* ==========================================
+   EDIT PROFILE MODAL
+========================================== */
+
+.edit-profile-modal{
+
+    width:min(92%,560px);
+
+    background:var(--surface);
+
+    color:var(--text);
+
+    border-radius:24px;
+
+    padding:32px;
+
+    box-shadow:0 30px 70px rgba(0,0,0,.25);
+
+    transform:translateY(20px) scale(.96);
+
+    transition:.25s ease;
+
+}
+
+.modal-overlay.show .edit-profile-modal{
+
+    transform:translateY(0) scale(1);
+
+}
+
+.edit-profile-modal h2{
+
+    margin-bottom:24px;
+
+    text-align:center;
+
+}
+
+.edit-profile-modal .form-group{
+
+    margin-bottom:18px;
+
+}
+
+.edit-profile-modal label{
+
+    display:block;
+
+    margin-bottom:8px;
+
+    font-weight:600;
+
+}
+
+.edit-profile-modal textarea{
+
+    resize:vertical;
+
+    min-height:120px;
+
+}
+
+.edit-profile-modal .modal-buttons{
+
+    display:flex;
+
+    gap:12px;
+
+    justify-content:flex-end;
+
+    margin-top:28px;
+
+}
+
+.edit-profile-modal .modal-buttons .btn{
+
+    min-width:140px;
+
+}

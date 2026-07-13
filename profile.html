@@ -221,85 +221,568 @@
     </div>
 </div>
 <div class="mobile-overlay" id="mobileOverlay"></div>
-    <section class="profile-hero">
-    <div class="profile-hero-content">
-        <div class="profile-avatar-large">
-            <i class="fa-solid fa-user"></i>
-        </div>
-        <span class="profile-role">
-            Student Marketplace Seller
-        </span>
-        <h1 class="userName"></h1>
-        <p class="userEmail"></p>
-        <p id="userBio" class="profile-bio"></p>
-        <div class="profile-meta">
-       <span>
-        <i class="fa-solid fa-graduation-cap"></i>
-        <span id="userLevel">Level</span>
-        </span>
-        <span>
-        <i class="fa-solid fa-location-dot"></i>
-        Academic City
-        </span>
-        </div>
-    <div class="profile-stats-mini">
-    <div class="mini-stat">
-        <h3 id="listingCount">0</h3>
-        <span>Listings</span>
-    </div>
-    <div class="mini-stat">
-        <h3 id="ratingValue">0.0</h3>
-        <span>Rating</span>
-    </div>
-    <div class="mini-stat">
-        <h3 id="reviewCount">0</h3>
-        <span>Reviews</span>
-    </div>
-    <div class="mini-stat">
-        <h3 id="totalRevenue" class="revenue-value">GH₵0.00</h3>
-        <span>Revenue</span>
-    </div>
-    </div>
-        <button
-            class="btn btn-primary"
-            onclick="openEditProfile()"
-        >
-            <i class="fa-solid fa-pen"></i>
-            Edit Profile
-        </button>
-    </div>
-</section>
-    <section class="profile-main">
-    <div class="profile-grid">
-        <section class="dashboard-panel">
-            <div class="panel-header">
-                <h2>My Listings</h2>
-                <a href="#">View All</a>
+    <section class="profileHero fade-up">
+
+        <div class="profileHeroTop">
+
+            <div class="profileIdentity">
+
+                <div class="profileAvatar">
+
+                    <img
+                        id="profileImage"
+                        src="images/default-avatar-image.jpg"
+                        alt="Profile"
+                    >
+
+                </div>
+
+                <div class="profileDetails">
+
+                    <div class="profileHeading">
+
+                        <h1 id="profileName"></h1>
+
+                        <span
+                            id="verifiedBadge"
+                            class="verifiedBadge hidden"
+                        >
+                            <i class="fa-solid fa-circle-check"></i>
+                            Verified
+                        </span>
+
+                    </div>
+
+                    <div class="profileBadges">
+
+                        <span
+                            id="userRoleBadge"
+                            class="badge"
+                        ></span>
+
+                        <span class="badge">
+
+                            <i class="fa-solid fa-graduation-cap"></i>
+
+                            <span id="profileLevel"></span>
+
+                        </span>
+
+                        <span class="badge">
+
+                            <i class="fa-solid fa-building-columns"></i>
+
+                            Academic City
+
+                        </span>
+
+                    </div>
+
+                    <p
+                        id="profileEmail"
+                        class="profileEmail"
+                    ></p>
+
+                    <p
+                        id="profileBio"
+                        class="profileBio"
+                    ></p>
+
+                </div>
+
             </div>
-            <div
-                id="myItemsContainer"
-                class="listings-grid"
-            ></div>
-        </section>
-        <section class="dashboard-panel">
-            <div class="panel-header">
-                <h2>Incoming Orders</h2>
-                <a href="#">View All</a>
-            </div>
-            <div
-                id="sellerOrders"
-                class="orders-list"
-            ></div>
-        </section>
-    </div>
-    <section class="dashboard-panel reviews-panel">
-        <div class="panel-header">
-            <h2>Reviews</h2>
+
+            <button
+                id="editProfileBtn"
+                class="btn btn-primary"
+            >
+
+                <i class="fa-solid fa-pen"></i>
+
+                Edit Profile
+
+            </button>
+
         </div>
-        <div id="reviewsContainer"></div>
+
+        <div class="profileHighlights">
+
+            <div class="highlightCard">
+
+                <i class="fa-solid fa-star"></i>
+
+                <div>
+
+                    <small>Rating</small>
+
+                    <strong id="heroRating">
+
+                        0.0
+
+                    </strong>
+
+                </div>
+
+            </div>
+
+            <div class="highlightCard">
+
+                <i class="fa-solid fa-box"></i>
+
+                <div>
+
+                    <small>Listings</small>
+
+                    <strong id="heroListings">
+
+                        0
+
+                    </strong>
+
+                </div>
+
+            </div>
+
+            <div class="highlightCard">
+
+                <i class="fa-solid fa-cart-shopping"></i>
+
+                <div>
+
+                    <small>Orders</small>
+
+                    <strong id="heroOrders">
+
+                        0
+
+                    </strong>
+
+                </div>
+
+            </div>
+
+            <div class="highlightCard">
+
+                <i class="fa-solid fa-users"></i>
+
+                <div>
+
+                    <small>Followers</small>
+
+                    <strong id="heroFollowers">
+
+                        0
+
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="profileCompletion">
+
+            <div class="completionHeader">
+
+                <span>
+
+                    Profile Completion
+
+                </span>
+
+                <strong
+                    id="completionPercent"
+                >
+
+                    0%
+
+                </strong>
+
+            </div>
+
+            <div class="completionBar">
+
+                <div
+                    id="completionFill"
+                    class="completionFill"
+                ></div>
+
+            </div>
+
+        </div>
+
     </section>
-</section>
+
+    
+
+    <section id="dashboardOverview">
+
+        <!-- Seller Dashboard -->
+
+        <div id="sellerDashboard" class="dashboard-grid hidden">
+
+            <div class="dashboard-card">
+                <small>Total Listings</small>
+                <h2 id="listingCount">0</h2>
+            </div>
+
+            <div class="dashboard-card">
+                <small>Average Rating</small>
+                <h2 id="ratingValue">0.0</h2>
+            </div>
+
+            <div class="dashboard-card">
+                <small>Reviews</small>
+                <h2 id="reviewCount">0</h2>
+            </div>
+
+            <div class="dashboard-card">
+                <small>Total Revenue</small>
+                <h2 id="revenueValue">GH₵0</h2>
+            </div>
+
+            <div class="dashboard-card">
+                <small>Incoming Orders</small>
+                <h2 id="incomingOrdersCount">0</h2>
+            </div>
+
+            <div class="dashboard-card">
+                <small>Products Sold</small>
+                <h2 id="soldCount">0</h2>
+            </div>
+
+        </div>
+
+
+        <!-- Buyer Dashboard -->
+
+        <div id="buyerDashboard" class="dashboard-grid hidden">
+
+            <div class="dashboard-card">
+                <small>Orders Placed</small>
+                <h2 id="buyerOrders">0</h2>
+            </div>
+
+            <div class="dashboard-card">
+                <small>Completed Purchases</small>
+                <h2 id="completedOrders">0</h2>
+            </div>
+
+            <div class="dashboard-card">
+                <small>Reviews Given</small>
+                <h2 id="buyerReviews">0</h2>
+            </div>
+
+            <div class="dashboard-card">
+                <small>Following Stores</small>
+                <h2 id="followingCount">0</h2>
+            </div>
+
+            <div class="dashboard-card">
+                <small>Wishlist</small>
+                <h2 id="wishlistCount">0</h2>
+            </div>
+
+            <div class="dashboard-card">
+                <small>Saved Items</small>
+                <h2 id="savedItems">0</h2>
+            </div>
+
+        </div>
+
     </section>
+
+    <section class="quickActionsSection">
+
+        <!-- SELLER ACTIONS -->
+
+        <div id="sellerActions" class="quick-actions hidden">
+
+            <div class="sectionHeader">
+                <div>
+                    <h2>Quick Actions</h2>
+                    <p>Manage your marketplace and services.</p>
+                </div>
+            </div>
+
+            <div class="actionGrid">
+
+                <a href="marketplace.html" class="actionCard">
+                    <div class="actionIcon">
+                        <i class="fa-solid fa-store"></i>
+                    </div>
+                    <h3>Marketplace</h3>
+                    <p>Edit your store</p>
+                </a>
+
+                <a href="services.html" class="actionCard">
+                    <div class="actionIcon">
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
+                    </div>
+                    <h3>Services</h3>
+                    <p>Manage your services</p>
+                </a>
+
+                <a href="create-listing.html" class="actionCard">
+                    <div class="actionIcon">
+                        <i class="fa-solid fa-plus"></i>
+                    </div>
+                    <h3>New Listing</h3>
+                    <p>Create a new product</p>
+                </a>
+
+                
+
+                <a href="inbox.html" class="actionCard">
+                    <div class="actionIcon">
+                        <i class="fa-solid fa-comments"></i>
+                    </div>
+                    <h3>Inbox</h3>
+                    <p>Messages & enquiries</p>
+                </a>
+
+                <a href="notifications.html" class="actionCard">
+                    <div class="actionIcon">
+                        <i class="fa-solid fa-bell"></i>
+                    </div>
+                    <h3>Notifications</h3>
+                    <p>Latest activity</p>
+                </a>
+
+            </div>
+
+        </div>
+
+        <!-- BUYER ACTIONS -->
+
+        <div id="buyerActions" class="quick-actions hidden">
+
+            <div class="sectionHeader">
+                <div>
+                    <h2>Quick Actions</h2>
+                    <p>Everything you need in one place.</p>
+                </div>
+            </div>
+
+            <div class="actionGrid">
+
+                <a href="marketplace.html" class="actionCard">
+                    <div class="actionIcon">
+                        <i class="fa-solid fa-store"></i>
+                    </div>
+                    <h3>Marketplace</h3>
+                    <p>Browse products</p>
+                </a>
+
+                <a href="services.html" class="actionCard">
+                    <div class="actionIcon">
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
+                    </div>
+                    <h3>Services</h3>
+                    <p>Find skilled students</p>
+                </a>
+
+                <a href="myCart.html" class="actionCard">
+                    <div class="actionIcon">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </div>
+                    <h3>My Cart</h3>
+                    <p>Ready to checkout</p>
+                </a>
+
+                <a href="wishlist.html" class="actionCard">
+                    <div class="actionIcon">
+                        <i class="fa-solid fa-heart"></i>
+                    </div>
+                    <h3>Wishlist</h3>
+                    <p>Saved favourites</p>
+                </a>
+
+                <a href="inbox.html" class="actionCard">
+                    <div class="actionIcon">
+                        <i class="fa-solid fa-comments"></i>
+                    </div>
+                    <h3>Inbox</h3>
+                    <p>Talk to sellers</p>
+                </a>
+
+                <a href="notifications.html" class="actionCard">
+                    <div class="actionIcon">
+                        <i class="fa-solid fa-bell"></i>
+                    </div>
+                    <h3>Notifications</h3>
+                    <p>Order updates</p>
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="profileDashboard">
+
+        <!-- LEFT COLUMN -->
+
+        <div class="profileMain">
+
+            <div class="dashboardSection">
+
+                <div class="sectionTitle">
+
+                    <div>
+
+                        <h2>My Listings</h2>
+
+                        <small>
+                            Manage everything you're selling.
+                        </small>
+
+                    </div>
+
+                    <a
+                        href="create-listing.html"
+                        class="btn btn-primary"
+                    >
+                        <i class="fa-solid fa-plus"></i>
+                        New Listing
+                    </a>
+
+                </div>
+
+                <div id="ItemsContainer"></div>
+
+            </div>
+
+            <div class="dashboardSection">
+
+                <div class="sectionTitle">
+
+                    <div>
+
+                        <h2>Reviews</h2>
+
+                        <small>
+
+                            What students think about you.
+
+                        </small>
+
+                    </div>
+
+                </div>
+
+                <div id="reviewsContainer"></div>
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN -->
+
+        <aside class="profileSidebar">
+
+            <div class="dashboardSection">
+
+                <div class="sectionTitle">
+
+                    <h2>
+
+                        Incoming Orders
+
+                    </h2>
+
+                </div>
+
+                <div id="ordersContainer"></div>
+
+            </div>
+
+            <!-- Dynamic Insight Panel -->
+
+            <div id="sellerInsights" class="dashboardSection hidden">
+
+                <div class="sectionHeader">
+                    <div>
+                        <h2>Store Performance</h2>
+                        <p>How your marketplace is performing this week.</p>
+                    </div>
+                </div>
+
+                <div class="insightGrid">
+
+                    <div class="insightCard">
+                        <i class="fa-solid fa-fire"></i>
+                        <span>Top Listing</span>
+                        <h3 id="topListing">--</h3>
+                    </div>
+
+                    <div class="insightCard">
+                        <i class="fa-solid fa-star"></i>
+                        <span>Store Rating</span>
+                        <h3 id="storeRating">0.0 ★</h3>
+                    </div>
+
+                    <div class="insightCard">
+                        <i class="fa-solid fa-box-open"></i>
+                        <span>Active Listings</span>
+                        <h3 id="activeListings">0</h3>
+                    </div>
+
+                    <div class="insightCard tipCard">
+                        <i class="fa-solid fa-lightbulb"></i>
+                        <span>Seller Tip</span>
+                        <p>Add 3–5 photos to each listing to improve visibility.</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div id="buyerInsights" class="dashboardSection hidden">
+
+                <div class="sectionHeader">
+                    <div>
+                        <h2>Buyer Activity</h2>
+                        <p>Your shopping activity on Acity Connect.</p>
+                    </div>
+                </div>
+
+                <div class="insightGrid">
+
+                    <div class="insightCard">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span>Orders</span>
+                        <h3 id="buyerOrderCount">0</h3>
+                    </div>
+
+                    <div class="insightCard">
+                        <i class="fa-solid fa-heart"></i>
+                        <span>Saved Items</span>
+                        <h3>Coming Soon</h3>
+                    </div>
+
+                    <div class="insightCard">
+                        <i class="fa-solid fa-comments"></i>
+                        <span>Messages</span>
+                        <h3 id="buyerMessages">0</h3>
+                    </div>
+
+                    <div class="insightCard tipCard">
+                        <i class="fa-solid fa-lightbulb"></i>
+                        <span>Buyer Tip</span>
+                        <p>Follow your favourite stores so you never miss new listings.</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </aside>
+
+    </section>
+
     <div
     id="editProfileModal"
     class="modal-overlay"
