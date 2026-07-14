@@ -26,7 +26,10 @@ function getStoreImage(category) {
 }
 async function loadItems() {
     const res = await fetch(
-        "https://acity-backend.onrender.com/api/listings/stores"
+        "https://acity-backend.onrender.com/api/listings/stores?t=${Date.now()}",
+        {  
+            cache: "no-store" // Prevent caching to ensure fresh data
+        }
     );
     allStores = await res.json();
     renderStores(allStores);

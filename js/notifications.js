@@ -5,30 +5,30 @@ document.getElementById(
     "notificationsContainer"
 );
 async function loadNotifications(){
-    const token =
-    localStorage.getItem("token");
+    const token = localStorage.getItem("token");
     if(!container) return;
+    
     container.innerHTML = "";
-    for(let i=0;i<5;i++){
+    for(let i=0; i<5; i++){
         container.innerHTML += `
             <div class="notification-skeleton skeleton-card"></div>
         `;
     }
-    const res =
-    await fetch(
+    
+    const res = await fetch(
         "https://acity-backend.onrender.com/api/notifications",
         {
             headers:{
-                Authorization:
-                `Bearer ${token}`
+                Authorization: `Bearer ${token}`
             }
         }
     );
-    allNotifications =
-    await res.json();
+    
+    allNotifications = await res.json();
     container.innerHTML = "";
-    if(allNotifications.length===0){
-        container.innerHTML=`
+    
+    if(allNotifications.length === 0){
+        container.innerHTML = `
         <div class="empty-state">
             <i class="fa-solid fa-bell-slash"></i>
             <h3>No Notifications</h3>
@@ -41,6 +41,7 @@ async function loadNotifications(){
     }
     renderNotifications();
 }
+
 function renderNotifications(){
     container.innerHTML = "";
     const filtered =
@@ -49,9 +50,9 @@ function renderNotifications(){
     allNotifications
     :
     allNotifications.filter(
-        notification =>
-        notification.type === currentFilter
+        notification => notification.type === currentFilter
     );
+    
     if(filtered.length === 0){
         container.innerHTML = `
         <div class="empty-state">
@@ -68,14 +69,22 @@ function renderNotifications(){
         `;
         return;
     }
-    filtered.forEach(notification=>{
+    
+    filtered.forEach(notification => {
+        // Safe check for conversation partner id
+        const partnerId = notification.conversation_user_id ? Number(notification.conversation_user_id) : null;
+        
+        // Escape special characters in the title just in case it contains single quotes
+        const escapedTitle = (notification.title || "New Message").replace(/'/g, "\\'");
+
         container.innerHTML += `
         <div
             class="notification-card ${notification.is_read ? "" : "unread"}"
             onclick="openNotification(
                 ${notification.id},
                 '${notification.type}',
-                ${notification.conversation_user_id}
+                ${partnerId},
+                '${escapedTitle}'
             )"
         >
             <div class="notification-icon icon-${notification.type}">
@@ -90,7 +99,7 @@ function renderNotifications(){
                         ${timeAgo(notification.created_at)}
                     </span>
                 </div>
-                <p class = "notification-message">
+                <p class="notification-message">
                     ${notification.message}
                 </p>
                 <div class="notification-product">
@@ -120,6 +129,39 @@ function renderNotifications(){
         </div>
         `;
     });
+}
+
+// Handler function that actually marks notifications read and handles redirects
+async function openNotification(notificationId, type, partnerId, conversationName) {
+    const token = localStorage.getItem("token");
+
+    // 1. If it's a message, set the localStorage properties so messages.html can pick them up
+    if (type === "message" && partnerId) {
+        localStorage.setItem("openConversationWith", partnerId);
+        localStorage.setItem("openConversationName", conversationName || "Chat");
+    }
+
+    // 2. Mark the notification as read on the backend database
+    try {
+        await fetch(`https://acity-backend.onrender.com/api/notifications/${notificationId}/read`, {
+            method: "PATCH",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+    } catch (err) {
+        console.error("Failed to mark notification as read:", err);
+    }
+
+    // 3. Route user to correct page
+    if (type === "message") {
+        window.location.href = "messages.html"; // Ensure this matches your messages layout path
+    } else if (type === "order" || type === "accepted" || type === "rejected") {
+        window.location.href = "orders.html";
+    } else {
+        // Reload to update reading status indicator if no redirect is required
+        loadNotifications();
+    }
 }
 async function openNotification(id, type, conversationUserId) {
     const token = localStorage.getItem("token");
