@@ -940,7 +940,7 @@ async function loadSellerOrders() {
                         ${
                             order.delivery_method === "room"
                             ? `${order.hostel} • ${order.room_number}`
-                            : order.meeting_point
+                            : order.meeting_location || "N/A"
                         }
                     </span>
                     <span>

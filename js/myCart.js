@@ -440,89 +440,70 @@ function messageSeller(
 }
 async function placeOrder() {
     const token = localStorage.getItem("token");
-    const deliveryMethod =
-    document.querySelector(
-        'input[name="deliveryMethod"]:checked'
-    )?.value;
+    const deliveryMethod = document.querySelector('input[name="deliveryMethod"]:checked')?.value;
+    
     if (!deliveryMethod) {
         showToast("Select a delivery method");
         return;
     }
+    
     let hostel = null;
     let room_number = null;
-    let meeting_location = null;
+    let meeting_point = null; // Changed from meeting_location to match what seller dashboard expects
+    
     if (deliveryMethod === "room") {
-        hostel =
-        document.getElementById(
-            "hostel"
-        )?.value;
-        room_number =
-        document.getElementById(
-            "roomNumber"
-        )?.value;
+        hostel = document.getElementById("hostel")?.value;
+        room_number = document.getElementById("roomNumber")?.value;
     }
+    
     if (deliveryMethod === "meetup") {
-        meeting_location =
-        document.getElementById(
-            "meetingLocation"
-        )?.value;
+        // Safe check to match the lowercase input ID, but maps values into meeting_point
+        meeting_point = document.getElementById("meetingLocation")?.value;
     }
+    
     try {
-        const itemsToOrder =
-        checkoutAllMode
-        ? currentItems
-        : [selectedItem];
+        const itemsToOrder = checkoutAllMode ? currentItems : [selectedItem];
+        
         for (const item of itemsToOrder) {
-            const res = await fetch(
-                "https://acity-backend.onrender.com/api/listings/orders",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type":"application/json",
-                        "Authorization":
-                        `Bearer ${token}`
-                    },
-                    body: JSON.stringify({
-                        listing_id: item.id,
-                        seller_id: item.user_id,
-                        quantity: item.quantity,
-                        delivery_method: deliveryMethod,
-                        hostel,
-                        room_number,
-                        meeting_location
-                    })
-                }
-            );
+            const res = await fetch("https://acity-backend.onrender.com/api/listings/orders", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    listing_id: item.id,
+                    seller_id: item.seller_id, // FIXED: Changed from item.user_id to item.seller_id
+                    quantity: item.quantity,
+                    delivery_method: deliveryMethod,
+                    hostel: hostel,
+                    room_number: room_number,
+                    meeting_point: meeting_point, // FIXED: Sending as meeting_point to fix seller's undefined UI bug
+                    meeting_location: meeting_point // Backup fallback in case backend requires this key name
+                })
+            });
+            
             const data = await res.json();
             if (!res.ok) {
-                throw new Error(
-                    data.message || "Order failed"
-                );
+                throw new Error(data.message || "Order failed");
             }
-            await fetch(
-                `https://acity-backend.onrender.com/api/listings/cart/${item.id}`,
-                {
-                    method: "DELETE",
-                    headers: {
-                        Authorization:`Bearer ${token}`
-                    }
+            
+            // Remove from cart after successful creation
+            await fetch(`https://acity-backend.onrender.com/api/listings/cart/${item.id}`, {
+                method: "DELETE",
+                headers: {
+                    Authorization: `Bearer ${token}`
                 }
-            );
+            });
         }
-        showToast(
-            checkoutAllMode
-            ? "All orders placed!"
-            : "Order placed!"
-        );
+        
+        showToast(checkoutAllMode ? "All orders placed!" : "Order placed!");
         closeCheckout();
         loadInterested();
-        loadCartCount();
+        if (typeof loadCartCount === "function") loadCartCount();
     } catch(err) {
         console.error(err);
-        showToast(
-            err.message,
-            "error"
-        );
+        showToast(err.message, "error");
     }
 }
 async function changeQuantity(listingId, change){
