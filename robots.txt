@@ -1,5 +1,12 @@
 User-agent: *
 
+Disallow: /admin
+Disallow: /inbox
+Disallow: /conversation
+Disallow: /profile
+Disallow: /notifications
+Disallow: /settings
+
 Allow: /
 
 Sitemap: https://acityconnect.com/sitemap.xml
