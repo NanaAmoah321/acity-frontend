@@ -223,6 +223,12 @@ padding:30px;
     background: #f8f9fa;
     border-color: #c6c6c6;
     transform: translateY(-1px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, .12);
+}
+
+.btn-google:disabled {
+    opacity: .75;
+    cursor: not-allowed;
 }
 
 .btn-google img {

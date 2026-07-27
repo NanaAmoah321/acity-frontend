@@ -205,6 +205,8 @@ if(resetPasswordForm){
 }
 
 // Google Sign-In
+const googleBtn = document.getElementById("googleSignInBtn");
+const googleBtnHTML = googleBtn?.innerHTML;
 if (document.getElementById("googleSignInBtn")) {
 
     google.accounts.id.initialize({
@@ -214,15 +216,17 @@ if (document.getElementById("googleSignInBtn")) {
 
     document
         .getElementById("googleSignInBtn")
-        .addEventListener("click", () => {
+        googleBtn.addEventListener("click", () => {
 
-            google.accounts.oauth2.initTokenClient({
-                client_id: "967147683947-j1d0ujljjjf4jufv1gfkdk2o5bbg7gog.apps.googleusercontent.com",
-                scope: "openid email profile",
-                callback: () => {}
-            });
+            googleBtn.disabled = true;
+
+            googleBtn.innerHTML = `
+                <i class="fa-solid fa-spinner fa-spin"></i>
+                <span>Connecting...</span>
+            `;
 
             google.accounts.id.prompt();
+
         });
 
 }
@@ -248,12 +252,17 @@ async function handleGoogleLogin(response) {
             localStorage.setItem("token", data.token);
             localStorage.setItem("user", JSON.stringify(data.user));
 
-            showToast("Welcome to Acity Connect!");
+            showToast(`Welcome back, ${data.user.name}!`);
             window.location.href = "marketplace.html";
         } else {
+            googleBtn.disabled = false;
+            googleBtn.innerHTML = googleBtnHTML;
             showToast(data.message || "Google sign-in failed.");
+            
         }
     } catch (err) {
+        googleBtn.disabled = false;
+        googleBtn.innerHTML = googleBtnHTML;
         console.error("Google Login Error:", err);
         showToast("Google sign-in failed.");
     }
