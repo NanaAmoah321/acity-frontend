@@ -77,28 +77,23 @@ function closeEditProfile(){
 
 }
 
-async function loadProfile(){
-
-    try{
-
-        const res = await fetch(
-
-            `${API}/auth/profile`,
-
-            {
-
-                headers:{
-
-                    Authorization:
-                    `Bearer ${getToken()}`
-
-                }
-
+async function loadProfile() {
+    try {
+        const res = await fetch(`${API}/auth/profile`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
             }
-
-        );
+        });
 
         const user = await res.json();
+
+        if (!res.ok) {
+            showToast(
+                user.error || "Unable to load profile",
+                "error"
+            );
+            return;
+        }
 
         updateHeroStats({
             listings: user.items?.length || 0,
@@ -108,90 +103,55 @@ async function loadProfile(){
             profile: user
         });
 
-        if(!res.ok){
+        localStorage.setItem("user", JSON.stringify(user));
 
-            showToast(
+        const profileName = document.getElementById("profileName");
+        if (profileName) profileName.textContent = user.name;
 
-                user.error ||
+        const profileEmail = document.getElementById("profileEmail");
+        if (profileEmail) profileEmail.textContent = user.email;
 
-                "Unable to load profile",
-
-                "error"
-
-            );
-
-            return;
-
+        const profileImage = document.getElementById("profileImage");
+        if (profileImage) {
+            profileImage.src = 
+                user.profile_picture || 
+                "images/default-avatar-image.jpg";
+            
+            profileImage.onerror = () => {
+                profileImage.src = "images/default-avatar-image.jpg";
+            };
         }
 
-        localStorage.setItem(
-
-            "user",
-
-            JSON.stringify(user)
-
-        );
-
-        document.getElementById("profileName").textContent =
-        user.name;
-
-        document.getElementById("profileEmail").textContent =
-        user.email;
-
-        document.getElementById("profileBio").textContent =
-        user.bio ||
-        "Tell other students a little about yourself.";
-
-        document.getElementById("profileLevel").textContent =
-        user.level
-        ?
-        `Level ${user.level}`
-        :
-        "Level Not Set";
-
-        document.getElementById("editName").value =
-        user.name || "";
-
-        document.getElementById("editLevel").value =
-        user.level || "";
-
-        document.getElementById("editBio").value =
-        user.bio || "";
-
-        const mobileUser =
-        document.getElementById("mobileUserName");
-
-        if(mobileUser){
-
-            mobileUser.textContent =
-            user.name;
-
+        const profileBio = document.getElementById("profileBio");
+        if (profileBio) {
+            profileBio.textContent = user.bio || "Tell other students a little about yourself.";
         }
 
-        if(user.verified){
-
-            document
-            .getElementById("verifiedBadge")
-            ?.classList.remove("hidden");
-
+        const profileLevel = document.getElementById("profileLevel");
+        if (profileLevel) {
+            profileLevel.textContent = user.level ? `Level ${user.level}` : "Level Not Set";
         }
 
+        const editName = document.getElementById("editName");
+        if (editName) editName.value = user.name || "";
+
+        const editLevel = document.getElementById("editLevel");
+        if (editLevel) editLevel.value = user.level || "";
+
+        const editBio = document.getElementById("editBio");
+        if (editBio) editBio.value = user.bio || "";
+
+        const mobileUser = document.getElementById("mobileUserName");
+        if (mobileUser) mobileUser.textContent = user.name;
+
+        if (user.verified) {
+            document.getElementById("verifiedBadge")?.classList.remove("hidden");
+        }
+
+    } catch (err) {
+        console.error("Load Profile Error:", err);
+        showToast("Couldn't load profile.", "error");
     }
-
-    catch(err){
-
-        console.error(err);
-
-        showToast(
-
-            "Couldn't load profile.",
-
-            "error"
-
-        );
-
-    }
-
 }
 
 async function saveProfile(){

@@ -49,12 +49,46 @@ const adminLink =
 document.getElementById(
     "adminLink"
 );
-const mobileUser =
-document.getElementById("mobileUserName");
-if(user && mobileUser){
-    mobileUser.textContent =
-    user.name;
+
+
+
+
+const mobileUser = document.getElementById("mobileUserName");
+const mobileProfileImage = document.getElementById("mobileProfileImage");
+
+if (user) {
+    if (mobileUser) {
+        mobileUser.textContent = user.name;
+    }
+
+    if (mobileProfileImage) {
+        mobileProfileImage.src = user.profile_picture || "images/default-avatar-image.jpg";
+
+        mobileProfileImage.onerror = () => {
+            mobileProfileImage.src = "images/default-avatar-image.jpg";
+        };
+    }
 }
+
+const navProfileImage = document.getElementById("navProfileImage");
+const navProfileName = document.getElementById("navProfileName");
+
+if (user) {
+    if (navProfileName) {
+        // Display only the user's first name
+        navProfileName.textContent = user.name ? user.name.split(" ")[0] : "Account";
+    }
+
+    if (navProfileImage) {
+        navProfileImage.src = user.profile_picture || "images/default-avatar-image.jpg";
+
+        // Fallback to default avatar if image URL fails to load
+        navProfileImage.onerror = () => {
+            navProfileImage.src = "images/default-avatar-image.jpg";
+        };
+    }
+}
+
 if (
     user &&
     user.role === "admin" &&

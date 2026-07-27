@@ -351,12 +351,17 @@ nav{
     width:56px;
     height:56px;
     border-radius:50%;
-    background:var(--primary);
-    color:white;
+    overflow:hidden;
     display:flex;
-    justify-content:center;
     align-items:center;
-    font-size:22px;
+    justify-content:center;
+    background:var(--surface);
+    flex-shrink:0;
+}
+#mobileProfileImage{
+    width:100%;
+    height:100%;
+    object-fit:cover;
 }
 .close-menu{
     width:44px;
@@ -552,4 +557,19 @@ nav{
     .search-box{
         width:200px;
     }
+}
+
+#profileToggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#navProfileImage {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--border);
+    flex-shrink: 0;
 }

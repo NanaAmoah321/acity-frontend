@@ -61,36 +61,60 @@ const registerForm = document.getElementById("registerForm");
 if (registerForm) {
   registerForm.addEventListener("submit", async function(e) {
   e.preventDefault();
+  
   const name = document.getElementById("fullName").value;
   const email = document.getElementById("email").value;
+    
   const password = document.getElementById("password").value;
-  const res = await fetch("https://acity-backend.onrender.com/api/auth/register", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
+  const level = document.getElementById("level").value;
+  const googleCredential = document.getElementById("googleCredential").value;
+  const endpoint = googleCredential
+    ? "https://acity-backend.onrender.com/api/auth/google-register"
+    : "https://acity-backend.onrender.com/api/auth/register";
 
-    name,
+    const body = googleCredential
+        ? {
+            credential: googleCredential,
+            level,
+            password,
+            receive_marketplace_updates: document.getElementById("receiveMarketplaceUpdates")?.checked || false
+        }
+        : {
+            name,
+            email,
+            password,
+            level,
+            receive_marketplace_updates: document.getElementById("receiveMarketplaceUpdates")?.checked || false
+        };
 
-    email,
-
-    password,
-
-    receive_marketplace_updates:
-    document.getElementById(
-        "receiveMarketplaceUpdates"
-    ).checked
-
-    })
-  });
+    const res = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(body)
+    });
   const data = await res.json();
   showToast(data.message || data.error);
   if (res.ok) {
-    window.location.href = "login.html";
-  }
-});
+        if (googleCredential) {
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("user", JSON.stringify(data.user));
+
+            showToast(`🎉 Welcome ${data.user.name}!`);
+
+            setTimeout(() => {
+                window.location.href = "marketplace.html";
+            }, 700);
+        } else {
+            showToast(data.message);
+            window.location.href = "login.html";
+        }
+    }
+})
 }
+
+
 
 
 
@@ -214,9 +238,8 @@ if (document.getElementById("googleSignInBtn")) {
         callback: handleGoogleLogin
     });
 
-    document
-        .getElementById("googleSignInBtn")
-        googleBtn.addEventListener("click", () => {
+    // Attach click handler to Google sign-in button
+    googleBtn.addEventListener("click", () => {
 
             googleBtn.disabled = true;
 
@@ -229,6 +252,36 @@ if (document.getElementById("googleSignInBtn")) {
 
         });
 
+}
+
+// Google Register
+
+const googleRegisterBtn = document.getElementById("googleRegisterBtn");
+
+if (googleRegisterBtn) {
+    google.accounts.id.initialize({
+        client_id: "967147683947-j1d0ujljjjf4jufv1gfkdk2o5bbg7gog.apps.googleusercontent.com",
+        callback: handleGoogleRegister
+    });
+
+    googleRegisterBtn.addEventListener("click", () => {
+        googleRegisterBtn.disabled = true;
+        googleRegisterBtn.innerHTML = `
+            <i class="fa-solid fa-spinner fa-spin"></i>
+            <span>Connecting...</span>
+        `;
+
+        google.accounts.id.prompt((notification) => {
+            // Reset button if the prompt is closed or fails to show
+            if (notification.isDismissedMoment() || notification.isNotDisplayed()) {
+                googleRegisterBtn.disabled = false;
+                googleRegisterBtn.innerHTML = `
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
+                    <span>Continue with Google</span>
+                `;
+            }
+        });
+    });
 }
 
 async function handleGoogleLogin(response) {
@@ -252,8 +305,10 @@ async function handleGoogleLogin(response) {
             localStorage.setItem("token", data.token);
             localStorage.setItem("user", JSON.stringify(data.user));
 
-            showToast(`Welcome back, ${data.user.name}!`);
-            window.location.href = "marketplace.html";
+            showToast(`Welcome , ${data.user.name}!`);
+            setTimeout(() => {
+                window.location.href = "marketplace.html";
+            }, 700);
         } else {
             googleBtn.disabled = false;
             googleBtn.innerHTML = googleBtnHTML;
@@ -265,5 +320,82 @@ async function handleGoogleLogin(response) {
         googleBtn.innerHTML = googleBtnHTML;
         console.error("Google Login Error:", err);
         showToast("Google sign-in failed.");
+    }
+}
+
+async function handleGoogleRegister(response) {
+    try {
+        const res = await fetch(
+            "https://acity-backend.onrender.com/api/auth/google-preview",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    credential: response.credential
+                })
+            }
+        );
+
+        const data = await res.json();
+
+        if (!res.ok) {
+            showToast(data.message || "Google sign-up failed.", "error");
+            return;
+        }
+
+        // Populate form hidden & input fields
+        const googleCredentialInput = document.getElementById("googleCredential");
+        const fullNameInput = document.getElementById("fullName");
+        const emailInput = document.getElementById("email");
+
+        if (googleCredentialInput) googleCredentialInput.value = response.credential;
+        if (fullNameInput) fullNameInput.value = data.name || "";
+        if (emailInput) emailInput.value = data.email || "";
+
+        
+
+        // Hidden credential input
+        const googleCredentialInput = document.getElementById("googleCredential");
+        if (googleCredentialInput) googleCredentialInput.value = response.credential;
+
+        // Form input fields
+        const fullNameInput = document.getElementById("fullName");
+        if (fullNameInput) fullNameInput.value = data.name || "";
+
+        const emailInput = document.getElementById("email");
+        if (emailInput) emailInput.value = data.email || "";
+
+        // Preview UI elements
+        const previewName = document.getElementById("googlePreviewName");
+        if (previewName) previewName.textContent = data.name || "";
+
+        const previewEmail = document.getElementById("googlePreviewEmail");
+        if (previewEmail) previewEmail.textContent = data.email || "";
+
+        const previewImage = document.getElementById("googlePreviewImage");
+        if (previewImage) {
+            previewImage.src = data.picture || "images/default-avatar-image.jpg";
+            previewImage.onerror = () => {
+                previewImage.src = "images/default-avatar-image.jpg";
+            };
+        }
+
+
+
+        // Reveal the preview container
+        document.getElementById("googleLoading")?.classList.remove("hidden");
+
+        showToast("Almost done! Choose your level.");
+
+    } catch (err) {
+        googleRegisterBtn.disabled = false;
+        googleRegisterBtn.innerHTML = `
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
+            <span>Continue with Google</span>
+        `;
+        console.error("Google Register Error:", err);
+        showToast("Google sign-up failed.", "error");
     }
 }
