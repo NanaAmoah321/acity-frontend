@@ -61,6 +61,7 @@ const registerForm = document.getElementById("registerForm");
 if (registerForm) {
   registerForm.addEventListener("submit", async function(e) {
   e.preventDefault();
+  console.log("Register form submitted");
   
   const name = document.getElementById("fullName").value;
   const email = document.getElementById("email").value;
@@ -86,6 +87,9 @@ if (registerForm) {
             level,
             receive_marketplace_updates: document.getElementById("receiveMarketplaceUpdates")?.checked || false
         };
+
+    
+    console.log(endpoint, body);
 
     const res = await fetch(endpoint, {
         method: "POST",
