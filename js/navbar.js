@@ -4,6 +4,47 @@ var user =
 JSON.parse(
     localStorage.getItem("user")
 );
+
+const mobileLoginLink = document.getElementById("mobileLoginLink");
+const mobileRegisterLink = document.getElementById("mobileRegisterLink");
+const mobileProfileLink = document.getElementById("mobileProfileLink");
+const mobileLogoutLink = document.getElementById("mobileLogoutLink");
+const mobileCartLink = document.getElementById("mobileCartLink");
+const mobileCreateListingLink = document.getElementById("mobileCreateListingLink");
+const mobileInboxLink = document.getElementById("mobileInboxLink");
+const mobileNotificationsLink = document.getElementById("mobileNotificationsLink");
+const mobileUsersubtitle = document.getElementById("mobileUserSubtitle");
+
+function updateGuestMenu() {
+    const loggedIn = !!localStorage.getItem("token");
+
+    if (loggedIn) {
+        if (mobileLoginLink) mobileLoginLink.style.display = "none";
+        if (mobileRegisterLink) mobileRegisterLink.style.display = "none";
+
+        if (mobileProfileLink) mobileProfileLink.style.display = "flex";
+        if (mobileLogoutLink) mobileLogoutLink.style.display = "flex";
+        if (mobileCartLink) mobileCartLink.style.display = "flex";
+        if (mobileCreateListingLink) mobileCreateListingLink.style.display = "flex";
+        if (mobileInboxLink) mobileInboxLink.style.display = "flex";
+        if (mobileNotificationsLink) mobileNotificationsLink.style.display = "flex";
+        if (mobileUsersubtitle) mobileUsersubtitle.textContent = "Welcome back!" ;
+    } else {
+        if (mobileLoginLink) mobileLoginLink.style.display = "flex";
+        if (mobileRegisterLink) mobileRegisterLink.style.display = "flex";
+
+        if (mobileProfileLink) mobileProfileLink.style.display = "none";
+        if (mobileLogoutLink) mobileLogoutLink.style.display = "none";
+        if (mobileCartLink) mobileCartLink.style.display = "none";
+        if (mobileCreateListingLink) mobileCreateListingLink.style.display = "none";
+        if (mobileInboxLink) mobileInboxLink.style.display = "none";
+        if (mobileNotificationsLink) mobileNotificationsLink.style.display = "none";
+        if (mobileUsersubtitle) mobileUsersubtitle.textContent = "Sign in or create an account";
+    }
+}
+
+updateGuestMenu();
+
 const adminLink =
 document.getElementById(
     "adminLink"
@@ -333,6 +374,38 @@ navbarSearch?.addEventListener("input", (e) => {
         }
     }
 });
+
+function logout() {
+
+    showConfirmModal({
+
+        title: "Logout",
+
+        message: "Are you sure you want to log out?",
+
+        icon: "fa-right-from-bracket",
+
+        confirmText: "Logout",
+
+        confirmClass: "btn-primary",
+
+        onConfirm: () => {
+
+            localStorage.removeItem("token");
+
+            localStorage.removeItem("user");
+
+            window.location.href = "login.html";
+
+        }
+
+    });
+
+}
+
+
+
+window.logout = logout;
 window.loadCartCount = loadCartCount;
 updateMessageCount();
 window.updateMessageCount =

@@ -92,33 +92,7 @@ if (registerForm) {
 });
 }
 
-function logout() {
 
-    showConfirmModal({
-
-        title: "Logout",
-
-        message: "Are you sure you want to log out?",
-
-        icon: "fa-right-from-bracket",
-
-        confirmText: "Logout",
-
-        confirmClass: "btn-primary",
-
-        onConfirm: () => {
-
-            localStorage.removeItem("token");
-
-            localStorage.removeItem("user");
-
-            window.location.href = "login.html";
-
-        }
-
-    });
-
-}
 
 const userData = localStorage.getItem("user");
 if (userData) {
@@ -228,4 +202,59 @@ if(resetPasswordForm){
             }
         }
     );
+}
+
+// Google Sign-In
+if (document.getElementById("googleSignInBtn")) {
+
+    google.accounts.id.initialize({
+        client_id: "967147683947-j1d0ujljjjf4jufv1gfkdk2o5bbg7gog.apps.googleusercontent.com",
+        callback: handleGoogleLogin
+    });
+
+    document
+        .getElementById("googleSignInBtn")
+        .addEventListener("click", () => {
+
+            google.accounts.oauth2.initTokenClient({
+                client_id: "967147683947-j1d0ujljjjf4jufv1gfkdk2o5bbg7gog.apps.googleusercontent.com",
+                scope: "openid email profile",
+                callback: () => {}
+            });
+
+            google.accounts.id.prompt();
+        });
+
+}
+
+async function handleGoogleLogin(response) {
+    try {
+        const res = await fetch(
+            "https://acity-backend.onrender.com/api/auth/google",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    credential: response.credential
+                })
+            }
+        );
+
+        const data = await res.json();
+
+        if (res.ok) {
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("user", JSON.stringify(data.user));
+
+            showToast("Welcome to Acity Connect!");
+            window.location.href = "marketplace.html";
+        } else {
+            showToast(data.message || "Google sign-in failed.");
+        }
+    } catch (err) {
+        console.error("Google Login Error:", err);
+        showToast("Google sign-in failed.");
+    }
 }

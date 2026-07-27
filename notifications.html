@@ -50,7 +50,7 @@
     <!-- LEFT -->
     <div class="nav-left">
         <div class="logo">
-            <img src="images/acity_new_logo-removebg-preview.png">
+             <img src="favicon.png" alt="Acity Connect Logo">
             <div class="logo-text">
             </div>
         </div>
@@ -141,8 +141,8 @@
                 <i class="fa-solid fa-user"></i>
             </div>
             <div>
-                <h3 id="mobileUserName">Account</h3>
-                <small>Acity Connect</small>
+                <h3 id="mobileUserName">Welcome</h3>
+                <small id="mobileUserSubtitle">Sign in or create an account</small>
             </div>
         </div>
         <button id="closeMenu" class="close-menu">
@@ -154,6 +154,16 @@
             <i class="fa-solid fa-house"></i>
             Home
         </a>
+        <a href="login.html" id="mobileLoginLink" style="display:none;">
+            <i class="fa-solid fa-right-to-bracket"></i>
+            Login
+        </a>
+
+        <a href="register.html" id="mobileRegisterLink" style="display:none;">
+            <i class="fa-solid fa-user-plus"></i>
+            Register
+        </a>
+        <hr>
         <a href="marketplace.html">
             <i class="fa-solid fa-store"></i>
             Marketplace
@@ -162,27 +172,71 @@
             <i class="fa-solid fa-screwdriver-wrench"></i>
             Skills Connect
         </a>
-        <a href="create-listing.html">
+        <a href="create-listing.html" id="mobileCreateListingLink" >
             <i class="fa-solid fa-plus"></i>
             Sell Item
         </a>
         <hr>
-        <a href="inbox.html">
+        <a href="inbox.html" id="mobileInboxLink" >
             <i class="fa-solid fa-comments"></i>
             Inbox
             <small id="mobileMessageCount"></small>
         </a>
-        <a href="notifications.html">
+        <a href="notifications.html" id="mobileNotificationsLink" >
             <i class="fa-solid fa-bell"></i>
             Notifications
             <small id="mobileNotificationCount"></small>
         </a>
-        <a href="myCart.html">
+        <a href="myCart.html" id="mobileCartLink" >
             <i class="fa-solid fa-cart-shopping"></i>
             My Cart
             <small id="mobileCartCount"></small>
         </a>
-        <a href="profile.html">
+        <div class="mobile-theme">
+        <button
+            id="appearanceBtn"
+            class="appearance-btn"
+        >
+            <div class="appearance-left">
+                <i class="fa-solid fa-circle-half-stroke"></i>
+                <span>Appearance</span>
+            </div>
+            <i class="fa-solid fa-chevron-right"></i>
+        </button>
+        <div
+            id="appearanceMenu"
+            class="appearance-menu"
+        >
+            <div
+                class="theme-option"
+                data-theme="light"
+            >
+                <i class="fa-solid fa-sun"></i>
+                <span>Light</span>
+                <i class="fa-solid fa-check check"></i>
+            </div>
+            <div
+                class="theme-option"
+                data-theme="dark"
+            >
+                <i class="fa-solid fa-moon"></i>
+                <span>Dark</span>
+                <i class="fa-solid fa-check check"></i>
+            </div>
+            <div
+                class="theme-option"
+                data-theme="system"
+            >
+                <i class="fa-solid fa-desktop"></i>
+                <span>System</span>
+                <i class="fa-solid fa-check check"></i>
+            </div>
+        </div>
+        </div>
+        <div>
+
+        
+        <a href="profile.html" id="mobileProfileLink">
             <i class="fa-solid fa-user"></i>
             Profile
         </a>
@@ -195,10 +249,11 @@
             Admin
         </a>
         <hr>
-        <a href="#" onclick="logout()">
+        <a href="#" id="mobileLogoutLink" onclick="logout()">
             <i class="fa-solid fa-right-from-bracket"></i>
             Logout
         </a>
+        </div>
     </div>
 </div>
 <div class="mobile-overlay" id="mobileOverlay"></div>
