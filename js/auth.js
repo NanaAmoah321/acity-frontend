@@ -345,14 +345,7 @@ async function handleGoogleRegister(response) {
             return;
         }
 
-        // Populate form hidden & input fields
-        const googleCredentialInput = document.getElementById("googleCredential");
-        const fullNameInput = document.getElementById("fullName");
-        const emailInput = document.getElementById("email");
-
-        if (googleCredentialInput) googleCredentialInput.value = response.credential;
-        if (fullNameInput) fullNameInput.value = data.name || "";
-        if (emailInput) emailInput.value = data.email || "";
+        
 
         
 
