@@ -61,17 +61,7 @@
             <p>
                 Join the Academic City community.
             </p>
-            <button
-                type="button"
-                id="googleRegisterBtn"
-                class="btn btn-google btn-block"
-            >
-                <img
-                    src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
-                    alt="Google"
-                >
-                <span>Create Account with Google</span>
-            </button>
+            <div id="googleRegisterBtn" class="google-button-container"></div>
 
             <div id="googleLoading" class="hidden">
                 <div class="google-user-preview">
@@ -191,8 +181,8 @@
         </div>
     </div>
 </div>
-<script src="https://accounts.google.com/gsi/client" async defer></script>
 <script src="js/toast.js"></script>
-<script src="js/auth.js"></script>
+<script src="https://accounts.google.com/gsi/client" defer></script>
+<script src="js/auth.js" defer></script>
 </body>
 </html>

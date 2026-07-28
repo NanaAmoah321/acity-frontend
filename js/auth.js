@@ -233,7 +233,7 @@ if(resetPasswordForm){
 }
 
 // Google Sign-In
-const googleBtn = document.getElementById("googleSignInBtn");
+/*const googleBtn = document.getElementById("googleSignInBtn");
 const googleBtnHTML = googleBtn?.innerHTML;
 if (document.getElementById("googleSignInBtn")) {
 
@@ -394,5 +394,136 @@ async function handleGoogleRegister(response) {
         `;
         console.error("Google Register Error:", err);
         showToast("Google sign-up failed.", "error");
+    }
+} */
+
+    // Google Sign-In
+const GOOGLE_CLIENT_ID =
+    "967147683947-j1d0ujljjjf4jufv1gfkdk2o5bbg7gog.apps.googleusercontent.com";
+    
+
+const googleLoginContainer = document.getElementById("googleSignInBtn");
+const googleRegisterContainer = document.getElementById("googleRegisterBtn");
+
+function getGoogleProfile(credential) {
+    const encodedPayload = credential
+        .split(".")[1]
+        .replace(/-/g, "+")
+        .replace(/_/g, "/");
+
+    const bytes = Uint8Array.from(
+        atob(encodedPayload),
+        character => character.charCodeAt(0)
+    );
+
+    return JSON.parse(new TextDecoder().decode(bytes));
+}
+
+function renderGoogleButton(container, text) {
+    google.accounts.id.renderButton(container, {
+        theme: "outline",
+        size: "large",
+        text,
+        shape: "rectangular",
+        width: Math.min(
+            Math.floor(container.getBoundingClientRect().width),
+            400
+        )
+    });
+}
+
+if (googleLoginContainer || googleRegisterContainer) {
+    google.accounts.id.initialize({
+        client_id: GOOGLE_CLIENT_ID,
+        callback: googleLoginContainer
+            ? handleGoogleLogin
+            : handleGoogleRegister,
+
+        // Never silently reuse the previously selected account.
+        auto_select: false,
+        button_auto_select: false
+    });
+
+    if (googleLoginContainer) {
+        renderGoogleButton(googleLoginContainer, "continue_with");
+    }
+
+    if (googleRegisterContainer) {
+        renderGoogleButton(googleRegisterContainer, "signup_with");
+    }
+}
+
+async function handleGoogleLogin(response) {
+    try {
+        const res = await fetch(
+            "https://acity-backend.onrender.com/api/auth/google",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    credential: response.credential
+                })
+            }
+        );
+
+        const data = await res.json();
+
+        if (!res.ok) {
+            showToast(data.message || "Google sign-in failed.");
+            return;
+        }
+
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+
+        showToast(`Welcome, ${data.user.name}!`);
+
+        setTimeout(() => {
+            window.location.href = "marketplace.html";
+        }, 700);
+    } catch (err) {
+        console.error("Google Login Error:", err);
+        showToast("Google sign-in failed.");
+    }
+}
+
+function handleGoogleRegister(response) {
+    try {
+        // This is only for filling the preview.
+        // The backend still verifies the credential before creating the account.
+        const profile = getGoogleProfile(response.credential);
+
+        document.getElementById("googleCredential").value =
+            response.credential;
+
+        document.getElementById("fullName").value =
+            profile.name || "";
+
+        document.getElementById("email").value =
+            profile.email || "";
+
+        document.getElementById("googlePreviewName").textContent =
+            profile.name || "";
+
+        document.getElementById("googlePreviewEmail").textContent =
+            profile.email || "";
+
+        const previewImage = document.getElementById("googlePreviewImage");
+
+        if (previewImage) {
+            previewImage.src =
+                profile.picture || "images/default-avatar-image.jpg";
+        }
+
+        document
+            .getElementById("googleLoading")
+            ?.classList.remove("hidden");
+
+        showToast("Almost done! Choose your level.");
+    } catch (err) {
+        console.error("Google Register Error:", err);
+        showToast("Google sign-up failed.");
     }
 }

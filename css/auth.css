@@ -255,3 +255,13 @@ padding:30px;
 .auth-divider span {
     margin: 0 16px;
 }
+
+.google-button-container {
+    display: flex;
+    justify-content: center;
+    min-height: 44px;
+}
+
+.google-button-container > div {
+    width: 100% !important;
+}
