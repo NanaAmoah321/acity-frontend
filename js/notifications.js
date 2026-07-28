@@ -5,21 +5,6 @@ if (!token) {
     throw new Error("Authentication required");
 }
 
-const res = await fetch(url, options);
-
-if (res.status === 401) {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    window.location.replace("login.html");
-    return;
-}
-
-if (!res.ok) {
-    throw new Error("Could not load this information.");
-}
-
-const data = await res.json();
-
 let allNotifications = [];
 let currentFilter = "all";
 const container =
@@ -46,7 +31,23 @@ async function loadNotifications(){
         }
     );
     
+    if (res.status === 401) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        window.location.replace("login.html");
+        return;
+    }
+
+    if (!res.ok) {
+        throw new Error("Could not load notifications.");
+    }
+
     allNotifications = await res.json();
+
+    if (!Array.isArray(allNotifications)) {
+        throw new Error("Invalid notifications response.");
+    }
+
     container.innerHTML = "";
     
     if(allNotifications.length === 0){
@@ -62,6 +63,50 @@ async function loadNotifications(){
         return;
     }
     renderNotifications();
+}
+function getNotificationIcon(type) {
+    switch (type) {
+        case "order":
+            return `<i class="fa-solid fa-box"></i>`;
+
+        case "message":
+            return `<i class="fa-solid fa-comments"></i>`;
+
+        case "review":
+            return `<i class="fa-solid fa-star"></i>`;
+
+        case "service":
+            return `<i class="fa-solid fa-screwdriver-wrench"></i>`;
+
+        case "accepted":
+            return `<i class="fa-solid fa-circle-check"></i>`;
+
+        case "rejected":
+            return `<i class="fa-solid fa-circle-xmark"></i>`;
+
+        default:
+            return `<i class="fa-solid fa-bell"></i>`;
+    }
+}
+
+function timeAgo(date) {
+    const seconds = Math.floor(
+        (Date.now() - new Date(date)) / 1000
+    );
+
+    if (seconds < 60) {
+        return "Just now";
+    }
+
+    if (seconds < 3600) {
+        return `${Math.floor(seconds / 60)} min ago`;
+    }
+
+    if (seconds < 86400) {
+        return `${Math.floor(seconds / 3600)} hr ago`;
+    }
+
+    return `${Math.floor(seconds / 86400)} days ago`;
 }
 
 function renderNotifications() {
@@ -178,139 +223,75 @@ function renderNotifications() {
     });
 }
 
-// Handler function that actually marks notifications read and handles redirects
-async function openNotification(notificationId, type, partnerId, conversationName) {
-    const token = localStorage.getItem("token");
-
-    // 1. If it's a message, set the localStorage properties so messages.html can pick them up
-    if (type === "message" && partnerId) {
-        localStorage.setItem("openConversationWith", partnerId);
-        localStorage.setItem("openConversationName", conversationName || "Chat");
-    }
-
-    // 2. Mark the notification as read on the backend database
+async function openNotification(
+    notificationId,
+    type,
+    conversationUserId,
+    conversationName
+) {
     try {
-        await fetch(`https://acity-backend.onrender.com/api/notifications/${notificationId}/read`, {
-            method: "PATCH",
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        });
-    } catch (err) {
-        console.error("Failed to mark notification as read:", err);
-    }
-
-    // 3. Route user to correct page
-    if (type === "message") {
-        window.location.href = "messages.html"; // Ensure this matches your messages layout path
-    } else if (type === "order" || type === "accepted" || type === "rejected") {
-        window.location.href = "orders.html";
-    } else {
-        // Reload to update reading status indicator if no redirect is required
-        loadNotifications();
-    }
-}
-async function openNotification(id, type, conversationUserId) {
-    const token = localStorage.getItem("token");
-    await fetch(
-        `https://acity-backend.onrender.com/api/notifications/${id}/read`,
-        {
-            method: "PATCH",
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        }
-    );
-   if (type === "message") {
-    if (!conversationUserId) {
-        showToast("Conversation not found.");
-        return;
-    }
-    localStorage.setItem(
-        "openConversationWith",
-        conversationUserId
-    );
-    window.location.href = "inbox.html";
-    return;
-    }
-    if (type === "order") {
-        window.location.href = "profile.html";
-    }
-}
-function getNotificationIcon(type){
-    switch(type){
-        case "order":
-            return `<i class="fa-solid fa-box"></i>`;
-        case "message":
-            return `<i class="fa-solid fa-comments"></i>`;
-        case "review":
-            return `<i class="fa-solid fa-star"></i>`;
-        case "service":
-            return `<i class="fa-solid fa-screwdriver-wrench"></i>`;
-        case "accepted":
-            return `<i class="fa-solid fa-circle-check"></i>`;
-        case "rejected":
-            return `<i class="fa-solid fa-circle-xmark"></i>`;
-        default:
-            return `<i class="fa-solid fa-bell"></i>`;
-    }
-}
-function timeAgo(date){
-    const seconds =
-    Math.floor(
-        (Date.now() - new Date(date))
-        /1000
-    );
-    if(seconds < 60)
-        return "Just now";
-    if(seconds < 3600)
-        return `${Math.floor(seconds/60)} min ago`;
-    if(seconds < 86400)
-        return `${Math.floor(seconds/3600)} hr ago`;
-    return `${Math.floor(seconds/86400)} days ago`;
-}
-document
-.querySelectorAll(".notification-filter")
-.forEach(button=>{
-    button.addEventListener(
-        "click",
-        ()=>{
-            document
-            .querySelectorAll(".notification-filter")
-            .forEach(btn=>
-                btn.classList.remove("active")
-            );
-            button.classList.add("active");
-            currentFilter =
-            button.dataset.filter;
-            renderNotifications();
-        }
-    );
-});
-const markAllReadBtn =
-document.getElementById(
-    "markAllRead"
-);
-if(markAllReadBtn){
-    markAllReadBtn.addEventListener(
-        "click",
-        async()=>{
-            const token =
-            localStorage.getItem("token");
-            await fetch(
-                "https://acity-backend.onrender.com/api/notifications/read-all",
-                {
-                    method:"PATCH",
-                    headers:{
-                        Authorization:`Bearer ${token}`
-                    }
+        const res = await fetch(
+            `https://acity-backend.onrender.com/api/notifications/${notificationId}/read`,
+            {
+                method: "PATCH",
+                headers: {
+                    Authorization: `Bearer ${token}`
                 }
-            );
-            loadNotifications();
-            if(window.updateNotificationCount){
-                window.updateNotificationCount();
             }
+        );
+
+        if (res.status === 401) {
+            localStorage.removeItem("token");
+            localStorage.removeItem("user");
+            window.location.replace("login.html");
+            return;
         }
-    );
+
+        if (!res.ok) {
+            throw new Error("Could not update notification.");
+        }
+
+        if (type === "message") {
+            if (!conversationUserId) {
+                showToast("Conversation not found.", "error");
+                return;
+            }
+
+            localStorage.setItem(
+                "openConversationWith",
+                conversationUserId
+            );
+
+            localStorage.setItem(
+                "openConversationName",
+                conversationName || "Chat"
+            );
+
+            window.location.href = "inbox.html";
+            return;
+        }
+
+        if (
+            type === "order" ||
+            type === "accepted" ||
+            type === "rejected"
+        ) {
+            window.location.href = "profile.html";
+            return;
+        }
+
+        await loadNotifications();
+
+        if (window.updateNotificationCount) {
+            window.updateNotificationCount();
+        }
+    } catch (err) {
+        console.error("Notification action error:", err);
+        showToast(
+            "Could not update this notification.",
+            "error"
+        );
+    }
 }
+
 loadNotifications();

@@ -1,45 +1,38 @@
+const currentUser =
+    JSON.parse(localStorage.getItem("user"));
+
 const token = localStorage.getItem("token");
 
-if (!token) {
+if (!token || !currentUser) {
     window.location.replace("login.html");
     throw new Error("Authentication required");
 }
 
-const res = await fetch(url, options);
+function safeUrl(value) {
+    try {
+        const url = new URL(value, window.location.origin);
 
-if (res.status === 401) {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    window.location.replace("login.html");
-    return;
+        if (
+            url.protocol === "https:" ||
+            url.origin === window.location.origin
+        ) {
+            return url.href;
+        }
+    } catch {
+        return null;
+    }
+
+    return null;
 }
 
-if (!res.ok) {
-    throw new Error("Could not load this information.");
-}
-
-const data = await res.json();
-
-console.log(
-    JSON.parse(localStorage.getItem("conversationListing"))
-);
 const socket = io(
     "https://acity-backend.onrender.com"
 );
 
-const currentUser =
-JSON.parse(
-    localStorage.getItem("user")
+socket.emit(
+    "join",
+    currentUser.id
 );
-
-if(currentUser){
-
-    socket.emit(
-        "join",
-        currentUser.id
-    );
-
-}
 
 
 const reviewModal =
@@ -103,26 +96,44 @@ function updateConversationCard(message){
 }
 
 async function loadInbox() {
-    const token = localStorage.getItem("token");
     try {
         conversationList.innerHTML = "";
-        for(let i=0;i<5;i++){
-        conversationList.innerHTML += `
-        <div class="inbox-skeleton skeleton-card">
-        </div>
-        `;
+
+        for (let i = 0; i < 5; i++) {
+            conversationList.innerHTML += `
+                <div class="inbox-skeleton skeleton-card"></div>
+            `;
         }
+
         const res = await fetch(
             "https://acity-backend.onrender.com/api/messages/conversations",
             {
                 headers: {
-                    "Authorization": `Bearer ${token}`
+                    Authorization: `Bearer ${token}`
                 }
             }
         );
+
+        if (res.status === 401) {
+            localStorage.removeItem("token");
+            localStorage.removeItem("user");
+            window.location.replace("login.html");
+            return;
+        }
+
+        if (!res.ok) {
+            throw new Error("Could not load conversations.");
+        }
+
         const messages = await res.json();
-        conversationList.innerHTML = "";
-        if(messages.length === 0){
+
+        if (!Array.isArray(messages)) {
+            throw new Error("Invalid conversations response.");
+        }
+
+        conversationList.replaceChildren();
+
+        if (messages.length === 0) {
             conversationList.innerHTML = `
                 <div class="empty-state">
                     <i class="fa-solid fa-comments"></i>
@@ -132,292 +143,391 @@ async function loadInbox() {
             `;
             return;
         }
-        messages.forEach(msg => {
-            (msg);
-            const card =
-                document.createElement("div");
-            card.dataset.userId =
-            msg.conversation_user_id;
-            card.classList.add("conversation-card");
-            card.innerHTML = `
-<div class="conversation-avatar">
-    ${msg.conversation_name?.charAt(0).toUpperCase() || "U"}
-</div>
-<div class="conversation-content">
-    <div class="conversation-top">
-        <span class="conversation-name">
-            ${msg.conversation_name || "Conversation"}
-        </span>
-        <span class="conversation-time">
-            ${new Date(msg.created_at).toLocaleTimeString([],{
-                hour:"2-digit",
-                minute:"2-digit"
-            })}
-        </span>
-    </div>
-    <div class="conversation-item">
-        Marketplace
-    </div>
-    <div class="conversation-preview">
-        ${msg.message}
-    </div>
-</div>
-`;
-card.onclick = () => {
 
-    openConversation(
+        messages.forEach(message => {
+            const card = document.createElement("div");
 
-        msg.conversation_user_id,
+            card.setAttribute("role", "button");
+            card.tabIndex = 0;
+            card.dataset.userId = message.conversation_user_id;
+            card.className = "conversation-card";
 
-        msg.conversation_name
+            const avatar = document.createElement("div");
+            avatar.className = "conversation-avatar";
+            avatar.textContent =
+                (message.conversation_name || "U")
+                    .charAt(0)
+                    .toUpperCase();
 
-    );
+            const content = document.createElement("div");
+            content.className = "conversation-content";
 
-    if(window.innerWidth <= 900){
+            const top = document.createElement("div");
+            top.className = "conversation-top";
 
-        document.querySelector(".conversation-sidebar").style.display = "none";
+            const name = document.createElement("span");
+            name.className = "conversation-name";
+            name.textContent =
+                message.conversation_name || "Conversation";
 
-        document.querySelector(".chat-area").classList.add("active");
+            const time = document.createElement("span");
+            time.className = "conversation-time";
+            time.textContent = new Date(
+                message.created_at
+            ).toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit"
+            });
 
-    }
+            top.append(name, time);
 
-};
+            const item = document.createElement("div");
+            item.className = "conversation-item";
+            item.textContent = "Marketplace";
+
+            const preview = document.createElement("div");
+            preview.className = "conversation-preview";
+            preview.textContent = message.message || "Attachment";
+
+            content.append(top, item, preview);
+            card.append(avatar, content);
+
+            card.addEventListener("click", () => {
+                openConversation(
+                    message.conversation_user_id,
+                    message.conversation_name
+                );
+
+                if (window.innerWidth <= 900) {
+                    document.querySelector(
+                        ".conversation-sidebar"
+                    ).style.display = "none";
+
+                    document.querySelector(
+                        ".chat-area"
+                    ).classList.add("active");
+                }
+            });
+
             conversationList.appendChild(card);
         });
     } catch (err) {
-        console.error(err);
+        console.error("Inbox load error:", err);
+
+        conversationList.innerHTML = `
+            <div class="empty-state">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <h3>Could not load conversations</h3>
+                <p>Please refresh the page and try again.</p>
+            </div>
+        `;
     }
 }
 
 let activeUserId = null;
 let selectedAttachment = null;
 
+function readStoredJSON(key) {
+    try {
+        return JSON.parse(localStorage.getItem(key));
+    } catch {
+        return null;
+    }
+}
 
-async function openConversation(userId, conversationName){
-    console.log("Opening conversation with", userId);
-    activeUserId = userId;
-    
-    const token = localStorage.getItem("token");
+async function openConversation(userId, conversationName) {
+    activeUserId = Number(userId);
+
     const empty = document.getElementById("emptyChat");
     const chatPanel = document.getElementById("chatPanel");
-    
-    if (empty) empty.style.display = "none";
-    if (chatPanel) chatPanel.style.display = "flex";
-    
-    const res = await fetch(
-        `https://acity-backend.onrender.com/api/messages/conversation/${userId}`,
-        {
-            headers:{
-                Authorization:`Bearer ${token}`
-            }
-        }
-    );
-    
-    console.log("Fetch status:", res.status);
-    const messages = await res.json();
-    console.log("Fetched messages:", messages);
-
-    // Dynamic Name Recovery Logic:
-    // If conversationName was not passed or is invalid, we inspect the loaded messages 
-    // to pull the real receiver name dynamically.
-    let resolvedName = conversationName;
-    
-    if (!resolvedName || resolvedName === "null" || resolvedName === "undefined" || resolvedName === "Chat") {
-        // Try to find a message in the conversation history where the other user is involved
-        const representativeMessage = messages.find(m => m.sender_id != userId || m.receiver_id != userId);
-        
-        if (representativeMessage) {
-            // Check if the API returned populated user structures (e.g., sender_name or profile)
-            if (representativeMessage.sender_id == userId) {
-                resolvedName = representativeMessage.sender_name || representativeMessage.sender_full_name;
-            } else {
-                resolvedName = representativeMessage.receiver_name || representativeMessage.receiver_full_name;
-            }
-        }
-        
-        // If the messages didn't have readable name fields, we default to the UI sidebar fallback
-        if (!resolvedName) {
-            const sidebarCard = document.querySelector(`.conversation-card[data-user-id="${userId}"] h4`);
-            resolvedName = sidebarCard ? sidebarCard.textContent.trim() : "User";
-        }
-    }
-    
     const header = document.getElementById("chatHeader");
-    if (header) {
-        header.innerHTML = `
-        <div class="chat-user">
-            <button
-                class="back-btn"
-                onclick="backToInbox()"
-            >
-                <i class="fa-solid fa-arrow-left"></i>
-            </button>
+    const context = document.getElementById("conversationContext");
+    const messagesContainer =
+        document.getElementById("messagesContainer");
 
-            <div class="conversation-avatar">
-                ${resolvedName.charAt(0).toUpperCase()}
-            </div>
+    if (empty) {
+        empty.style.display = "none";
+    }
 
-            <div>
-                <h3>${resolvedName}</h3>
-                <small>Active conversation</small>
-            </div>
-        </div>
+    if (chatPanel) {
+        chatPanel.style.display = "flex";
+    }
 
-        <button
-            id="reviewBtn"
-            class="btn btn-outline btn-sm"
-        >
-            <i class="fa-solid fa-star"></i>
-            Leave Review
-        </button>
+    if (messagesContainer) {
+        messagesContainer.innerHTML = `
+            <div class="inbox-skeleton skeleton-card"></div>
+            <div class="inbox-skeleton skeleton-card"></div>
+            <div class="inbox-skeleton skeleton-card"></div>
         `;
     }
 
-    const reviewBtn = document.getElementById("reviewBtn");
-    if (reviewBtn) {
-        reviewBtn.addEventListener("click", () => {
-            const reviewModal = document.getElementById("reviewModal");
-            if (reviewModal) {
-                reviewModal.classList.add("active");
+    try {
+        const res = await fetch(
+            `https://acity-backend.onrender.com/api/messages/conversation/${activeUserId}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
             }
-        });
-        reviewBtn.style.display = "inline-flex";
-    }
+        );
 
-    const context = document.getElementById("conversationContext");
-    if (context) {
-        const listing = JSON.parse(localStorage.getItem("conversationListing"));
-        const service = JSON.parse(localStorage.getItem("conversationService"));
+        if (res.status === 401) {
+            localStorage.removeItem("token");
+            localStorage.removeItem("user");
+            window.location.replace("login.html");
+            return;
+        }
 
-        context.style.display = "none";
-        context.innerHTML = "";
+        if (!res.ok) {
+            throw new Error("Could not load this conversation.");
+        }
 
-        if(listing){
-            context.style.display = "block";
-            context.innerHTML = `
-                <div class="context-card">
-                    <img
-                        class="context-image"
-                        src="${listing.image || `images/${listing.category}.jpg`}"
-                        onerror="this.src='images/Other.jpg'"
-                    >
-                    <div class="context-info">
-                        <div class="context-type">
-                            Marketplace Item
-                        </div>
-                        <div class="context-title">
-                            ${listing.title}
-                        </div>
-                        <div class="context-subtitle">
-                            GH₵${listing.price}
-                        </div>
-                    </div>
+        const messages = await res.json();
+
+        if (!Array.isArray(messages)) {
+            throw new Error("Invalid conversation response.");
+        }
+
+        let resolvedName = conversationName;
+
+        if (
+            !resolvedName ||
+            resolvedName === "null" ||
+            resolvedName === "undefined" ||
+            resolvedName === "Chat"
+        ) {
+            const representativeMessage = messages.find(
+                message =>
+                    Number(message.sender_id) === activeUserId ||
+                    Number(message.receiver_id) === activeUserId
+            );
+
+            if (representativeMessage) {
+                const otherUserSentMessage =
+                    Number(representativeMessage.sender_id) === activeUserId;
+
+                resolvedName = otherUserSentMessage
+                    ? (
+                        representativeMessage.sender_name ||
+                        representativeMessage.sender_full_name
+                    )
+                    : (
+                        representativeMessage.receiver_name ||
+                        representativeMessage.receiver_full_name
+                    );
+            }
+        }
+
+        resolvedName = resolvedName || "User";
+
+        if (header) {
+            header.replaceChildren();
+
+            const chatUser = document.createElement("div");
+            chatUser.className = "chat-user";
+
+            const backButton = document.createElement("button");
+            backButton.type = "button";
+            backButton.className = "back-btn";
+            backButton.innerHTML =
+                `<i class="fa-solid fa-arrow-left"></i>`;
+
+            backButton.addEventListener("click", backToInbox);
+
+            const avatar = document.createElement("div");
+            avatar.className = "conversation-avatar";
+            avatar.textContent =
+                resolvedName.charAt(0).toUpperCase();
+
+            const details = document.createElement("div");
+
+            const name = document.createElement("h3");
+            name.textContent = resolvedName;
+
+            const status = document.createElement("small");
+            status.textContent = "Active conversation";
+
+            details.append(name, status);
+            chatUser.append(backButton, avatar, details);
+
+            const reviewButton = document.createElement("button");
+            reviewButton.type = "button";
+            reviewButton.id = "reviewBtn";
+            reviewButton.className = "btn btn-outline btn-sm";
+            reviewButton.innerHTML = `
+                <i class="fa-solid fa-star"></i>
+                Leave Review
+            `;
+
+            reviewButton.addEventListener("click", () => {
+                reviewModal?.classList.add("active");
+            });
+
+            header.append(chatUser, reviewButton);
+        }
+
+        if (context) {
+            const listing = readStoredJSON("conversationListing");
+            const service = readStoredJSON("conversationService");
+
+            context.replaceChildren();
+            context.style.display = "none";
+
+            if (listing) {
+                context.style.display = "block";
+
+                const card = document.createElement("div");
+                card.className = "context-card";
+
+                const image = document.createElement("img");
+                image.className = "context-image";
+                image.alt = "Marketplace item";
+                image.src =
+                    safeUrl(listing.image_url || listing.image) ||
+                    "images/Other.jpg";
+
+                image.onerror = () => {
+                    image.src = "images/Other.jpg";
+                };
+
+                const info = document.createElement("div");
+                info.className = "context-info";
+
+                const type = document.createElement("div");
+                type.className = "context-type";
+                type.textContent = "Marketplace Item";
+
+                const title = document.createElement("div");
+                title.className = "context-title";
+                title.textContent = listing.title || "Marketplace Item";
+
+                const price = document.createElement("div");
+                price.className = "context-subtitle";
+                price.textContent =
+                    `GH₵${Number(listing.price || 0).toFixed(2)}`;
+
+                info.append(type, title, price);
+                card.append(image, info);
+                context.appendChild(card);
+
+                localStorage.removeItem("conversationListing");
+            } else if (service) {
+                context.style.display = "block";
+
+                const card = document.createElement("div");
+                card.className = "context-card";
+
+                const icon = document.createElement("div");
+                icon.className = "context-image";
+                icon.innerHTML =
+                    `<i class="fa-solid fa-briefcase"></i>`;
+
+                const info = document.createElement("div");
+                info.className = "context-info";
+
+                const type = document.createElement("div");
+                type.className = "context-type";
+                type.textContent = "Service";
+
+                const title = document.createElement("div");
+                title.className = "context-title";
+                title.textContent = service.title || "Service";
+
+                const category = document.createElement("div");
+                category.className = "context-subtitle";
+                category.textContent = service.category || "Other";
+
+                info.append(type, title, category);
+                card.append(icon, info);
+                context.appendChild(card);
+
+                localStorage.removeItem("conversationService");
+            }
+        }
+
+        renderConversation(messages);
+
+        if (messagesContainer) {
+            messagesContainer.scrollTop =
+                messagesContainer.scrollHeight;
+        }
+    } catch (err) {
+        console.error("Conversation load error:", err);
+
+        if (messagesContainer) {
+            messagesContainer.innerHTML = `
+                <div class="empty-chat">
+                    <h3>Could not load this conversation</h3>
+                    <p>Please try again.</p>
                 </div>
             `;
-            localStorage.removeItem("conversationListing");
         }
-        else if(service){
-            context.style.display = "block";
-            context.innerHTML = `
-                <div class="context-card">
-                    <div class="context-image">
-                        <i class="fa-solid fa-briefcase"></i>
-                    </div>
-                    <div class="context-info">
-                        <div class="context-type">
-                            Service
-                        </div>
-                        <div class="context-title">
-                            ${service.title}
-                        </div>
-                        <div class="context-subtitle">
-                            ${service.category}
-                        </div>
-                    </div>
-                </div>
-            `;
-            localStorage.removeItem("conversationService");
-        }
-    }
 
-    renderConversation(messages);
-    
-    const container = document.getElementById("messagesContainer");
-    if (container) {
-        container.scrollTop = container.scrollHeight;
+        showToast("Could not load this conversation.", "error");
     }
 }
-function createMessageBubble(message){
 
-    const bubble =
-    document.createElement("div");
+function createMessageBubble(message) {
+    const bubble = document.createElement("div");
 
-    bubble.dataset.messageId =
-    message.id;
+    bubble.dataset.messageId = message.id;
 
     bubble.className =
         `message ${
-            message.sender_id ==
-            currentUser.id
-            ? "sent"
-            : "received"
+            Number(message.sender_id) === Number(currentUser.id)
+                ? "sent"
+                : "received"
         }`;
 
-    bubble.innerHTML = `
-        
-            ${
-                message.message?.trim()
-                ?
-                `<div>${message.message}</div>`
-                :
-                ""
+    if (message.message?.trim()) {
+        const text = document.createElement("div");
+        text.className = "message-text";
+        text.textContent = message.message;
+        bubble.appendChild(text);
+    }
+
+    if (message.file_url) {
+        const fileUrl = safeUrl(message.file_url);
+
+        if (fileUrl) {
+            if (message.file_type?.startsWith("image/")) {
+                const image = document.createElement("img");
+
+                image.src = fileUrl;
+                image.alt = "Message attachment";
+                image.className = "chat-image";
+
+                bubble.appendChild(image);
+            } else {
+                const file = document.createElement("a");
+
+                file.href = fileUrl;
+                file.target = "_blank";
+                file.rel = "noopener noreferrer";
+                file.className = "chat-file";
+                file.textContent =
+                    message.file_name || "Open attachment";
+
+                bubble.appendChild(file);
             }
-        
-
-        ${
-            message.file_url
-            ?
-            message.file_type &&
-            message.file_type.startsWith("image/")
-            ?
-            `
-            <img
-                src="${message.file_url}"
-                class="chat-image"
-            >
-            `
-            :
-            `
-            <a
-                href="${message.file_url}"
-                target="_blank"
-                class="chat-file"
-            >
-                <i class="fa-solid fa-file"></i>
-                ${message.file_name}
-            </a>
-            `
-            :
-            ""
         }
+    }
 
-        <span class="message-time">
+    const time = document.createElement("span");
 
-            ${new Date(message.created_at)
-            .toLocaleTimeString([],{
+    time.className = "message-time";
+    time.textContent = new Date(
+        message.created_at
+    ).toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit"
+    });
 
-                hour:"2-digit",
-
-                minute:"2-digit"
-
-            })}
-
-        </span>
-    `;
+    bubble.appendChild(time);
 
     return bubble;
-
 }
+
 function renderConversation(messages){
     const container =
     document.getElementById("messagesContainer");
