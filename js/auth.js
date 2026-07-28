@@ -399,7 +399,7 @@ async function handleGoogleRegister(response) {
 
     // Google Sign-In
 const GOOGLE_CLIENT_ID =
-    "967147683947-j1d0ujljjjf4jufv1gfkdk2o5bbg7gog.apps.googleusercontent.com";
+    "880781376378-7k0b4kduohkmq7ubtj19n1g0g120i81j.apps.googleusercontent.com";
     
 
 const googleLoginContainer = document.getElementById("googleSignInBtn");
