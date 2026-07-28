@@ -234,6 +234,7 @@ padding:30px;
 .btn-google img {
     width: 20px;
     height: 20px;
+    border-radius: 50%;
 }
 
 .auth-divider {
@@ -260,8 +261,22 @@ padding:30px;
     display: flex;
     justify-content: center;
     min-height: 44px;
+    border-radius: 12px;
 }
 
 .google-button-container > div {
     width: 100% !important;
+}
+
+.google-button-container:disabled {
+    opacity: .75;
+    cursor: not-allowed;
+}
+
+
+
+.google-button-container img {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
 }
