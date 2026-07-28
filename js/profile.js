@@ -404,6 +404,23 @@ function showBuyerActions(){
 
 }
 
+function safeImageUrl(value) {
+    try {
+        const url = new URL(value, window.location.origin);
+
+        if (
+            url.protocol === "https:" ||
+            url.origin === window.location.origin
+        ) {
+            return url.href;
+        }
+    } catch {
+        return null;
+    }
+
+    return null;
+}
+
 async function loadMyItems() {
 
     const token = localStorage.getItem("token");
@@ -540,96 +557,99 @@ async function loadMyItems() {
 
         // Listing Cards
 
-        items
-        .slice(0,6)
-        .forEach(item=>{
-
-            const statusClass =
-
-                item.status === "sold"
-
-                ? "sold"
-
-                : "active";
-
+        items.slice(0, 6).forEach(item => {
             const card = document.createElement("div");
 
-            // Added 'profile-card' back to ensure editItem's querySelector works properly
-            card.className = "profile-card my-item-card fade-up";
+            card.className =
+                "profile-card my-item-card fade-up";
 
-            card.innerHTML = `
+            const listingCard = document.createElement("div");
+            listingCard.className = "listing-card";
 
-                <div class="listing-card">
+            const image = document.createElement("img");
+            image.className = "listing-image";
+            image.alt = item.title || "Listing image";
+            image.src =
+                safeImageUrl(item.image_url) ||
+                "images/Other.jpg";
 
-                    <img
+            image.onerror = () => {
+                image.src = "images/Other.jpg";
+            };
 
-                        src="${item.image_url || `images/${item.category}.jpg`}"
+            const content = document.createElement("div");
+            content.className = "listing-content";
 
-                        class="listing-image"
+            const top = document.createElement("div");
+            top.className = "listing-top";
 
-                        onerror="this.src='images/Other.jpg'"
+            const title = document.createElement("h3");
+            title.textContent = item.title || "Untitled Listing";
 
-                    >
+            const status = document.createElement("span");
+            status.className =
+                `listing-status ${
+                    item.status === "sold" ? "sold" : "active"
+                }`;
 
-                    <div class="listing-content">
+            status.textContent =
+                item.status === "sold" ? "Sold" : "Active";
 
-                        <div class="listing-top">
+            top.append(title, status);
 
-                            <h3>${item.title}</h3>
+            const price = document.createElement("div");
+            price.className = "listing-price";
 
-                            <span class="listing-status ${statusClass}">
+            const numericPrice = Number(item.price);
 
-                                ${item.status}
+            price.textContent = Number.isFinite(numericPrice)
+                ? `GH₵${numericPrice.toFixed(2)}`
+                : "Price unavailable";
 
-                            </span>
+            const actions = document.createElement("div");
+            actions.className = "listing-actions";
 
-                        </div>
+            const editButton = document.createElement("button");
+            editButton.type = "button";
+            editButton.title = "Edit";
+            editButton.innerHTML =
+                `<i class="fa-solid fa-pen"></i>`;
 
-                        <div class="listing-price">
+            editButton.addEventListener("click", () => {
+                editItem(item.id);
+            });
 
-                            GH₵${item.price}
+            const soldButton = document.createElement("button");
+            soldButton.type = "button";
+            soldButton.title = "Mark Sold";
+            soldButton.innerHTML =
+                `<i class="fa-solid fa-check"></i>`;
 
-                        </div>
+            soldButton.addEventListener("click", () => {
+                markSold(item.id);
+            });
 
-                        <div class="listing-actions">
+            const deleteButton = document.createElement("button");
+            deleteButton.type = "button";
+            deleteButton.title = "Delete";
+            deleteButton.innerHTML =
+                `<i class="fa-solid fa-trash"></i>`;
 
-                            <button
-                                onclick="editItem(${item.id})"
-                                title="Edit"
-                            >
+            deleteButton.addEventListener("click", () => {
+                deleteItem(item.id);
+            });
 
-                                <i class="fa-solid fa-pen"></i>
+            actions.append(
+                editButton,
+                soldButton,
+                deleteButton
+            );
 
-                            </button>
-
-                            <button
-                                onclick="markSold(${item.id})"
-                                title="Mark Sold"
-                            >
-
-                                <i class="fa-solid fa-check"></i>
-
-                            </button>
-
-                            <button
-                                onclick="deleteItem(${item.id})"
-                                title="Delete"
-                            >
-
-                                <i class="fa-solid fa-trash"></i>
-
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            `;
+            content.append(top, price, actions);
+            listingCard.append(image, content);
+            card.appendChild(listingCard);
 
             ItemsContainer.appendChild(card);
-
         });
 
     }

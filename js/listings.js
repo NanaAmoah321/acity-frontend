@@ -24,6 +24,36 @@ document
 function getStoreImage(category) {
     return `images/${category || "Other"}.jpg`;
 }
+
+function safeImageUrl(value, fallback = "images/Other.jpg") {
+    const imageValue = String(value || "")
+        .trim()
+        .toLowerCase();
+
+    if (
+        !imageValue ||
+        imageValue === "null" ||
+        imageValue === "undefined"
+    ) {
+        return fallback;
+    }
+
+    try {
+        const url = new URL(value, window.location.origin);
+
+        if (
+            url.protocol === "https:" ||
+            url.origin === window.location.origin
+        ) {
+            return url.href;
+        }
+    } catch {
+        return fallback;
+    }
+
+    return fallback;
+}
+
 async function loadItems() {
     const res = await fetch(
         "https://acity-backend.onrender.com/api/listings/stores?t=${Date.now()}",
@@ -34,78 +64,193 @@ async function loadItems() {
     allStores = await res.json();
     renderStores(allStores);
 }
-function renderStores(stores){
+function renderStores(stores) {
     const searchText = searchInput
         ? searchInput.value.toLowerCase().trim()
         : "";
+
     const filteredStores = stores.filter(store => {
+        const storeName =
+            String(store.store_name || "").toLowerCase();
+
+        const category =
+            String(store.store_category || "").toLowerCase();
+
+        const sellerName =
+            String(store.seller_name || "").toLowerCase();
+
         const matchesSearch =
-            store.store_name
-                .toLowerCase()
-                .includes(searchText)
-            ||
-            (store.store_category || "")
-                .toLowerCase()
-                .includes(searchText)
-            ||
-            (store.seller_name || "")
-                .toLowerCase()
-                .includes(searchText);
+            storeName.includes(searchText) ||
+            category.includes(searchText) ||
+            sellerName.includes(searchText);
+
         const matchesCategory =
-            selectedCategory === "All"
-            ||
-            (store.store_category || "")
-                .toLowerCase()
-                .trim() ===
-            selectedCategory
-                .toLowerCase()
-                .trim();
+            selectedCategory === "All" ||
+            category.trim() ===
+                selectedCategory.toLowerCase().trim();
+
         return matchesSearch && matchesCategory;
     });
-    ItemsContainer.innerHTML = "";
-    if(filteredStores.length === 0){
+
+    ItemsContainer.replaceChildren();
+
+    if (filteredStores.length === 0) {
         ItemsContainer.innerHTML = `
-        <div class="empty-state">
-            <i class="fa-solid fa-store-slash"></i>
-            <h3>No Stores Found</h3>
-            <p>
-                Try another search or category.
-            </p>
-        </div>
+            <div class="empty-state">
+                <i class="fa-solid fa-store-slash"></i>
+                <h3>No Stores Found</h3>
+                <p>Try another search or category.</p>
+            </div>
         `;
         return;
     }
-    filteredStores.forEach(store=>{
-        const card = document.createElement("div");
+
+    filteredStores.forEach(store => {
+        const card = document.createElement("article");
         card.className = "store-card";
-        card.innerHTML = `
-<img
-src="${getStoreImage(store.store_category)}"
-class="store-image"
->
-<div class="store-info">
-    <span class="store-category">
-        ${store.store_category || "General"}
-    </span>
-    <h3>
-        ${store.store_name}'s Store
-    </h3>
-    <p>
-        ⭐ ${store.average_rating || "New Store"}
-    </p>
-    <p>
-        ${store.total_products} Products
-    </p>
-    <button
-        onclick="viewStore(${store.user_id})"
-    >
-        Visit Store
-    </button>
-</div>
-`;
+
+        const image = document.createElement("img");
+        image.className = "store-image";
+        image.alt = `${store.store_name || "Store"} image`;
+        image.src = safeImageUrl(
+            getStoreImage(store.store_category)
+        );
+
+        image.onerror = () => {
+            image.src = "images/Other.jpg";
+        };
+
+        const info = document.createElement("div");
+        info.className = "store-info";
+
+        const category = document.createElement("span");
+        category.className = "store-category";
+        category.textContent =
+            store.store_category || "General";
+
+        const name = document.createElement("h3");
+        name.textContent =
+            `${store.store_name || "Student"}'s Store`;
+
+        const rating = document.createElement("p");
+        rating.textContent =
+            `⭐ ${store.average_rating || "New Store"}`;
+
+        const productCount = document.createElement("p");
+        productCount.textContent =
+            `${Number(store.total_products || 0)} Products`;
+
+        const visitButton = document.createElement("button");
+        visitButton.type = "button";
+        visitButton.textContent = "Visit Store";
+
+        visitButton.addEventListener("click", () => {
+            viewStore(store.user_id);
+        });
+
+        info.append(
+            category,
+            name,
+            rating,
+            productCount,
+            visitButton
+        );
+
+        card.append(image, info);
         ItemsContainer.appendChild(card);
     });
 }
+
+function createPublicListingCard(item) {
+    const card = document.createElement("article");
+    card.className = "featured-card";
+
+    card.setAttribute("role", "button");
+    card.tabIndex = 0;
+
+    const openListing = () => {
+        viewListing(item.user_id);
+    };
+
+    card.addEventListener("click", openListing);
+
+    card.addEventListener("keydown", event => {
+        if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            openListing();
+        }
+    });
+
+    const imageWrapper = document.createElement("div");
+    imageWrapper.className = "featured-image";
+
+    const image = document.createElement("img");
+    image.alt = item.title || "Listing image";
+    image.src = safeImageUrl(item.image_url);
+
+    image.onerror = () => {
+        image.src = "images/Other.jpg";
+    };
+
+    imageWrapper.appendChild(image);
+
+    const info = document.createElement("div");
+    info.className = "featured-info";
+
+    const category = document.createElement("span");
+    category.className = "featured-category";
+    category.textContent = item.category || "Other";
+
+    const title = document.createElement("h3");
+    title.textContent = item.title || "Untitled Listing";
+
+    const price = document.createElement("p");
+    price.className = "featured-price";
+
+    const numericPrice = Number(item.price);
+
+    price.textContent = Number.isFinite(numericPrice)
+        ? `GH₵${numericPrice.toFixed(2)}`
+        : "Price unavailable";
+
+    const stock = document.createElement("p");
+    stock.className = "stock";
+
+    const quantity = Number(item.stock_quantity || 0);
+
+    if (quantity > 5) {
+        stock.innerHTML =
+            `<i class="fa-solid fa-box"></i>`;
+
+        stock.append(` ${quantity} in stock`);
+    } else if (quantity > 0) {
+        stock.innerHTML =
+            `<i class="fa-solid fa-fire"></i>`;
+
+        stock.append(` Only ${quantity} left`);
+    } else {
+        stock.innerHTML =
+            `<i class="fa-solid fa-circle-xmark"></i>`;
+
+        stock.append(" Out of stock");
+    }
+
+    const footer = document.createElement("div");
+    footer.className = "featured-footer";
+
+    const seller = document.createElement("span");
+    seller.textContent = item.seller_name || "Student Seller";
+
+    const arrow = document.createElement("i");
+    arrow.className = "fa-solid fa-arrow-right";
+
+    footer.append(seller, arrow);
+    info.append(category, title, price, stock, footer);
+    card.append(imageWrapper, info);
+
+    return card;
+}
+
 async function loadFeaturedProducts() {
     const container =
     document.getElementById("featuredProducts");
@@ -168,49 +313,9 @@ if(getSearchQuery()){
     listings
     .slice(0, 15)
     .forEach(item => {
-        container.innerHTML += `
-<div
-class="featured-card"
-onclick="viewListing(${item.user_id})">
-    <div class="featured-image">
-        <img
-        src="${
-        item.image_url && 
-        item.image_url.trim()
-        ? item.image_url
-        : `images/${item.category || "Other"}.jpg`
-        }"
-        onerror="this.src='images/Other.jpg'"
-       >
-    </div>
-    <div class="featured-info">
-        <span class="featured-category">
-            ${item.category}
-        </span>
-        <h3>
-            ${item.title}
-        </h3>
-        <p class="featured-price">
-            GH₵${item.price}
-        </p>
-        <p class="stock">
-        ${
-            item.stock_quantity > 5
-            ? `<i class="fa-solid fa-box"></i> ${item.stock_quantity} in stock`
-            : item.stock_quantity > 0
-                ? `<i class="fa-solid fa-fire"></i> Only ${item.stock_quantity} left`
-                : `<i class="fa-solid fa-circle-xmark"></i> Out of stock`
-        }
-        </p>
-        <div class="featured-footer">
-            <span>
-                ${item.seller_name}
-            </span>
-            <i class="fa-solid fa-arrow-right"></i>
-        </div>
-    </div>
-</div>
-`;
+        container.appendChild(
+            createPublicListingCard(item)
+        );
     });
 }
 async function loadServices(){
@@ -306,61 +411,20 @@ async function loadRecentListings(){
     return;
     }
     listings
-    .slice(0,8)
-    .forEach(item=>{
-        container.innerHTML += `
-<div
-class="featured-card"
-onclick="viewListing(${item.user_id})"
->
-<div class="featured-image">
-<img
-src="${
-item.image_url &&
-item.image_url.trim()
-? item.image_url
-: `images/${item.category || "Other"}.jpg`
-}"
-onerror="this.src='images/Other.jpg'"
->
-</div>
-<div class="featured-info">
-<span class="featured-category">
-${item.category}
-</span>
-<h3>
-${item.title}
-</h3>
-<p class="featured-price">
-GH₵${item.price}
-</p>
-<p class="stock">
-        ${
-            item.stock_quantity > 5
-            ? `<i class="fa-solid fa-box"></i> ${item.stock_quantity} in stock`
-            : item.stock_quantity > 0
-                ? `<i class="fa-solid fa-fire"></i> Only ${item.stock_quantity} left`
-                : `<i class="fa-solid fa-circle-xmark"></i> Out of stock`
-        }
-</p>
-<div class="featured-footer">
-<span>
-${item.seller_name}
-</span>
-<i class="fa-solid fa-arrow-right"></i>
-</div>
-</div>
-</div>
-`;
+    .slice(0, 8)
+    .forEach(item => {
+        container.appendChild(
+            createPublicListingCard(item)
+        );
     });
 }
+
+
 function getCategoryImage(category){
     return `images/${category}.jpg`;
 }
-function viewService(id){
-    window.location.href =
-    `services.html?id=${id}`;
-}
+
+
 function viewListing(id) {
     window.location.href =
     `listing.html?id=${id}`;
