@@ -491,30 +491,76 @@ async function handleGoogleLogin(response) {
 
 function handleGoogleRegister(response) {
     try {
-        // This is only for filling the preview.
-        // The backend still verifies the credential before creating the account.
+        // Used only to fill the registration preview.
+        // The backend still verifies this credential before creating the account.
         const profile = getGoogleProfile(response.credential);
 
-        document.getElementById("googleCredential").value =
-            response.credential;
+        const googleCredentialInput =
+            document.getElementById("googleCredential");
 
-        document.getElementById("fullName").value =
-            profile.name || "";
+        const fullNameInput =
+            document.getElementById("fullName");
 
-        document.getElementById("email").value =
-            profile.email || "";
+        const emailInput =
+            document.getElementById("email");
 
-        document.getElementById("googlePreviewName").textContent =
-            profile.name || "";
+        const passwordInput =
+            document.getElementById("password");
 
-        document.getElementById("googlePreviewEmail").textContent =
-            profile.email || "";
+        const confirmPasswordInput =
+            document.getElementById("confirmPassword");
 
-        const previewImage = document.getElementById("googlePreviewImage");
+        if (googleCredentialInput) {
+            googleCredentialInput.value = response.credential;
+        }
+
+        if (fullNameInput) {
+            fullNameInput.value = profile.name || "";
+            fullNameInput.readOnly = true;
+        }
+
+        if (emailInput) {
+            emailInput.value = profile.email || "";
+            emailInput.readOnly = true;
+        }
+
+        if (passwordInput) {
+            passwordInput.value = "";
+            passwordInput.required = false;
+            passwordInput.closest(".input-group").style.display = "none";
+        }
+
+        if (confirmPasswordInput) {
+            confirmPasswordInput.value = "";
+            confirmPasswordInput.required = false;
+            confirmPasswordInput.closest(".input-group").style.display = "none";
+        }
+
+        const previewName =
+            document.getElementById("googlePreviewName");
+
+        const previewEmail =
+            document.getElementById("googlePreviewEmail");
+
+        const previewImage =
+            document.getElementById("googlePreviewImage");
+
+        if (previewName) {
+            previewName.textContent = profile.name || "";
+        }
+
+        if (previewEmail) {
+            previewEmail.textContent = profile.email || "";
+        }
 
         if (previewImage) {
             previewImage.src =
                 profile.picture || "images/default-avatar-image.jpg";
+
+            previewImage.onerror = () => {
+                previewImage.src =
+                    "images/default-avatar-image.jpg";
+            };
         }
 
         document
