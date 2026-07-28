@@ -468,3 +468,11 @@
     .footer-links-list a { justify-content: center; }
     .footer-bottom-bar { flex-direction: column; text-align: center; }
 }
+
+@media (max-width: 768px) {
+    .hero-blur-bg {
+        right: -4%;
+        width: 55vw;
+        height: 55vw;
+    }
+}

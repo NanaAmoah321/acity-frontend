@@ -1,3 +1,25 @@
+const token = localStorage.getItem("token");
+
+if (!token) {
+    window.location.replace("login.html");
+    throw new Error("Authentication required");
+}
+
+const res = await fetch(url, options);
+
+if (res.status === 401) {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    window.location.replace("login.html");
+    return;
+}
+
+if (!res.ok) {
+    throw new Error("Could not load this information.");
+}
+
+const data = await res.json();
+
 let currentItems = [];
 const container = document.getElementById("interestedContainer");
 async function loadInterested() {
