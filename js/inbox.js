@@ -434,49 +434,39 @@ async function openConversation(userId, conversationName) {
             backButton.addEventListener("click", backToInbox);
 
             const firstMessage = messages[0];
+                let profilePicture = null;
 
-            let profilePicture = null;
+                if (firstMessage) {
+                    // If activeUserId is sender -> grab RECEIVER's picture
+                    // If activeUserId is receiver -> grab SENDER's picture
+                    profilePicture =
+                        Number(activeUserId) === Number(firstMessage.sender_id)
+                            ? firstMessage.receiver_profile_picture
+                            : firstMessage.sender_profile_picture;
+                }
 
-            if (firstMessage) {
+                let avatar;
 
-                profilePicture =
-                    Number(activeUserId) === Number(firstMessage.sender_id)
-                        ? firstMessage.sender_profile_picture
-                        : firstMessage.receiver_profile_picture;
+                if (profilePicture) {
+                    avatar = document.createElement("img");
+                    avatar.className = "conversation-avatar";
+                    avatar.src = profilePicture;
+                    avatar.alt = resolvedName || "User";
+                    avatar.onerror = () => {
+                        // Fallback to initial if image breaks/fails to load
+                        avatar.outerHTML = createInitialAvatar(resolvedName);
+                    };
+                } else {
+                    avatar = createInitialAvatar(resolvedName);
+                }
 
-            }
-
-            let avatar;
-
-            if (profilePicture) {
-
-                avatar = document.createElement("img");
-
-                avatar.className =
-                    "conversation-avatar";
-
-                avatar.src = profilePicture;
-
-                avatar.alt = resolvedName;
-
-                avatar.onerror = () => {
-
-                    avatar.src =
-                        "images/default-avatar-image.jpg";
-
-                };
-
-            } else {
-
-                avatar = document.createElement("div");
-
-                avatar.className =
-                    "conversation-avatar";
-
-                avatar.textContent =
-                    resolvedName.charAt(0).toUpperCase();
-
-            }
+                // Helper to generate text initial fallback
+                function createInitialAvatar(name) {
+                    const div = document.createElement("div");
+                    div.className = "conversation-avatar";
+                    div.textContent = (name || "U").charAt(0).toUpperCase();
+                    return div;
+                }
 
             const details = document.createElement("div");
 
