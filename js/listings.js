@@ -435,7 +435,7 @@ function viewStore(userId) {
 }
 function viewService(id) {
     window.location.href =
-    `service.html?id=${id}`;
+    `services.html?id=${id}`;
 }
 if (ItemsContainer) {
     loadItems();
