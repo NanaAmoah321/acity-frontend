@@ -294,7 +294,8 @@ async function openConversation(userId, conversationName) {
             !resolvedName ||
             resolvedName === "null" ||
             resolvedName === "undefined" ||
-            resolvedName === "Chat"
+            resolvedName === "Chat" ||
+            resolvedName === "New Message"
         ) {
             const representativeMessage = messages.find(
                 message =>
@@ -466,6 +467,7 @@ async function openConversation(userId, conversationName) {
         showToast("Could not load this conversation.", "error");
     }
 }
+
 
 function createMessageBubble(message) {
     const bubble = document.createElement("div");

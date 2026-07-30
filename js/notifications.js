@@ -7,125 +7,77 @@ if (!token) {
 
 let allNotifications = [];
 let currentFilter = "all";
-const container =
-document.getElementById(
-    "notificationsContainer"
-);
-async function loadNotifications(){
-    const token = localStorage.getItem("token");
-    if(!container) return;
+const container = document.getElementById("notificationsContainer");
+
+async function loadNotifications() {
+    if (!container) return;
     
-    container.innerHTML = "";
-    for(let i=0; i<5; i++){
-        container.innerHTML += `
-            <div class="notification-skeleton skeleton-card"></div>
-        `;
-    }
+    container.innerHTML = Array(5)
+        .fill('<div class="notification-skeleton skeleton-card"></div>')
+        .join("");
     
-    const res = await fetch(
-        "https://acity-backend.onrender.com/api/notifications",
-        {
-            headers:{
+    try {
+        const res = await fetch("https://acity-backend.onrender.com/api/notifications", {
+            headers: {
                 Authorization: `Bearer ${token}`
             }
+        });
+        
+        if (res.status === 401) {
+            handleLogout();
+            return;
         }
-    );
-    
-    if (res.status === 401) {
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-        window.location.replace("login.html");
-        return;
-    }
 
-    if (!res.ok) {
-        throw new Error("Could not load notifications.");
-    }
+        if (!res.ok) throw new Error("Could not load notifications.");
 
-    allNotifications = await res.json();
+        allNotifications = await res.json();
 
-    if (!Array.isArray(allNotifications)) {
-        throw new Error("Invalid notifications response.");
-    }
+        if (!Array.isArray(allNotifications)) {
+            throw new Error("Invalid notifications response.");
+        }
 
-    container.innerHTML = "";
-    
-    if(allNotifications.length === 0){
+        renderNotifications();
+    } catch (err) {
+        console.error("Load Notifications Error:", err);
         container.innerHTML = `
-        <div class="empty-state">
-            <i class="fa-solid fa-bell-slash"></i>
-            <h3>No Notifications</h3>
-            <p>
-                You're all caught up.
-            </p>
-        </div>
+            <div class="empty-state">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <h3>Error Loading Notifications</h3>
+                <p>Please refresh the page or try again later.</p>
+            </div>
         `;
-        return;
     }
-    renderNotifications();
 }
+
 function getNotificationIcon(type) {
     switch (type) {
-        case "order":
-            return `<i class="fa-solid fa-box"></i>`;
-
-        case "message":
-            return `<i class="fa-solid fa-comments"></i>`;
-
-        case "review":
-            return `<i class="fa-solid fa-star"></i>`;
-
-        case "service":
-            return `<i class="fa-solid fa-screwdriver-wrench"></i>`;
-
-        case "accepted":
-            return `<i class="fa-solid fa-circle-check"></i>`;
-
-        case "rejected":
-            return `<i class="fa-solid fa-circle-xmark"></i>`;
-
-        default:
-            return `<i class="fa-solid fa-bell"></i>`;
+        case "order": return `<i class="fa-solid fa-box"></i>`;
+        case "message": return `<i class="fa-solid fa-comments"></i>`;
+        case "review": return `<i class="fa-solid fa-star"></i>`;
+        case "service": return `<i class="fa-solid fa-screwdriver-wrench"></i>`;
+        case "accepted": return `<i class="fa-solid fa-circle-check"></i>`;
+        case "rejected": return `<i class="fa-solid fa-circle-xmark"></i>`;
+        default: return `<i class="fa-solid fa-bell"></i>`;
     }
 }
 
 function timeAgo(date) {
-    const seconds = Math.floor(
-        (Date.now() - new Date(date)) / 1000
-    );
-
-    if (seconds < 60) {
-        return "Just now";
-    }
-
-    if (seconds < 3600) {
-        return `${Math.floor(seconds / 60)} min ago`;
-    }
-
-    if (seconds < 86400) {
-        return `${Math.floor(seconds / 3600)} hr ago`;
-    }
-
+    const seconds = Math.floor((Date.now() - new Date(date)) / 1000);
+    if (seconds < 60) return "Just now";
+    if (seconds < 3600) return `${Math.floor(seconds / 60)} min ago`;
+    if (seconds < 86400) return `${Math.floor(seconds / 3600)} hr ago`;
     return `${Math.floor(seconds / 86400)} days ago`;
 }
 
 function renderNotifications() {
+    if (!container) return;
     container.replaceChildren();
 
-    const allowedTypes = new Set([
-        "order",
-        "message",
-        "review",
-        "accepted",
-        "rejected"
-    ]);
+    const allowedTypes = new Set(["order", "message", "review", "accepted", "rejected"]);
 
-    const filtered =
-        currentFilter === "all"
-            ? allNotifications
-            : allNotifications.filter(
-                notification => notification.type === currentFilter
-            );
+    const filtered = currentFilter === "all"
+        ? allNotifications
+        : allNotifications.filter(n => n.type === currentFilter);
 
     if (filtered.length === 0) {
         container.innerHTML = `
@@ -133,29 +85,20 @@ function renderNotifications() {
                 <i class="fa-solid fa-bell-slash"></i>
                 <h3>You're all caught up!</h3>
                 <p>Nothing here yet.</p>
-                <small>
-                    Orders, messages, reviews and important updates
-                    will appear here.
-                </small>
+                <small>Orders, messages, reviews, and important updates will appear here.</small>
             </div>
         `;
         return;
     }
 
     filtered.forEach(notification => {
-        const type = allowedTypes.has(notification.type)
-            ? notification.type
-            : "default";
-
-        const partnerId = Number.isFinite(
-            Number(notification.conversation_user_id)
-        )
+        const type = allowedTypes.has(notification.type) ? notification.type : "default";
+        const partnerId = Number.isFinite(Number(notification.conversation_user_id))
             ? Number(notification.conversation_user_id)
             : null;
 
         const card = document.createElement("article");
-        card.className =
-            `notification-card ${notification.is_read ? "" : "unread"}`;
+        card.className = `notification-card ${notification.is_read ? "" : "unread"}`;
 
         card.addEventListener("click", () => {
             openNotification(
@@ -208,8 +151,7 @@ function renderNotifications() {
 
         const arrow = document.createElement("div");
         arrow.className = "notification-arrow";
-        arrow.innerHTML =
-            `<i class="fa-solid fa-chevron-right"></i>`;
+        arrow.innerHTML = `<i class="fa-solid fa-chevron-right"></i>`;
 
         card.append(icon, content, arrow);
 
@@ -223,12 +165,7 @@ function renderNotifications() {
     });
 }
 
-async function openNotification(
-    notificationId,
-    type,
-    conversationUserId,
-    conversationName
-) {
+async function openNotification(notificationId, type, conversationUserId, conversationName) {
     try {
         const res = await fetch(
             `https://acity-backend.onrender.com/api/notifications/${notificationId}/read`,
@@ -240,58 +177,92 @@ async function openNotification(
             }
         );
 
-        if (res.status === 401) {
-            localStorage.removeItem("token");
-            localStorage.removeItem("user");
-            window.location.replace("login.html");
-            return;
-        }
-
         if (!res.ok) {
-            throw new Error("Could not update notification.");
+            throw new Error(await res.text());
         }
 
-        if (type === "message") {
-            if (!conversationUserId) {
-                showToast("Conversation not found.", "error");
-                return;
-            }
+        const target = allNotifications.find(n => Number(n.id) === Number(notificationId));
+        if (target) target.is_read = true;
 
-            localStorage.setItem(
-                "openConversationWith",
-                conversationUserId
-            );
-
-            localStorage.setItem(
-                "openConversationName",
-                conversationName || "Chat"
-            );
-
-            window.location.href = "inbox.html";
-            return;
-        }
-
-        if (
-            type === "order" ||
-            type === "accepted" ||
-            type === "rejected"
-        ) {
-            window.location.href = "profile.html";
-            return;
-        }
-
-        await loadNotifications();
+        renderNotifications();
 
         if (window.updateNotificationCount) {
             window.updateNotificationCount();
         }
+
+        await loadNotifications();
+
+        // Navigation
+        if (type === "message") {
+            localStorage.setItem("openConversationWith", conversationUserId);
+            localStorage.setItem("openConversationName", conversationName || "Chat");
+            window.location.href = "inbox.html";
+            return;
+        }
+
+        if (["order", "accepted", "rejected"].includes(type)) {
+            window.location.href = "profile.html";
+            return;
+        }
+
     } catch (err) {
-        console.error("Notification action error:", err);
-        showToast(
-            "Could not update this notification.",
-            "error"
-        );
+        console.error(err);
     }
 }
 
+// "Mark All as Read" function
+async function markAllAsRead() {
+    try {
+        const res = await fetch(
+            "https://acity-backend.onrender.com/api/notifications/read-all",
+            {
+                method: "PATCH",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+
+        if (!res.ok) {
+            throw new Error(await res.text());
+        }
+
+        allNotifications.forEach(n => n.is_read = true);
+
+        renderNotifications();
+
+        if (window.updateNotificationCount) {
+            window.updateNotificationCount();
+        }
+
+        await loadNotifications();
+
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+function handleLogout() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    window.location.replace("login.html");
+}
+
+document.querySelectorAll(".notification-filter").forEach(button => {
+    button.addEventListener("click", () => {
+        document.querySelectorAll(".notification-filter")
+            .forEach(btn => btn.classList.remove("active"));
+
+        button.classList.add("active");
+
+        currentFilter = button.dataset.filter;
+
+        renderNotifications();
+    });
+});
+
+// Attach event listener for "Mark All As Read" button if present
+document.getElementById("markAllReadBtn")?.addEventListener("click", markAllAsRead);
+
+// Initial Load
 loadNotifications();
