@@ -48,6 +48,8 @@ document.getElementById(
 const conversationList =
 document.getElementById("conversationList");
 
+let conversations = [];
+
 function updateConversationCard(message){
 
     const otherUserId =
@@ -95,6 +97,168 @@ function updateConversationCard(message){
 
 }
 
+function renderConversationList(messages){
+    conversationList.replaceChildren();
+
+    if(messages.length === 0){
+
+        showNoSearchResults();
+
+        return;
+
+    }
+
+    messages.forEach(message => {
+        const card = document.createElement("div");
+
+        card.setAttribute("role", "button");
+        card.tabIndex = 0;
+        card.dataset.userId = message.conversation_user_id;
+        card.className = "conversation-card";
+
+        const avatar = document.createElement("div");
+        avatar.className = "conversation-avatar";
+        avatar.textContent =
+            (message.conversation_name || "U")
+                .charAt(0)
+                .toUpperCase();
+
+        const content = document.createElement("div");
+        content.className = "conversation-content";
+
+        const top = document.createElement("div");
+        top.className = "conversation-top";
+
+        const name = document.createElement("span");
+        name.className = "conversation-name";
+        name.textContent =
+            message.conversation_name || "Conversation";
+
+        const time = document.createElement("span");
+        time.className = "conversation-time";
+        time.textContent = new Date(
+            message.created_at
+        ).toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit"
+        });
+
+        top.append(name, time);
+
+        const item = document.createElement("div");
+        item.className = "conversation-item";
+        item.textContent = "Marketplace";
+
+        const preview = document.createElement("div");
+        preview.className = "conversation-preview";
+        preview.textContent = message.message || "Attachment";
+
+        content.append(top, item, preview);
+        card.append(avatar, content);
+
+        card.addEventListener("click", () => {
+            openConversation(
+                message.conversation_user_id,
+                message.conversation_name
+            );
+
+            if (window.innerWidth <= 900) {
+                document.querySelector(
+                    ".conversation-sidebar"
+                ).style.display = "none";
+
+                document.querySelector(
+                    ".chat-area"
+                ).classList.add("active");
+            }
+        });
+
+        conversationList.appendChild(card);
+    });
+
+}
+
+function showEmptyInbox(){
+
+    conversationList.innerHTML = `
+        <div class="empty-state">
+
+            <div class="empty-icon">
+                <i class="fa-regular fa-comments"></i>
+            </div>
+
+            <h3>Welcome to your Inbox</h3>
+
+            <p>
+                Your conversations with buyers,
+                sellers and service providers
+                will appear here.
+            </p>
+
+            <a
+                href="marketplace.html"
+                class="btn btn-primary"
+            >
+                Browse Marketplace
+            </a>
+
+        </div>
+    `;
+
+}
+
+function showNoSearchResults(){
+
+    const search =
+    document.getElementById(
+        "conversationSearch"
+    );
+
+    const query =
+    search?.value || "";
+
+    conversationList.innerHTML = `
+        <div class="empty-state">
+
+            <div class="empty-icon">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+
+            <h3>No conversations found</h3>
+
+            <p>
+                No conversations match
+                "<strong>${query}</strong>".
+            </p>
+
+            <button
+                class="btn btn-outline"
+                id="clearConversationSearch"
+            >
+                Clear Search
+            </button>
+
+        </div>
+    `;
+
+    document
+    .getElementById(
+        "clearConversationSearch"
+    )
+    .addEventListener("click",()=>{
+
+        search.value = "";
+
+        renderConversationList(
+            conversations
+        );
+
+        search.focus();
+
+    });
+
+}
+
 async function loadInbox() {
     try {
         conversationList.innerHTML = "";
@@ -127,90 +291,24 @@ async function loadInbox() {
 
         const messages = await res.json();
 
+        conversations = messages;
+
         if (!Array.isArray(messages)) {
             throw new Error("Invalid conversations response.");
         }
 
         conversationList.replaceChildren();
 
-        if (messages.length === 0) {
-            conversationList.innerHTML = `
-                <div class="empty-state">
-                    <i class="fa-solid fa-comments"></i>
-                    <h3>No Conversations</h3>
-                    <p>Your messages will appear here.</p>
-                </div>
-            `;
+        if(messages.length === 0){
+
+            showEmptyInbox();
+
             return;
+
         }
 
-        messages.forEach(message => {
-            const card = document.createElement("div");
+        renderConversationList(messages);
 
-            card.setAttribute("role", "button");
-            card.tabIndex = 0;
-            card.dataset.userId = message.conversation_user_id;
-            card.className = "conversation-card";
-
-            const avatar = document.createElement("div");
-            avatar.className = "conversation-avatar";
-            avatar.textContent =
-                (message.conversation_name || "U")
-                    .charAt(0)
-                    .toUpperCase();
-
-            const content = document.createElement("div");
-            content.className = "conversation-content";
-
-            const top = document.createElement("div");
-            top.className = "conversation-top";
-
-            const name = document.createElement("span");
-            name.className = "conversation-name";
-            name.textContent =
-                message.conversation_name || "Conversation";
-
-            const time = document.createElement("span");
-            time.className = "conversation-time";
-            time.textContent = new Date(
-                message.created_at
-            ).toLocaleTimeString([], {
-                hour: "2-digit",
-                minute: "2-digit"
-            });
-
-            top.append(name, time);
-
-            const item = document.createElement("div");
-            item.className = "conversation-item";
-            item.textContent = "Marketplace";
-
-            const preview = document.createElement("div");
-            preview.className = "conversation-preview";
-            preview.textContent = message.message || "Attachment";
-
-            content.append(top, item, preview);
-            card.append(avatar, content);
-
-            card.addEventListener("click", () => {
-                openConversation(
-                    message.conversation_user_id,
-                    message.conversation_name
-                );
-
-                if (window.innerWidth <= 900) {
-                    document.querySelector(
-                        ".conversation-sidebar"
-                    ).style.display = "none";
-
-                    document.querySelector(
-                        ".chat-area"
-                    ).classList.add("active");
-                }
-            });
-
-            conversationList.appendChild(card);
-        });
     } catch (err) {
         console.error("Inbox load error:", err);
 
@@ -295,7 +393,7 @@ async function openConversation(userId, conversationName) {
             resolvedName === "null" ||
             resolvedName === "undefined" ||
             resolvedName === "Chat" ||
-            resolvedName === "New Message"
+            resolvedName === "New"
         ) {
             const representativeMessage = messages.find(
                 message =>
@@ -335,20 +433,59 @@ async function openConversation(userId, conversationName) {
 
             backButton.addEventListener("click", backToInbox);
 
-            const avatar = document.createElement("div");
-            avatar.className = "conversation-avatar";
-            avatar.textContent =
-                resolvedName.charAt(0).toUpperCase();
+            const firstMessage = messages[0];
+
+            let profilePicture = null;
+
+            if (firstMessage) {
+
+                profilePicture =
+                    Number(activeUserId) === Number(firstMessage.sender_id)
+                        ? firstMessage.sender_profile_picture
+                        : firstMessage.receiver_profile_picture;
+
+            }
+
+            let avatar;
+
+            if (profilePicture) {
+
+                avatar = document.createElement("img");
+
+                avatar.className =
+                    "conversation-avatar";
+
+                avatar.src = profilePicture;
+
+                avatar.alt = resolvedName;
+
+                avatar.onerror = () => {
+
+                    avatar.src =
+                        "images/default-avatar-image.jpg";
+
+                };
+
+            } else {
+
+                avatar = document.createElement("div");
+
+                avatar.className =
+                    "conversation-avatar";
+
+                avatar.textContent =
+                    resolvedName.charAt(0).toUpperCase();
+
+            }
 
             const details = document.createElement("div");
 
             const name = document.createElement("h3");
             name.textContent = resolvedName;
 
-            const status = document.createElement("small");
-            status.textContent = "Active conversation";
+            
 
-            details.append(name, status);
+            details.append(name);
             chatUser.append(backButton, avatar, details);
 
             const reviewButton = document.createElement("button");
@@ -807,3 +944,50 @@ document
 
     }
 );
+
+const search =
+document.getElementById("conversationSearch");
+
+if(search){
+
+    search.addEventListener("input",()=>{
+
+        const value =
+        search.value
+        .trim()
+        .toLowerCase();
+
+        const filtered =
+        conversations.filter(c=>{
+
+            return (
+                c.conversation_name || ""
+            )
+            .toLowerCase()
+            .includes(value);
+
+        });
+
+        renderConversationList(filtered);
+
+    });
+
+}
+
+const filtered =
+conversations.filter(c=>{
+
+    const name =
+    (c.conversation_name || "")
+    .toLowerCase();
+
+    const preview =
+    (c.message || "")
+    .toLowerCase();
+
+    return (
+        name.includes(value) ||
+        preview.includes(value)
+    );
+
+});

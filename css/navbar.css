@@ -463,7 +463,7 @@ nav{
     width:52px;
     height:52px;
     border:1px solid var(--border);
-    border-radius:16px;
+    border-radius:20px;
     background:var(--surface);
     box-shadow:0 8px 25px rgba(0,0,0,.08);
     align-items:center;

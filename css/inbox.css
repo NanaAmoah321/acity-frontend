@@ -65,15 +65,19 @@
     border-left:4px solid var(--primary);
 }
 .conversation-avatar{
-    width:58px;
-    height:58px;
+    width:52px;
+    height:52px;
+
     border-radius:50%;
-    background:linear-gradient(135deg,#EF4444,#DC2626);
-    color:white;
+
     display:flex;
-    justify-content:center;
     align-items:center;
-    font-size:22px;
+    justify-content:center;
+
+    overflow:hidden;
+
+    object-fit:cover;
+
     flex-shrink:0;
 }
 .conversation-content{
@@ -86,7 +90,7 @@
 }
 .conversation-name{
     font-weight:700;
-    font-size:16px;
+    font-size:15px;
 }
 .conversation-time{
     color:#94A3B8;
@@ -164,7 +168,7 @@
     display:flex;
     justify-content:space-between;
     align-items:center;
-    padding:24px;
+    padding:10px;
 }
 
 .chat-user{
@@ -566,4 +570,82 @@
     justify-content:flex-end;
     padding:16px 24px;
     border-bottom:1px solid var(--border);
+}
+
+.empty-state{
+
+    display:flex;
+    flex-direction:column;
+
+    justify-content:center;
+    align-items:center;
+
+    text-align:center;
+
+    padding:70px 24px;
+
+    min-height:350px;
+
+}
+
+.empty-icon{
+
+    width:82px;
+    height:82px;
+
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:var(--surface-2);
+
+    border:1px solid var(--border);
+
+    margin-bottom:18px;
+
+}
+
+.empty-icon i{
+
+    font-size:34px;
+
+    color:var(--primary);
+
+}
+
+.empty-state h3{
+
+    margin:0;
+
+    font-size:1.45rem;
+
+    color:var(--text);
+
+}
+
+.empty-state p{
+
+    margin:12px 0 28px;
+
+    max-width:310px;
+
+    color:var(--text-light);
+
+    line-height:1.7;
+
+}
+
+.profile-avatar{
+
+    width:64px;
+    height:64px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    flex-shrink:0;
+
 }
