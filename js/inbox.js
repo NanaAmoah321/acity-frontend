@@ -116,12 +116,28 @@ function renderConversationList(messages){
         card.dataset.userId = message.conversation_user_id;
         card.className = "conversation-card";
 
-        const avatar = document.createElement("div");
-        avatar.className = "conversation-avatar";
-        avatar.textContent =
-            (message.conversation_name || "U")
-                .charAt(0)
-                .toUpperCase();
+        let avatar;
+
+        if (message.other_user_profile_picture) {
+
+            avatar = document.createElement("img");
+            avatar.className = "conversation-avatar";
+            avatar.src = message.other_user_profile_picture;
+            avatar.alt = message.conversation_name || "User";
+
+            avatar.onerror = () => {
+                avatar.replaceWith(
+                    createInitialAvatar(message.conversation_name)
+                );
+            };
+
+        } else {
+
+            avatar = createInitialAvatar(
+                message.conversation_name
+            );
+
+        }
 
         const content = document.createElement("div");
         content.className = "conversation-content";
@@ -175,6 +191,19 @@ function renderConversationList(messages){
 
         conversationList.appendChild(card);
     });
+
+}
+
+function createInitialAvatar(name) {
+
+    const div = document.createElement("div");
+
+    div.className = "conversation-avatar";
+
+    div.textContent =
+        (name || "U").charAt(0).toUpperCase();
+
+    return div;
 
 }
 
@@ -334,7 +363,12 @@ function readStoredJSON(key) {
 }
 
 async function openConversation(userId, conversationName) {
-    activeUserId = Number(userId);
+    const conversationUserId = Number(userId);
+
+    const currentUser = JSON.parse(localStorage.getItem("user"));
+    const currentUserId = Number(currentUser.id);
+
+    activeUserId = conversationUserId; 
 
     const empty = document.getElementById("emptyChat");
     const chatPanel = document.getElementById("chatPanel");
@@ -434,39 +468,38 @@ async function openConversation(userId, conversationName) {
             backButton.addEventListener("click", backToInbox);
 
             const firstMessage = messages[0];
-                let profilePicture = null;
 
-                if (firstMessage) {
-                    // If activeUserId is sender -> grab RECEIVER's picture
-                    // If activeUserId is receiver -> grab SENDER's picture
-                    profilePicture =
-                        Number(activeUserId) === Number(firstMessage.sender_id)
-                            ? firstMessage.receiver_profile_picture
-                            : firstMessage.sender_profile_picture;
-                }
+            const profilePicture =
+                firstMessage?.other_user_profile_picture;
 
-                let avatar;
+            let avatar;
 
-                if (profilePicture) {
-                    avatar = document.createElement("img");
-                    avatar.className = "conversation-avatar";
-                    avatar.src = profilePicture;
-                    avatar.alt = resolvedName || "User";
-                    avatar.onerror = () => {
-                        // Fallback to initial if image breaks/fails to load
-                        avatar.outerHTML = createInitialAvatar(resolvedName);
-                    };
-                } else {
-                    avatar = createInitialAvatar(resolvedName);
-                }
+            if (profilePicture) {
 
-                // Helper to generate text initial fallback
-                function createInitialAvatar(name) {
-                    const div = document.createElement("div");
-                    div.className = "conversation-avatar";
-                    div.textContent = (name || "U").charAt(0).toUpperCase();
-                    return div;
-                }
+                avatar = document.createElement("img");
+                avatar.className = "conversation-avatar";
+                avatar.src = profilePicture;
+                avatar.alt = resolvedName;
+
+                avatar.onerror = () => {
+                    avatar.replaceWith(
+                        createInitialAvatar(resolvedName)
+                    );
+                };
+
+            } else {
+
+                avatar = createInitialAvatar(resolvedName);
+
+            }
+
+            // Helper to generate text initial fallback
+            function createInitialAvatar(name) {
+                const div = document.createElement("div");
+                div.className = "conversation-avatar";
+                div.textContent = (name || "U").charAt(0).toUpperCase();
+                return div;
+            }
 
             const details = document.createElement("div");
 
