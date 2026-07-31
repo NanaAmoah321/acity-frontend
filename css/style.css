@@ -17,6 +17,8 @@ html{
 html,
 body{
     overflow-x:hidden;
+    padding-top: 50px;
+    
 }
 
 body,

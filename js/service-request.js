@@ -32,14 +32,14 @@ const categoryFields = {
             label: "Pickup location",
             type: "text",
             required: true,
-            placeholder: "e.g. Hall 3, Room 204"
+            placeholder: "e.g. Hostel A, Room 20"
         },
         {
             name: "dropoff_location",
             label: "Drop-off location",
             type: "text",
             required: true,
-            placeholder: "e.g. Administration Block"
+            placeholder: "e.g. BB Hostel"
         },
         {
             name: "preferred_date",
@@ -88,7 +88,7 @@ const categoryFields = {
             label: "Course or subject",
             type: "text",
             required: true,
-            placeholder: "e.g. Calculus, Python, Economics"
+            placeholder: "e.g. Calculus, Python, JAVA"
         },
         {
             name: "topic",
@@ -98,7 +98,7 @@ const categoryFields = {
         },
         {
             name: "level",
-            label: "Your level",
+            label: "Level of Understanding",
             type: "select",
             required: true,
             options: [
@@ -132,7 +132,7 @@ const categoryFields = {
         },
         {
             name: "additional_details",
-            label: "What would you like to achieve?",
+            label: "Anything else to add?",
             type: "textarea",
             placeholder:
                 "Include questions, assignment details, or areas you find difficult."

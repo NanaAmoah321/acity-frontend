@@ -1,6 +1,7 @@
 .service-request-page {
     width: min(1180px, 92%);
     margin: 40px auto 80px;
+    margin-top: 100px;
 }
 
 .back-link {

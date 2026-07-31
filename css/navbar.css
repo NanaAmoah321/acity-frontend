@@ -25,12 +25,12 @@
 nav{
     position:fixed;
     
-    left: 60%;
+    left: 50%;
 
     width:96%;
     max-width:1550px;
 
-    margin:18px auto;
+    top: 18px;
 
     height:74px;
 
@@ -56,7 +56,7 @@ nav{
     z-index:1000;
 
     transition:.3s ease;
-    transform:translateX(-60%);
+    transform:translateX(-50%);
     
 }
 
