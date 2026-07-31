@@ -1034,6 +1034,7 @@ body.dark .insightCard i{
     border-radius:18px;
     padding:18px;
     transition:.25s;
+    margin-bottom: 20px;
 }
 
 .incomingOrderCard:hover{
@@ -1087,6 +1088,7 @@ body.dark .insightCard i{
 
 .incomingOrderButtons{
     display:flex;
+    flex-wrap: wrap;
     gap:12px;
 }
 

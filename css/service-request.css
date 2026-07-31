@@ -264,6 +264,7 @@
 
     .request-actions {
         flex-direction: column-reverse;
+        
     }
 
     .request-actions .btn {
