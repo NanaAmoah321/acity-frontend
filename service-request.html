@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Request Service | Acity Connect</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/buttons.css">
+    <link rel="stylesheet" href="css/toast.css">
+    <link rel="stylesheet" href="css/service-request.css">
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+</head>
+
+<body>
+    <main class="service-request-page">
+        <a
+            class="back-link"
+            href="services.html"
+        >
+            <i class="fa-solid fa-arrow-left"></i>
+            Back to services
+        </a>
+
+        <section class="request-layout">
+            <aside
+                id="serviceSummary"
+                class="service-summary-card"
+            >
+                <div class="service-summary-loading">
+                    <i class="fa-solid fa-spinner fa-spin"></i>
+                    Loading service…
+                </div>
+            </aside>
+
+            <section class="request-form-card">
+                <div class="request-form-heading">
+                    <span class="request-eyebrow">
+                        Service request
+                    </span>
+
+                    <h1 id="requestTitle">
+                        Tell the provider what you need
+                    </h1>
+
+                    <p id="requestIntro">
+                        Complete the details below to send a clear request.
+                    </p>
+                </div>
+
+                <form id="serviceRequestForm">
+                    <div
+                        id="categoryRequestFields"
+                        class="request-fields"
+                    >
+                        <div class="service-summary-loading">
+                            <i class="fa-solid fa-spinner fa-spin"></i>
+                            Preparing request form…
+                        </div>
+                    </div>
+
+                    <div class="request-actions">
+                        <a
+                            href="services.html"
+                            class="btn btn-secondary"
+                        >
+                            Cancel
+                        </a>
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                            id="submitServiceRequest"
+                        >
+                            <i class="fa-solid fa-paper-plane"></i>
+                            Send request
+                        </button>
+                    </div>
+                </form>
+            </section>
+        </section>
+    </main>
+
+    <script src="js/toast.js"></script>
+    <script src="js/service-request.js"></script>
+</body>
+</html>

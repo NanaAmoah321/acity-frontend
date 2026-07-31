@@ -134,12 +134,19 @@ function displayServices() {
     </div>
     <div class="service-actions">
         <button
+            class="btn btn-primary request-service-btn"
+            onclick="requestService(${service.id})"
+        >
+            Request service
+        </button>
+
+        <button
             class="btn btn-secondary"
             onclick="messageProvider(
                 ${service.user_id},
                 '${service.provider_name}',
                 ${service.id},
-                '${service.title.replace(/'/g,"\\'")}',
+                '${service.title.replace(/'/g, "\\'")}',
                 '${service.category}',
                 '${service.image_url || ""}'
             )"
@@ -154,6 +161,11 @@ function displayServices() {
         );
     });
 }
+
+function requestService(serviceId) {
+    window.location.href = `service-request.html?id=${serviceId}`;
+}
+
 function messageProvider(
     providerId,
     providerName,
@@ -212,6 +224,8 @@ searchService.addEventListener(
 );
 function getServiceIcon(category){
     switch(category){
+        case "Delivery":
+            return "truck";
         case "Programming":
             return "code";
         case "Graphic Design":
@@ -226,6 +240,17 @@ function getServiceIcon(category){
             return "pen";
         case "Marketing":
             return "bullhorn";
+        case "Printing & Documents":
+            return "print";
+
+        case "Repairs & Tech Support":
+            return "screwdriver-wrench";
+
+        case "Beauty & Fashion":
+            return "scissors";
+
+        case "Other":
+            return "briefcase";
         default:
             return "briefcase";
     }

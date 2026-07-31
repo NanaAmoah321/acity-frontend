@@ -973,6 +973,293 @@ async function loadSellerOrders() {
     }
 }
 
+function escapeHtml(value) {
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+function formatServiceRequestDetails(details) {
+    const labels = {
+        pickup_location: "Pickup",
+        dropoff_location: "Drop-off",
+        preferred_date: "Date",
+        preferred_time: "Time",
+        item_size: "Item size",
+        quantity: "Quantity",
+        additional_details: "Notes",
+        course: "Course",
+        topic: "Topic",
+        level: "Level",
+        session_format: "Session format",
+        project_type: "Project type",
+        required_features: "Features",
+        deadline: "Deadline",
+        design_type: "Design type",
+        dimensions: "Dimensions",
+        event_type: "Event type",
+        location: "Location",
+        duration: "Duration",
+        document_type: "Document type",
+        word_count: "Word count",
+        what_you_need: "Request",
+        preferred_location: "Location",
+        budget: "Budget"
+    };
+
+    if (!details || typeof details !== "object") {
+        return "<span>No details provided.</span>";
+    }
+
+    return Object.entries(details)
+        .filter(([, value]) => {
+            return String(value || "").trim() !== "";
+        })
+        .map(([key, value]) => {
+            const label =
+                labels[key] ||
+                key.replaceAll("_", " ");
+
+            return `
+                <span>
+                    <strong>${escapeHtml(label)}:</strong>
+                    ${escapeHtml(value)}
+                </span>
+            `;
+        })
+        .join("");
+}
+
+function openServiceRequestConversation(
+    requesterId,
+    requesterName
+) {
+    localStorage.removeItem("conversationListing");
+    localStorage.removeItem("conversationService");
+
+    localStorage.setItem(
+        "openConversationWith",
+        requesterId
+    );
+
+    localStorage.setItem(
+        "openConversationName",
+        requesterName
+    );
+
+    window.location.href = "inbox.html";
+}
+
+async function loadIncomingServiceRequests() {
+    const token = localStorage.getItem("token");
+
+    const container = document.getElementById(
+        "serviceRequestsContainer"
+    );
+
+    if (!container || !token) {
+        return;
+    }
+
+    container.innerHTML = `
+        <div class="profile-skeleton order-skeleton"></div>
+    `;
+
+    try {
+        const res = await fetch(
+            "https://acity-backend.onrender.com/api/services/incoming",
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+
+        const requests = await res.json();
+
+        if (!res.ok) {
+            throw new Error(
+                requests.error ||
+                "Could not load service requests."
+            );
+        }
+
+        container.innerHTML = "";
+
+        if (requests.length === 0) {
+            container.innerHTML = `
+                <div class="emptyOrders">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                    <h3>No Incoming Requests</h3>
+                    <p>
+                        Service requests from students will appear here.
+                    </p>
+                </div>
+            `;
+
+            return;
+        }
+
+        requests.forEach(request => {
+            const requestDetails =
+                formatServiceRequestDetails(
+                    request.request_details
+                );
+
+            const status =
+                request.status.charAt(0).toUpperCase() +
+                request.status.slice(1);
+
+            container.innerHTML += `
+                <div class="incomingOrderCard serviceRequestCard">
+                    <div class="incomingOrderTop">
+                        <div>
+                            <h4>
+                                ${escapeHtml(request.service_title)}
+                            </h4>
+
+                            <small>
+                                ${escapeHtml(request.requester_name)}
+                            </small>
+                        </div>
+
+                        <span class="statusBadge ${escapeHtml(request.status)}">
+                            ${escapeHtml(status)}
+                        </span>
+                    </div>
+
+                    <div class="orderMeta serviceRequestMeta">
+                        ${requestDetails}
+                    </div>
+
+                    <div class="incomingOrderButtons">
+                        ${
+                            request.status === "pending"
+                                ? `
+                                    <button
+                                        class="btn btn-success"
+                                        onclick="updateServiceRequestStatus(
+                                            ${Number(request.id)},
+                                            'accepted'
+                                        )"
+                                    >
+                                        Accept
+                                    </button>
+
+                                    <button
+                                        class="btn btn-danger"
+                                        onclick="updateServiceRequestStatus(
+                                            ${Number(request.id)},
+                                            'declined'
+                                        )"
+                                    >
+                                        Decline
+                                    </button>
+                                `
+                                : ""
+                        }
+
+                        <button
+                            class="btn btn-secondary"
+                            onclick="openServiceRequestConversation(
+                                ${Number(request.requester_id)},
+                                '${escapeHtml(request.requester_name)}'
+                            )"
+                        >
+                            <i class="fa-solid fa-comments"></i>
+                            Open conversation
+                        </button>
+                    </div>
+                </div>
+            `;
+        });
+
+    } catch (err) {
+        console.error(err);
+
+        container.innerHTML = `
+            <div class="emptyOrders">
+                Server Error
+            </div>
+        `;
+    }
+}
+
+async function updateServiceRequestStatus(
+    requestId,
+    status
+) {
+    const isAccepting = status === "accepted";
+
+    showConfirmModal({
+        title: isAccepting
+            ? "Accept Service Request"
+            : "Decline Service Request",
+
+        message: isAccepting
+            ? "Accept this service request and notify the requester?"
+            : "Decline this service request and notify the requester?",
+
+        icon: isAccepting
+            ? "fa-check"
+            : "fa-xmark",
+
+        confirmText: isAccepting
+            ? "Accept"
+            : "Decline",
+
+        confirmClass: isAccepting
+            ? "btn-success"
+            : "btn-danger",
+
+        onConfirm: async () => {
+            try {
+                const token =
+                    localStorage.getItem("token");
+
+                const res = await fetch(
+                    `https://acity-backend.onrender.com/api/services/requests/${requestId}/status`,
+                    {
+                        method: "PATCH",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${token}`
+                        },
+                        body: JSON.stringify({
+                            status
+                        })
+                    }
+                );
+
+                const data = await res.json();
+
+                if (!res.ok) {
+                    throw new Error(
+                        data.error ||
+                        "Could not update request."
+                    );
+                }
+
+                showToast(data.message);
+
+                loadIncomingServiceRequests();
+
+            } catch (err) {
+                console.error(err);
+
+                showToast(
+                    err.message ||
+                    "Could not update request.",
+                    "error"
+                );
+            }
+        }
+    });
+}
+
 async function acceptOrder(orderId){
 
     showConfirmModal({
@@ -1166,6 +1453,8 @@ document.addEventListener(
         await loadMyItems();
 
         await loadSellerOrders();
+
+        await loadIncomingServiceRequests();
 
         
 

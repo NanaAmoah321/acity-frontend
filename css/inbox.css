@@ -649,3 +649,7 @@
     flex-shrink:0;
 
 }
+
+.message-text {
+    white-space: pre-line;
+}
