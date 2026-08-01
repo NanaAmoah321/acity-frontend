@@ -399,18 +399,20 @@ font-size:15px;
 }
 .store-info{
     padding:22px;
+    font-size:14px;
 }
 .store-category{
     display:inline-block;
     background:#FEECEC;
     color:var(--primary);
-    padding:6px 14px;
+    padding:6px 10px;
     border-radius:999px;
     font-size:12px;
     font-weight:700;
 }
 .store-info h3{
-    margin:16px 0 10px;
+    margin:6px 0 6px;
+    font-size:18px;
 }
 .store-info p{
     color:var(--text-light);
@@ -427,10 +429,13 @@ font-size:15px;
     font-weight:700;
     cursor:pointer;
     transition:.25s;
+    
 }
-.store-info button:hover{
-    background:var(--primary-dark);
+
+store-info button:hover{
+    transform:translateY(4px);
 }
+
 /* ==========================================
    SELL BANNER
 ========================================== */
