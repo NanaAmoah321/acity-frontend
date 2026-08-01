@@ -317,7 +317,11 @@ function renderProducts(products){
         `;
         return;
     }
-    container.innerHTML = products.map(product => `
+    container.innerHTML = products.map(product => {
+        const canPurchase =
+            product.status !== "archived" &&
+            product.stock_quantity > 0;
+        return `
         <div class="featured-card">
             <div class="featured-image">
                 <img
@@ -336,58 +340,80 @@ function renderProducts(products){
                     GH₵${product.price}
                 </div>
                 <div class="listing-stock">
-${
-    product.stock_quantity > 5
-    ?
-    `<span class="stock-good">
-        <i class="fa-solid fa-box"></i>
-        ${product.stock_quantity} Available
-    </span>`
-    :
-    product.stock_quantity > 0
-    ?
-    `<span class="stock-low">
-        🔥 Only ${product.stock_quantity} left
-    </span>`
-    :
-    `<span class="stock-out">
-        ❌ Out of Stock
-    </span>`
-}
-</div>
-                <div class="featured-footer">
-                    <span>
-                        ${product.status}
-                    </span>
-                    ${
-                        product.stock_quantity > 0
-                        ?
-                        `
-                        <button
-                        class="btn-primary"
-                        onclick="addToCart(${product.id})"
-                        >
-                        Add to Cart
-                        </button>
-                        `
-                            :
-                            `
-                        <button
-                        class="btn-secondary"
-                        disabled
-                        >
+                ${
+                    product.status === "archived"
+                    ?
+                    `<span class="stock-out">
+                        <i class="fa-solid fa-box-archive"></i>
+                        Archived
+                    </span>`
+                    :
+                    product.stock_quantity > 5
+                    ?
+                    `<span class="stock-good">
+                        <i class="fa-solid fa-box"></i>
+                        ${product.stock_quantity} Available
+                    </span>`
+                    :
+                    product.stock_quantity > 0
+                    ?
+                    `<span class="stock-low">
+                        <i class="fa-solid fa-fire"></i>
+                        Only ${product.stock_quantity} left
+                    </span>`
+                    :
+                    `<span class="stock-out">
+                        <i class="fa-solid fa-circle-xmark"></i>
                         Out of Stock
-                        </button>
-                        `
+                    </span>`
+                }
+                </div>
+                <div class="featured-footer">
+                    <span class="${
+                        product.status === "archived" || product.stock_quantity <= 0
+                            ? "stock-out"
+                            : "stock-good"
+                    }">
+                        ${
+                            product.status === "archived"
+                                ? "Archived"
+                                : product.stock_quantity <= 0
+                                    ? "Out of Stock"
+                                    : "Available"
                         }
+                    </span>
+                  ${
+                    canPurchase
+                    ? `
+                        <button
+                            class="btn-primary"
+                            onclick="addToCart(${product.id})"
+                        >
+                            Add to Cart
+                        </button>
+                    `
+                    : `
+                        <button
+                            class="btn-disabled"
+                            disabled
+                        >
+                            ${
+                                product.status === "archived"
+                                    ? "Archived"
+                                    : "Out of Stock"
+                            }
+                        </button>
+                    `
+                }
                 </div>
             </div>
         </div>
-    `).join("");
+    `}).join("");
 }
 function setupStoreFilters(){
     const search =
     document.getElementById("storeSearch");
+    const sort = document.getElementById("storeSort");
     const buttons =
     document.querySelectorAll(".store-categories button");
     let category = "All";
@@ -410,12 +436,34 @@ function setupStoreFilters(){
                 description.includes(text)
             );
         });
+
+        switch (sort.value) {
+
+            case "low":
+                filtered.sort((a, b) => Number(a.price) - Number(b.price));
+                break;
+
+            case "high":
+                filtered.sort((a, b) => Number(b.price) - Number(a.price));
+                break;
+
+            case "latest":
+            default:
+                filtered.sort(
+                    (a, b) => new Date(b.created_at) - new Date(a.created_at)
+                );
+                break;
+        }
+
         renderProducts(filtered);
     }
     search.addEventListener(
         "input",
         filter
     );
+
+    sort.addEventListener("change", filter);
+
     buttons.forEach(button=>{
         button.onclick=()=>{
             buttons.forEach(b=>
