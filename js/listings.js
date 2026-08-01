@@ -164,91 +164,90 @@ function renderStores(stores) {
 function createPublicListingCard(item) {
     const card = document.createElement("article");
     card.className = "featured-card";
+card.setAttribute("role", "button");
+card.tabIndex = 0;
 
-    card.setAttribute("role", "button");
-    card.tabIndex = 0;
+const openListing = () => {
+    viewListing(item.user_id);
+};
 
-    const openListing = () => {
-        viewListing(item.user_id);
-    };
+card.addEventListener("click", openListing);
 
-    card.addEventListener("click", openListing);
-
-    card.addEventListener("keydown", event => {
-        if (event.key === "Enter" || event.key === " ") {
-            event.preventDefault();
-            openListing();
-        }
-    });
-
-    const imageWrapper = document.createElement("div");
-    imageWrapper.className = "featured-image";
-
-    const image = document.createElement("img");
-    image.alt = item.title || "Listing image";
-    image.src = safeImageUrl(item.image_url);
-
-    image.onerror = () => {
-        image.src = "images/Other.jpg";
-    };
-
-    imageWrapper.appendChild(image);
-
-    const info = document.createElement("div");
-    info.className = "featured-info";
-
-    const category = document.createElement("span");
-    category.className = "featured-category";
-    category.textContent = item.category || "Other";
-
-    const title = document.createElement("h3");
-    title.textContent = item.title || "Untitled Listing";
-
-    const price = document.createElement("p");
-    price.className = "featured-price";
-
-    const numericPrice = Number(item.price);
-
-    price.textContent = Number.isFinite(numericPrice)
-        ? `GH₵${numericPrice.toFixed(2)}`
-        : "Price unavailable";
-
-    const stock = document.createElement("p");
-    stock.className = "stock";
-
-    const quantity = Number(item.stock_quantity || 0);
-
-    if (quantity > 5) {
-        stock.innerHTML =
-            `<i class="fa-solid fa-box"></i>`;
-
-        stock.append(` ${quantity} in stock`);
-    } else if (quantity > 0) {
-        stock.innerHTML =
-            `<i class="fa-solid fa-fire"></i>`;
-
-        stock.append(` Only ${quantity} left`);
-    } else {
-        stock.innerHTML =
-            `<i class="fa-solid fa-circle-xmark"></i>`;
-
-        stock.append(" Out of stock");
+card.addEventListener("keydown", event => {
+    if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openListing();
     }
+});
 
-    const footer = document.createElement("div");
-    footer.className = "featured-footer";
+const imageWrapper = document.createElement("div");
+imageWrapper.className = "featured-image";
 
-    const seller = document.createElement("span");
-    seller.textContent = item.seller_name || "Student Seller";
+const image = document.createElement("img");
+image.alt = item.title || "Listing image";
+image.src = safeImageUrl(item.image_url);
 
-    const arrow = document.createElement("i");
-    arrow.className = "fa-solid fa-arrow-right";
+image.onerror = () => {
+    image.src = "images/Other.jpg";
+};
 
-    footer.append(seller, arrow);
-    info.append(category, title, price, stock, footer);
-    card.append(imageWrapper, info);
+imageWrapper.appendChild(image);
 
-    return card;
+const info = document.createElement("div");
+info.className = "featured-info";
+
+const category = document.createElement("span");
+category.className = "featured-category";
+category.textContent = item.category || "Other";
+
+const title = document.createElement("h3");
+title.textContent = item.title || "Untitled Listing";
+
+const price = document.createElement("p");
+price.className = "featured-price";
+
+const numericPrice = Number(item.price);
+
+price.textContent = Number.isFinite(numericPrice)
+    ? `GH₵${numericPrice.toFixed(2)}`
+    : "Price unavailable";
+
+const stock = document.createElement("p");
+stock.className = "stock";
+
+const quantity = Number(item.stock_quantity || 0);
+
+if (quantity > 5) {
+    stock.innerHTML =
+        `<i class="fa-solid fa-box"></i>`;
+
+    stock.append(` ${quantity} in stock`);
+} else if (quantity > 0) {
+    stock.innerHTML =
+        `<i class="fa-solid fa-fire"></i>`;
+
+    stock.append(` Only ${quantity} left`);
+} else {
+    stock.innerHTML =
+        `<i class="fa-solid fa-circle-xmark"></i>`;
+
+    stock.append(" Out of stock");
+}
+
+const footer = document.createElement("div");
+footer.className = "featured-footer";
+
+const seller = document.createElement("span");
+seller.textContent = item.seller_name || "Student Seller";
+
+const arrow = document.createElement("i");
+arrow.className = "fa-solid fa-arrow-right";
+
+footer.append(seller, arrow);
+info.append(category, title, price, stock, footer);
+card.append(imageWrapper, info);
+
+return card;
 }
 
 async function loadFeaturedProducts() {
