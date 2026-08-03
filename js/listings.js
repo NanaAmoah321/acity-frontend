@@ -56,9 +56,9 @@ function safeImageUrl(value, fallback = "images/Other.jpg") {
 
 async function loadItems() {
     const res = await fetch(
-        "https://acity-backend.onrender.com/api/listings/stores?t=${Date.now()}",
-        {  
-            cache: "no-store" // Prevent caching to ensure fresh data
+        `https://acity-backend.onrender.com/api/listings/stores?t=${Date.now()}`,
+        {
+            cache: "no-store"
         }
     );
     allStores = await res.json();
@@ -203,6 +203,13 @@ category.textContent = item.category || "Other";
 const title = document.createElement("h3");
 title.textContent = item.title || "Untitled Listing";
 
+const description = document.createElement("p");
+
+description.className = "featured-description";
+
+description.textContent =
+    item.description || "No description available.";
+
 const price = document.createElement("p");
 price.className = "featured-price";
 
@@ -244,7 +251,7 @@ const arrow = document.createElement("i");
 arrow.className = "fa-solid fa-arrow-right";
 
 footer.append(seller, arrow);
-info.append(category, title, price, stock, footer);
+info.append(category, title, description, price, stock, footer);
 card.append(imageWrapper, info);
 
 return card;

@@ -267,38 +267,66 @@
                 type="text"
                 placeholder="Search stores..."
             >
+            
         </div>
+       <div class="ai-search-container">
+
+            <div class="hero-search ai-search">
+
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+
+                <input
+                    id="aiSearchInput"
+                    type="text"
+                    placeholder="Ask Acity AI... e.g. Cheap calculator for engineering"
+                >
+
+            </div>
+
+            <button
+                id="aiSearchBtn"
+                class="ai-search-btn"
+            >
+                <i class="fa-solid fa-robot"></i>
+
+                Search with Acity AI
+            </button>
+
+        </div>
+
+        <div id="aiExplanation"></div>
         <div class="mobile-categories">
-<button class="active" data-category="All">
-<i class="fa-solid fa-border-all"></i>
-<span>All</span>
-</button>
-<button data-category="Electronics">
-<i class="fa-solid fa-laptop"></i>
-<span>Electronics</span>
-</button>
-<button data-category="Books">
-<i class="fa-solid fa-book"></i>
-<span>Books</span>
-</button>
-<button data-category="Clothing">
-<i class="fa-solid fa-shirt"></i>
-<span>Clothing</span>
-</button>
-<button data-category="Hostel Items">
-<i class="fa-solid fa-bed"></i>
-<span>Hostel</span>
-</button>
-<button data-category="Academic">
-<i class="fa-solid fa-graduation-cap"></i>
-<span>Academic</span>
-</button>
-<button data-category="Other">
-<i class="fa-solid fa-ellipsis"></i>
-<span>Other</span>
-</button>
-</div>
-    </section>
+        <button class="active" data-category="All">
+        <i class="fa-solid fa-border-all"></i>
+        <span>All</span>
+        </button>
+        <button data-category="Electronics">
+        <i class="fa-solid fa-laptop"></i>
+        <span>Electronics</span>
+        </button>
+        <button data-category="Books">
+        <i class="fa-solid fa-book"></i>
+        <span>Books</span>
+        </button>
+        <button data-category="Clothing">
+        <i class="fa-solid fa-shirt"></i>
+        <span>Clothing</span>
+        </button>
+        <button data-category="Hostel Items">
+        <i class="fa-solid fa-bed"></i>
+        <span>Hostel</span>
+        </button>
+        <button data-category="Academic">
+        <i class="fa-solid fa-graduation-cap"></i>
+        <span>Academic</span>
+        </button>
+        <button data-category="Other">
+        <i class="fa-solid fa-ellipsis"></i>
+        <span>Other</span>
+        </button>
+        </div>
+        </section>
+        <div id="aiExplanation"></div>
     <!-- TRENDING -->
     <section class="market-section">
         <div class="section-header">
@@ -372,6 +400,7 @@
 <script src="js/toast.js"></script>
 <script src="js/modal.js"></script>
 <script src="js/listings.js"></script>
+<script src="js/buyerAi.js"></script>
 <script src="js/auth.js"></script>
 
 <script type="module" src="js/navbar.js"></script>
