@@ -354,6 +354,8 @@ async function loadInbox() {
 let activeUserId = null;
 let selectedAttachment = null;
 
+let latestSuggestedReplies = [];
+
 function readStoredJSON(key) {
     try {
         return JSON.parse(localStorage.getItem(key));
@@ -608,6 +610,10 @@ async function openConversation(userId, conversationName) {
 
         renderConversation(messages);
 
+        latestSuggestedReplies = [];
+
+        renderSuggestedReplies();
+
         if (messagesContainer) {
             messagesContainer.scrollTop =
                 messagesContainer.scrollHeight;
@@ -673,6 +679,29 @@ function createMessageBubble(message) {
                 bubble.appendChild(file);
             }
         }
+    }
+
+    if (
+
+        message.detected_language &&
+
+        message.detected_language.toLowerCase() !== "english" &&
+
+        Number(message.receiver_id) === Number(currentUser.id)
+
+    ) {
+
+        const translated = document.createElement("div");
+
+        translated.className = "translated-indicator";
+
+        translated.innerHTML = `
+            <i class="fa-solid fa-language"></i>
+            Translated from ${message.detected_language}
+        `;
+
+        bubble.appendChild(translated);
+
     }
 
     const time = document.createElement("span");
@@ -760,6 +789,11 @@ async function sendMessage(e){
     );
     const data =
     await res.json();
+
+    latestSuggestedReplies =
+        data.ai?.suggestedReplies || [];
+
+    renderSuggestedReplies();
     if(!res.ok){
         showToast(
             data.error ||
@@ -803,6 +837,74 @@ attachmentInput.addEventListener(
     }
 );
 
+function renderSuggestedReplies() {
+
+    let container =
+        document.getElementById(
+            "aiReplies"
+        );
+
+    if (!container) {
+
+        container =
+            document.createElement("div");
+
+        container.id = "aiReplies";
+
+        container.className =
+            "ai-replies";
+
+        document
+            .getElementById("messageForm")
+            .prepend(container);
+
+    }
+
+    container.innerHTML = "";
+
+    if (
+        latestSuggestedReplies.length === 0
+    ) {
+
+        container.style.display = "none";
+
+        return;
+
+    }
+
+    container.style.display = "flex";
+
+    latestSuggestedReplies.forEach(reply => {
+
+        const chip =
+            document.createElement("button");
+
+        chip.type = "button";
+
+        chip.className =
+            "ai-reply-chip";
+
+        chip.innerHTML = `
+            ✨ ${reply}
+        `;
+
+        chip.onclick = () => {
+
+            document.getElementById(
+                "messageInput"
+            ).value = reply;
+
+            document.getElementById(
+                "messageInput"
+            ).focus();
+
+        };
+
+        container.appendChild(chip);
+
+    });
+
+}
 
 loadInbox().then(() => {
 
@@ -848,32 +950,31 @@ loadInbox().then(() => {
     }
 
 });
+
 socket.on(
     "new_message",
-    (message)=>{
+    message => {
 
-        updateConversationCard(
-            message
-        );
+        updateConversationCard(message);
 
-        if(
+        if (
             activeUserId &&
             (
                 message.sender_id == activeUserId ||
                 message.receiver_id == activeUserId
             )
-        ){
+        ) {
 
             const container =
-            document.getElementById(
-                "messagesContainer"
-            );
+                document.getElementById(
+                    "messagesContainer"
+                );
 
-            if(
+            if (
                 document.querySelector(
                     `[data-message-id="${message.id}"]`
                 )
-            ){
+            ) {
                 return;
             }
 
@@ -882,13 +983,27 @@ socket.on(
             );
 
             container.scrollTop =
-            container.scrollHeight;
+                container.scrollHeight;
+
+            // Only show Smart Replies
+            // when YOU receive a message
+
+            if (
+                Number(message.receiver_id) ===
+                Number(currentUser.id)
+            ) {
+
+                latestSuggestedReplies =
+                    message.ai?.suggestedReplies || [];
+
+                renderSuggestedReplies();
+
+            }
 
         }
 
     }
 );
-
 
 
 closeReview.addEventListener(
