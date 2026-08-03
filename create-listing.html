@@ -280,6 +280,16 @@
                         required
                     ></textarea>
                 </div>
+                <button
+                    type="button"
+                    id="aiImproveButton"
+                    class="btn btn-secondary btn-block"
+                >
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    Improve with Acity AI
+                </button>
+
+                <p id="aiStatus" aria-live="polite"></p>
                 <div class="input-group select-group">
                     <i class="fa-solid fa-layer-group"></i>
                     <select id="category" name="category" required>
@@ -317,46 +327,46 @@
                     >
                 </div>
                 <label>Item Image</label>
-<div class="upload-area" id="uploadArea">
-    <input
-        type="file"
-        id="image"
-        accept="image/*"
-        hidden
-    >
-    <div id="uploadContent">
-        <i class="fa-solid fa-cloud-arrow-up"></i>
-        <h3>Drag & Drop your image</h3>
-        <p>or click anywhere to browse</p>
-        <small>PNG • JPG • JPEG • WEBP</small>
-    </div>
-    <img
-        id="previewImage"
-        style="display:none"
-    >
-</div>
-<div
-    class="image-actions"
-    id="imageActions"
-    style="display:none"
->
-    <button
-        type="button"
-        id="changeImageBtn"
-        class="btn btn-secondary"
-    >
-        <i class="fa-solid fa-pen"></i>
-        Change Image
-    </button>
-    <button
-        type="button"
-        id="removeImageBtn"
-        class="btn btn-danger"
-    >
-        <i class="fa-solid fa-trash"></i>
-        Remove
-    </button>
-</div>
+                <div class="upload-area" id="uploadArea">
+                    <input
+                        type="file"
+                        id="image"
+                        accept="image/*"
+                        hidden
+                    >
+                    <div id="uploadContent">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                        <h3>Drag & Drop your image</h3>
+                        <p>or click anywhere to browse</p>
+                        <small>PNG • JPG • JPEG • WEBP</small>
+                    </div>
+                    <img
+                        id="previewImage"
+                        style="display:none"
+                    >
+                </div>
+                <div
+                    class="image-actions"
+                    id="imageActions"
+                    style="display:none"
+                >
+                    <button
+                        type="button"
+                        id="changeImageBtn"
+                        class="btn btn-secondary"
+                    >
+                        <i class="fa-solid fa-pen"></i>
+                        Change Image
+                    </button>
+                    <button
+                        type="button"
+                        id="removeImageBtn"
+                        class="btn btn-danger"
+                    >
+                        <i class="fa-solid fa-trash"></i>
+                        Remove
+                    </button>
+                </div>
                 <button
                 class="btn btn-primary btn-block"
                 id="publishButton"

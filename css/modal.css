@@ -165,3 +165,10 @@
     min-width:140px;
 
 }
+
+#modalMessage {
+    white-space: pre-line;
+    max-height: 280px;
+    overflow-y: auto;
+    text-align: left;
+}
