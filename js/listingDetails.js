@@ -1,3 +1,19 @@
+function formatStoreTime(timeString) {
+
+    if (!timeString) return "";
+
+    const [hour, minute] = timeString.split(":").map(Number);
+
+    const date = new Date();
+
+    date.setHours(hour, minute);
+
+    return date.toLocaleTimeString([], {
+        hour: "numeric",
+        minute: "2-digit"
+    });
+
+}
 const params = new URLSearchParams(window.location.search);
 const userId = params.get("id");
 const listingDetails =
@@ -31,29 +47,46 @@ function renderStore(){
 <section class="store-card">
     <div class="store-avatar">
         <img
-        src="images/${store.seller.store_category || "Other"}.jpg"
-        onerror="this.src='images/Other.jpg'"
+            src="${store.store.profile_image || 'images/Other.jpg'}"
+            alt="${store.store.store_name}"
+            onerror="this.src='images/Other.jpg'"
         >
     </div>
+
     <div class="store-info">
+
         <span class="store-badge">
-            ${store.seller.store_category || "General"}
+            ${
+                Array.isArray(store.store.categories)
+                    ? store.store.categories.join(" • ")
+                    : (store.store.categories || "General")
+            }
         </span>
+
         <h1>
-            ${store.seller.seller_name}'s Store
+            ${store.store.store_name || "Store"}
         </h1>
         <div class="store-rating">
-            ⭐ ${store.seller.average_rating || "New"}
+            ⭐ ${store.store.average_rating || "New"}
             •
-            ${store.seller.total_reviews || 0} Reviews
+            ${store.store.total_reviews || 0} Reviews
+        </div>
+        <div class="store-hours">
+            <i class="fa-regular fa-clock"></i>
+            ${formatStoreTime(store.store.opening_time)}
+            -
+            ${formatStoreTime(store.store.closing_time)}
         </div>
         <p class="store-description">
-            Browse everything available from this Academic City seller.
+            ${
+                store.store.description ||
+                "Browse everything available from this Academic City seller."
+            }
         </p>
         <div class="store-actions">
             <button
                 class="message-btn"
-                onclick="messageSeller(${store.seller.id}, '${store.seller.seller_name}')"
+                onclick="messageSeller(${store.store.id}, '${store.store.store_name}')"
             >
                 <i class="fa-solid fa-comments"></i>
                 Message Seller
@@ -78,7 +111,7 @@ function renderStore(){
         </div>
         <div class="store-stat">
             <h2>
-                ${store.seller.total_reviews || 0}
+                ${store.store.total_reviews || 0}
             </h2>
             <p>
                 Reviews
@@ -86,7 +119,7 @@ function renderStore(){
         </div>
         <div class="store-stat">
             <h2>
-                ${store.seller.average_rating || "New"}
+                ${store.store.average_rating || "New"}
             </h2>
             <p>
                 Rating
@@ -192,7 +225,7 @@ if(!token){
 const statusRes =
 await fetch(
 
-    `https://acity-backend.onrender.com/api/follow/${store.seller.id}`,
+    `https://acity-backend.onrender.com/api/follow/${store.store.user_id}`,
 
     {
 
@@ -261,7 +294,7 @@ if(status.following){
                     body:JSON.stringify({
 
                         following_user_id:
-                        store.seller.id
+                        store.store.user_id
 
                     })
 

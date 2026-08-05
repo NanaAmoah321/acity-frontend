@@ -45,6 +45,79 @@ function updateGuestMenu() {
 
 updateGuestMenu();
 
+async function updateStoreNavigation(){
+
+    const token = localStorage.getItem("token");
+
+    if(!token) return;
+
+    try{
+
+        const response = await fetch(
+            "https://acity-backend.onrender.com/api/stores/me",
+            {
+                headers:{
+                    Authorization:`Bearer ${token}`
+                }
+            }
+        );
+
+        if(!response.ok) return;
+
+        const data = await response.json();
+
+        const desktopLink = document.querySelector(
+            '.nav-item.sell span'
+        );
+
+        const mobileLink = document.getElementById(
+            "mobileCreateListingLink"
+        );
+
+        if(data.hasStore){
+
+            if(desktopLink){
+
+                desktopLink.textContent = "Create Listing";
+
+            }
+
+            if(mobileLink){
+
+                mobileLink.innerHTML = `
+                    <i class="fa-solid fa-plus"></i>
+                    Create Listing
+                `;
+
+            }
+
+        }else{
+
+            if(desktopLink){
+
+                desktopLink.textContent = "Create Store";
+
+            }
+
+            if(mobileLink){
+
+                mobileLink.innerHTML = `
+                    <i class="fa-solid fa-store"></i>
+                    Create Store
+                `;
+
+            }
+
+        }
+
+    }catch(err){
+
+        console.error(err);
+
+    }
+
+}
+
 const adminLink =
 document.getElementById(
     "adminLink"
@@ -160,14 +233,24 @@ if(mobileOverlay){
 }
 const currentPage =
 window.location.pathname.split("/").pop();
+
 document
 .querySelectorAll(".nav-item")
 .forEach(link => {
-    const href =
-    link.getAttribute("href");
-    if(href === currentPage){
+
+    const href = link.getAttribute("href");
+
+    if (
+        href === currentPage ||
+
+        (
+            currentPage === "create-store.html" &&
+            href === "create-listing.html"
+        )
+    ) {
         link.classList.add("active");
     }
+
 });
 async function updateNotificationCount(){
     const token =
@@ -444,3 +527,4 @@ window.loadCartCount = loadCartCount;
 updateMessageCount();
 window.updateMessageCount =
 updateMessageCount;
+updateStoreNavigation();

@@ -649,3 +649,69 @@ body.dark .stock{
     color:var(--text-primary,#111827);
     font-size:13px;
 }
+
+.store-image-wrapper{
+
+    position:relative;
+
+}
+
+.store-badges{
+
+    position:absolute;
+
+    top:12px;
+
+    left:12px;
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:8px;
+
+}
+
+.store-badge{
+
+    background:rgba(0,0,0,.72);
+
+    color:#fff;
+
+    padding:6px 12px;
+
+    border-radius:999px;
+
+    font-size:12px;
+
+    font-weight:600;
+
+    backdrop-filter:blur(10px);
+
+}
+
+.store-hours{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    margin-top:14px;
+
+    font-size:16px;
+
+    font-weight:500;
+
+    color:var(--text-light);
+
+}
+
+.store-hours i{
+
+    color:var(--primary);
+
+    font-size:15px;
+
+}

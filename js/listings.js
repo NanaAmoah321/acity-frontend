@@ -54,6 +54,59 @@ function safeImageUrl(value, fallback = "images/Other.jpg") {
     return fallback;
 }
 
+function formatStoreTime(timeString) {
+
+    if (!timeString) return "";
+
+    const [hour, minute] = timeString.split(":").map(Number);
+
+    const date = new Date();
+
+    date.setHours(hour, minute);
+
+    return date.toLocaleTimeString([], {
+        hour: "numeric",
+        minute: "2-digit"
+    });
+
+}
+
+function getStoreStatus(openingTime, closingTime) {
+
+    if (!openingTime || !closingTime) {
+
+        return {
+            open: false,
+            text: "Hours unavailable"
+        };
+
+    }
+
+    const now = new Date();
+
+    const open = new Date();
+    const close = new Date();
+
+    const [openHour, openMinute] = openingTime.split(":").map(Number);
+    const [closeHour, closeMinute] = closingTime.split(":").map(Number);
+
+    open.setHours(openHour, openMinute, 0, 0);
+    close.setHours(closeHour, closeMinute, 0, 0);
+
+    const isOpen = now >= open && now <= close;
+
+    return {
+
+        open: isOpen,
+
+        text: isOpen
+            ? `Open • Closes at ${formatStoreTime(closingTime)}`
+            : `Closed • Opens at ${formatStoreTime(openingTime)}`
+
+    };
+
+}
+
 async function loadItems() {
     const res = await fetch(
         `https://acity-backend.onrender.com/api/listings/stores?t=${Date.now()}`,
@@ -77,7 +130,7 @@ function renderStores(stores) {
             String(store.store_category || "").toLowerCase();
 
         const sellerName =
-            String(store.seller_name || "").toLowerCase();
+            String(store.store_name || "").toLowerCase();
 
         const matchesSearch =
             storeName.includes(searchText) ||
@@ -113,50 +166,182 @@ function renderStores(stores) {
         image.className = "store-image";
         image.alt = `${store.store_name || "Store"} image`;
         image.src = safeImageUrl(
-            getStoreImage(store.store_category)
+            store.profile_image,
+            getStoreImage(
+                Array.isArray(store.categories)
+                    ? store.categories[0]
+                    : "Other"
+            )
         );
 
         image.onerror = () => {
             image.src = "images/Other.jpg";
         };
 
-        const info = document.createElement("div");
-        info.className = "store-info";
+        /* Store image category badges */
 
-        const category = document.createElement("span");
-        category.className = "store-category";
-        category.textContent =
-            store.store_category || "General";
+    const badgeContainer = document.createElement("div");
+    badgeContainer.className = "store-badges";
 
-        const name = document.createElement("h3");
-        name.textContent =
-            `${store.store_name || "Student"}'s Store`;
+    const categories = Array.isArray(store.categories)
+        ? store.categories
+        : [];
 
-        const rating = document.createElement("p");
-        rating.textContent =
-            `⭐ ${store.average_rating || "New Store"}`;
+    if (categories.length) {
 
-        const productCount = document.createElement("p");
-        productCount.textContent =
-            `${Number(store.total_products || 0)} Products`;
+        categories.forEach(cat => {
 
-        const visitButton = document.createElement("button");
-        visitButton.type = "button";
-        visitButton.textContent = "Visit Store";
+            const badge = document.createElement("span");
 
-        visitButton.addEventListener("click", () => {
-            viewStore(store.user_id);
+            badge.className = "store-badge";
+
+            badge.textContent = cat;
+
+            badgeContainer.appendChild(badge);
+
         });
 
-        info.append(
-            category,
-            name,
-            rating,
-            productCount,
-            visitButton
-        );
+    }
 
-        card.append(image, info);
+    const imageWrapper = document.createElement("div");
+    imageWrapper.className = "store-image-wrapper";
+
+    imageWrapper.append(
+        image,
+        badgeContainer
+    );
+
+    const info = document.createElement("div");
+    info.className = "store-info";
+
+    const name = document.createElement("h3");
+
+    name.textContent =
+        store.store_name || "Student Store";
+
+    const status = document.createElement("p");
+
+    status.className = "store-status";
+
+    const now = new Date();
+
+    const currentMinutes =
+        now.getHours() * 60 +
+        now.getMinutes();
+
+    let statusText =
+        "Hours unavailable";
+
+    if (
+        store.opening_time &&
+        store.closing_time
+    ) {
+
+        const [oh, om] =
+            store.opening_time
+                .split(":")
+                .map(Number);
+
+        const [ch, cm] =
+            store.closing_time
+                .split(":")
+                .map(Number);
+
+        const open =
+            oh * 60 + om;
+
+        const close =
+            ch * 60 + cm;
+
+        const isOpen =
+            currentMinutes >= open &&
+            currentMinutes < close;
+
+        const closing =
+            new Date(
+                `1970-01-01T${store.closing_time}`
+            ).toLocaleTimeString([],{
+
+                hour:"numeric",
+
+                minute:"2-digit"
+
+            });
+
+        statusText = isOpen
+
+            ? `🟢 Open until ${closing}`
+
+            : "🔴 Closed";
+
+    }
+
+    status.textContent =
+        statusText;
+
+    const rating =
+        document.createElement("p");
+
+    rating.className =
+        "store-rating";
+
+    rating.textContent =
+        store.average_rating
+
+            ? `⭐ ${store.average_rating} (${store.total_reviews})`
+
+            : "⭐ New Store";
+
+    
+    const storeStatus = getStoreStatus(
+        store.opening_time,
+        store.closing_time
+    );
+
+    const storeStatusElement = document.createElement("p");
+    storeStatusElement.className = storeStatus.open
+        ? "store-open"
+        : "store-closed";
+
+    storeStatusElement.innerHTML = storeStatus.open
+        ? `<i class="fa-solid fa-circle"></i> ${storeStatus.text}`
+        : `<i class="fa-solid fa-circle"></i> ${storeStatus.text}`;
+    
+    const visitButton =
+        document.createElement("button");
+
+    visitButton.type = "button";
+
+    visitButton.textContent =
+        "Visit Store";
+
+    visitButton.addEventListener("click",()=>{
+
+        viewStore(store.user_id);
+
+    });
+
+    info.append(
+
+        name,
+
+        storeStatusElement,
+
+        rating,
+
+        
+
+        visitButton
+
+    );
+
+    card.append(
+
+        imageWrapper,
+
+        info
+
+    );
         ItemsContainer.appendChild(card);
     });
 }

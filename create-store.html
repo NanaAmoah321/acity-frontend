@@ -12,16 +12,21 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marketplace - Acity Connect</title>
+    <title>ACity Connect</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/navbar.css">
     <link rel="stylesheet" href="css/buttons.css">
-    <link rel="stylesheet" href="css/cards.css">
-    <link rel="stylesheet" href="css/marketplace.css">
+    <link rel="stylesheet" href="css/forms.css">
+    <link rel="stylesheet" href="css/modal.css">
+    <link rel="stylesheet" href="css/create-listing.css">
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="css/toast.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="icon" type="image/png" href="/favicon.png" sizes="any">
     <link rel="apple-touch-icon" href="/favicon.png">
+    
+
 </head>
 <body>
      <nav>
@@ -51,22 +56,20 @@
             <i class="fa-solid fa-plus"></i>
             <span>Sell Items</span>
         </a>
-        
     </div>
     <!-- RIGHT -->
     <div class="nav-right">
         <div class="search-box">
             <i class="fa-solid fa-magnifying-glass"></i>
             <input
-                id="navbarSearch"
                 type="text"
                 placeholder="Search items..."
             >
         </div>
         
         <button id="themeToggle" class="theme-toggle">
-            <i id="themeIcon" class="fa-solid fa-circle-half-stroke"></i>
-        </button>
+                    <i id="themeIcon" class="fa-solid fa-circle-half-stroke"></i>
+                </button>
         <a href="notifications.html" class="icon-btn">
             <i class="fa-solid fa-bell"></i>
             <small id="notificationCount"></small>
@@ -241,168 +244,273 @@
         </a>
         </div>
     </div>
-</div>
-<div class="mobile-overlay" id="mobileOverlay"></div>
-    <main class="marketplace">
-    <!-- HERO -->
-    <section class="marketplace-hero">
-        <div class="hero-content">
-            <span class="hero-badge">
-                Campus Marketplace
-            </span>
-            <h1>
-                ACITY
-                <br>
-                <span>CONNECT</span>
-            </h1>
-            <p>
-                Discover products, trusted student stores,
-                and campus services all in one place.
-            </p>
-        </div>
-        <div class="hero-search">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <input
-                id="searchInput"
-                type="text"
-                placeholder="Search stores..."
-            >
-            
-        </div>
-       <div class="ai-search-container">
+</div><div class="mobile-overlay" id="mobileOverlay"></div>
+    <section class="create-page">
 
-            <div class="hero-search ai-search">
+        <div class="create-header">
 
-                <i class="fa-solid fa-wand-magic-sparkles"></i>
-
-                <input
-                    id="aiSearchInput"
-                    type="text"
-                    placeholder="Ask Acity AI... e.g. Cheap calculator for engineering"
-                >
-
+            <div class="create-icon">
+                <i class="fa-solid fa-store"></i>
             </div>
 
-            <button
-                id="aiSearchBtn"
-                class="ai-search-btn"
-            >
-                <i class="fa-solid fa-robot"></i>
+            <h1>Create Your Store</h1>
 
-                Search with Acity AI
+            <p>
+                Set up your store once and start selling to thousands of Academic City students.
+            </p>
+
+        </div>
+
+        <div class="create-card">
+
+            <h2>Create Store</h2>
+
+            <p class="form-subtitle">
+                Tell buyers about your store before publishing your first listings.
+            </p>
+
+            <form id="storeForm">
+
+                <div class="input-group">
+                    <i class="fa-solid fa-store"></i>
+                    <input
+                        type="text"
+                        id="store_name"
+                        placeholder="Store Name"
+                        required
+                    >
+                </div>
+
+                <div class="input-group textarea-group">
+                    <i class="fa-solid fa-align-left"></i>
+                    <textarea
+                        id="description"
+                        placeholder="Describe your store..."
+                        required
+                    ></textarea>
+                </div>
+                <div class="field-group">
+                    <label>Store Categories</label>
+
+                    <p class="field-description">
+                        Select one or more categories that best describe what your store sells.
+                    </p>
+                    
+
+                    <div class="category-selector">
+
+                        <button type="button" class="category-chip" data-category="Electronics">Electronics</button>
+
+                        <button type="button" class="category-chip" data-category="Books">Books</button>
+
+                        <button type="button" class="category-chip" data-category="Clothing">Clothing</button>
+
+                        <button type="button" class="category-chip" data-category="Hostel Items">Hostel Items</button>
+
+                        <button type="button" class="category-chip" data-category="Academic">Academic</button>
+
+                        <button type="button" class="category-chip" data-category="Other">Other</button>
+
+                    </div>
+                </div>
+
+                <div class="form-row">
+
+                    
+
+                    <div class="input-group">
+                        <label for="opening_time">Opening Time</label>
+
+                        
+
+                        <input
+                            type="time"
+                            id="opening_time"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="input-group">
+                        <label for="closing_time">Closing Time</label>
+                        
+
+                        <input
+                            type="time"
+                            id="closing_time"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+                <div class="form-row">
+
+                    <div class="input-group">
+
+                        <i class="fa-solid fa-phone"></i>
+
+                        <input
+                            type="text"
+                            id="phone"
+                            placeholder="Phone Number (Optional)"
+                        >
+
+                    </div>
+
+                    <div class="input-group">
+
+                        <i class="fa-solid fa-location-dot"></i>
+
+                        <input
+                            type="text"
+                            id="location"
+                            placeholder="Location (Optional)"
+                        >
+
+                    </div>
+
+                </div>
+                <div class="field-group">
+                    <label>Store Picture</label>
+
+                    <p class="field-description">
+                        Choose a picture that represents your store. This image will appear on your marketplace store card and store page.
+                    </p>
+
+                    <div
+                        class="upload-area"
+                        id="uploadArea"
+                    >
+
+                        <input
+                            type="file"
+                            id="image"
+                            accept="image/*"
+                            hidden
+                        >
+
+                        <div id="uploadContent">
+
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                            <h3>Upload your store logo</h3>
+
+                            <p>
+                                This image represents your store throughout Acity Connect.
+                            </p>
+
+                        </div>
+
+                        <img
+                            id="previewImage"
+                            style="display:none"
+                        >
+
+                    </div>
+
+                    <div
+                        class="image-actions"
+                        id="imageActions"
+                        style="display:none"
+                    >
+
+                        <button
+                            type="button"
+                            id="changeImageBtn"
+                            class="btn btn-secondary"
+                        >
+
+                            <i class="fa-solid fa-pen"></i>
+
+                            Change Image
+
+                        </button>
+
+                        <button
+                            type="button"
+                            id="removeImageBtn"
+                            class="btn btn-danger"
+                        >
+
+                            <i class="fa-solid fa-trash"></i>
+
+                            Remove
+
+                        </button>
+
+                    </div>
+                </div>
+
+                <button
+                    class="btn btn-primary btn-block"
+                    id="createStoreButton"
+                    type="submit"
+                >
+
+                    <i class="fa-solid fa-store"></i>
+
+                    <span>Create Store</span>
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </section>
+
+    <div id="confirmModal" class="modal-overlay">
+
+    <div class="modal">
+
+        <div class="modal-icon">
+
+            <i
+                id="modalIcon"
+                class="fa-solid fa-triangle-exclamation"
+            ></i>
+
+        </div>
+
+        <h2 id="modalTitle">
+
+            Confirm Action
+
+        </h2>
+
+        <p id="modalMessage">
+
+            Are you sure you want to continue?
+
+        </p>
+
+        <div class="modal-actions">
+
+            <button
+                id="modalCancel"
+                class="btn btn-secondary"
+            >
+                Cancel
+            </button>
+
+            <button
+                id="modalConfirm"
+                class="btn btn-danger"
+            >
+                Confirm
             </button>
 
         </div>
 
-        <div id="aiExplanation"></div>
-        <div class="mobile-categories">
-        <button class="active" data-category="All">
-        <i class="fa-solid fa-border-all"></i>
-        <span>All</span>
-        </button>
-        <button data-category="Electronics">
-        <i class="fa-solid fa-laptop"></i>
-        <span>Electronics</span>
-        </button>
-        <button data-category="Books">
-        <i class="fa-solid fa-book"></i>
-        <span>Books</span>
-        </button>
-        <button data-category="Clothing">
-        <i class="fa-solid fa-shirt"></i>
-        <span>Clothing</span>
-        </button>
-        <button data-category="Hostel Items">
-        <i class="fa-solid fa-bed"></i>
-        <span>Hostel</span>
-        </button>
-        <button data-category="Academic">
-        <i class="fa-solid fa-graduation-cap"></i>
-        <span>Academic</span>
-        </button>
-        <button data-category="Other">
-        <i class="fa-solid fa-ellipsis"></i>
-        <span>Other</span>
-        </button>
-        </div>
-        </section>
-        <div id="aiExplanation"></div>
-    <!-- TRENDING -->
-    <section class="market-section">
-        <div class="section-header">
-            <div>
-                <h2>Trending on Campus</h2>
-                <p>Popular student listings</p>
-            </div>
-        </div>
-        <div id="featuredProducts"></div>
-    </section>
-    <!-- STORES -->
-    <section class="market-section">
-        <div class="section-header">
-            <div>
-                <h2>Popular Stores</h2>
-                <p>Trusted student sellers</p>
-            </div>
-        </div>
-        <div id="ItemsContainer"></div>
-    </section>
-    <!-- SERVICES -->
-    <section class="market-section">
-        <div class="section-header">
-            <div>
-                <h2>Student Services</h2>
-                <p>Skills around campus</p>
-            </div>
-            <a href="services.html">
-                See All
-            </a>
-        </div>
-        <div id="servicesContainer"></div>
-    </section>
-    <!-- RECENT -->
-    <section class="market-section">
-        <div class="section-header">
-            <div>
-                <h2>Recently Added</h2>
-                <p>Fresh listings</p>
-            </div>
-        </div>
-        <div id="recentListings"></div>
-    </section>
-    <!-- CTA -->
-    <section class="sell-banner">
-        <div>
-            <h2>
-                Ready to earn?
-            </h2>
-            <p>
-                Sell your unused items and reach
-                thousands of Academic City students.
-            </p>
-        </div>
-        <a
-            href="create-listing.html"
-            class="sell-btn"
-        >
-            Sell Now
-        </a>
-    </section>
-    <a
-    href="create-listing.html"
-    class="fab-sell"
-    title="Create Listing"
-    >
-    <i class="fa-solid fa-plus"></i>
-    </a>
-    
-</main>
-<script src="js/toast.js"></script>
-<script src="js/modal.js"></script>
-<script src="js/listings.js"></script>
-<script src="js/buyerAi.js"></script>
-<script src="js/auth.js"></script>
+    </div>
 
-<script type="module" src="js/navbar.js"></script>
+</div>
+    <script src="js/toast.js"></script>
+    <script src="js/modal.js"></script>
+    <script src="js/create-store.js"></script>
+    <script src="js/auth.js"></script>
+    <script type="module" src="js/navbar.js"></script>
 </body>
 </html>

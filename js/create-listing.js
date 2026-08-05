@@ -1,5 +1,59 @@
 const API_BASE_URL = "https://acity-backend.onrender.com";
 
+const createListingPage = document.getElementById("createListingPage");
+
+async function checkSellerStore() {
+
+    const token = localStorage.getItem("token");
+
+    if (!token) return;
+
+    if (createListingPage) {
+        createListingPage.style.display = "none";
+    }
+
+    try {
+
+        const response = await fetch(
+            `${API_BASE_URL}/api/stores/me`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.error || "Unable to check store.");
+        }
+
+        if (!data.hasStore) {
+
+            window.location.href = "create-store.html";
+
+            return;
+        }
+
+        if (createListingPage) {
+            createListingPage.style.display = "";
+        }
+
+    } catch (error) {
+
+        console.error(error);
+
+        if (createListingPage) {
+            createListingPage.style.display = "";
+        }
+
+    }
+
+}
+
+checkSellerStore();
+
 const ItemForm = document.getElementById("ItemForm");
 const uploadArea = document.getElementById("uploadArea");
 const imageInput = document.getElementById("image");
