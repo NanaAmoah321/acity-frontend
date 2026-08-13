@@ -1,4 +1,16 @@
 ("Auth script loaded");
+
+const fullNameInput = document.getElementById("fullName");
+const emailInput = document.getElementById("email");
+
+if (fullNameInput) {
+    fullNameInput.readOnly = false;
+}
+
+if (emailInput) {
+    emailInput.readOnly = false;
+}
+
 const loginForm = document.getElementById("loginForm");
 if (loginForm) {
     loginForm.addEventListener("submit", async function(e){
