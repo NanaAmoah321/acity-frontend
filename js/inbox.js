@@ -354,7 +354,13 @@ async function loadInbox() {
 let activeUserId = null;
 let selectedAttachment = null;
 
+const improveMessageBtn =
+document.getElementById(
+    "improveMessageBtn"
+);
+
 let latestSuggestedReplies = [];
+const smartReplyCache = new Map();
 
 function readStoredJSON(key) {
     try {
@@ -610,9 +616,34 @@ async function openConversation(userId, conversationName) {
 
         renderConversation(messages);
 
-        latestSuggestedReplies = [];
+        const lastIncomingMessage =
+            [...messages]
+            .reverse()
+            .find(
 
-        renderSuggestedReplies();
+                m =>
+
+                Number(m.sender_id) ===
+                activeUserId
+
+            );
+
+        if(lastIncomingMessage){
+
+            await loadSmartReplies(
+
+                lastIncomingMessage.message
+
+            );
+
+        }
+        else{
+
+            latestSuggestedReplies = [];
+
+            renderSuggestedReplies();
+
+        }
 
         if (messagesContainer) {
             messagesContainer.scrollTop =
@@ -750,6 +781,142 @@ document
 .getElementById("messageForm")
 .addEventListener("submit",sendMessage);
 
+async function improveMessage(){
+
+    const input =
+    document.getElementById(
+        "messageInput"
+    );
+
+    const message =
+    input.value.trim();
+
+    if(!message){
+
+        showToast(
+            "Type a message first."
+        );
+
+        return;
+
+    }
+
+    
+
+    improveMessageBtn.disabled = true;
+
+    improveMessageBtn.innerHTML = `
+    <i class="fa-solid fa-wand-magic-sparkles fa-spin"></i>
+    `;
+
+    try{
+
+        const res =
+        await fetch(
+
+            "https://acity-backend.onrender.com/api/ai/messages/improve",
+
+            {
+
+                method:"POST",
+
+                headers:{
+
+                    "Content-Type":"application/json",
+
+                    Authorization:
+                    `Bearer ${token}`
+
+                },
+
+                body:JSON.stringify({
+
+                    message
+
+                })
+
+            }
+
+        );
+
+        const data =
+        await res.json();
+
+        if(!res.ok){
+
+            throw new Error(
+
+                data.error?.message ||
+
+                data.error ||
+
+                "Unable to improve message."
+
+            );
+
+        }
+
+        const improved =
+            data.data.improvedMessage.trim();
+
+        if (
+            improved.toLowerCase() ===
+            message.toLowerCase()
+        ) {
+
+            showToast(
+                "This message is already clear enough."
+            );
+
+        } else {
+
+            input.value = improved;
+
+            showToast(
+                "✨ Message improved"
+            );
+
+        }
+
+        input.focus();
+
+        input.setSelectionRange(
+            input.value.length,
+            input.value.length
+        );
+
+        showToast(
+            "✨ Message improved"
+        );
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        showToast(
+
+            error.message,
+
+            "error"
+
+        );
+
+    }
+
+    finally{
+
+        improveMessageBtn.disabled = false;
+
+        improveMessageBtn.innerHTML = `
+        <i class="fa-solid fa-wand-magic-sparkles"></i>
+        `;
+
+    }
+
+}
+
 async function sendMessage(e){
     e.preventDefault();
     const input =
@@ -759,8 +926,7 @@ async function sendMessage(e){
         &&
         !selectedAttachment
     ) return;
-    const token =
-    localStorage.getItem("token");
+    
     const formData =
     new FormData();
     formData.append(
@@ -790,8 +956,6 @@ async function sendMessage(e){
     const data =
     await res.json();
 
-    latestSuggestedReplies =
-        data.ai?.suggestedReplies || [];
 
     renderSuggestedReplies();
     if(!res.ok){
@@ -802,11 +966,20 @@ async function sendMessage(e){
         );
         return;
     }
+
+    
+
     input.value = "";
     selectedAttachment = null;
+
     document.getElementById(
         "attachmentInput"
     ).value = "";
+
+    latestSuggestedReplies = [];
+
+    renderSuggestedReplies();
+
     
 }
 
@@ -836,6 +1009,96 @@ attachmentInput.addEventListener(
         }
     }
 );
+
+async function loadSmartReplies(message){
+
+    if(!message){
+
+        latestSuggestedReplies = [];
+
+        renderSuggestedReplies();
+
+        return;
+
+    }
+
+    const cacheKey = message.trim();
+
+    if(smartReplyCache.has(cacheKey)){
+
+        latestSuggestedReplies =
+            smartReplyCache.get(cacheKey);
+
+        renderSuggestedReplies();
+
+        return;
+
+    }
+
+    try{
+
+        const res =
+        await fetch(
+
+            "https://acity-backend.onrender.com/api/messages/smart-replies",
+
+            {
+
+                method:"POST",
+
+                headers:{
+
+                    "Content-Type":"application/json",
+
+                    Authorization:`Bearer ${token}`
+
+                },
+
+                body:JSON.stringify({
+
+                    message
+
+                })
+
+            }
+
+        );
+
+        if(!res.ok){
+
+            latestSuggestedReplies = [];
+
+            renderSuggestedReplies();
+
+            return;
+
+        }
+
+        const data =
+        await res.json();
+
+        latestSuggestedReplies =
+            data.replies || [];
+
+        smartReplyCache.set(
+
+            cacheKey,
+
+            latestSuggestedReplies
+
+        );
+
+        renderSuggestedReplies();
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+    }
+
+}
 
 function renderSuggestedReplies() {
 
@@ -953,7 +1216,7 @@ loadInbox().then(() => {
 
 socket.on(
     "new_message",
-    message => {
+    async message => {
 
         updateConversationCard(message);
 
@@ -993,10 +1256,7 @@ socket.on(
                 Number(currentUser.id)
             ) {
 
-                latestSuggestedReplies =
-                    message.ai?.suggestedReplies || [];
-
-                renderSuggestedReplies();
+                await loadSmartReplies(message.message);
 
             }
 
@@ -1112,7 +1372,7 @@ if(search){
 
 }
 
-const filtered =
+/*const filtered =
 conversations.filter(c=>{
 
     const name =
@@ -1128,4 +1388,16 @@ conversations.filter(c=>{
         preview.includes(value)
     );
 
-});
+});*/
+
+if(improveMessageBtn){
+
+    improveMessageBtn.addEventListener(
+
+        "click",
+
+        improveMessage
+
+    );
+
+}
