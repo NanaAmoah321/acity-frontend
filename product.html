@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Product | Acity Connect</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/buttons.css">
+    <link rel="stylesheet" href="css/store.css">
+    <link rel="stylesheet" href="css/toast.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+    <nav>
+        <div class="nav-left">
+            <a class="logo" href="index.html">
+                <img src="favicon.png" alt="Acity Connect Logo">
+                <span class="logo-text">Acity Connect</span>
+            </a>
+        </div>
+
+        <div class="nav-center">
+            <a href="index.html" class="nav-item">
+                <i class="fa-solid fa-house"></i>
+                <span>Home</span>
+            </a>
+
+            <a href="marketplace.html" class="nav-item">
+                <i class="fa-solid fa-store"></i>
+                <span>Marketplace</span>
+            </a>
+
+            <a href="services.html" class="nav-item">
+                <i class="fa-solid fa-screwdriver-wrench"></i>
+                <span>Services</span>
+            </a>
+
+            <a href="create-listing.html" class="nav-item">
+                <i class="fa-solid fa-plus"></i>
+                <span>Sell Items</span>
+            </a>
+        </div>
+
+        <div class="nav-right">
+            <a href="notifications.html" class="icon-btn">
+                <i class="fa-solid fa-bell"></i>
+                <small id="notificationCount"></small>
+            </a>
+
+            <a href="myCart.html" class="icon-btn">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <small id="cartCount"></small>
+            </a>
+
+            <button id="themeToggle" class="theme-toggle">
+                <i id="themeIcon"
+                   class="fa-solid fa-circle-half-stroke"></i>
+            </button>
+
+            <div class="profile-menu">
+                <button id="profileToggle">
+                    <img id="navProfileImage"
+                         src="images/default-avatar-image.jpg"
+                         alt="Profile">
+
+                    <span id="navProfileName">Account</span>
+
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+            </div>
+        </div>
+
+        <button id="menu-toggle" class="menu-toggle">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+    </nav>
+
+    <main class="product-page">
+        <div class="product-shell">
+            <a href="javascript:history.back()"
+               class="product-back">
+                <i class="fa-solid fa-arrow-left"></i>
+                Back to menu
+            </a>
+
+            <div id="productDetails"></div>
+        </div>
+    </main>
+
+    <script src="js/toast.js"></script>
+    <script src="js/productDetails.js"></script>
+    <script type="module" src="js/navbar.js"></script>
+</body>
+</html>

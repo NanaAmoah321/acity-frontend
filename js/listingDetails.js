@@ -1,569 +1,87 @@
-function formatStoreTime(timeString) {
-
-    if (!timeString) return "";
-
-    const [hour, minute] = timeString.split(":").map(Number);
-
-    const date = new Date();
-
-    date.setHours(hour, minute);
-
-    return date.toLocaleTimeString([], {
-        hour: "numeric",
-        minute: "2-digit"
-    });
-
-}
-const params = new URLSearchParams(window.location.search);
+const API = "https://acity-backend.onrender.com/api";
+const params = new URLSearchParams(location.search);
 const userId = params.get("id");
-const listingDetails =
-document.getElementById("listingDetails");
-let store = null;
-async function loadStore(){
-    try{
-        const res = await fetch(
-            `https://acity-backend.onrender.com/api/listings/store/${userId}`
-        );
-        store = await res.json();
-        renderStore();
-    }catch(err){
-        console.error(err);
-        listingDetails.innerHTML = `
-            <div class="empty-state">
-                <i class="fa-solid fa-store-slash"></i>
-                <h2>
-                    Store not found
-                </h2>
-                <p>
-                    We couldn't load this store.
-                </p>
-            </div>
-        `;
-    }
-}
-loadStore();
-function renderStore(){
-    listingDetails.innerHTML = `
-<section class="store-card">
-    <div class="store-avatar">
-        <img
-            src="${store.store.profile_image || 'images/Other.jpg'}"
-            alt="${store.store.store_name}"
-            onerror="this.src='images/Other.jpg'"
-        >
-    </div>
+const root = document.getElementById("listingDetails");
+let store;
 
-    <div class="store-info">
+const esc = value => String(value ?? "").replace(/[&<>\"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'\"':"&quot;", "'":"&#39;"}[c]));
+const imageFor = product => product.image_url || `images/${encodeURIComponent(product.category || "Other")}.jpg`;
+const token = () => localStorage.getItem("token");
+const toast = (message, type = "success") => window.showToast ? showToast(message, type) : alert(message);
 
-        <span class="store-badge">
-            ${
-                Array.isArray(store.store.categories)
-                    ? store.store.categories.join(" • ")
-                    : (store.store.categories || "General")
-            }
-        </span>
-
-        <h1>
-            ${store.store.store_name || "Store"}
-        </h1>
-        <div class="store-rating">
-            ⭐ ${store.store.average_rating || "New"}
-            •
-            ${store.store.total_reviews || 0} Reviews
-        </div>
-        <div class="store-hours">
-            <i class="fa-regular fa-clock"></i>
-            ${formatStoreTime(store.store.opening_time)}
-            -
-            ${formatStoreTime(store.store.closing_time)}
-        </div>
-        <p class="store-description">
-            ${
-                store.store.description ||
-                "Browse everything available from this Academic City seller."
-            }
-        </p>
-        <div class="store-actions">
-            <button
-                class="message-btn"
-                onclick="messageSeller(${store.store.id}, '${store.store.store_name}')"
-            >
-                <i class="fa-solid fa-comments"></i>
-                Message Seller
-            </button>
-            <button
-                class="follow-btn"
-                id="followBtn"
-            >
-                <i class="fa-regular fa-bookmark"></i>
-                Follow Store
-            </button>
-        </div>
-    </div>
-    <div class="store-stats">
-        <div class="store-stat">
-            <h2>
-                ${store.products.length}
-            </h2>
-            <p>
-                Products
-            </p>
-        </div>
-        <div class="store-stat">
-            <h2>
-                ${store.store.total_reviews || 0}
-            </h2>
-            <p>
-                Reviews
-            </p>
-        </div>
-        <div class="store-stat">
-            <h2>
-                ${store.store.average_rating || "New"}
-            </h2>
-            <p>
-                Rating
-            </p>
-        </div>
-        <div class="store-stat">
-            <h2>
-                2026
-            </h2>
-            <p>
-                Joined
-            </p>
-        </div>
-    </div>
-</section>
-<section class="store-toolbar">
-    <div class="store-search">
-        <i class="fa-solid fa-magnifying-glass"></i>
-        <input
-            type="text"
-            id="storeSearch"
-            placeholder="Search this store..."
-        >
-    </div>
-    <select
-        id="storeSort"
-        class="store-sort"
-    >
-        <option value="latest">
-            Latest
-        </option>
-        <option value="low">
-            Price: Low to High
-        </option>
-        <option value="high">
-            Price: High to Low
-        </option>
-    </select>
-</section>
-<section class="store-categories">
-    <button class="active" data-category="All">
-        All
-    </button>
-    <button data-category="Books">
-        Books
-    </button>
-    <button data-category="Electronics">
-        Electronics
-    </button>
-    <button data-category="Academic">
-        Academic
-    </button>
-    <button data-category="Hostel Items">
-        Hostel
-    </button>
-    <button data-category="Clothing">
-        Clothing
-    </button>
-    <button data-category="Other">
-        Other
-    </button>
-</section>
-<section class="store-products-section">
-    <div class="section-header">
-        <div>
-            <h2>
-                Products
-            </h2>
-            <p>
-                ${store.products.length} item${store.products.length !== 1 ? "s" : ""} available
-            </p>
-        </div>
-    </div>
-    <div
-        class="store-products"
-        id="storeProducts"
-    >
-    </div>
-</section>
-`;
-renderProducts(store.products);
-setupStoreFilters();
-setupFollowButton();
-
-async function setupFollowButton(){
-
-    const button =
-    document.getElementById(
-        "followBtn"
-    );
-
-    const token =
-localStorage.getItem(
-    "token"
-);
-
-if(!token){
-
-    return;
-
+async function request(path, options = {}) {
+    const headers = { ...(options.headers || {}) };
+    if (token()) headers.Authorization = `Bearer ${token()}`;
+    const response = await fetch(`${API}${path}`, { ...options, headers });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(data.error || data.message || "Request failed");
+    return data;
 }
 
-const statusRes =
-await fetch(
-
-    `https://acity-backend.onrender.com/api/follow/${store.store.user_id}`,
-
-    {
-
-        headers:{
-
-            Authorization:`Bearer ${token}`
-
-        }
-
-    }
-
-);
-
-const status =
-await statusRes.json();
-
-if(status.following){
-
-    button.innerHTML = `
-        <i class="fa-solid fa-bookmark"></i>
-        Following
-    `;
-
-}
-
-    if(!button){
-
-        return;
-
-    }
-
-    button.addEventListener(
-        "click",
-        async ()=>{
-
-            
-
-            if(!token){
-
-                showToast(
-                    "Please login first.",
-                    "error"
-                );
-
-                return;
-
-            }
-
-            const res =
-            await fetch(
-
-                "https://acity-backend.onrender.com/api/follow",
-
-                {
-
-                    method:"POST",
-
-                    headers:{
-
-                        "Content-Type":"application/json",
-
-                        Authorization:`Bearer ${token}`
-
-                    },
-
-                    body:JSON.stringify({
-
-                        following_user_id:
-                        store.store.user_id
-
-                    })
-
-                }
-
-            );
-
-            const data =
-            await res.json();
-
-            showToast(
-                data.message
-            );
-
-            if(data.following){
-
-                button.innerHTML = `
-                    <i class="fa-solid fa-bookmark"></i>
-                    Following
-                `;
-
-            }else{
-
-                button.innerHTML = `
-                    <i class="fa-regular fa-bookmark"></i>
-                    Follow Store
-                `;
-
-            }
-
-        }
-
-    );
-
-}
-
-}
-function renderProducts(products){
-    const container =
-    document.getElementById("storeProducts");
-    if(!container) return;
-    if(products.length === 0){
-        container.innerHTML = `
-        <div class="empty-state">
-            <i class="fa-solid fa-box-open"></i>
-            <h3>
-                No Products Found
-            </h3>
-            <p>
-                Try another search or category.
-            </p>
-        </div>
-        `;
-        return;
-    }
-    container.innerHTML = products.map(product => {
-        const canPurchase =
-            product.status !== "archived" &&
-            product.stock_quantity > 0;
-        return `
-        <div class="featured-card">
-            <div class="featured-image">
-                <img
-                    src="${product.image_url || `images/${product.category}.jpg`}"
-                    onerror="this.src='images/Other.jpg'"
-                >
-            </div>
-            <div class="featured-info">
-                <span class="featured-category">
-                    ${product.category}
-                </span>
-                <h3>
-                    ${product.title}
-                </h3>
-                <div class="featured-price">
-                    GH₵${product.price}
-                </div>
-                <div class="listing-stock">
-                ${
-                    product.status === "archived"
-                    ?
-                    `<span class="stock-out">
-                        <i class="fa-solid fa-box-archive"></i>
-                        Archived
-                    </span>`
-                    :
-                    product.stock_quantity > 5
-                    ?
-                    `<span class="stock-good">
-                        <i class="fa-solid fa-box"></i>
-                        ${product.stock_quantity} Available
-                    </span>`
-                    :
-                    product.stock_quantity > 0
-                    ?
-                    `<span class="stock-low">
-                        <i class="fa-solid fa-fire"></i>
-                        Only ${product.stock_quantity} left
-                    </span>`
-                    :
-                    `<span class="stock-out">
-                        <i class="fa-solid fa-circle-xmark"></i>
-                        Out of Stock
-                    </span>`
-                }
-                </div>
-                <div class="featured-footer">
-                    <span class="${
-                        product.status === "archived" || product.stock_quantity <= 0
-                            ? "stock-out"
-                            : "stock-good"
-                    }">
-                        ${
-                            product.status === "archived"
-                                ? "Archived"
-                                : product.stock_quantity <= 0
-                                    ? "Out of Stock"
-                                    : "Available"
-                        }
-                    </span>
-                  ${
-                    canPurchase
-                    ? `
-                        <button
-                            class="btn-primary"
-                            onclick="addToCart(${product.id})"
-                        >
-                            Add to Cart
-                        </button>
-                    `
-                    : `
-                        <button
-                            class="btn-disabled"
-                            disabled
-                        >
-                            ${
-                                product.status === "archived"
-                                    ? "Archived"
-                                    : "Out of Stock"
-                            }
-                        </button>
-                    `
-                }
-                </div>
-            </div>
-        </div>
-    `}).join("");
-}
-function setupStoreFilters(){
-    const search =
-    document.getElementById("storeSearch");
-    const sort = document.getElementById("storeSort");
-    const buttons =
-    document.querySelectorAll(".store-categories button");
-    let category = "All";
-    function filter(){
-        let filtered =
-        [...store.products];
-        if(category !== "All"){
-            filtered =
-            filtered.filter(product =>
-                product.category === category
-            );
-        }
-        const text =
-        search.value.toLowerCase();
-        filtered = filtered.filter(product => {
-            const title = (product.title || "").toLowerCase();
-            const description = (product.description || "").toLowerCase();
-            return (
-                title.includes(text) ||
-                description.includes(text)
-            );
-        });
-
-        switch (sort.value) {
-
-            case "low":
-                filtered.sort((a, b) => Number(a.price) - Number(b.price));
-                break;
-
-            case "high":
-                filtered.sort((a, b) => Number(b.price) - Number(a.price));
-                break;
-
-            case "latest":
-            default:
-                filtered.sort(
-                    (a, b) => new Date(b.created_at) - new Date(a.created_at)
-                );
-                break;
-        }
-
-        renderProducts(filtered);
-    }
-    search.addEventListener(
-        "input",
-        filter
-    );
-
-    sort.addEventListener("change", filter);
-
-    buttons.forEach(button=>{
-        button.onclick=()=>{
-            buttons.forEach(b=>
-                b.classList.remove("active")
-            );
-            button.classList.add("active");
-            category =
-            button.dataset.category;
-            filter();
-        };
-    });
-}
-async function addToCart(listingId) {
-    ("1. addToCart called");
-    const token = localStorage.getItem("token");
-    ("2. token:", token);
-    if (!token) {
-        showToast("Please login first");
-        return;
-    }
+async function loadStore() {
+    if (!userId) return renderError("This store link is missing its seller ID.");
     try {
-        const res = await fetch(
-            "https://acity-backend.onrender.com/api/listings/interest",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
-                },
-                body: JSON.stringify({
-                    listing_id: listingId
-                })
-            }
-        );
-        ("3. fetch finished");
-        const data = await res.json();
-        ("4.", data);
-        if (res.ok) {
-            ("5. About to show toast");
-            showToast("Added to cart!");
-            ("6. Toast called");
-            if (typeof updateCartCount === "function") {
-                updateCartCount();
-            }
-        } else {
-            ("Server error:", data);
-            showToast(data.message || "Failed", "error");
-        }
-    } catch (err) {
-        console.error(err);
+        store = await request(`/listings/store/${encodeURIComponent(userId)}`);
+        render();
+        await setupFollow();
+    } catch (error) {
+        console.error(error);
+        renderError("We couldn't load this store right now.");
     }
 }
-function messageSeller(userId, userName){
 
-    localStorage.removeItem("conversationListing");
-
-    localStorage.setItem(
-        "openConversationWith",
-        userId
-    );
-
-    localStorage.setItem(
-        "openConversationName",
-        userName
-    );
-
-    window.location.href =
-        "inbox.html";
-
+function renderError(message) {
+    root.innerHTML = `<div class="store-empty"><i class="fa-solid fa-store-slash"></i><h2>Store not found</h2><p>${esc(message)}</p></div>`;
 }
+
+function render() {
+    const s = store.store;
+    const categories = Array.isArray(s.categories) ? s.categories : [s.categories || "General"];
+    root.innerHTML = `
+        <section class="store-hero">
+            <div class="store-identity">
+                <div class="store-avatar"><img src="${esc(s.profile_image || "images/Other.jpg")}" alt="${esc(s.store_name)}" onerror="this.src='images/Other.jpg'"></div>
+                <div class="store-info"><span class="store-eyebrow">${categories.map(esc).join(" · ")}</span><h1>${esc(s.store_name || "Student Store")}</h1>
+                    <div class="store-rating">★ ${esc(s.average_rating || "New")} <span>·</span> ${Number(s.total_reviews || 0)} reviews</div>
+                    <p>${esc(s.description || "Browse products from this Academic City seller.")}</p>
+                    <div class="store-actions"><button class="btn btn-primary" id="messageSeller"><i class="fa-solid fa-message"></i> Message seller</button><button class="btn btn-secondary" id="followBtn"><i class="fa-regular fa-bookmark"></i> Follow store</button></div>
+                </div>
+            </div>
+            <div class="store-stats"><div><strong>${store.products.length}</strong><span>Products</span></div><div><strong>${Number(s.total_reviews || 0)}</strong><span>Reviews</span></div><div><strong>${esc(s.average_rating || "New")}</strong><span>Rating</span></div></div>
+        </section>
+        <section class="store-toolbar"><label class="store-search"><i class="fa-solid fa-magnifying-glass"></i><input id="storeSearch" placeholder="Search this store" autocomplete="off"></label><select id="storeSort"><option value="latest">Latest</option><option value="low">Price: low to high</option><option value="high">Price: high to low</option></select></section>
+        <div class="store-categories" id="storeCategories"><button class="active" data-category="All">All</button>${["Books","Electronics","Academic","Hostel Items","Clothing","Other"].map(c => `<button data-category="${esc(c)}">${esc(c)}</button>`).join("")}</div>
+        <section class="store-products-section"><div class="store-section-heading"><div><span class="store-eyebrow">${store.products.length} items available</span><h2>Products</h2></div></div><div class="store-products" id="storeProducts"></div></section>`;
+    document.getElementById("messageSeller").onclick = () => messageSeller(s.user_id, s.store_name);
+    setupFilters(); renderProducts(store.products);
+}
+
+function renderProducts(products) {
+    const target = document.getElementById("storeProducts");
+    if (!products.length) { target.innerHTML = `<div class="store-empty"><i class="fa-solid fa-box-open"></i><h3>No products found</h3><p>Try another search or category.</p></div>`; return; }
+    target.innerHTML = products.map(p => {
+        const available = p.status !== "archived" && Number(p.stock_quantity) > 0;
+        const stock = p.status === "archived" ? "Archived" : available ? `${Number(p.stock_quantity)} left` : "Out of stock";
+        return `<article class="product-card" data-id="${Number(p.id)}"><a class="product-media" href="product.html?id=${Number(p.id)}"><img src="${esc(imageFor(p))}" alt="${esc(p.title)}" loading="lazy" onerror="this.src='images/Other.jpg'"><span class="product-category">${esc(p.category || "Other")}</span></a><div class="product-body"><a class="product-title" href="product.html?id=${Number(p.id)}">${esc(p.title)}</a><div class="product-meta"><strong>GH₵${Number(p.price).toFixed(2)}</strong><span class="${available ? (Number(p.stock_quantity) <= 5 ? "stock-low" : "stock-good") : "stock-out"}">${esc(stock)}</span></div><button class="add-cart" data-cart-id="${Number(p.id)}" ${available ? "" : "disabled"}>${available ? "<i class='fa-solid fa-cart-plus'></i> Add to cart" : esc(stock)}</button></div></article>`;
+    }).join("");
+    target.querySelectorAll("[data-cart-id]").forEach(button => button.onclick = () => addToCart(button.dataset.cartId, button));
+}
+
+function setupFilters() {
+    const search = document.getElementById("storeSearch"), sort = document.getElementById("storeSort"); let category = "All";
+    const apply = () => { const q = search.value.trim().toLowerCase(); let list = store.products.filter(p => (category === "All" || p.category === category) && (`${p.title} ${p.description || ""}`.toLowerCase().includes(q))); if (sort.value === "low") list.sort((a,b) => a.price - b.price); if (sort.value === "high") list.sort((a,b) => b.price - a.price); if (sort.value === "latest") list.sort((a,b) => new Date(b.created_at) - new Date(a.created_at)); renderProducts(list); };
+    search.oninput = apply; sort.onchange = apply;
+    document.querySelectorAll("#storeCategories button").forEach(button => button.onclick = () => { document.querySelectorAll("#storeCategories button").forEach(b => b.classList.remove("active")); button.classList.add("active"); category = button.dataset.category; apply(); });
+}
+
+async function setupFollow() {
+    const button = document.getElementById("followBtn");
+    if (!token()) return;
+    try { const status = await request(`/follow/${encodeURIComponent(store.store.user_id)}`); setFollow(button, status.following); } catch (e) { console.warn(e); }
+    button.onclick = async () => { if (!token()) return toast("Please log in first.", "error"); button.disabled = true; try { const data = await request("/follow", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({ following_user_id:store.store.user_id }) }); setFollow(button, data.following); toast(data.message || (data.following ? "Store followed." : "Store unfollowed.")); } catch(e) { toast(e.message, "error"); } finally { button.disabled = false; } };
+}
+function setFollow(button, following) { button.innerHTML = following ? '<i class="fa-solid fa-bookmark"></i> Following' : '<i class="fa-regular fa-bookmark"></i> Follow store'; button.classList.toggle("is-following", following); }
+
+async function addToCart(id, button) { if (!token()) return toast("Please log in to add items to your cart.", "error"); const original = button.innerHTML; button.disabled = true; try { const data = await request("/listings/interest", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({ listing_id:Number(id) }) }); toast(data.message || "Added to cart!"); if (window.loadCartCount) await window.loadCartCount(); button.innerHTML = '<i class="fa-solid fa-check"></i> Added'; setTimeout(() => { button.innerHTML = original; button.disabled = false; }, 1200); } catch(e) { toast(e.message, "error"); button.innerHTML = original; button.disabled = false; } }
+function messageSeller(id, name) { if (!token()) return toast("Please log in to message this seller.", "error"); localStorage.setItem("openConversationWith", id); localStorage.setItem("openConversationName", name || "Seller"); location.href = "inbox.html"; }
+window.addToCart = addToCart; window.messageSeller = messageSeller; loadStore();
