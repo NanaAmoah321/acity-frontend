@@ -19,8 +19,29 @@ let quantity = 1;
 
 async function load() {
     try {
-        const r = await fetch(`${API}/listings/${encodeURIComponent(id)}`);
-        const p = await r.json();
+        const r = await fetch(
+            `${API}/listings/${encodeURIComponent(id)}`
+        );
+
+        const responseText = await r.text();
+
+        let p;
+
+        try {
+            p = responseText ? JSON.parse(responseText) : {};
+        } catch {
+            throw new Error(
+                `The server returned an invalid response (${r.status}).`
+            );
+        }
+
+        if (!r.ok) {
+            throw new Error(
+                p.error ||
+                p.message ||
+                `Product could not be loaded (${r.status}).`
+            );
+        }
 
         if (!r.ok) throw new Error(p.error || "Product not found");
 

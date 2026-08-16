@@ -353,12 +353,13 @@ card.setAttribute("role", "button");
 card.tabIndex = 0;
 
 const openListing = () => {
-    viewListing(item.user_id);
+    viewListing(item.id);
 };
 
 card.addEventListener("click", openListing);
 
 card.addEventListener("keydown", event => {
+
     if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
         openListing();
@@ -376,24 +377,26 @@ image.onerror = () => {
     image.src = "images/Other.jpg";
 };
 
-imageWrapper.appendChild(image);
-
-const info = document.createElement("div");
-info.className = "featured-info";
-
 const category = document.createElement("span");
 category.className = "featured-category";
 category.textContent = item.category || "Other";
 
+imageWrapper.append(
+    image,
+    category
+);
+
+const info = document.createElement("div");
+info.className = "featured-info";
+
 const title = document.createElement("h3");
 title.textContent = item.title || "Untitled Listing";
 
-const description = document.createElement("p");
 
-description.className = "featured-description";
 
-description.textContent =
-    item.description || "No description available.";
+
+
+
 
 const price = document.createElement("p");
 price.className = "featured-price";
@@ -436,7 +439,7 @@ const arrow = document.createElement("i");
 arrow.className = "fa-solid fa-arrow-right";
 
 footer.append(seller, arrow);
-info.append(category, title, description, price, stock, footer);
+info.append(title, price, stock, footer);
 card.append(imageWrapper, info);
 
 return card;
@@ -616,9 +619,9 @@ function getCategoryImage(category){
 }
 
 
-function viewListing(id) {
+function viewListing(listingId) {
     window.location.href =
-    `listing.html?id=${id}`;
+        `product.html?id=${encodeURIComponent(listingId)}`;
 }
 function viewStore(userId) {
     window.location.href =

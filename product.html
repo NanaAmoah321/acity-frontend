@@ -1,84 +1,245 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Product | Acity Connect</title>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-B940J1CYHZ"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
+    gtag('config', 'G-B940J1CYHZ');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Cart - Acity Connect</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/navbar.css">
-    <link rel="stylesheet" href="css/buttons.css">
-    <link rel="stylesheet" href="css/store.css">
     <link rel="stylesheet" href="css/toast.css">
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="css/modal.css">
+    <link rel="stylesheet" href="css/store.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="icon" type="image/png" href="/favicon.png" sizes="any">
+    <link rel="apple-touch-icon" href="/favicon.png">
 </head>
 
 <body>
     <nav>
-        <div class="nav-left">
-            <a class="logo" href="index.html">
-                <img src="favicon.png" alt="Acity Connect Logo">
-                <span class="logo-text">Acity Connect</span>
-            </a>
-        </div>
-
-        <div class="nav-center">
-            <a href="index.html" class="nav-item">
-                <i class="fa-solid fa-house"></i>
-                <span>Home</span>
-            </a>
-
-            <a href="marketplace.html" class="nav-item">
-                <i class="fa-solid fa-store"></i>
-                <span>Marketplace</span>
-            </a>
-
-            <a href="services.html" class="nav-item">
-                <i class="fa-solid fa-screwdriver-wrench"></i>
-                <span>Services</span>
-            </a>
-
-            <a href="create-listing.html" class="nav-item">
-                <i class="fa-solid fa-plus"></i>
-                <span>Sell Items</span>
-            </a>
-        </div>
-
-        <div class="nav-right">
-            <a href="notifications.html" class="icon-btn">
-                <i class="fa-solid fa-bell"></i>
-                <small id="notificationCount"></small>
-            </a>
-
-            <a href="myCart.html" class="icon-btn">
-                <i class="fa-solid fa-cart-shopping"></i>
-                <small id="cartCount"></small>
-            </a>
-
-            <button id="themeToggle" class="theme-toggle">
-                <i id="themeIcon"
-                   class="fa-solid fa-circle-half-stroke"></i>
-            </button>
-
-            <div class="profile-menu">
-                <button id="profileToggle">
-                    <img id="navProfileImage"
-                         src="images/default-avatar-image.jpg"
-                         alt="Profile">
-
-                    <span id="navProfileName">Account</span>
-
-                    <i class="fa-solid fa-chevron-down"></i>
-                </button>
+    <!-- LEFT -->
+    <div class="nav-left">
+        <div class="logo">
+             <img src="favicon.png" alt="Acity Connect Logo">
+            <div class="logo-text"> Acity Connect
             </div>
         </div>
-
-        <button id="menu-toggle" class="menu-toggle">
-            <i class="fa-solid fa-bars"></i>
+    </div>
+    <!-- CENTER -->
+    <div class="nav-center">
+        <a href="index.html" class="nav-item">
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
+        </a>
+        <a href="marketplace.html" class="nav-item">
+            <i class="fa-solid fa-store"></i>
+            <span>Marketplace</span>
+        </a>
+        <a href="services.html" class="nav-item">
+            <i class="fa-solid fa-screwdriver-wrench"></i>
+            <span>Services</span>
+        </a>
+        <a href="create-listing.html" class="nav-item">
+            <i class="fa-solid fa-plus"></i>
+            <span>Sell Items</span>
+        </a>
+    </div>
+    <!-- RIGHT -->
+    <div class="nav-right">
+        <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input
+                type="text"
+                placeholder="Search items..."
+            >
+        </div>
+        
+        <button id="themeToggle" class="theme-toggle">
+                    <i id="themeIcon" class="fa-solid fa-circle-half-stroke"></i>
+                </button>
+        <a href="notifications.html" class="icon-btn">
+            <i class="fa-solid fa-bell"></i>
+            <small id="notificationCount"></small>
+        </a>
+        <a href="myCart.html" class="icon-btn">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <small id="cartCount"></small>
+        </a>
+        <div class="profile-menu">
+            <button id="profileToggle">
+                <img
+                    id="navProfileImage"
+                    src="images/default-avatar-image.jpg"
+                    alt="Profile"
+                >
+                <span id="navProfileName">Account</span>
+                <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="profile-dropdown">
+                <a href="profile.html">
+                    <i class="fa-solid fa-user"></i>
+                    My Profile
+                </a>
+                <a href="inbox.html">
+                    <i class="fa-solid fa-comments"></i>
+                    Inbox
+                </a>
+                <a href="notifications.html">
+                    <i class="fa-solid fa-bell"></i>
+                    Notifications
+                </a>
+                <a
+                    href="admin.html"
+                    id="adminLink"
+                    style="display:none;"
+                >
+                    <i class="fa-solid fa-shield-halved"></i>
+                    Admin Dashboard
+                </a>
+                <hr>
+                <a href="#" onclick="logout()">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    Logout
+                </a>
+            </div>
+        </div>
+    </div>
+   <button id="menu-toggle" class="menu-toggle">
+    <i class="fa-solid fa-bars"></i>
+</button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-header">
+        <div class="mobile-profile">
+            <div class="mobile-avatar">
+                <img 
+                id="mobileProfileImage"
+                src="images/default-avatar-image.jpg" alt="Profile">
+            </div>
+            <div>
+                <h3 id="mobileUserName">Welcome</h3>
+                <small id="mobileUserSubtitle">Sign in or create an account</small>
+            </div>
+        </div>
+        <button id="closeMenu" class="close-menu">
+            <i class="fa-solid fa-xmark"></i>
         </button>
-    </nav>
+    </div>
+    <div class="mobile-links">
+        <a href="index.html">
+            <i class="fa-solid fa-house"></i>
+            Home
+        </a>
+        <a href="login.html" id="mobileLoginLink" style="display:none;">
+            <i class="fa-solid fa-right-to-bracket"></i>
+            Login
+        </a>
 
+        <a href="register.html" id="mobileRegisterLink" style="display:none;">
+            <i class="fa-solid fa-user-plus"></i>
+            Register
+        </a>
+        <hr>
+        <a href="marketplace.html">
+            <i class="fa-solid fa-store"></i>
+            Marketplace
+        </a>
+        <a href="services.html">
+            <i class="fa-solid fa-screwdriver-wrench"></i>
+            Skills Connect
+        </a>
+        <a href="create-listing.html" id="mobileCreateListingLink" >
+            <i class="fa-solid fa-plus"></i>
+            Sell Item
+        </a>
+        <hr>
+        <a href="inbox.html" id="mobileInboxLink" >
+            <i class="fa-solid fa-comments"></i>
+            Inbox
+            <small id="mobileMessageCount"></small>
+        </a>
+        <a href="notifications.html" id="mobileNotificationsLink" >
+            <i class="fa-solid fa-bell"></i>
+            Notifications
+            <small id="mobileNotificationCount"></small>
+        </a>
+        <a href="myCart.html" id="mobileCartLink" >
+            <i class="fa-solid fa-cart-shopping"></i>
+            My Cart
+            <small id="mobileCartCount"></small>
+        </a>
+        <div class="mobile-theme">
+        <button
+            id="appearanceBtn"
+            class="appearance-btn"
+        >
+            <div class="appearance-left">
+                <i class="fa-solid fa-circle-half-stroke"></i>
+                <span>Appearance</span>
+            </div>
+            <i class="fa-solid fa-chevron-right"></i>
+        </button>
+        <div
+            id="appearanceMenu"
+            class="appearance-menu"
+        >
+            <div
+                class="theme-option"
+                data-theme="light"
+            >
+                <i class="fa-solid fa-sun"></i>
+                <span>Light</span>
+                <i class="fa-solid fa-check check"></i>
+            </div>
+            <div
+                class="theme-option"
+                data-theme="dark"
+            >
+                <i class="fa-solid fa-moon"></i>
+                <span>Dark</span>
+                <i class="fa-solid fa-check check"></i>
+            </div>
+            <div
+                class="theme-option"
+                data-theme="system"
+            >
+                <i class="fa-solid fa-desktop"></i>
+                <span>System</span>
+                <i class="fa-solid fa-check check"></i>
+            </div>
+        </div>
+        </div>
+        <div>
+
+        
+        <a href="profile.html" id="mobileProfileLink">
+            <i class="fa-solid fa-user"></i>
+            Profile
+        </a>
+        <a
+            href="admin.html"
+            id="mobileAdminLink"
+            style="display:none;"
+        >
+            <i class="fa-solid fa-shield-halved"></i>
+            Admin
+        </a>
+        <hr>
+        <a href="#" id="mobileLogoutLink" onclick="logout()">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Logout
+        </a>
+        </div>
+    </div>
+</div><div class="mobile-overlay" id="mobileOverlay"></div>
     <main class="product-page">
         <div class="product-shell">
             <a href="javascript:history.back()"

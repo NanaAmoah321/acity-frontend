@@ -389,7 +389,7 @@
 }
 
 .product-detail-image {
-  height: min(610px, 52vw);
+  height: min(510px, 42vw);
   overflow: hidden;
   border-radius: 28px;
   background: var(--background);
