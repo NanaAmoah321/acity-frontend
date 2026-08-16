@@ -46,7 +46,7 @@ async function performAiSearch() {
 
     aiSearchButton.disabled = true;
     aiSearchButton.innerHTML =
-        `<i class="fa-solid fa-spinner fa-spin"></i> Searching...`;
+    `<i class="fa-solid fa-spinner fa-spin"></i>`;
 
     aiExplanation.style.display = "none";
 
@@ -151,8 +151,7 @@ async function performAiSearch() {
         aiSearchButton.disabled = false;
 
         aiSearchButton.innerHTML =
-            `<i class="fa-solid fa-wand-magic-sparkles"></i>
-             Search with Acity AI`;
+            `<i class="fa-solid fa-arrow-right"></i>`;
     }
 }
 

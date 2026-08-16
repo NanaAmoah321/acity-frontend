@@ -100,17 +100,16 @@ function displayServices() {
         card.innerHTML = `
 <div class="service-image">
     <i class="fa-solid fa-${getServiceIcon(service.category)}"></i>
-</div>
-<div class="service-info">
     <span class="service-category">
         ${service.category}
     </span>
+</div>
+<div class="service-info">
+    
     <h3>
         ${service.title}
     </h3>
-    <p class="service-description">
-        ${service.description}
-    </p>
+    
     <div class="service-meta">
         <span>
             ⭐ ${service.average_rating || "New"}
@@ -129,7 +128,7 @@ function displayServices() {
             </small>
         </div>
         <span class="provider">
-            ${service.provider_name}
+            ${service.store_name || service.provider_name || "Student Store"}
         </span>
     </div>
     <div class="service-actions">

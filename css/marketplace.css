@@ -4,14 +4,18 @@
 .marketplace{
     width:100%;
     padding-bottom:80px;
+    
 }
 /* ==========================================
    HERO
 ========================================== */
 .marketplace-hero{
-    max-width:1300px;
-    margin:50px auto;
-    padding:0 5%;
+    width: min(1650px, calc(100% - 80px));
+    max-width: none;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 0;
+    padding-right: 0;
 }
 .hero-content{
     max-width:700px;
@@ -120,36 +124,69 @@
 /* ==========================================
    MOBILE
 ========================================== */
-@media(max-width:768px){
-.marketplace-hero{
-margin-top:20px;
-padding:0 20px;
-}
-.hero-content h1{
-font-size:3rem;
-}
-.hero-content p{
-font-size:15px;
-}
-.hero-search{
-margin-top:30px;
-padding:15px 18px;
-}
-.mobile-categories{
-gap:12px;
-}
-.mobile-categories button{
-width:82px;
-height:82px;
-}
+@media (max-width: 768px) {
+    .marketplace {
+        width: 100%;
+        padding-top: 30px;
+        padding-bottom: 50px;
+    }
+
+    .marketplace-hero,
+    .market-section {
+        width: 100%;
+        max-width: none;
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 20px;
+        padding-right: 20px;
+        box-sizing: border-box;
+    }
+
+    .hero-content {
+        width: 100%;
+        max-width: none;
+    }
+
+    .hero-content h1 {
+        font-size: 3.2rem;
+        letter-spacing: -1.5px;
+    }
+
+    .hero-search,
+    .market-search-row {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .market-search-row {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        margin-top: 30px;
+    }
+
+    .market-search-row > *,
+    .ai-search-container {
+        width: 100%;
+    }
+
+    .mobile-categories {
+        width: 100%;
+        margin-left: 0;
+        padding-left: 0;
+        padding-right: 0;
+    }
 }
 /* ==========================================
    MARKET SECTIONS
 ========================================== */
 .market-section{
-    max-width:1300px;
-    margin:70px auto;
-    padding:0 5%;
+    width: min(1650px, calc(100% - 80px));
+    max-width: none;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 0;
+    padding-right: 0;
 }
 .section-header{
     display:flex;
@@ -266,10 +303,7 @@ height:82px;
     }
 }
 @media(max-width:768px){
-.market-section{
-padding:0 20px;
-margin:50px auto;
-}
+
 .section-header{
 align-items:flex-start;
 flex-direction:column;
@@ -297,7 +331,7 @@ font-size:1.5rem;
 .featured-image {
     position: relative;
     width: 100%;
-    height: 220px;
+    height: 200px;
     overflow: hidden;
 }
 
@@ -585,41 +619,7 @@ body.dark .stock{
 
 }
 
-.ai-search{
 
-    margin-top:16px;
-
-}
-
-.ai-search-btn{
-
-    width:100%;
-
-    margin-top:12px;
-
-    padding:15px;
-
-    border:none;
-
-    border-radius:14px;
-
-    cursor:pointer;
-
-    font-size:15px;
-
-    font-weight:600;
-
-    background:linear-gradient(
-        135deg,
-        #5B5FF8,
-        #2563EB
-    );
-
-    color:#fff;
-
-    transition:.25s;
-
-}
 
 .ai-search-btn:hover{
 
@@ -719,5 +719,73 @@ body.dark .stock{
 
     font-size:15px;
 
+}
+
+
+.market-search-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-top: 45px;
+}
+
+.market-search-row .hero-search {
+    margin-top: 0;
+}
+
+.ai-search-container {
+    width: 100%;
+    margin: 0;
+}
+
+.ai-search {
+    height: 58px;
+    margin: 0;
+}
+
+.ai-search input {
+    min-width: 0;
+    flex: 1;
+}
+
+.ai-search-icon {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+    place-items: center;
+    border: none;
+    border-radius: 50%;
+    background: var(--primary);
+    color: #fff;
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.ai-search-icon:hover {
+    transform: scale(1.08);
+}
+
+.ai-search-icon:disabled {
+    opacity: .7;
+    cursor: wait;
+}
+
+.ai-search-icon .fa-spinner {
+    animation: aiSpin 1s linear infinite;
+}
+
+@keyframes aiSpin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (max-width: 768px) {
+    .market-search-row {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        margin-top: 30px;
+    }
 }
 

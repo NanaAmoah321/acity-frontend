@@ -433,7 +433,10 @@ const footer = document.createElement("div");
 footer.className = "featured-footer";
 
 const seller = document.createElement("span");
-seller.textContent = item.seller_name || "Student Seller";
+seller.textContent =
+    item.store_name ||
+    item.seller_name ||
+    "Student Store";
 
 const arrow = document.createElement("i");
 arrow.className = "fa-solid fa-arrow-right";
