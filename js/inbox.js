@@ -917,70 +917,135 @@ async function improveMessage(){
 
 }
 
-async function sendMessage(e){
+async function sendMessage(e) {
     e.preventDefault();
-    const input =
-    document.getElementById("messageInput");
-    if(
-        !input.value.trim()
-        &&
-        !selectedAttachment
-    ) return;
-    
-    const formData =
-    new FormData();
-    formData.append(
-        "receiver_id",
-        activeUserId
-    );
-    formData.append(
-        "message",
-        input.value
-    );
-    if(selectedAttachment){
-        formData.append(
-            "attachment",
-            selectedAttachment
-        );
-    }
-    const res = await fetch(
-        "https://acity-backend.onrender.com/api/messages",
-        {
-            method:"POST",
-            headers:{
-                Authorization:`Bearer ${token}`
-            },
-            body:formData
-        }
-    );
-    const data =
-    await res.json();
 
+    const input = document.getElementById("messageInput");
+    const attachmentInput =
+        document.getElementById("attachmentInput");
 
-    renderSuggestedReplies();
-    if(!res.ok){
-        showToast(
-            data.error ||
-            "Failed to send",
-            "error"
-        );
+    const messageText = input.value.trim();
+
+    if (!messageText && !selectedAttachment) {
         return;
     }
 
-    
+    if (!activeUserId) {
+        showToast("Select a conversation first", "error");
+        return;
+    }
+
+    const temporaryId =
+        `pending-${Date.now()}-${Math.random()}`;
+
+    const optimisticMessage = {
+        id: temporaryId,
+        sender_id: currentUser.id,
+        receiver_id: activeUserId,
+        message: messageText,
+        created_at: new Date().toISOString()
+    };
+
+    const bubble =
+        createMessageBubble(optimisticMessage);
+
+    const messagesContainer =
+        document.getElementById("messagesContainer");
+
+    messagesContainer.appendChild(bubble);
+    messagesContainer.scrollTop =
+        messagesContainer.scrollHeight;
+
+    const originalText = input.value;
+    const originalAttachment = selectedAttachment;
 
     input.value = "";
     selectedAttachment = null;
 
-    document.getElementById(
-        "attachmentInput"
-    ).value = "";
+    if (attachmentInput) {
+        attachmentInput.value = "";
+    }
 
     latestSuggestedReplies = [];
-
     renderSuggestedReplies();
 
-    
+    const formData = new FormData();
+
+    formData.append(
+        "receiver_id",
+        activeUserId
+    );
+
+    formData.append(
+        "message",
+        messageText
+    );
+
+    if (originalAttachment) {
+        formData.append(
+            "attachment",
+            originalAttachment
+        );
+    }
+
+    try {
+        const response = await fetch(
+            "https://acity-backend.onrender.com/api/messages",
+            {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+                body: formData
+            }
+        );
+
+        const raw = await response.text();
+
+        let data = {};
+
+        try {
+            data = raw ? JSON.parse(raw) : {};
+        } catch {
+            throw new Error(
+                "The server returned an invalid response."
+            );
+        }
+
+        if (!response.ok) {
+            throw new Error(
+                data.error ||
+                data.message ||
+                "Failed to send message"
+            );
+        }
+
+        const savedMessage =
+            data.message || data;
+
+        if (savedMessage.id) {
+            bubble.dataset.messageId =
+                savedMessage.id;
+        }
+
+        if (savedMessage.file_url) {
+            bubble.replaceWith(
+                createMessageBubble(savedMessage)
+            );
+        }
+
+    } catch (error) {
+        bubble.remove();
+
+        input.value = originalText;
+        selectedAttachment = originalAttachment;
+
+        showToast(
+            error.message ||
+            "Message failed to send",
+            "error"
+        );
+    }
 }
 
 function backToInbox(){
