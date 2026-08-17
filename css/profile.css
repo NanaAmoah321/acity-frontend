@@ -210,7 +210,9 @@
 
     border-radius:999px;
 
-    background:var(--surface-2);
+    background:var(--surface);
+
+    border:1px solid var(--border);
 
     color:var(--text-light);
 
@@ -272,7 +274,9 @@
 
     border-radius:20px;
 
-    background:var(--surface-2);
+    background:var(--surface);
+
+    border:1px solid var(--border);
 
     transition:.3s;
 

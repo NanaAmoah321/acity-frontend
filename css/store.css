@@ -393,6 +393,7 @@
   overflow: hidden;
   border-radius: 28px;
   background: var(--background);
+  border: 1px solid var(--border);
 }
 
 .product-detail-image img {
@@ -410,6 +411,7 @@
   padding: 8px 14px;
   border-radius: 999px;
   background: var(--background);
+  border: 1px solid var(--border);
   color: var(--primary);
   font-size: 0.75rem;
   font-weight: 900;

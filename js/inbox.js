@@ -1010,163 +1010,120 @@ attachmentInput.addEventListener(
     }
 );
 
-async function loadSmartReplies(message){
+async function loadSmartReplies(message) {
+    const text = String(message || "").trim();
 
-    if(!message){
-
+    if (!text) {
         latestSuggestedReplies = [];
-
         renderSuggestedReplies();
-
         return;
-
     }
 
-    const cacheKey = message.trim();
+    const cacheKey = text.toLowerCase();
 
-    if(smartReplyCache.has(cacheKey)){
-
-        latestSuggestedReplies =
-            smartReplyCache.get(cacheKey);
-
+    if (smartReplyCache.has(cacheKey)) {
+        latestSuggestedReplies = smartReplyCache.get(cacheKey);
         renderSuggestedReplies();
-
         return;
-
     }
 
-    try{
-
-        const res =
-        await fetch(
-
+    try {
+        const response = await fetch(
             "https://acity-backend.onrender.com/api/messages/smart-replies",
-
             {
-
-                method:"POST",
-
-                headers:{
-
-                    "Content-Type":"application/json",
-
-                    Authorization:`Bearer ${token}`
-
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
                 },
-
-                body:JSON.stringify({
-
-                    message
-
+                body: JSON.stringify({
+                    message: text
                 })
-
             }
-
         );
 
-        if(!res.ok){
+        const raw = await response.text();
 
-            latestSuggestedReplies = [];
-
-            renderSuggestedReplies();
-
-            return;
-
+        let data = {};
+        try {
+            data = raw ? JSON.parse(raw) : {};
+        } catch {
+            throw new Error("Invalid Smart Reply response");
         }
 
-        const data =
-        await res.json();
+        if (!response.ok) {
+            throw new Error(
+                data.error || data.message || "Smart Replies unavailable"
+            );
+        }
 
-        latestSuggestedReplies =
-            data.replies || [];
+        const replies = Array.isArray(data.replies)
+            ? data.replies
+                .filter(reply => typeof reply === "string")
+                .map(reply => reply.trim())
+                .filter(Boolean)
+                .slice(0, 3)
+            : [];
 
-        smartReplyCache.set(
-
-            cacheKey,
-
-            latestSuggestedReplies
-
-        );
+        latestSuggestedReplies = replies;
+        smartReplyCache.set(cacheKey, replies);
 
         renderSuggestedReplies();
+    } catch (error) {
+        console.error("Smart Reply error:", error);
 
+        latestSuggestedReplies = [];
+        renderSuggestedReplies();
     }
-
-    catch(error){
-
-        console.error(error);
-
-    }
-
 }
 
 function renderSuggestedReplies() {
-
-    let container =
-        document.getElementById(
-            "aiReplies"
-        );
+    let container = document.getElementById("aiReplies");
 
     if (!container) {
-
-        container =
-            document.createElement("div");
-
+        container = document.createElement("div");
         container.id = "aiReplies";
+        container.className = "ai-replies";
 
-        container.className =
-            "ai-replies";
+        const form = document.getElementById("messageForm");
 
-        document
-            .getElementById("messageForm")
-            .prepend(container);
+        if (!form) return;
 
+        form.prepend(container);
     }
 
-    container.innerHTML = "";
+    container.replaceChildren();
 
-    if (
-        latestSuggestedReplies.length === 0
-    ) {
-
+    if (!latestSuggestedReplies.length) {
         container.style.display = "none";
-
         return;
-
     }
 
     container.style.display = "flex";
 
     latestSuggestedReplies.forEach(reply => {
-
-        const chip =
-            document.createElement("button");
+        const chip = document.createElement("button");
 
         chip.type = "button";
-
-        chip.className =
-            "ai-reply-chip";
-
+        chip.className = "ai-reply-chip";
         chip.innerHTML = `
-            ✨ ${reply}
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            <span></span>
         `;
 
-        chip.onclick = () => {
+        chip.querySelector("span").textContent = reply;
 
-            document.getElementById(
-                "messageInput"
-            ).value = reply;
+        chip.addEventListener("click", () => {
+            const input = document.getElementById("messageInput");
 
-            document.getElementById(
-                "messageInput"
-            ).focus();
+            if (!input) return;
 
-        };
+            input.value = reply;
+            input.focus();
+        });
 
         container.appendChild(chip);
-
     });
-
 }
 
 loadInbox().then(() => {
