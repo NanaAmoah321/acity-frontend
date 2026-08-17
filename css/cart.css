@@ -47,6 +47,7 @@ CART CARD
     box-shadow:0 12px 35px rgba(0,0,0,.06);
     transition:.3s;
     margin: 0;
+    border: 1px solid var(--border);
 }
 .cart-card:hover{
     transform:translateY(-4px);
@@ -144,6 +145,7 @@ SUMMARY
 ====================================*/
 .cart-summary{
     background:var(--surface);
+    border:1px solid var(--border);
     border-radius:22px;
     padding:30px;
     position:sticky;

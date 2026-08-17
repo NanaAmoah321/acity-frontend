@@ -290,7 +290,7 @@
     word-wrap:break-word;
 }
 .message.received{
-    background:var(--surface);
+    background:var(--surface-alt);
     align-self:flex-start;
     border-bottom-left-radius:6px;
     box-shadow:0 6px 18px rgba(0,0,0,.06);

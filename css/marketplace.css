@@ -16,6 +16,7 @@
     margin-right: auto;
     padding-left: 0;
     padding-right: 0;
+    padding-top: 30px;
 }
 .hero-content{
     max-width:700px;
@@ -127,7 +128,7 @@
 @media (max-width: 768px) {
     .marketplace {
         width: 100%;
-        padding-top: 30px;
+        
         padding-bottom: 50px;
     }
 
@@ -183,7 +184,7 @@
 .market-section{
     width: min(1650px, calc(100% - 80px));
     max-width: none;
-    margin-left: auto;
+    margin-left: 30px;
     margin-right: auto;
     padding-left: 0;
     padding-right: 0;
@@ -308,6 +309,7 @@
 align-items:flex-start;
 flex-direction:column;
 gap:10px;
+padding-top:20px;
 }
 .section-header h2{
 font-size:1.5rem;

@@ -30,15 +30,18 @@
     display:flex;
     gap:15px;
     flex-wrap:wrap;
+    
 }
 .notification-filter{
     border:none;
     background:var(--surface);
+    border:1px solid var(--border);
     padding:12px 20px;
     border-radius:999px;
     cursor:pointer;
     font-weight:600;
     transition:.25s;
+    color:var(--text-light);
 }
 .notification-filter.active{
     background:var(--primary);
@@ -51,6 +54,7 @@
 }
 .notification-card{
     background:var(--surface);
+    border:1px solid var(--border);
     border-radius:22px;
     padding:24px;
     display:grid;
