@@ -252,35 +252,76 @@ document
     }
 
 });
-async function updateNotificationCount(){
-    const token =
-    localStorage.getItem("token");
-    if(!token) return;
-    const res =
-    await fetch(
-        "https://acity-backend.onrender.com/api/notifications/unread-count",
-        {
-            headers:{
-                Authorization:
-                `Bearer ${token}`
-            }
+async function updateNotificationCount() {
+    const token = localStorage.getItem("token");
+
+    const desktopBadge =
+        document.getElementById("notificationCount");
+
+    const mobileBadge =
+        document.getElementById("mobileNotificationCount");
+
+    if (!token) {
+        if (desktopBadge) {
+            desktopBadge.textContent = "";
+            desktopBadge.style.display = "none";
         }
-    );
-    const data =
-    await res.json();
-    const badge =
-    document.getElementById(
-        "notificationCount"
-    );
-    if(!badge) return;
-    badge.textContent =
-    data.count;
-    badge.style.display =
-    data.count>0
-    ? "flex"
-    : "none";
+
+        if (mobileBadge) {
+            mobileBadge.textContent = "";
+            mobileBadge.style.display = "none";
+        }
+
+        return;
+    }
+
+    try {
+        const res = await fetch(
+            "https://acity-backend.onrender.com/api/notifications/unread-count",
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+
+        if (!res.ok) {
+            throw new Error("Could not load notification count.");
+        }
+
+        const data = await res.json();
+        const count = Number(data.count) || 0;
+
+        [desktopBadge, mobileBadge].forEach(badge => {
+            if (!badge) return;
+
+            badge.textContent = count > 99
+                ? "99+"
+                : String(count);
+
+            badge.style.display =
+                count > 0
+                    ? "flex"
+                    : "none";
+        });
+
+    } catch (error) {
+        console.error(
+            "Notification counter error:",
+            error
+        );
+    }
 }
+
+// Make it available to other frontend files.
+window.updateNotificationCount = updateNotificationCount;
+
+// Initial count.
 updateNotificationCount();
+
+// Keep the navbar counter live.
+setInterval(updateNotificationCount, 15000);
+
 async function loadCartCount() {
     const badge =
     document.getElementById("cartCount");

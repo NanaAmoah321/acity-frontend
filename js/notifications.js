@@ -4,48 +4,87 @@ if (!token) {
     window.location.replace("login.html");
     throw new Error("Authentication required");
 }
+let notificationsRequestInFlight = false;
 
 let allNotifications = [];
 let currentFilter = "all";
 const container = document.getElementById("notificationsContainer");
 
-async function loadNotifications() {
+async function loadNotifications(showLoading = true) {
     if (!container) return;
-    
-    container.innerHTML = Array(5)
-        .fill('<div class="notification-skeleton skeleton-card"></div>')
-        .join("");
-    
+
+    if (notificationsRequestInFlight) {
+        return;
+    }
+
+    notificationsRequestInFlight = true;
+
+    if (showLoading) {
+        container.innerHTML = Array(5)
+            .fill(
+                '<div class="notification-skeleton skeleton-card"></div>'
+            )
+            .join("");
+    }
+
     try {
-        const res = await fetch("https://acity-backend.onrender.com/api/notifications", {
-            headers: {
-                Authorization: `Bearer ${token}`
+        const res = await fetch(
+            "https://acity-backend.onrender.com/api/notifications",
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
             }
-        });
-        
+        );
+
         if (res.status === 401) {
             handleLogout();
             return;
         }
 
-        if (!res.ok) throw new Error("Could not load notifications.");
-
-        allNotifications = await res.json();
-
-        if (!Array.isArray(allNotifications)) {
-            throw new Error("Invalid notifications response.");
+        if (!res.ok) {
+            throw new Error(
+                "Could not load notifications."
+            );
         }
 
+        const data = await res.json();
+
+        if (!Array.isArray(data)) {
+            throw new Error(
+                "Invalid notifications response."
+            );
+        }
+
+        allNotifications = data;
         renderNotifications();
+
+        if (window.updateNotificationCount) {
+            window.updateNotificationCount();
+        }
+
     } catch (err) {
-        console.error("Load Notifications Error:", err);
-        container.innerHTML = `
-            <div class="empty-state">
-                <i class="fa-solid fa-triangle-exclamation"></i>
-                <h3>Error Loading Notifications</h3>
-                <p>Please refresh the page or try again later.</p>
-            </div>
-        `;
+        console.error(
+            "Load Notifications Error:",
+            err
+        );
+
+        // Do not destroy already-loaded notifications
+        // during a background refresh.
+        if (showLoading) {
+            container.innerHTML = `
+                <div class="empty-state">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <h3>Error Loading Notifications</h3>
+                    <p>
+                        Please refresh the page or try again later.
+                    </p>
+                </div>
+            `;
+        }
+
+    } finally {
+        notificationsRequestInFlight = false;
     }
 }
 
@@ -76,8 +115,14 @@ function renderNotifications() {
     const allowedTypes = new Set(["order", "message", "review", "accepted", "rejected"]);
 
     const filtered = currentFilter === "all"
-        ? allNotifications
-        : allNotifications.filter(n => n.type === currentFilter);
+    ? allNotifications
+    : allNotifications.filter(notification => {
+        const type = String(
+            notification.type || ""
+        ).toLowerCase();
+
+        return type === currentFilter;
+    });
 
     if (filtered.length === 0) {
         container.innerHTML = `
@@ -92,7 +137,13 @@ function renderNotifications() {
     }
 
     filtered.forEach(notification => {
-        const type = allowedTypes.has(notification.type) ? notification.type : "default";
+        const normalizedType = String(
+            notification.type || ""
+        ).toLowerCase();
+
+        const type = allowedTypes.has(normalizedType)
+            ? normalizedType
+            : "default";
         const partnerId = Number.isFinite(Number(notification.conversation_user_id))
             ? Number(notification.conversation_user_id)
             : null;
@@ -265,4 +316,10 @@ document.querySelectorAll(".notification-filter").forEach(button => {
 document.getElementById("markAllReadBtn")?.addEventListener("click", markAllAsRead);
 
 // Initial Load
-loadNotifications();
+// Initial load
+loadNotifications(true);
+
+// Refresh notifications and the navbar counter.
+setInterval(() => {
+    loadNotifications(false);
+}, 15000);
