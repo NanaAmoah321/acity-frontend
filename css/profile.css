@@ -1516,3 +1516,52 @@ body.dark .insightCard i{
     height:36px;
     border-radius:50%;
 }
+
+.dangerZone {
+    border: 1px solid color-mix(
+        in srgb,
+        var(--danger) 45%,
+        var(--border)
+    );
+}
+
+.dangerZone h2 {
+    color: var(--danger);
+}
+
+.delete-account-btn {
+    width: 100%;
+    margin-top: 20px;
+    background: var(--danger);
+    color: #ffffff;
+}
+
+.delete-account-btn:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+}
+
+.delete-account-btn:disabled {
+    opacity: 0.7;
+    cursor: wait;
+    transform: none;
+}
+
+@media (max-width: 768px) {
+    .profileHeading {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .profileHeading h1 {
+        margin: 0;
+    }
+
+    #verifiedBadge {
+        order: -1;
+        margin: 0;
+    }
+}

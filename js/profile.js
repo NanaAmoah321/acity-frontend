@@ -106,10 +106,10 @@ async function loadProfile() {
         }
 
         updateHeroStats({
-            listings: user.items?.length || 0,
-            rating: user.rating || 0,
-            orders: user.orders || 0,
-            followers: user.followers || 0,
+            listings: Number(user.listing_count || 0),
+            rating: Number(user.average_rating || 0),
+            orders: Number(user.order_count || 0),
+            followers: Number(user.follower_count || 0),
             profile: user
         });
 
@@ -1341,6 +1341,82 @@ async function rejectOrder(orderId){
     });
 
 }
+
+async function deleteProfile() {
+    const button =
+        document.getElementById("deleteAccountBtn");
+
+    if (button) {
+        button.disabled = true;
+        button.innerHTML = `
+            <i class="fa-solid fa-spinner fa-spin"></i>
+            Deleting Account...
+        `;
+    }
+
+    try {
+        const response = await fetch(
+            `${API}/auth/profile`,
+            {
+                method: "DELETE",
+                headers: {
+                    Authorization: `Bearer ${getToken()}`
+                }
+            }
+        );
+
+        const raw = await response.text();
+
+        let data = {};
+
+        try {
+            data = raw ? JSON.parse(raw) : {};
+        } catch {
+            throw new Error(
+                "The server returned an invalid response."
+            );
+        }
+
+        if (!response.ok) {
+            throw new Error(
+                data.error ||
+                data.message ||
+                "Account deletion failed."
+            );
+        }
+
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        localStorage.removeItem("openConversationWith");
+        localStorage.removeItem("openConversationName");
+
+        showToast(
+            "Your account has been deleted."
+        );
+
+        setTimeout(() => {
+            window.location.replace("login.html");
+        }, 900);
+
+    } catch (error) {
+        console.error("Delete profile error:", error);
+
+        showToast(
+            error.message ||
+            "Unable to delete your account.",
+            "error"
+        );
+
+        if (button) {
+            button.disabled = false;
+            button.innerHTML = `
+                <i class="fa-solid fa-trash"></i>
+                Delete My Account
+            `;
+        }
+    }
+}
+
 function messageSeller(userId, userName){
 
     localStorage.setItem(
@@ -1437,6 +1513,26 @@ document.addEventListener(
 
         }
 
+        const deleteAccountBtn =
+            document.getElementById("deleteAccountBtn");
+
+        if (deleteAccountBtn) {
+            deleteAccountBtn.addEventListener(
+                "click",
+                () => {
+                    showConfirmModal({
+                        title: "Delete Account?",
+                        message:
+                            "This will permanently delete your profile, listings, messages, orders, reviews, follows, and account data. This action cannot be undone.",
+                        icon: "fa-trash",
+                        confirmText: "Delete Account",
+                        confirmClass: "btn-danger",
+                        onConfirm: deleteProfile
+                    });
+                }
+            );
+        }
+
         await loadProfile();
 
         await initializeDashboard();
@@ -1450,5 +1546,7 @@ document.addEventListener(
         
 
     }
+
+    
 
 );
