@@ -536,16 +536,7 @@ async function loadMyItems() {
 
                     </p>
 
-                    <a
-                        href="create-listing.html"
-                        class="btn btn-primary"
-                    >
-
-                        <i class="fa-solid fa-plus"></i>
-
-                        Create Listing
-
-                    </a>
+                    
 
                 </div>
 
