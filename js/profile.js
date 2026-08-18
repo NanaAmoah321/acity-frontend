@@ -22,6 +22,17 @@ function getToken(){
 
 }
 
+let analyticsCharts = {};
+
+const analyticsColors = [
+    "#EF4444",
+    "#F97316",
+    "#EAB308",
+    "#22C55E",
+    "#3B82F6",
+    "#8B5CF6",
+    "#EC4899"
+];
 
 function updateDashboard(hasListings){
 
@@ -1417,6 +1428,162 @@ async function deleteProfile() {
     }
 }
 
+async function loadAnalytics() {
+    const section =
+        document.getElementById(
+            "profileAnalytics"
+        );
+
+    if (!section) return;
+
+    const range =
+        document.getElementById(
+            "analyticsRange"
+        )?.value || "30";
+
+    try {
+        const response = await fetch(
+            `${API}/analytics?range=${range}`,
+            {
+                headers: {
+                    Authorization:
+                        `Bearer ${getToken()}`
+                }
+            }
+        );
+
+        const data =
+            await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                data.error ||
+                "Unable to load analytics."
+            );
+        }
+
+        destroyAnalyticsCharts();
+
+        const sellerHasActivity =
+            data.seller.metrics.activeListings > 0 ||
+            data.seller.metrics.orders > 0;
+
+        document.getElementById(
+            "profileAnalytics"
+        ).classList.remove("hidden");
+
+        document.getElementById(
+            "sellerAnalytics"
+        ).classList.toggle(
+            "hidden",
+            !sellerHasActivity
+        );
+
+        document.getElementById(
+            "buyerAnalytics"
+        ).classList.toggle(
+            "hidden",
+            sellerHasActivity
+        );
+
+        if (sellerHasActivity) {
+            document.getElementById(
+                "analyticsTitle"
+            ).textContent =
+                "Seller Analytics";
+
+            document.getElementById(
+                "analyticsSubtitle"
+            ).textContent =
+                "Understand your store performance and growth.";
+
+            renderSellerAnalytics(data);
+        } else {
+            document.getElementById(
+                "analyticsTitle"
+            ).textContent =
+                "Buyer Expense Tracker";
+
+            document.getElementById(
+                "analyticsSubtitle"
+            ).textContent =
+                "Track your spending and manage your budget.";
+
+            renderBuyerAnalytics(data);
+        }
+
+    } catch (error) {
+        console.error(
+            "Analytics loading error:",
+            error
+        );
+    }
+}
+
+async function saveBudget(event) {
+    event.preventDefault();
+
+    const input =
+        document.getElementById(
+            "budgetInput"
+        );
+
+    const monthly_budget =
+        Number(input.value);
+
+    if (
+        !Number.isFinite(monthly_budget) ||
+        monthly_budget < 0
+    ) {
+        showToast(
+            "Enter a valid budget.",
+            "error"
+        );
+        return;
+    }
+
+    try {
+        const response = await fetch(
+            `${API}/analytics/budget`,
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type":
+                        "application/json",
+                    Authorization:
+                        `Bearer ${getToken()}`
+                },
+                body: JSON.stringify({
+                    monthly_budget
+                })
+            }
+        );
+
+        const data =
+            await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                data.error ||
+                "Unable to save budget."
+            );
+        }
+
+        showToast(
+            "Budget updated successfully."
+        );
+
+        await loadAnalytics();
+
+    } catch (error) {
+        showToast(
+            error.message ||
+            "Unable to save budget.",
+            "error"
+        );
+    }
+}
+
 function messageSeller(userId, userName){
 
     localStorage.setItem(
@@ -1492,29 +1659,425 @@ function updateHeroStats({
 
 }
 
-document.addEventListener(
+function money(value) {
+    return `GH₵${Number(value || 0).toFixed(2)}`;
+}
 
-    "DOMContentLoaded",
+function destroyAnalyticsCharts() {
+    Object.values(analyticsCharts).forEach(chart => {
+        if (chart) chart.destroy();
+    });
 
-    async()=>{
+    analyticsCharts = {};
+}
 
-        const editBtn =
-        document.getElementById("editProfileBtn");
+function chartTheme() {
+    const dark =
+        document.body.classList.contains("dark");
 
-        if(editBtn){
+    return {
+        text: dark ? "#F8FAFC" : "#0F172A",
+        muted: dark ? "#CBD5E1" : "#64748B",
+        grid: dark
+            ? "rgba(203, 213, 225, .12)"
+            : "rgba(15, 23, 42, .10)"
+    };
+}
 
-            editBtn.addEventListener(
+function baseChartOptions() {
+    const theme = chartTheme();
 
-                "click",
+    return {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                labels: {
+                    color: theme.text
+                }
+            }
+        },
+        scales: {
+            x: {
+                ticks: {
+                    color: theme.muted
+                },
+                grid: {
+                    color: theme.grid
+                }
+            },
+            y: {
+                ticks: {
+                    color: theme.muted
+                },
+                grid: {
+                    color: theme.grid
+                }
+            }
+        }
+    };
+}
 
-                openEditProfile
+function createLineChart(
+    canvasId,
+    labels,
+    values,
+    label
+) {
+    const canvas =
+        document.getElementById(canvasId);
 
+    if (!canvas) return;
+
+    analyticsCharts[canvasId] =
+        new Chart(canvas, {
+            type: "line",
+            data: {
+                labels,
+                datasets: [
+                    {
+                        label,
+                        data: values,
+                        borderColor: "#EF4444",
+                        backgroundColor:
+                            "rgba(239, 68, 68, .16)",
+                        borderWidth: 3,
+                        pointRadius: 3,
+                        pointBackgroundColor: "#EF4444",
+                        fill: true,
+                        tension: .35
+                    }
+                ]
+            },
+            options: baseChartOptions()
+        });
+}
+
+function createBarChart(
+    canvasId,
+    labels,
+    values,
+    label
+) {
+    const canvas =
+        document.getElementById(canvasId);
+
+    if (!canvas) return;
+
+    analyticsCharts[canvasId] =
+        new Chart(canvas, {
+            type: "bar",
+            data: {
+                labels,
+                datasets: [
+                    {
+                        label,
+                        data: values,
+                        backgroundColor: "#EF4444",
+                        borderRadius: 8,
+                        maxBarThickness: 34
+                    }
+                ]
+            },
+            options: baseChartOptions()
+        });
+}
+
+function createDoughnutChart(
+    canvasId,
+    labels,
+    values
+) {
+    const canvas =
+        document.getElementById(canvasId);
+
+    if (!canvas) return;
+
+    const theme = chartTheme();
+
+    analyticsCharts[canvasId] =
+        new Chart(canvas, {
+            type: "doughnut",
+            data: {
+                labels,
+                datasets: [
+                    {
+                        data: values,
+                        backgroundColor: analyticsColors,
+                        borderColor: theme.text,
+                        borderWidth: 2
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: "bottom",
+                        labels: {
+                            color: theme.text,
+                            padding: 14
+                        }
+                    }
+                }
+            }
+        });
+}
+
+function renderSellerAnalytics(data) {
+    const seller = data.seller;
+    const metrics = seller.metrics;
+
+    document.getElementById(
+        "sellerRevenue"
+    ).textContent = money(metrics.revenue);
+
+    document.getElementById(
+        "sellerOrders"
+    ).textContent = metrics.orders;
+
+    document.getElementById(
+        "sellerAverageOrder"
+    ).textContent = money(
+        metrics.averageOrderValue
+    );
+
+    document.getElementById(
+        "sellerActiveListings"
+    ).textContent = metrics.activeListings;
+
+    document.getElementById(
+        "sellerRating"
+    ).textContent =
+        `${Number(metrics.rating).toFixed(1)} rating`;
+
+    document.getElementById(
+        "sellerAudienceText"
+    ).textContent =
+        `Your store currently has ${metrics.followers} followers.`;
+
+    if (metrics.orders > 0) {
+        document.getElementById(
+            "sellerInsightText"
+        ).textContent =
+            `You have generated ${money(metrics.revenue)} from ${metrics.orders} completed orders.`;
+    }
+
+    createLineChart(
+        "sellerRevenueChart",
+        seller.revenueTrend.labels,
+        seller.revenueTrend.values,
+        "Revenue"
+    );
+
+    createBarChart(
+        "sellerOrdersChart",
+        seller.ordersTrend.labels,
+        seller.ordersTrend.values,
+        "Orders"
+    );
+
+    createBarChart(
+        "sellerListingsChart",
+        seller.listingPerformance.map(
+            item => item.title
+        ),
+        seller.listingPerformance.map(
+            item => item.orders
+        ),
+        "Orders"
+    );
+
+    createDoughnutChart(
+        "sellerCategoryChart",
+        seller.categories.map(
+            item => item.category
+        ),
+        seller.categories.map(
+            item => item.value
+        )
+    );
+}
+
+function renderRecentPurchases(purchases) {
+    const container =
+        document.getElementById(
+            "recentPurchases"
+        );
+
+    if (!container) return;
+
+    container.innerHTML = "";
+
+    if (!purchases.length) {
+        container.innerHTML = `
+            <div class="analyticsEmpty">
+                No purchases yet.
+            </div>
+        `;
+        return;
+    }
+
+    purchases.forEach(purchase => {
+        const item =
+            document.createElement("div");
+
+        item.className =
+            "recentPurchase";
+
+        const date =
+            new Date(
+                purchase.createdAt
+            ).toLocaleDateString(
+                "en-GB",
+                {
+                    day: "numeric",
+                    month: "short"
+                }
             );
 
+        item.innerHTML = `
+            <div>
+                <strong></strong>
+                <small></small>
+            </div>
+            <span></span>
+        `;
+
+        item.querySelector(
+            "strong"
+        ).textContent = purchase.title;
+
+        item.querySelector(
+            "small"
+        ).textContent =
+            `${purchase.category || "Other"} · ${date}`;
+
+        item.querySelector(
+            "span"
+        ).textContent = money(
+            purchase.total
+        );
+
+        container.appendChild(item);
+    });
+}
+
+function renderBuyerAnalytics(data) {
+    const buyer = data.buyer;
+    const metrics = buyer.metrics;
+
+    document.getElementById(
+        "buyerSpending"
+    ).textContent = money(metrics.spending);
+
+    document.getElementById(
+        "buyerPeriodSpending"
+    ).textContent = money(metrics.spending);
+
+    document.getElementById(
+        "buyerOrders"
+    ).textContent = metrics.orders;
+
+    document.getElementById(
+        "buyerAveragePurchase"
+    ).textContent = money(
+        metrics.averagePurchase
+    );
+
+    const budget =
+        Number(buyer.monthlyBudget || 0);
+
+    const spent =
+        Number(metrics.spending || 0);
+
+    const remaining =
+        Math.max(budget - spent, 0);
+
+    const percentage =
+        budget > 0
+            ? Math.min((spent / budget) * 100, 100)
+            : 0;
+
+    document.getElementById(
+        "buyerBudget"
+    ).textContent = money(budget);
+
+    document.getElementById(
+        "buyerRemaining"
+    ).textContent = money(remaining);
+
+    document.getElementById(
+        "buyerBudgetFill"
+    ).style.width = `${percentage}%`;
+
+    document.getElementById(
+        "buyerBudgetPercent"
+    ).textContent =
+        budget > 0
+            ? `${percentage.toFixed(0)}% of your budget used`
+            : "Set a budget to track your progress.";
+
+    document.getElementById(
+        "budgetInput"
+    ).value = budget || "";
+
+    if (metrics.orders > 0) {
+        document.getElementById(
+            "buyerInsightText"
+        ).textContent =
+            `You have spent ${money(spent)} across ${metrics.orders} orders.`;
+    }
+
+    createLineChart(
+        "buyerSpendingChart",
+        buyer.spendingTrend.labels,
+        buyer.spendingTrend.values,
+        "Spending"
+    );
+
+    createDoughnutChart(
+        "buyerCategoryChart",
+        buyer.categories.map(
+            item => item.category
+        ),
+        buyer.categories.map(
+            item => item.value
+        )
+    );
+
+    renderRecentPurchases(
+        buyer.recentPurchases
+    );
+}
+
+window.addEventListener(
+    "focus",
+    () => {
+        loadAnalytics();
+    }
+);
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async () => {
+        const editBtn =
+            document.getElementById(
+                "editProfileBtn"
+            );
+
+        if (editBtn) {
+            editBtn.addEventListener(
+                "click",
+                openEditProfile
+            );
         }
 
         const deleteAccountBtn =
-            document.getElementById("deleteAccountBtn");
+            document.getElementById(
+                "deleteAccountBtn"
+            );
 
         if (deleteAccountBtn) {
             deleteAccountBtn.addEventListener(
@@ -1523,30 +2086,60 @@ document.addEventListener(
                     showConfirmModal({
                         title: "Delete Account?",
                         message:
-                            "This will permanently delete your profile, listings, messages, orders, reviews, follows, and account data. This action cannot be undone.",
+                            "This will permanently delete your profile and account data.",
                         icon: "fa-trash",
-                        confirmText: "Delete Account",
-                        confirmClass: "btn-danger",
-                        onConfirm: deleteProfile
+                        confirmText:
+                            "Delete Account",
+                        confirmClass:
+                            "btn-danger",
+                        onConfirm:
+                            deleteProfile
                     });
                 }
             );
         }
 
+        const range =
+            document.getElementById(
+                "analyticsRange"
+            );
+
+        if (range) {
+            range.addEventListener(
+                "change",
+                loadAnalytics
+            );
+        }
+
+        const refresh =
+            document.getElementById(
+                "analyticsRefresh"
+            );
+
+        if (refresh) {
+            refresh.addEventListener(
+                "click",
+                loadAnalytics
+            );
+        }
+
+        const budgetForm =
+            document.getElementById(
+                "budgetForm"
+            );
+
+        if (budgetForm) {
+            budgetForm.addEventListener(
+                "submit",
+                saveBudget
+            );
+        }
+
         await loadProfile();
-
         await initializeDashboard();
-
         await loadMyItems();
-
         await loadSellerOrders();
-
         await loadIncomingServiceRequests();
-
-        
-
+        await loadAnalytics();
     }
-
-    
-
 );

@@ -48,7 +48,7 @@
             <i class="fa-solid fa-screwdriver-wrench"></i>
             <span>Services</span>
         </a>
-        <a href="create-listing.html" class="nav-item sell">
+        <a href="create-listing.html" class="nav-item">
             <i class="fa-solid fa-plus"></i>
             <span>Sell Items</span>
         </a>
@@ -755,85 +755,357 @@
 
             <!-- Dynamic Insight Panel -->
 
-            <div id="sellerInsights" class="dashboardSection hidden">
+            
 
-                <div class="sectionHeader">
-                    <div>
-                        <h2>Store Performance</h2>
-                        <p>How your marketplace is performing this week.</p>
-                    </div>
-                </div>
-
-                <div class="insightGrid">
-
-                    <div class="insightCard">
-                        <i class="fa-solid fa-fire"></i>
-                        <span>Top Listing</span>
-                        <h3 id="topListing">--</h3>
-                    </div>
-
-                    <div class="insightCard">
-                        <i class="fa-solid fa-star"></i>
-                        <span>Store Rating</span>
-                        <h3 id="storeRating">0.0 ★</h3>
-                    </div>
-
-                    <div class="insightCard">
-                        <i class="fa-solid fa-box-open"></i>
-                        <span>Active Listings</span>
-                        <h3 id="activeListings">0</h3>
-                    </div>
-
-                    <div class="insightCard tipCard">
-                        <i class="fa-solid fa-lightbulb"></i>
-                        <span>Seller Tip</span>
-                        <p>Add 3–5 photos to each listing to improve visibility.</p>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div id="buyerInsights" class="dashboardSection hidden">
-
-                <div class="sectionHeader">
-                    <div>
-                        <h2>Buyer Activity</h2>
-                        <p>Your shopping activity on Acity Connect.</p>
-                    </div>
-                </div>
-
-                <div class="insightGrid">
-
-                    <div class="insightCard">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                        <span>Orders</span>
-                        <h3 id="buyerOrderCount">0</h3>
-                    </div>
-
-                    <div class="insightCard">
-                        <i class="fa-solid fa-heart"></i>
-                        <span>Saved Items</span>
-                        <h3>Coming Soon</h3>
-                    </div>
-
-                    <div class="insightCard">
-                        <i class="fa-solid fa-comments"></i>
-                        <span>Messages</span>
-                        <h3 id="buyerMessages">0</h3>
-                    </div>
-
-                    <div class="insightCard tipCard">
-                        <i class="fa-solid fa-lightbulb"></i>
-                        <span>Buyer Tip</span>
-                        <p>Follow your favourite stores so you never miss new listings.</p>
-                    </div>
-
-                </div>
-
-            </div>
-
+            
         </aside>
+
+    </section>
+
+    <section
+    id="profileAnalytics"
+    class="profileAnalytics hidden"
+    >
+
+        <div class="analyticsHeader">
+            <div>
+                <span class="analyticsEyebrow">
+                    Live Insights
+                </span>
+
+                <h2 id="analyticsTitle">
+                    Analytics
+                </h2>
+
+                <p id="analyticsSubtitle">
+                    Understand your activity on Acity Connect.
+                </p>
+            </div>
+
+            <div class="analyticsControls">
+                <select id="analyticsRange">
+                    <option value="7">Last 7 days</option>
+                    <option value="30" selected>
+                        Last 30 days
+                    </option>
+                    <option value="90">Last 90 days</option>
+                    <option value="365">Last year</option>
+                </select>
+
+                <button
+                    id="analyticsRefresh"
+                    class="analyticsRefresh"
+                    type="button"
+                >
+                    <i class="fa-solid fa-rotate"></i>
+                    Refresh
+                </button>
+            </div>
+        </div>
+
+        <!-- SELLER ANALYTICS -->
+
+        <div
+            id="sellerAnalytics"
+            class="analyticsMode hidden"
+        >
+
+            <div class="analyticsMetricGrid">
+
+                <div class="analyticsMetric">
+                    <i class="fa-solid fa-money-bill-trend-up"></i>
+                    <span>Total Revenue</span>
+                    <strong id="sellerRevenue">
+                        GH₵0.00
+                    </strong>
+                    <small id="sellerRevenueChange">
+                        From completed orders
+                    </small>
+                </div>
+
+                <div class="analyticsMetric">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span>Orders</span>
+                    <strong id="sellerOrders">
+                        0
+                    </strong>
+                    <small>Orders received</small>
+                </div>
+
+                <div class="analyticsMetric">
+                    <i class="fa-solid fa-receipt"></i>
+                    <span>Average Order</span>
+                    <strong id="sellerAverageOrder">
+                        GH₵0.00
+                    </strong>
+                    <small>Average order value</small>
+                </div>
+
+                <div class="analyticsMetric">
+                    <i class="fa-solid fa-box-open"></i>
+                    <span>Active Listings</span>
+                    <strong id="sellerActiveListings">
+                        0
+                    </strong>
+                    <small id="sellerRating">
+                        0.0 rating
+                    </small>
+                </div>
+
+            </div>
+
+            <div class="analyticsChartGrid">
+
+                <article class="analyticsChartCard analyticsChartWide">
+                    <div class="analyticsCardHeader">
+                        <div>
+                            <h3>Revenue Trend</h3>
+                            <p>Completed order revenue over time.</p>
+                        </div>
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+
+                    <div class="analyticsCanvas">
+                        <canvas id="sellerRevenueChart"></canvas>
+                    </div>
+                </article>
+
+                <article class="analyticsChartCard">
+                    <div class="analyticsCardHeader">
+                        <div>
+                            <h3>Orders Trend</h3>
+                            <p>Orders received over time.</p>
+                        </div>
+                        <i class="fa-solid fa-chart-column"></i>
+                    </div>
+
+                    <div class="analyticsCanvas">
+                        <canvas id="sellerOrdersChart"></canvas>
+                    </div>
+                </article>
+
+                <article class="analyticsChartCard">
+                    <div class="analyticsCardHeader">
+                        <div>
+                            <h3>Listing Performance</h3>
+                            <p>Your strongest listings.</p>
+                        </div>
+                        <i class="fa-solid fa-ranking-star"></i>
+                    </div>
+
+                    <div class="analyticsCanvas">
+                        <canvas id="sellerListingsChart"></canvas>
+                    </div>
+                </article>
+
+                <article class="analyticsChartCard">
+                    <div class="analyticsCardHeader">
+                        <div>
+                            <h3>Revenue by Category</h3>
+                            <p>Which categories earn the most.</p>
+                        </div>
+                        <i class="fa-solid fa-chart-pie"></i>
+                    </div>
+
+                    <div class="analyticsCanvas analyticsCanvasSmall">
+                        <canvas id="sellerCategoryChart"></canvas>
+                    </div>
+                </article>
+
+            </div>
+
+            <div class="analyticsInsightGrid">
+
+                <article class="analyticsInsightCard">
+                    <i class="fa-solid fa-lightbulb"></i>
+                    <div>
+                        <h3>Seller Insight</h3>
+                        <p id="sellerInsightText">
+                            Keep completing orders to unlock stronger insights.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="analyticsInsightCard">
+                    <i class="fa-solid fa-users"></i>
+                    <div>
+                        <h3>Store Audience</h3>
+                        <p id="sellerAudienceText">
+                            Your store currently has 0 followers.
+                        </p>
+                    </div>
+                </article>
+
+            </div>
+
+        </div>
+
+        <!-- BUYER ANALYTICS -->
+
+        <div
+            id="buyerAnalytics"
+            class="analyticsMode hidden"
+        >
+
+            <div class="analyticsMetricGrid">
+
+                <div class="analyticsMetric">
+                    <i class="fa-solid fa-wallet"></i>
+                    <span>Total Spending</span>
+                    <strong id="buyerSpending">
+                        GH₵0.00
+                    </strong>
+                    <small>Completed purchases</small>
+                </div>
+
+                <div class="analyticsMetric">
+                    <i class="fa-solid fa-calendar"></i>
+                    <span>Current Period</span>
+                    <strong id="buyerPeriodSpending">
+                        GH₵0.00
+                    </strong>
+                    <small>Spending in selected range</small>
+                </div>
+
+                <div class="analyticsMetric">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span>Orders</span>
+                    <strong id="buyerOrders">
+                        0
+                    </strong>
+                    <small>Orders placed</small>
+                </div>
+
+                <div class="analyticsMetric">
+                    <i class="fa-solid fa-receipt"></i>
+                    <span>Average Purchase</span>
+                    <strong id="buyerAveragePurchase">
+                        GH₵0.00
+                    </strong>
+                    <small>Average purchase value</small>
+                </div>
+
+            </div>
+
+            <div class="analyticsChartGrid">
+
+                <article class="analyticsChartCard">
+                    <div class="analyticsCardHeader">
+                        <div>
+                            <h3>Monthly Budget</h3>
+                            <p>Control your spending limit.</p>
+                        </div>
+                        <i class="fa-solid fa-piggy-bank"></i>
+                    </div>
+
+                    <div class="budgetSummary">
+                        <div>
+                            <span>Budget</span>
+                            <strong id="buyerBudget">
+                                GH₵0.00
+                            </strong>
+                        </div>
+
+                        <div>
+                            <span>Remaining</span>
+                            <strong id="buyerRemaining">
+                                GH₵0.00
+                            </strong>
+                        </div>
+                    </div>
+
+                    <div class="budgetTrack">
+                        <span id="buyerBudgetFill"></span>
+                    </div>
+
+                    <p
+                        id="buyerBudgetPercent"
+                        class="budgetPercent"
+                    >
+                        Set a budget to track your progress.
+                    </p>
+
+                    <form
+                        id="budgetForm"
+                        class="budgetForm"
+                    >
+                        <input
+                            id="budgetInput"
+                            type="number"
+                            min="0"
+                            step="0.01"
+                            placeholder="Enter monthly budget"
+                        >
+
+                        <button
+                            class="btn btn-primary"
+                            type="submit"
+                        >
+                            Save Budget
+                        </button>
+                    </form>
+                </article>
+
+                <article class="analyticsChartCard analyticsChartWide">
+                    <div class="analyticsCardHeader">
+                        <div>
+                            <h3>Spending Trend</h3>
+                            <p>Your completed purchase spending.</p>
+                        </div>
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+
+                    <div class="analyticsCanvas">
+                        <canvas id="buyerSpendingChart"></canvas>
+                    </div>
+                </article>
+
+                <article class="analyticsChartCard">
+                    <div class="analyticsCardHeader">
+                        <div>
+                            <h3>Spending by Category</h3>
+                            <p>Where your money goes.</p>
+                        </div>
+                        <i class="fa-solid fa-chart-pie"></i>
+                    </div>
+
+                    <div class="analyticsCanvas analyticsCanvasSmall">
+                        <canvas id="buyerCategoryChart"></canvas>
+                    </div>
+                </article>
+
+                <article class="analyticsChartCard">
+                    <div class="analyticsCardHeader">
+                        <div>
+                            <h3>Recent Purchases</h3>
+                            <p>Your latest activity.</p>
+                        </div>
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                    </div>
+
+                    <div
+                        id="recentPurchases"
+                        class="recentPurchases"
+                    ></div>
+                </article>
+
+            </div>
+
+            <div class="analyticsInsightGrid">
+
+                <article class="analyticsInsightCard">
+                    <i class="fa-solid fa-lightbulb"></i>
+                    <div>
+                        <h3>Buyer Insight</h3>
+                        <p id="buyerInsightText">
+                            Complete purchases to receive spending insights.
+                        </p>
+                    </div>
+                </article>
+
+            </div>
+
+        </div>
 
     </section>
 
@@ -932,6 +1204,7 @@
 </div>
     <script src="js/toast.js"></script>
     <script src="js/modal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="js/profile.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/reviews.js"></script>
