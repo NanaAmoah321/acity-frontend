@@ -360,6 +360,69 @@ async function loadCartCount() {
         badge.style.display = "none";
     }
 }
+
+async function updateSellerOnlyNavigation() {
+    const sellerLinks =
+        document.querySelectorAll(
+            "[data-seller-only]"
+        );
+
+    if (!sellerLinks.length) {
+        return;
+    }
+
+    const token =
+        localStorage.getItem("token");
+
+    if (!token) {
+        sellerLinks.forEach(link => {
+            link.remove();
+        });
+
+        return;
+    }
+
+    try {
+        const response = await fetch(
+            "https://acity-backend.onrender.com/api/stores/me",
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+
+        if (!response.ok) {
+            sellerLinks.forEach(link => {
+                link.remove();
+            });
+
+            return;
+        }
+
+        const data =
+            await response.json();
+
+        if (!data.hasStore) {
+            sellerLinks.forEach(link => {
+                link.remove();
+            });
+        }
+
+    } catch (error) {
+        console.error(
+            "Seller navigation error:",
+            error
+        );
+
+        sellerLinks.forEach(link => {
+            link.remove();
+        });
+    }
+}
+
+updateSellerOnlyNavigation();
+
 document.addEventListener(
     "DOMContentLoaded",
     loadCartCount

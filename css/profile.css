@@ -2042,3 +2042,53 @@ body.dark .insightCard i{
         gap: 10px;
     }
 }
+
+.profile-order-links {
+    display: grid;
+    gap: 14px;
+    margin-top: 20px;
+}
+
+.profile-order-link {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 18px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: var(--surface);
+    color: var(--text);
+}
+
+.profile-order-link > i:first-child {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: color-mix(
+        in srgb,
+        var(--primary) 14%,
+        transparent
+    );
+    color: var(--primary);
+}
+
+.profile-order-link span {
+    display: grid;
+    flex: 1;
+    gap: 3px;
+}
+
+.profile-order-link small {
+    color: var(--text-light);
+}
+
+.profile-order-link > i:last-child {
+    color: var(--primary);
+}
+
+.profile-order-link:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+}

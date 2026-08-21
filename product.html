@@ -96,6 +96,18 @@
                     <i class="fa-solid fa-bell"></i>
                     Notifications
                 </a>
+                <a href="orders.html">
+                    <i class="fa-solid fa-box"></i>
+                    My Orders
+                </a>
+                <a
+    href="incoming-orders.html"
+    id="incomingOrdersDropdownLink"
+    data-seller-only
+>
+    <i class="fa-solid fa-truck"></i>
+    Incoming Orders
+</a>
                 <a
                     href="admin.html"
                     id="adminLink"
@@ -116,24 +128,7 @@
     <i class="fa-solid fa-bars"></i>
 </button>
 </nav>
-<div class="mobile-menu" id="mobileMenu">
-    <div class="mobile-menu-header">
-        <div class="mobile-profile">
-            <div class="mobile-avatar">
-                <img 
-                id="mobileProfileImage"
-                src="images/default-avatar-image.jpg" alt="Profile">
-            </div>
-            <div>
-                <h3 id="mobileUserName">Welcome</h3>
-                <small id="mobileUserSubtitle">Sign in or create an account</small>
-            </div>
-        </div>
-        <button id="closeMenu" class="close-menu">
-            <i class="fa-solid fa-xmark"></i>
-        </button>
-    </div>
-    <div class="mobile-links">
+<div class="mobile-links">
         <a href="index.html">
             <i class="fa-solid fa-house"></i>
             Home
@@ -175,6 +170,18 @@
             <i class="fa-solid fa-cart-shopping"></i>
             My Cart
             <small id="mobileCartCount"></small>
+        </a>
+        <a href="orders.html">
+            <i class="fa-solid fa-box"></i>
+            My Orders
+        </a>
+        <a
+            href="incoming-orders.html"
+            id="mobileIncomingOrdersLink"
+            data-seller-only
+        >
+            <i class="fa-solid fa-inbox"></i>
+            Incoming Orders
         </a>
         <div class="mobile-theme">
         <button
@@ -239,8 +246,8 @@
         </a>
         </div>
     </div>
-</div><div class="mobile-overlay" id="mobileOverlay"></div>
-    <main class="product-page">
+</div>
+<div class="mobile-overlay" id="mobileOverlay"></div>    <main class="product-page">
         <div class="product-shell">
             <a href="javascript:history.back()"
                class="product-back">

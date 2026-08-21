@@ -97,6 +97,18 @@
                     <i class="fa-solid fa-bell"></i>
                     Notifications
                 </a>
+                <a href="orders.html">
+                    <i class="fa-solid fa-box"></i>
+                    My Orders
+                </a>
+                <a
+    href="incoming-orders.html"
+    id="incomingOrdersDropdownLink"
+    data-seller-only
+>
+    <i class="fa-solid fa-truck"></i>
+    Incoming Orders
+</a>
                 <a
                     href="admin.html"
                     id="adminLink"
@@ -117,131 +129,201 @@
     <i class="fa-solid fa-bars"></i>
 </button>
 </nav>
-<div class="mobile-menu" id="mobileMenu">
+<div
+    class="mobile-overlay"
+    id="mobileOverlay"
+></div>
+
+<div
+    class="mobile-menu"
+    id="mobileMenu"
+>
     <div class="mobile-menu-header">
         <div class="mobile-profile">
             <div class="mobile-avatar">
-                <img 
-                id="mobileProfileImage"
-                src="images/default-avatar-image.jpg" alt="Profile">
+                <img
+                    id="mobileProfileImage"
+                    src="images/default-avatar-image.jpg"
+                    alt="Profile"
+                >
             </div>
+
             <div>
-                <h3 id="mobileUserName">Welcome</h3>
-                <small id="mobileUserSubtitle">Sign in or create an account</small>
+                <h3 id="mobileUserName">
+                    Welcome
+                </h3>
+
+                <small id="mobileUserSubtitle">
+                    Sign in or create an account
+                </small>
             </div>
         </div>
-        <button id="closeMenu" class="close-menu">
+
+        <button
+            id="closeMenu"
+            class="close-menu"
+            type="button"
+        >
             <i class="fa-solid fa-xmark"></i>
         </button>
     </div>
+
     <div class="mobile-links">
+
         <a href="index.html">
             <i class="fa-solid fa-house"></i>
             Home
         </a>
-        <a href="login.html" id="mobileLoginLink" style="display:none;">
+
+        <a
+            href="login.html"
+            id="mobileLoginLink"
+            style="display:none;"
+        >
             <i class="fa-solid fa-right-to-bracket"></i>
             Login
         </a>
 
-        <a href="register.html" id="mobileRegisterLink" style="display:none;">
+        <a
+            href="register.html"
+            id="mobileRegisterLink"
+            style="display:none;"
+        >
             <i class="fa-solid fa-user-plus"></i>
             Register
         </a>
+
         <hr>
+
         <a href="marketplace.html">
             <i class="fa-solid fa-store"></i>
             Marketplace
         </a>
+
         <a href="services.html">
             <i class="fa-solid fa-screwdriver-wrench"></i>
             Skills Connect
         </a>
-        <a href="create-listing.html" id="mobileCreateListingLink" >
+
+        <a
+            href="create-listing.html"
+            id="mobileCreateListingLink"
+        >
             <i class="fa-solid fa-plus"></i>
             Sell Item
         </a>
+
+        <a href="orders.html">
+            <i class="fa-solid fa-box"></i>
+            My Orders
+        </a>
+
+        <a
+            href="incoming-orders.html"
+            data-seller-only
+        >
+            <i class="fa-solid fa-truck"></i>
+            Incoming Orders
+        </a>
+
         <hr>
-        <a href="inbox.html" id="mobileInboxLink" >
+
+        <a
+            href="inbox.html"
+            id="mobileInboxLink"
+        >
             <i class="fa-solid fa-comments"></i>
             Inbox
             <small id="mobileMessageCount"></small>
         </a>
-        <a href="notifications.html" id="mobileNotificationsLink" >
+
+        <a
+            href="notifications.html"
+            id="mobileNotificationsLink"
+        >
             <i class="fa-solid fa-bell"></i>
             Notifications
             <small id="mobileNotificationCount"></small>
         </a>
-        <a href="myCart.html" id="mobileCartLink" >
+
+        <a
+            href="myCart.html"
+            id="mobileCartLink"
+        >
             <i class="fa-solid fa-cart-shopping"></i>
             My Cart
             <small id="mobileCartCount"></small>
         </a>
-        <div class="mobile-theme">
-        <button
-            id="appearanceBtn"
-            class="appearance-btn"
-        >
-            <div class="appearance-left">
-                <i class="fa-solid fa-circle-half-stroke"></i>
-                <span>Appearance</span>
-            </div>
-            <i class="fa-solid fa-chevron-right"></i>
-        </button>
-        <div
-            id="appearanceMenu"
-            class="appearance-menu"
-        >
-            <div
-                class="theme-option"
-                data-theme="light"
-            >
-                <i class="fa-solid fa-sun"></i>
-                <span>Light</span>
-                <i class="fa-solid fa-check check"></i>
-            </div>
-            <div
-                class="theme-option"
-                data-theme="dark"
-            >
-                <i class="fa-solid fa-moon"></i>
-                <span>Dark</span>
-                <i class="fa-solid fa-check check"></i>
-            </div>
-            <div
-                class="theme-option"
-                data-theme="system"
-            >
-                <i class="fa-solid fa-desktop"></i>
-                <span>System</span>
-                <i class="fa-solid fa-check check"></i>
-            </div>
-        </div>
-        </div>
-        <div>
 
-        
-        <a href="profile.html" id="mobileProfileLink">
+        <div class="mobile-theme">
+            <button
+                id="appearanceBtn"
+                class="appearance-btn"
+                type="button"
+            >
+                <div class="appearance-left">
+                    <i class="fa-solid fa-circle-half-stroke"></i>
+                    <span>Appearance</span>
+                </div>
+
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+
+            <div
+                id="appearanceMenu"
+                class="appearance-menu"
+            >
+                <div
+                    class="theme-option"
+                    data-theme="light"
+                >
+                    <i class="fa-solid fa-sun"></i>
+                    <span>Light</span>
+                    <i class="fa-solid fa-check check"></i>
+                </div>
+
+                <div
+                    class="theme-option"
+                    data-theme="dark"
+                >
+                    <i class="fa-solid fa-moon"></i>
+                    <span>Dark</span>
+                    <i class="fa-solid fa-check check"></i>
+                </div>
+
+                <div
+                    class="theme-option"
+                    data-theme="system"
+                >
+                    <i class="fa-solid fa-desktop"></i>
+                    <span>System</span>
+                    <i class="fa-solid fa-check check"></i>
+                </div>
+            </div>
+        </div>
+
+        <a
+            href="profile.html"
+            id="mobileProfileLink"
+        >
             <i class="fa-solid fa-user"></i>
             Profile
         </a>
-        <a
-            href="admin.html"
-            id="mobileAdminLink"
-            style="display:none;"
-        >
-            <i class="fa-solid fa-shield-halved"></i>
-            Admin
-        </a>
+
         <hr>
-        <a href="#" id="mobileLogoutLink" onclick="logout()">
+
+        <a
+            href="#"
+            id="mobileLogoutLink"
+            onclick="logout(); return false;"
+        >
             <i class="fa-solid fa-right-from-bracket"></i>
             Logout
         </a>
-        </div>
+
     </div>
-</div><div class="mobile-overlay" id="mobileOverlay"></div>
-    <section class="profileHero fade-up">
+</div>
+<div class="mobile-overlay" id="mobileOverlay"></div>    <section class="profileHero fade-up">
 
         <div class="profileHeroTop">
 
@@ -1086,6 +1168,36 @@
 
                 
 
+            </div>
+
+            <div class="profile-order-links">
+                <a
+                    href="orders.html"
+                    class="profile-order-link"
+                >
+                    <i class="fa-solid fa-box"></i>
+
+                    <span>
+                        <strong>My Orders</strong>
+                        <small>Track purchases and deliveries</small>
+                    </span>
+
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+
+                <a
+                    href="incoming-orders.html"
+                    class="profile-order-link"
+                >
+                    <i class="fa-solid fa-inbox"></i>
+
+                    <span>
+                        <strong>Incoming Orders</strong>
+                        <small>Manage buyer orders</small>
+                    </span>
+
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
             </div>
 
             <div class="dashboardSection">

@@ -251,11 +251,23 @@ async function openNotification(notificationId, type, conversationUserId, conver
             return;
         }
 
-        if (["order", "accepted", "rejected"].includes(type)) {
-            window.location.href = "profile.html";
+        if (type === "order") {
+            const targetPage =
+                notification.action_url ||
+                `orders.html?id=${notification.related_id}`;
+
+            window.location.href = targetPage;
             return;
         }
 
+        if (["accepted", "rejected"].includes(type)) {
+            const targetPage =
+                notification.action_url ||
+                `orders.html?id=${notification.related_id}`;
+
+            window.location.href = targetPage;
+            return;
+        }
     } catch (err) {
         console.error(err);
     }

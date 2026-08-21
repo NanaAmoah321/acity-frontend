@@ -1,134 +1,166 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-B940J1CYHZ"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-B940J1CYHZ');
-    </script>
     <meta charset="UTF-8">
+
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0"
     >
-    <meta name="robots" content="noindex, nofollow, noarchive">
-    <title>Inbox | Acity Connect</title>
-    <link
-        rel="stylesheet"
-        href="css/style.css"
-    >
-    <link
-        rel="stylesheet"
-        href="css/navbar.css"
-    >
-    <link
-        rel="stylesheet"
-        href="css/buttons.css"
-    >
-    <link
-        rel="stylesheet"
-        href="css/inbox.css"
-    >
-    <link
-        rel="stylesheet"
-        href="css/toast.css"
-    >
+
+    <title>Incoming Orders | Acity Connect</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/orders.css">
+
     <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     >
-    <link rel="icon" type="image/png" href="/favicon.png" sizes="any">
-    <link rel="apple-touch-icon" href="/favicon.png">
+
+    <link
+        rel="icon"
+        type="image/png"
+        href="/favicon.png"
+        sizes="any"
+    >
+
+    <link
+        rel="apple-touch-icon"
+        href="/favicon.png"
+    >
 </head>
-<body>
- <nav>
-    <!-- LEFT -->
+
+<body class="seller-only-page">
+
+<nav>
     <div class="nav-left">
         <div class="logo">
-             <img src="favicon.png" alt="Acity Connect Logo">
-            <div class="logo-text"> Acity Connect
+            <a href="index.html">
+                <img
+                    src="favicon.png"
+                    alt="Acity Connect Logo"
+                >
+            </a>
+
+            <div class="logo-text">
+                Acity Connect
             </div>
         </div>
     </div>
-    <!-- CENTER -->
+
     <div class="nav-center">
         <a href="index.html" class="nav-item">
             <i class="fa-solid fa-house"></i>
             <span>Home</span>
         </a>
+
         <a href="marketplace.html" class="nav-item">
             <i class="fa-solid fa-store"></i>
             <span>Marketplace</span>
         </a>
+
         <a href="services.html" class="nav-item">
             <i class="fa-solid fa-screwdriver-wrench"></i>
             <span>Services</span>
         </a>
-        <a href="create-listing.html" class="nav-item sell">
-            <i class="fa-solid fa-plus"></i>
-            <span>Sell Items</span>
+
+        <a
+            href="incoming-orders.html"
+            class="nav-item active"
+            data-seller-only
+        >
+            <i class="fa-solid fa-box"></i>
+            <span>Incoming Orders</span>
         </a>
     </div>
-    <!-- RIGHT -->
+
     <div class="nav-right">
         <div class="search-box">
             <i class="fa-solid fa-magnifying-glass"></i>
+
             <input
+                id="navbarSearch"
                 type="text"
-                placeholder="Search..."
+                placeholder="Search items..."
             >
         </div>
-        
-        <button id="themeToggle" class="theme-toggle">
-                    <i id="themeIcon" class="fa-solid fa-circle-half-stroke"></i>
-                </button>
-        <a href="notifications.html" class="icon-btn">
+
+        <button
+            id="themeToggle"
+            class="theme-toggle"
+            type="button"
+        >
+            <i
+                id="themeIcon"
+                class="fa-solid fa-circle-half-stroke"
+            ></i>
+        </button>
+
+        <a
+            href="notifications.html"
+            class="icon-btn"
+        >
             <i class="fa-solid fa-bell"></i>
             <small id="notificationCount"></small>
         </a>
-        <a href="myCart.html" class="icon-btn">
+
+        <a
+            href="myCart.html"
+            class="icon-btn"
+        >
             <i class="fa-solid fa-cart-shopping"></i>
             <small id="cartCount"></small>
         </a>
+
         <div class="profile-menu">
-            <button id="profileToggle">
+            <button
+                id="profileToggle"
+                type="button"
+            >
                 <img
                     id="navProfileImage"
                     src="images/default-avatar-image.jpg"
                     alt="Profile"
                 >
-                <span id="navProfileName">Account</span>
+
+                <span id="navProfileName">
+                    Account
+                </span>
+
                 <i class="fa-solid fa-chevron-down"></i>
             </button>
+
             <div class="profile-dropdown">
                 <a href="profile.html">
                     <i class="fa-solid fa-user"></i>
                     My Profile
                 </a>
+
                 <a href="inbox.html">
                     <i class="fa-solid fa-comments"></i>
                     Inbox
                 </a>
+
                 <a href="notifications.html">
                     <i class="fa-solid fa-bell"></i>
                     Notifications
                 </a>
+
                 <a href="orders.html">
                     <i class="fa-solid fa-box"></i>
                     My Orders
                 </a>
+
                 <a
-    href="incoming-orders.html"
-    id="incomingOrdersDropdownLink"
-    data-seller-only
->
-    <i class="fa-solid fa-truck"></i>
-    Incoming Orders
-</a>
+                    href="incoming-orders.html"
+                    data-seller-only
+                >
+                    <i class="fa-solid fa-truck"></i>
+                    Incoming Orders
+                </a>
+
                 <a
                     href="admin.html"
                     id="adminLink"
@@ -137,18 +169,29 @@
                     <i class="fa-solid fa-shield-halved"></i>
                     Admin Dashboard
                 </a>
+
                 <hr>
-                <a href="#" onclick="logout()">
+
+                <a
+                    href="#"
+                    onclick="logout(); return false;"
+                >
                     <i class="fa-solid fa-right-from-bracket"></i>
                     Logout
                 </a>
             </div>
         </div>
     </div>
-   <button id="menu-toggle" class="menu-toggle">
-    <i class="fa-solid fa-bars"></i>
-</button>
+
+    <button
+        id="menu-toggle"
+        class="menu-toggle"
+        type="button"
+    >
+        <i class="fa-solid fa-bars"></i>
+    </button>
 </nav>
+
 <div
     class="mobile-overlay"
     id="mobileOverlay"
@@ -298,8 +341,7 @@
                     data-theme="light"
                 >
                     <i class="fa-solid fa-sun"></i>
-                    <span>Light</span>
-                    <i class="fa-solid fa-check check"></i>
+                    Light
                 </div>
 
                 <div
@@ -307,17 +349,15 @@
                     data-theme="dark"
                 >
                     <i class="fa-solid fa-moon"></i>
-                    <span>Dark</span>
-                    <i class="fa-solid fa-check check"></i>
+                    Dark
                 </div>
 
                 <div
                     class="theme-option"
                     data-theme="system"
                 >
-                    <i class="fa-solid fa-desktop"></i>
-                    <span>System</span>
-                    <i class="fa-solid fa-check check"></i>
+                    <i class="fa-solid fa-circle-half-stroke"></i>
+                    System
                 </div>
             </div>
         </div>
@@ -343,153 +383,95 @@
 
     </div>
 </div>
-<div class="mobile-overlay" id="mobileOverlay"></div><main class="inbox-page">
-    <aside class="conversation-sidebar">
-        <div class="sidebar-header">
-            <h1>Inbox</h1>
-            <div class="conversation-search">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input
-                    type="text"
-                    id="conversationSearch"
-                    placeholder="Search conversations..."
-                >
-            </div>
-        </div>
-        <div
-            id="conversationList"
-            class="conversation-list"
-        >
-        </div>
-    </aside>
-    <section class="chat-area">
-        <div
-            id="emptyChat"
-            class="empty-chat"
-        >
-            <i class="fa-solid fa-comments"></i>
-            <h2>Select a conversation</h2>
+<main class="orders-page">
+
+    <section class="orders-header">
+        <div>
+            <span class="orders-eyebrow">
+                <i class="fa-solid fa-inbox"></i>
+                Seller dashboard
+            </span>
+
+            <h1>Incoming Orders</h1>
+
             <p>
-                Choose a conversation from the left to start chatting.
+                Manage buyer orders and keep customers updated.
             </p>
         </div>
-        <div
-            id="chatPanel"
-            class="chat-panel"
-            style="display:none;"
-        >
-            <div
-                id="chatHeader"
-                class="chat-header"
-            >
-            </div>
-            <div
-                id="conversationContext"
-                class="conversation-context"
-            >
-            </div>
-            
-
-            
-            <div
-                id="messagesContainer"
-                class="messages-container"
-            >
-            </div>
-            <form
-                id="messageForm"
-                class="message-form"
-            >
-
-                <button
-                    type="button"
-                    class="attach-btn"
-                    id="attachBtn"
-                >
-                    <i class="fa-solid fa-paperclip"></i>
-                </button>
-
-                <input
-                    type="file"
-                    id="attachmentInput"
-                    accept="image/*,.pdf,.doc,.docx"
-                    hidden
-                >
-
-                <input
-                    id="messageInput"
-                    placeholder="Type your message..."
-                    autocomplete="off"
-                >
-
-                <button
-                    type="button"
-                    id="improveMessageBtn"
-                    class="improve-btn"
-                    title="Improve with AI"
-                >
-                    ✨
-                </button>
-
-                <button
-                    type="submit"
-                    class="send-btn"
-                >
-                    <i class="fa-solid fa-paper-plane"></i>
-                </button>
-
-            </form>
-            
-        </div>
-    </section>
-</main>
-
-<div
-                id="reviewModal"
-                class="review-modal"
-            >
-
-                <div class="review-card">
-
-                    <button
-                    id="closeReview"
-                    class="close-review"
-                >
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-
-                <h2>Leave a Review</h2>
-
-        <select id="rating">
-
-            <option value="5">⭐⭐⭐⭐⭐</option>
-            <option value="4">⭐⭐⭐⭐</option>
-            <option value="3">⭐⭐⭐</option>
-            <option value="2">⭐⭐</option>
-            <option value="1">⭐</option>
-
-        </select>
-
-        <textarea
-            id="reviewComment"
-            placeholder="Share your experience..."
-        ></textarea>
 
         <button
-            id="submitReview"
-            class="btn btn-primary btn-block"
+            id="refreshIncomingBtn"
+            class="orders-refresh"
+            type="button"
         >
-            Submit Review
+            <i class="fa-solid fa-rotate"></i>
+            Refresh
+        </button>
+    </section>
+
+    <section class="orders-tabs">
+        <button
+            class="incoming-tab active"
+            data-filter="active"
+            type="button"
+        >
+            Active
         </button>
 
-    </div>
+        <button
+            class="incoming-tab"
+            data-filter="placed"
+            type="button"
+        >
+            New
+        </button>
 
-</div>
-<script src="js/toast.js"></script>
-<script src="js/auth.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.8.1/socket.io.min.js"></script>
-<script src="js/inbox.js"></script>
-<script src="js/modal.js"></script>
-<script type="module" src="js/navbar.js"></script>
+        <button
+            class="incoming-tab"
+            data-filter="preparing"
+            type="button"
+        >
+            Preparing
+        </button>
+
+        <button
+            class="incoming-tab"
+            data-filter="ready"
+            type="button"
+        >
+            Ready
+        </button>
+
+        <button
+            class="incoming-tab"
+            data-filter="completed"
+            type="button"
+        >
+            Completed
+        </button>
+
+        <button
+            class="incoming-tab"
+            data-filter="all"
+            type="button"
+        >
+            All Orders
+        </button>
+    </section>
+
+    <section
+        id="incomingOrdersContainer"
+        class="orders-container"
+    ></section>
+
+</main>
+
+<script src="js/incoming-orders.js"></script>
+
+<script
+    type="module"
+    src="js/navbar.js"
+></script>
+
 </body>
 </html>

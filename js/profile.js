@@ -1334,7 +1334,7 @@ async function rejectOrder(orderId){
                         Authorization:`Bearer ${token}`
                     },
                     body:JSON.stringify({
-                        status:"rejected"
+                        status:"cancelled"
                     })
                 }
             );

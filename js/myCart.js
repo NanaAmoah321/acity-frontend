@@ -320,10 +320,22 @@ async function placeOrder() {
             });
         }
 
-        showToast(checkoutAllMode ? "All orders placed!" : "Order placed!");
+        showToast(
+            checkoutAllMode
+                ? "All orders placed!"
+                : "Order placed!"
+        );
+
         closeCheckout();
         loadInterested();
-        if (typeof loadCartCount === "function") loadCartCount();
+
+        if (typeof loadCartCount === "function") {
+            loadCartCount();
+        }
+
+        setTimeout(() => {
+            window.location.href = "orders.html";
+        }, 900);
     } catch (err) {
         console.error(err);
         showToast(err.message, "error");
