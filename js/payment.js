@@ -167,15 +167,19 @@ function renderDeliverySummary() {
     if (method === "room") {
         deliverySummary.innerHTML = `
             <i class="fa-solid fa-building"></i>
+
             <span>
                 <strong>Room delivery</strong>
+
                 <small>
                     ${escapeHtml(
-                        pendingCheckout.hostel
+                        pendingCheckout.hostel ||
+                        "Hostel not provided"
                     )}
                     · Room
                     ${escapeHtml(
-                        pendingCheckout.room_number
+                        pendingCheckout.room_number ||
+                        "Not provided"
                     )}
                 </small>
             </span>
@@ -184,14 +188,19 @@ function renderDeliverySummary() {
         return;
     }
 
+    const pickupLocation =
+        pendingCheckout.meeting_location ||
+        pendingCheckout.meeting_point ||
+        "Pickup location not provided";
+
     deliverySummary.innerHTML = `
         <i class="fa-solid fa-location-dot"></i>
+
         <span>
-            <strong>Pickup</strong>
+            <strong>Pickup location</strong>
+
             <small>
-                ${escapeHtml(
-                    pendingCheckout.meeting_location
-                )}
+                ${escapeHtml(pickupLocation)}
             </small>
         </span>
     `;

@@ -309,7 +309,7 @@ function placeOrder() {
 
         if (!meetingLocation) {
             showToast(
-                "Enter a pickup location.",
+                "Enter a meeting location.",
                 "error"
             );
             return;
