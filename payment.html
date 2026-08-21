@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Payment | Acity Connect</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/payment.css">
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+</head>
+
+<body>
+
+<main class="payment-page">
+
+    <a
+        href="myCart.html"
+        class="payment-back"
+    >
+        <i class="fa-solid fa-arrow-left"></i>
+        Back to checkout
+    </a>
+
+    <section class="payment-layout">
+
+        <div class="payment-summary">
+            <span class="payment-eyebrow">
+                <i class="fa-solid fa-receipt"></i>
+                Order summary
+            </span>
+
+            <h1>Complete your order</h1>
+
+            <p class="payment-subtitle">
+                Choose how you want to pay for this order.
+            </p>
+
+            <div
+                id="paymentItems"
+                class="payment-items"
+            ></div>
+
+            <div class="payment-total">
+                <span>Total</span>
+                <strong id="paymentTotal">
+                    GH₵0.00
+                </strong>
+            </div>
+
+            <div
+                id="deliverySummary"
+                class="delivery-summary"
+            ></div>
+        </div>
+
+        <div class="payment-method-card">
+
+            <h2>Payment method</h2>
+
+            <label class="payment-option">
+                <input
+                    type="radio"
+                    name="paymentMethod"
+                    value="cash"
+                    checked
+                >
+
+                <span class="payment-option-icon">
+                    <i class="fa-solid fa-hand-holding-dollar"></i>
+                </span>
+
+                <span>
+                    <strong>Pay on delivery or pickup</strong>
+                    <small>
+                        Pay the seller when your order is received.
+                    </small>
+                </span>
+            </label>
+
+            <label class="payment-option">
+                <input
+                    type="radio"
+                    name="paymentMethod"
+                    value="online"
+                >
+
+                <span class="payment-option-icon">
+                    <i class="fa-solid fa-credit-card"></i>
+                </span>
+
+                <span>
+                    <strong>Pay online</strong>
+                    <small>
+                        Pay with card, mobile money, or bank transfer.
+                    </small>
+                </span>
+            </label>
+
+            <p
+                id="onlinePaymentNotice"
+                class="payment-notice hidden"
+            >
+                Online payment will open securely through Paystack.
+            </p>
+
+            <button
+                id="continuePaymentBtn"
+                class="continue-payment-btn"
+                type="button"
+            >
+                <i class="fa-solid fa-lock"></i>
+                Continue securely
+            </button>
+
+            <p class="secure-payment-note">
+                <i class="fa-solid fa-shield-halved"></i>
+                Your payment information is protected.
+            </p>
+
+        </div>
+
+    </section>
+
+</main>
+
+<script src="js/payment.js"></script>
+
+</body>
+</html>

@@ -398,6 +398,7 @@ async function loadIncomingOrders(
         if (!response.ok) {
             throw new Error(
                 data.error ||
+                data.message ||
                 "Could not load incoming orders."
             );
         }
@@ -527,11 +528,11 @@ container.addEventListener(
 );
 
 document
-    .querySelectorAll(".incoming-tab")
+    .querySelectorAll(".order-tab")
     .forEach(tab => {
         tab.addEventListener("click", () => {
             document
-                .querySelectorAll(".incoming-tab")
+                .querySelectorAll(".order-tab")
                 .forEach(item => {
                     item.classList.remove("active");
                 });
